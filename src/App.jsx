@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-do
 import axios from 'axios';
 
 // Components import
-import Navbar from "./components/Navbar";
-import UserAuth from "./components/UserAuth";
+import Main from "./components/creatures/Main";
+import UserAuth from './components/creatures/UserAuth';
 
 const BACKEND_URL = `http://localhost:3004`;
 
@@ -39,7 +39,7 @@ export default function App() {
     <div>
      <Router>
        { auth 
-       ? <Navbar />
+       ? <Main />
        : <UserAuth />
       }
 
