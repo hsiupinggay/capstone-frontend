@@ -2,7 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import axios from 'axios';
-
+import { MedicalProvier } from './components/others/store'
 // Components import
 import Main from "./components/creatures/Main";
 import UserAuth from './components/creatures/UserAuth';
@@ -36,18 +36,14 @@ export default function App() {
   // });
 
   return (
-    <div>
-     <Router>
-       { auth 
-       ? <Main />
-       : <UserAuth />
-      }
-
-       <Routes>
-         <Route />
-       </Routes>
-     </Router>
-    </div>
+    <MedicalProvier> 
+      <Router>
+        { auth  ? <Main /> : <UserAuth /> }
+        <Routes>
+          <Route />
+        </Routes>
+      </Router>
+    </MedicalProvier>
   );
 }
 
