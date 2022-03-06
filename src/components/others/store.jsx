@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 /*
  * ========================================================
  * ========================================================
@@ -40,11 +39,21 @@ export const initialState = {
 export function medicalReducer(state, action) {
   switch (action.type) {
     case LOGIN:
-      return { ...state, 
+      return { 
+        ...state, 
         userId: action.payload.userDetails.userId,
         firstName: action.payload.userDetails.name.first,
         lastName: action.payload.userDetails.name.last,
         email: action.payload.userDetails.email,
+      };
+    case LOGOUT:
+      return { 
+        ...state, 
+        userId: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        photo: '',
       };
     default:
       return state;
@@ -62,11 +71,18 @@ export function medicalReducer(state, action) {
  */
 // Action Types
 const LOGIN = 'LOGIN';
+const LOGOUT = 'LOGOUT';
 
 export function loginAction(userDetails) {
   return {
     type: LOGIN,
     payload: userDetails,
+  };
+}
+
+export function logoutAction() {
+  return {
+    type: LOGOUT,
   };
 }
 
@@ -113,6 +129,14 @@ const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://local
 
 export function login(dispatch, data) {
   return axios.post(`${REACT_APP_BACKEND_URL}/login`, data).then((result) => {
-    dispatch((loginAction(result.data)));
+    if (result.data !== null) {
+      localStorage.setItem('token', result.data.token);
+      dispatch((loginAction(result.data)));
+    }
   });
+}
+
+export function logout(dispatch) {
+  localStorage.removeItem('token');
+  dispatch((logoutAction()));
 }
