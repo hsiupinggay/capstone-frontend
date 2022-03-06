@@ -1,13 +1,47 @@
 import './App.css';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
+import axios from 'axios';
 
+// Components import
+import Navbar from "./components/Navbar";
+import UserAuth from "./components/UserAuth";
+
+const BACKEND_URL = `http://localhost:3004`;
 
 export default function App() {
+  // state to check jwt from backend
+  const [auth, setAuth] = useState(false);
+
+  // on load, check for token... if no token, 
+  // useEffect(() => {
+  //   const token = localStorage.getItem('authToken');
+  //   if (!token) return setAuth(false)/
+
+  //   ( async() => {
+  //     try {
+  //       const headers = {
+  //         headers: { Authorization: `Bearer ${token}` }
+  //       };
+
+  //       const response = await axios.get(`${BACKEND_URL}/authenticate`, headers);
+  //       const { valid } = response.data;
+  //       if (!valid) return setAuth(false);
+  //       setAuth(true);
+  //     } catch (err) {
+  //       setAuth(false);
+  //       console.error(err.response);
+  //     }
+  //   })();
+  // });
+
   return (
     <div>
      <Router>
-       <NavLink></NavLink>
+       { auth 
+       ? <Navbar />
+       : <UserAuth />
+      }
 
        <Routes>
          <Route />
