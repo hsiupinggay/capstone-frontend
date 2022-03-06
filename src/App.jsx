@@ -1,11 +1,10 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import { MedicalProvider } from './components/others/store'
 // Components import
-import Main from "./components/creatures/Main";
-import UserAuth from './components/creatures/UserAuth';
+import AuthPage from './components/pages/AuthPage';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || `http://localhost:3004`;
 
@@ -38,10 +37,14 @@ export default function App() {
   return (
     <MedicalProvider>
       <Router>
-        { auth  ? <Main /> : <UserAuth /> }
-        <Routes>
-          <Route />
-        </Routes>
+        { auth  ?
+          <div className="main-container w-screen h-screen flex flex-col items-center">
+            <Routes>
+              <Route />
+            </Routes>
+          </div> 
+          // Log In page displays if there's no auth token
+        : <AuthPage /> }
       </Router>
     </MedicalProvider>
   );
