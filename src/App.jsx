@@ -2,12 +2,12 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import axios from 'axios';
-import { MedicalProvier } from './components/others/store'
+import { MedicalProvider } from './components/others/store'
 // Components import
 import Main from "./components/creatures/Main";
 import UserAuth from './components/creatures/UserAuth';
 
-const BACKEND_URL = `http://localhost:3004`;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || `http://localhost:3004`;
 
 export default function App() {
   // state to check jwt from backend
@@ -36,14 +36,14 @@ export default function App() {
   // });
 
   return (
-    <MedicalProvier> 
+    <MedicalProvider>
       <Router>
         { auth  ? <Main /> : <UserAuth /> }
         <Routes>
           <Route />
         </Routes>
       </Router>
-    </MedicalProvier>
+    </MedicalProvider>
   );
 }
 
