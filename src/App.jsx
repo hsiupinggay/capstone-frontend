@@ -8,7 +8,7 @@ import { MedicalProvider } from './components/others/store'
 import AuthPage from './components/pages/AuthPage';
 import HomePage from './components/pages/HomePage';
 import AppointmentsPage from './components/pages/AppointmentsPage';
-import FamilyPage from './components/pages/FamilyPage';
+import PeoplePage from './components/pages/PeoplePage';
 import ProfilePage from './components/pages/ProfilePage';
 import LogoutPage from './components/pages/LogoutPage';
 
@@ -44,23 +44,26 @@ export default function App() {
     <MedicalProvider>
       <Router>
         { auth  ?
-          <div className="main-container w-screen h-screen flex flex-col items-center">
+          <div className="main-container w-screen h-screen 
+          flex flex-col items-center">
             <div className="nav-div w-full border-solid border-black border-2">
               <nav className="flex justify-evenly items-center">
                 <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/">Home</NavLink>
                 <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/appointments">Appointments</NavLink>
-                <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/family">Family || People(?)</NavLink>
+                <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/people">People</NavLink>
                 <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/profile">Profile</NavLink>
                 <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/logout">Logout</NavLink>
               </nav>
             </div>
-            <Routes>
-              <Route path="/" element={<HomePage auth={auth} />} />
-              <Route path="/appointments" element={<AppointmentsPage auth={auth} />} />
-              <Route path="/family" element={<FamilyPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/logout" element={<LogoutPage setAuth={setAuth} />} />
-            </Routes>
+            <div className="display">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/appointments" element={<AppointmentsPage />} />
+                <Route path="/people" element={<PeoplePage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/logout" element={<LogoutPage setAuth={setAuth} />} />
+              </Routes>
+            </div>
           </div> 
           // Log In page displays if there's no auth token
         : <AuthPage /> }
