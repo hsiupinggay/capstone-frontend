@@ -1,9 +1,9 @@
 import React from 'react';
 
-const FamilyPage = () => {
+function FamilyPage() {
   return (
     <div>FamilyPage</div>
   );
-};
+}
 
 export default FamilyPage;
