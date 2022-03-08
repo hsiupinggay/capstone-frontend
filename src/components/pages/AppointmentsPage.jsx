@@ -1,9 +1,9 @@
 import React from 'react';
 
-const AppointmentsPage = () => {
+function AppointmentsPage() {
   return (
     <div>AppointmentsPage</div>
   );
-};
+}
 
 export default AppointmentsPage;
