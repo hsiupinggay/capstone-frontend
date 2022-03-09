@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
-import Login from '../organisms/Login';
-import Signup from '../organisms/Signup';
+import React, { useState, useRef } from 'react';
+import Login from '../molecules/LoginForm';
+import Signup from '../molecules/SignupForm';
 
 function UserAuthTab() {
   // States for aria label and conditional rendering of login/signup components
-
   const [loginSelected, setLoginSelected] = useState(true);
-  const [signupSelected, setSignupSelected] = useState(true);
+  const [signupSelected, setSignupSelected] = useState(false);
 
-  // Get login and signup tab for DOM manipulation in handleLogin and handleSignup
-
-  const loginTab = document.getElementById('tabs-login-tab');
-  const signupTab = document.getElementById('tabs-signup-tab');
+  const loginTab = useRef();
+  const signupTab = useRef();
 
   // Event listener when tabs are clicked
 
@@ -19,26 +16,31 @@ function UserAuthTab() {
     setLoginSelected(true);
     setSignupSelected(false);
 
-    loginTab.classList.add('border-blue-600');
-    loginTab.classList.remove('border-transparent');
+    loginTab.current.classList.add('border-blue-600');
+    loginTab.current.classList.remove('border-transparent');
 
-    signupTab.classList.remove('border-blue-600');
-    signupTab.classList.add('border-transparent');
+    signupTab.current.classList.remove('border-blue-600');
+    signupTab.current.classList.add('border-transparent');
   };
 
   const handleSignup = () => {
     setLoginSelected(false);
     setSignupSelected(true);
 
-    loginTab.classList.remove('border-blue-600');
-    loginTab.classList.add('border-transparent');
+    loginTab.current.classList.remove('border-blue-600');
+    loginTab.current.classList.add('border-transparent');
 
-    signupTab.classList.add('border-blue-600');
-    signupTab.classList.remove('border-transparent');
+    signupTab.current.classList.add('border-blue-600');
+    signupTab.current.classList.remove('border-transparent');
   };
 
   return (
-    <div className="drop-shadow-md rounded-2xl bg-white">
+    <div
+      className="drop-shadow-md
+    rounded-2xl
+    bg-white
+    p-4 my-12"
+    >
       <ul
         className="flex flex-row flex-wrap list-none "
         id="tabs-tab"
@@ -46,6 +48,7 @@ function UserAuthTab() {
       >
         <li className="nav-item" role="presentation">
           <a
+            ref={loginTab}
             href="#tabs-login"
             className="
       nav-link
@@ -53,7 +56,7 @@ function UserAuthTab() {
       font-medium
       text-s
       uppercase
-      border-x-0 border-t-0 border-b-2 border-transparent
+      border-x-0 border-t-0 border-b-2 border-blue-600
       px-6
       py-3
       my-2
@@ -71,6 +74,7 @@ function UserAuthTab() {
         </li>
         <li className="nav-item" role="presentation">
           <a
+            ref={signupTab}
             href="#tabs-signup"
             className="
       nav-link

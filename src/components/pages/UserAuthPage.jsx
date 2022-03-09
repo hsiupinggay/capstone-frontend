@@ -1,5 +1,5 @@
 import React from 'react';
-import UserAuthTab from '../molecules/UserAuthTab';
+import UserAuthTab from '../organisms/UserAuthTab';
 
 function UserAuthPage() {
   return (
