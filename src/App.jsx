@@ -14,6 +14,7 @@ import AppointmentsPage from './components/pages/AppointmentsPage';
 import PeoplePage from './components/pages/PeoplePage';
 import ProfilePage from './components/pages/ProfilePage';
 import LogoutPage from './components/pages/LogoutPage';
+import AddAppointment from './components/organisms/AddAppointment';
 import UserAuthPage from './components/pages/UserAuthPage';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3004';
@@ -68,6 +69,7 @@ export default function App() {
                 <Route path="/people" element={<PeoplePage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/logout" element={<LogoutPage setAuth={setAuth} />} />
+                <Route path="/add-appt" element={<AddAppointment />} />
               </Routes>
             </div>
           </div>
