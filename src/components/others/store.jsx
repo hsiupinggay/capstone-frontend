@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-use-before-define */
 /*
  * ========================================================
  * ========================================================
@@ -39,16 +41,16 @@ export const initialState = {
 export function medicalReducer(state, action) {
   switch (action.type) {
     case LOGIN:
-      return { 
-        ...state, 
+      return {
+        ...state,
         userId: action.payload.userDetails.userId,
         firstName: action.payload.userDetails.name.first,
         lastName: action.payload.userDetails.name.last,
         email: action.payload.userDetails.email,
       };
     case LOGOUT:
-      return { 
-        ...state, 
+      return {
+        ...state,
         userId: '',
         firstName: '',
         lastName: '',
