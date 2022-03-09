@@ -12,7 +12,7 @@ import React from 'react';
 function OptionalTextfield({ label, type, id }) {
   return (
 
-    <div className="mx-5">
+    <div className="mx-3">
       <div className="relative z-0 mb-6 w-full group">
         <input
           className="
