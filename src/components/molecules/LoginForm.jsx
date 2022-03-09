@@ -16,14 +16,15 @@ function Login() {
 
   const navigate = useNavigate();
 
+  // Handles input changes
   const handleEmail = (e) => {
     setEmail(e.target.value);
   };
-
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
 
+  // Handle submit button
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -46,6 +47,7 @@ function Login() {
       password,
     };
     try {
+      // Calls login function from store
       const res = await login(dispatch, data);
 
       if (res.loginSuccess) {

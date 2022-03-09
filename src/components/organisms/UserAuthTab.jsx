@@ -7,11 +7,13 @@ function UserAuthTab() {
   const [loginSelected, setLoginSelected] = useState(true);
   const [signupSelected, setSignupSelected] = useState(false);
 
+  // useRef for equivalent of getElementById
+  // see refs in tab div
   const loginTab = useRef();
   const signupTab = useRef();
 
   // Event listener when tabs are clicked
-
+  // className of tab is originally transparent and changes to blue when clicked
   const handleLogin = () => {
     setLoginSelected(true);
     setSignupSelected(false);

@@ -13,30 +13,29 @@ function Signup() {
   const [passwordConfrimation, setPasswordConfirmation] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  // This is a 2-step form
   const [step, setStep] = useState(1);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  // Handle input changes
   const handleEmail = (e) => {
     setEmail(e.target.value);
   };
-
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
-
   const handlePasswordConfirmation = (e) => {
     setPasswordConfirmation(e.target.value);
   };
-
   const handleFirstName = (e) => {
     setFirstName(e.target.value);
   };
-
   const handleLastName = (e) => {
     setLastName(e.target.value);
   };
 
+  // Handle button clicks
   const handleNext = async (e) => {
     e.preventDefault();
     if (email === '' || firstName === '' || lastName === '') {
@@ -59,7 +58,7 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Ensure all fields are filled in
+    // Ensure passwords are the same
     if (password !== passwordConfrimation) {
       setError(true);
       setErrorMessage('Passwords do not match.');

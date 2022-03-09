@@ -154,6 +154,9 @@ axios.defaults.withCredentials = true;
 
 const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3004';
 
+// Login function
+// Successful login is sent as data
+// Error login are caught and error messages are passed to components
 export async function login(dispatch, data) {
   try {
     const res = await axios.post(`${REACT_APP_BACKEND_URL}/user/login`, data);
@@ -167,6 +170,9 @@ export async function login(dispatch, data) {
   }
 }
 
+// Signup function
+// Successful signup is sent as data
+// Error signup are caught and error messages are passed to components
 export async function signup(dispatch, data) {
   try {
     const res = await axios.post(`${REACT_APP_BACKEND_URL}/user/signup`, data);
@@ -178,6 +184,9 @@ export async function signup(dispatch, data) {
   }
 }
 
+// Authenticate JWT
+// This fucntion does not use dispatch
+// Might consider moving out of store into helper.js
 export function authenticate() {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
@@ -187,9 +196,11 @@ export function authenticate() {
   }
   const config = { headers: { authorization: `Bearer ${token}` } };
 
+  // config to be sent to backend with relevant protected requests
   return config;
 }
 
+// Not done
 export function logout(dispatch) {
   localStorage.removeItem('token');
   dispatch((logoutAction()));
