@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/solid";
 // import classNames from "./helper";
 
+// Global variables to help print  Calendar
 const monthNames = [
   "January",
   "February",
@@ -24,12 +25,15 @@ function classNames(...classes) {
 }
 
 const AppointmentsPage = () => {
+  // Get today's date
   const date = new Date();
+  // Set state to toggle between month views
   const [month, setMonth] = useState(date.getMonth());
   const [year, setYear] = useState(date.getFullYear());
   const [numOfDays, setNumOfDays] = useState([]);
   const [emptyDays, setEmptyDays] = useState([]);
 
+  // Function to check for "today"
   const isToday = (date) => {
     const today = new Date();
     const d = new Date(year, month, date);
@@ -38,6 +42,7 @@ const AppointmentsPage = () => {
     return today.toDateString() === d.toDateString();
   };
 
+  // Function to define number of days in the month and check the empty days at the beginning of the month
   const getNoOfDays = () => {
     let i;
     let daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -63,6 +68,7 @@ const AppointmentsPage = () => {
     console.log(month, year);
   }, [month]);
 
+  // Placeholder for appointments
   const events = [
     {
       event_date: new Date(2022, 8, 1),
@@ -110,6 +116,7 @@ const AppointmentsPage = () => {
     }
   ];
 
+  // Arrow button classNames
   const btnClass = (limit) => {
     return classNames(
       month === limit ? "cursor-not-allowed opacity-25" : "",
@@ -117,11 +124,12 @@ const AppointmentsPage = () => {
     );
   };
 
+  // Function for right arrow
   const nextMonth = () => {
     setMonth(month + 1);
     getNoOfDays();
   };
-
+  // Function for left arrow
   const prevMonth = () => {
     setMonth(month - 1);
     getNoOfDays();
@@ -144,13 +152,18 @@ const AppointmentsPage = () => {
 
   return (
     <>
+      {/* calendar body */}
       <div className="container mx-auto py-4 px-6">
+        {/* calendar outer frame */}
         <div className="bg-white rounded-lg shadow overflow-hidden">
+          {/* top row: display month, year; display nav arrows*/}
           <div className="flex items-center justify-between px-6 py-4 border-b">
+            {/* div: month and year */}
             <div>
               <span className="text-lg font-bold text-gray-800">{monthNames[month]}</span>
               <span className="ml-1 text-lg text-gray-600 font-normal">{year}</span>
             </div>
+            {/* div: nav arrow buttons */}
             <div className="border rounded-lg px-1 pt-1">
               {/* Previous Month Button */}
               <button
@@ -173,7 +186,9 @@ const AppointmentsPage = () => {
               </button>
             </div>
           </div>
+          {/* Calendar Body */}
           <div className="-mx-1 -mb-1">
+            {/* Div: Print Day Row */}
             <div className="flex flex-wrap -mb-8" style={{ marginBottom: "-30px" }}>
               {days.map((day) => (
                 <div key={day} className="px-2 py-2 w-[14.28%]">
@@ -181,10 +196,13 @@ const AppointmentsPage = () => {
                 </div>
               ))}
             </div>
+            {/* Div: Print Dates */ }
             <div className="flex flex-wrap">
+              {/* IF empty day, print box without {date} */}
               {emptyDays.map((emptyDay) => (
-                <div key={emptyDay} className="text-center border-r border-b px-4 pt-2 h-32 w-[14.28%]" />
+                <div key={emptyDay} className="border-r border-b px-4 pt-2 h-32 w-[14.28%]" />
               ))}
+              {/* Print {date} and conditionally format for isToday vs. other days + add hover to show mouseover - probably can add onClick here to open modal */}
               {numOfDays.map((date, index) => (
                 <div key={index} className="px-4 pt-2 border-r border-b relative h-32 w-[14.28%]">
                   <div className={classNames(
@@ -195,7 +213,7 @@ const AppointmentsPage = () => {
                   )}>
                     {date}
                   </div>
-
+                  {/* Within non-empty days, check for event and print event */}
                   <div className="overflow-y-auto mt-1 h-20">
                     {events.filter((e) =>
                       new Date(e.event_date).toDateString() ===
