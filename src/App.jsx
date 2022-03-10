@@ -15,7 +15,11 @@ import PeoplePage from './components/pages/PeoplePage';
 import ProfilePage from './components/pages/ProfilePage';
 import LogoutPage from './components/pages/LogoutPage';
 import AddAppointment from './components/organisms/AddAppointment';
+import AddPatient from './components/organisms/AddPatient';
+import AddHospital from './components/organisms/AddHospital';
+import AddDepartment from './components/organisms/AddDepartment';
 import UserAuthPage from './components/pages/UserAuthPage';
+import AddChaperone from './components/organisms/AddChaperone';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3004';
 
@@ -70,6 +74,10 @@ export default function App() {
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/logout" element={<LogoutPage setAuth={setAuth} />} />
                 <Route path="/add-appt" element={<AddAppointment />} />
+                <Route path="/add-patient" element={<AddPatient />} />
+                <Route path="/add-hospital" element={<AddHospital />} />
+                <Route path="/add-department" element={<AddDepartment />} />
+                <Route path="/add-chaperone" element={<AddChaperone />} />
               </Routes>
             </div>
           </div>

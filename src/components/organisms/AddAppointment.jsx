@@ -2,14 +2,33 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/no-array-index-key */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                       Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *       Component for rendering add appointment form
+ *
+ * ========================================================
+ * ========================================================
+ */
 export default function AddAppointment() {
-  const [patientArr, setPatientArr] = useState([]);
-  const [hospArr, setHospArr] = useState([]);
-  const [deptArr, setDeptArr] = useState([]);
-  const [chaperoneArr, setChaperoneArr] = useState([]);
+  const [patientArr, setPatientArr] = useState();
+  const [hospArr, setHospArr] = useState();
+  const [deptArr, setDeptArr] = useState();
+  const [chaperoneArr, setChaperoneArr] = useState();
   const [patientId, setPatientId] = useState('');
   const [patientName, setPatientName] = useState('');
   const [hospital, setHospital] = useState('');
@@ -18,6 +37,8 @@ export default function AddAppointment() {
   const [department, setDepartment] = useState('');
   const [dateTime, setDateTime] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+
+  const navigate = useNavigate();
 
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
@@ -31,35 +52,59 @@ export default function AddAppointment() {
       });
   }, []);
 
+  const selectDept = (string) => {
+    if (string === 'ADD-DEPARTMENT') {
+      // Redirect to add department component
+      navigate('/add-department');
+    } else {
+      setDepartment(string);
+    }
+  };
+
   // When user has selected a patient, find related hospitals and chaperones
   const updateHosChapDropdowns = (string) => {
-    console.log('string', string);
-    const patientSplitStr = string.split(',');
-    setPatientId(patientSplitStr[0]);
-    setPatientName(patientSplitStr[1]);
-    for (let i = 0; i < patientArr.length; i += 1) {
-      if (patientArr[i]._id === patientSplitStr[0]) {
-        setChaperoneArr(patientArr[i].visitDetails.chaperones);
-        setHospArr(patientArr[i].visitDetails.clinics);
+    if (string === 'ADD-PATIENT') {
+      // Redirect to add patient component
+      navigate('/add-patient');
+    } else {
+      console.log('string', string);
+      const patientSplitStr = string.split(',');
+      setPatientId(patientSplitStr[0]);
+      setPatientName(patientSplitStr[1]);
+      for (let i = 0; i < patientArr.length; i += 1) {
+        if (patientArr[i]._id === patientSplitStr[0]) {
+          setChaperoneArr(patientArr[i].visitDetails.chaperones);
+          setHospArr(patientArr[i].visitDetails.clinics);
+        }
       }
     }
   };
 
   // When user has selected a hospital, find related departments
   const updateDept = (hospitalInput) => {
-    setHospital(hospitalInput);
-    for (let i = 0; i < hospArr.length; i += 1) {
-      if (hospArr[i].hospital === hospitalInput) {
-        setDeptArr(hospArr[i].departments);
+    if (hospitalInput === 'ADD-HOSPITAL') {
+      // Redirect to add hospital component
+      navigate('/add-hospital');
+    } else {
+      setHospital(hospitalInput);
+      for (let i = 0; i < hospArr.length; i += 1) {
+        if (hospArr[i].hospital === hospitalInput) {
+          setDeptArr(hospArr[i].departments);
+        }
       }
     }
   };
 
   // When user selects a chaperone, save name and id in useState
   const updateChaperoneState = (value) => {
-    const chaperoneSplitStr = value.split(',');
-    setChaperone(chaperoneSplitStr[0]);
-    setChaperoneId(chaperoneSplitStr[1]);
+    if (value === 'ADD-CHAPERONE') {
+      // Redirect to add chaperone component
+      navigate('/add-chaperone');
+    } else {
+      const chaperoneSplitStr = value.split(',');
+      setChaperone(chaperoneSplitStr[0]);
+      setChaperoneId(chaperoneSplitStr[1]);
+    }
   };
 
   // On form submit, send data to backend to store in DB
@@ -108,7 +153,7 @@ export default function AddAppointment() {
 
   return (
     <div>
-      { patientArr.length === 0
+      { patientArr === undefined
         ? <div />
         : (
           <form onSubmit={handleSubmit}>
@@ -123,96 +168,101 @@ export default function AddAppointment() {
               <select name="patient" id="patient" onChange={(event) => updateHosChapDropdowns(event.target.value)} required>
                 <option value="" disabled selected>Select Patient</option>
                 {
-            patientArr.map((patient, index) => (
-              <option value={`${patient._id},${`${patient.identity.name.first} ${patient.identity.name.last}`}`} key={index}>
-                {`${patient.identity.name.first} ${patient.identity.name.last}`}
-              </option>
-            ))
-          }
+                  patientArr.map((patient, index) => (
+                    <option value={`${patient._id},${`${patient.identity.name.first} ${patient.identity.name.last}`}`} key={index}>
+                      {`${patient.identity.name.first} ${patient.identity.name.last}`}
+                    </option>
+                  ))
+                }
+                <option value="ADD-PATIENT">--ADD NEW PATIENT--</option>
               </select>
             </div>
 
-            {
-        hospArr.length === 0
-          ? (
-            <div>
-              <label htmlFor="hospital"> </label>
-              <select>
-                <option disabled selected>Select Hospital</option>
-              </select>
-              <label htmlFor="department"> </label>
-              <div>
-                <select>
-                  <option disabled selected>Select Department</option>
-                </select>
-              </div>
-              <label htmlFor="chaperone"> </label>
-              <div>
-                <select>
-                  <option disabled selected>Select Chaperone</option>
-                </select>
-              </div>
-            </div>
-          )
-          : (
-            <div>
-              <div>
-                <label htmlFor="hospital"> </label>
-                <select name="hospital" id="hospital" onChange={(event) => updateDept(event.target.value)} required>
-                  <option value="" disabled selected>Select Hospital</option>
-                  {
-                hospArr.map((hospitalEl, index) => (
-                  <option value={hospitalEl.hospital} key={index}>
-                    {hospitalEl.hospital}
-                  </option>
-                ))
-              }
-                </select>
-              </div>
-
-              {
-            deptArr.length === 0
+            { hospArr === undefined
               ? (
                 <div>
-                  <label htmlFor="department"> </label>
-                  <select>
-                    <option disabled selected>Select Department</option>
+                  <label htmlFor="hospital"> </label>
+                  <select onChange={(event) => updateDept(event.target.value)}>
+                    <option disabled selected>Select Hospital</option>
+                    <option value="ADD-HOSPITAL">--ADD NEW HOSPITAL--</option>
                   </select>
+                  <label htmlFor="department"> </label>
+                  <div>
+                    <select onChange={(event) => selectDept(event.target.value)}>
+                      <option disabled selected>Select Department</option>
+                      <option value="ADD-DEPARTMENT">--ADD NEW DEPARTMENT--</option>
+                    </select>
+                  </div>
+                  <label htmlFor="chaperone"> </label>
+                  <div>
+                    <select onChange={(event) => updateChaperoneState(event.target.value)}>
+                      <option disabled selected>Select Chaperone</option>
+                      <option value="ADD-CHAPERONE">--ADD NEW CHAPERONE--</option>
+                    </select>
+                  </div>
                 </div>
               )
               : (
                 <div>
-                  <label htmlFor="department"> </label>
-                  <select name="department" id="department" onChange={(event) => setDepartment(event.target.value)} required>
-                    <option value="" disabled selected>Select Department</option>
-                    {
-                  deptArr.map((departmentEl, index) => (
-                    <option value={departmentEl} key={index}>
-                      {departmentEl}
-                    </option>
-                  ))
-                }
-                  </select>
-                </div>
-              )
-            }
+                  <div>
+                    <label htmlFor="hospital"> </label>
+                    <select name="hospital" id="hospital" onChange={(event) => updateDept(event.target.value)} required>
+                      <option value="" disabled selected>Select Hospital</option>
+                      {
+                        hospArr.map((hospitalEl, index) => (
+                          <option value={hospitalEl.hospital} key={index}>
+                            {hospitalEl.hospital}
+                          </option>
+                        ))
+                      }
+                      <option value="ADD-HOSPITAL">--ADD NEW HOSPITAL--</option>
 
-              <div>
-                <label htmlFor="chaperone"> </label>
-                <select name="chaperone" id="chaperone" onChange={(event) => updateChaperoneState(event.target.value)}>
-                  <option disabled selected>Select Chaperone</option>
-                  {
-                chaperoneArr.map((chaperoneEl, index) => (
-                  <option value={`${chaperoneEl.name},${chaperoneEl.chaperoneId}`} key={index}>
-                    {chaperoneEl.name}
-                  </option>
-                ))
-              }
-                </select>
-              </div>
-            </div>
-          )
-}
+                    </select>
+                  </div>
+
+                  { deptArr === undefined
+                    ? (
+                      <div>
+                        <label htmlFor="department"> </label>
+                        <select onChange={(event) => selectDept(event.target.value)}>
+                          <option disabled selected>Select Department</option>
+                          <option value="ADD-DEPARTMENT">--ADD NEW DEPARTMENT--</option>
+                        </select>
+                      </div>
+                    )
+                    : (
+                      <div>
+                        <label htmlFor="department"> </label>
+                        <select name="department" id="department" onChange={(event) => selectDept(event.target.value)} required>
+                          <option value="" disabled selected>Select Department</option>
+                          {
+                          deptArr.map((departmentEl, index) => (
+                            <option value={departmentEl} key={index}>
+                              {departmentEl}
+                            </option>
+                          ))
+                        }
+                          <option value="ADD-DEPARTMENT">--ADD NEW DEPARTMENT--</option>
+                        </select>
+                      </div>
+                    )}
+
+                  <div>
+                    <label htmlFor="chaperone"> </label>
+                    <select name="chaperone" id="chaperone" onChange={(event) => updateChaperoneState(event.target.value)}>
+                      <option disabled selected>Select Chaperone</option>
+                      {
+                        chaperoneArr.map((chaperoneEl, index) => (
+                          <option value={`${chaperoneEl.name},${chaperoneEl.chaperoneId}`} key={index}>
+                            {chaperoneEl.name}
+                          </option>
+                        ))
+                      }
+                      <option value="ADD-CHAPERONE">--ADD NEW CHAPERONE--</option>
+                    </select>
+                  </div>
+                </div>
+              )}
 
             <button type="submit"> Submit</button>
           </form>
