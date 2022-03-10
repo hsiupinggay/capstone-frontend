@@ -1,15 +1,49 @@
+<<<<<<< HEAD
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-shadow */
 /* eslint-disable no-underscore-dangle */
+=======
+/* eslint-disable no-console */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/no-array-index-key */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                       Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
+>>>>>>> 4ed469913036321d059220164648f4bf03c60987
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
+<<<<<<< HEAD
 export default function AddAppointment() {
   const [patientArr, setPatientArr] = useState([]);
   const [hospArr, setHospArr] = useState([]);
   const [deptArr, setDeptArr] = useState([]);
   const [chaperoneArr, setChaperoneArr] = useState([]);
+=======
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *       Component for rendering add appointment form
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function AddAppointment() {
+  const [patientArr, setPatientArr] = useState();
+  const [hospArr, setHospArr] = useState();
+  const [deptArr, setDeptArr] = useState();
+  const [chaperoneArr, setChaperoneArr] = useState();
+>>>>>>> 4ed469913036321d059220164648f4bf03c60987
   const [patientId, setPatientId] = useState('');
   const [patientName, setPatientName] = useState('');
   const [hospital, setHospital] = useState('');
@@ -19,6 +53,11 @@ export default function AddAppointment() {
   const [dateTime, setDateTime] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
+<<<<<<< HEAD
+=======
+  const navigate = useNavigate();
+
+>>>>>>> 4ed469913036321d059220164648f4bf03c60987
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
     const data = new URLSearchParams();
@@ -31,8 +70,18 @@ export default function AddAppointment() {
       });
   }, []);
 
+  const selectDept = (string) => {
+    if (string === 'ADD-DEPARTMENT') {
+      // Redirect to add department component
+      navigate('/add-department');
+    } else {
+      setDepartment(string);
+    }
+  };
+
   // When user has selected a patient, find related hospitals and chaperones
   const updateHosChapDropdowns = (string) => {
+<<<<<<< HEAD
     console.log('string', string);
     const patientSplitStr = string.split(',');
     setPatientId(patientSplitStr[0]);
@@ -41,25 +90,63 @@ export default function AddAppointment() {
       if (patientArr[i]._id === patientSplitStr[0]) {
         setChaperoneArr(patientArr[i].visitDetails.chaperones);
         setHospArr(patientArr[i].visitDetails.clinics);
+=======
+    if (string === 'ADD-PATIENT') {
+      // Redirect to add patient component
+      navigate('/add-patient');
+    } else {
+      const patientSplitStr = string.split(',');
+      setPatientId(patientSplitStr[0]);
+      setPatientName(patientSplitStr[1]);
+      for (let i = 0; i < patientArr.length; i += 1) {
+        if (patientArr[i]._id === patientSplitStr[0]) {
+          setChaperoneArr(patientArr[i].visitDetails.chaperones);
+          setHospArr(patientArr[i].visitDetails.clinics);
+        }
+>>>>>>> 4ed469913036321d059220164648f4bf03c60987
       }
     }
   };
 
   // When user has selected a hospital, find related departments
+<<<<<<< HEAD
   const updateDept = (hospital) => {
     setHospital(hospital);
     for (let i = 0; i < hospArr.length; i += 1) {
       if (hospArr[i].hospital === hospital) {
         setDeptArr(hospArr[i].departments);
+=======
+  const updateDept = (hospitalInput) => {
+    if (hospitalInput === 'ADD-HOSPITAL') {
+      // Redirect to add hospital component
+      navigate('/add-hospital');
+    } else {
+      setHospital(hospitalInput);
+      for (let i = 0; i < hospArr.length; i += 1) {
+        if (hospArr[i].hospital === hospitalInput) {
+          setDeptArr(hospArr[i].departments);
+        }
+>>>>>>> 4ed469913036321d059220164648f4bf03c60987
       }
     }
   };
 
   // When user selects a chaperone, save name and id in useState
   const updateChaperoneState = (value) => {
+<<<<<<< HEAD
     const chaperoneSplitStr = value.split(',');
     setChaperone(chaperoneSplitStr[0]);
     setChaperoneId(chaperoneSplitStr[1]);
+=======
+    if (value === 'ADD-CHAPERONE') {
+      // Redirect to add chaperone component
+      navigate('/add-chaperone');
+    } else {
+      const chaperoneSplitStr = value.split(',');
+      setChaperone(chaperoneSplitStr[0]);
+      setChaperoneId(chaperoneSplitStr[1]);
+    }
+>>>>>>> 4ed469913036321d059220164648f4bf03c60987
   };
 
   // On form submit, send data to backend to store in DB
@@ -73,9 +160,13 @@ export default function AddAppointment() {
       chaperoneId,
       dateTime,
     };
+<<<<<<< HEAD
     console.log('data', data);
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-appointment`, data).then((response) => {
       console.log(response.data);
+=======
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-appointment`, data).then((response) => {
+>>>>>>> 4ed469913036321d059220164648f4bf03c60987
       if (response.status === 200) {
         setSuccessMessage(
           <div>
@@ -108,11 +199,16 @@ export default function AddAppointment() {
 
   return (
     <div>
+<<<<<<< HEAD
       { patientArr.length === 0
+=======
+      { patientArr === undefined
+>>>>>>> 4ed469913036321d059220164648f4bf03c60987
         ? <div />
         : (
           <form onSubmit={handleSubmit}>
 
+<<<<<<< HEAD
             <div>
               <label htmlFor="dateTime" name="dateTime" />
               <input type="datetime-local" id="dateTime" name="dateTime" onChange={(event) => setDateTime(event.target.value)} required />
@@ -214,6 +310,114 @@ export default function AddAppointment() {
           )
 }
 
+=======
+            <div>
+              <label htmlFor="dateTime" name="dateTime" />
+              <input type="datetime-local" id="dateTime" name="dateTime" onChange={(event) => setDateTime(event.target.value)} required />
+            </div>
+
+            <div>
+              <label htmlFor="patient"> </label>
+              <select name="patient" id="patient" onChange={(event) => updateHosChapDropdowns(event.target.value)} required>
+                <option value="" disabled selected>Select Patient</option>
+                {
+                  patientArr.map((patient, index) => (
+                    <option value={`${patient._id},${`${patient.identity.name.first} ${patient.identity.name.last}`}`} key={index}>
+                      {`${patient.identity.name.first} ${patient.identity.name.last}`}
+                    </option>
+                  ))
+                }
+                <option value="ADD-PATIENT">--ADD NEW PATIENT--</option>
+              </select>
+            </div>
+
+            { hospArr === undefined
+              ? (
+                <div>
+                  <label htmlFor="hospital"> </label>
+                  <select onChange={(event) => updateDept(event.target.value)}>
+                    <option disabled selected>Select Hospital</option>
+                    <option value="ADD-HOSPITAL">--ADD NEW HOSPITAL--</option>
+                  </select>
+                  <label htmlFor="department"> </label>
+                  <div>
+                    <select onChange={(event) => selectDept(event.target.value)}>
+                      <option disabled selected>Select Department</option>
+                      <option value="ADD-DEPARTMENT">--ADD NEW DEPARTMENT--</option>
+                    </select>
+                  </div>
+                  <label htmlFor="chaperone"> </label>
+                  <div>
+                    <select onChange={(event) => updateChaperoneState(event.target.value)}>
+                      <option disabled selected>Select Chaperone</option>
+                      <option value="ADD-CHAPERONE">--ADD NEW CHAPERONE--</option>
+                    </select>
+                  </div>
+                </div>
+              )
+              : (
+                <div>
+                  <div>
+                    <label htmlFor="hospital"> </label>
+                    <select name="hospital" id="hospital" onChange={(event) => updateDept(event.target.value)} required>
+                      <option value="" disabled selected>Select Hospital</option>
+                      {
+                        hospArr.map((hospitalEl, index) => (
+                          <option value={hospitalEl.hospital} key={index}>
+                            {hospitalEl.hospital}
+                          </option>
+                        ))
+                      }
+                      <option value="ADD-HOSPITAL">--ADD NEW HOSPITAL--</option>
+
+                    </select>
+                  </div>
+
+                  { deptArr === undefined
+                    ? (
+                      <div>
+                        <label htmlFor="department"> </label>
+                        <select onChange={(event) => selectDept(event.target.value)}>
+                          <option disabled selected>Select Department</option>
+                          <option value="ADD-DEPARTMENT">--ADD NEW DEPARTMENT--</option>
+                        </select>
+                      </div>
+                    )
+                    : (
+                      <div>
+                        <label htmlFor="department"> </label>
+                        <select name="department" id="department" onChange={(event) => selectDept(event.target.value)} required>
+                          <option value="" disabled selected>Select Department</option>
+                          {
+                          deptArr.map((departmentEl, index) => (
+                            <option value={departmentEl} key={index}>
+                              {departmentEl}
+                            </option>
+                          ))
+                        }
+                          <option value="ADD-DEPARTMENT">--ADD NEW DEPARTMENT--</option>
+                        </select>
+                      </div>
+                    )}
+
+                  <div>
+                    <label htmlFor="chaperone"> </label>
+                    <select name="chaperone" id="chaperone" onChange={(event) => updateChaperoneState(event.target.value)}>
+                      <option disabled selected>Select Chaperone</option>
+                      {
+                        chaperoneArr.map((chaperoneEl, index) => (
+                          <option value={`${chaperoneEl.name},${chaperoneEl.chaperoneId}`} key={index}>
+                            {chaperoneEl.name}
+                          </option>
+                        ))
+                      }
+                      <option value="ADD-CHAPERONE">--ADD NEW CHAPERONE--</option>
+                    </select>
+                  </div>
+                </div>
+              )}
+
+>>>>>>> 4ed469913036321d059220164648f4bf03c60987
             <button type="submit"> Submit</button>
           </form>
         )}
