@@ -27,7 +27,6 @@ export default function App() {
       <Router>
         <div className="main-container w-screen h-screen
           flex flex-col items-center"
-<<<<<<< HEAD
         >
 
           <div className="display">
@@ -80,33 +79,6 @@ export default function App() {
               />
 
             </Routes>
-=======
-          >
-            <div className="nav-div w-full border-solid border-black border-2">
-              <nav className="flex justify-evenly items-center">
-                <NavLink className={({ isActive }) => `${isActive && 'font-bold'} hover:underline`} to="/">Home</NavLink>
-                <NavLink className={({ isActive }) => `${isActive && 'font-bold'} hover:underline`} to="/appointments">Appointments</NavLink>
-                <NavLink className={({ isActive }) => `${isActive && 'font-bold'} hover:underline`} to="/people">People</NavLink>
-                <NavLink className={({ isActive }) => `${isActive && 'font-bold'} hover:underline`} to="/profile">Profile</NavLink>
-                <NavLink className={({ isActive }) => `${isActive && 'font-bold'} hover:underline`} to="/logout">Logout</NavLink>
-              </nav>
-            </div>
-            <div className="display">
-              <Routes>
-                <Route path="/" element={<UserAuthPage />} />
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/appointments" element={<AppointmentsPage />} />
-                <Route path="/people" element={<PeoplePage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/logout" element={<LogoutPage setAuth={setAuth} />} />
-                <Route path="/add-appt" element={<AddAppointment />} />
-                <Route path="/add-patient" element={<AddPatient />} />
-                <Route path="/add-hospital" element={<AddHospital />} />
-                <Route path="/add-department" element={<AddDepartment />} />
-                <Route path="/add-chaperone" element={<AddChaperone />} />
-              </Routes>
-            </div>
->>>>>>> 4ed469913036321d059220164648f4bf03c60987
           </div>
         </div>
       </Router>
