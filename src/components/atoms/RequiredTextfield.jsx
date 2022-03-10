@@ -9,12 +9,15 @@ import React from 'react';
 // this input has a required attribute,
 // for optional input, please use OptionalTextfield in './atoms/OptionalTextfield'
 
-function RequiredTextfield({ label, type, id }) {
+function RequiredTextfield({
+  label, type, id, onChange,
+}) {
   return (
 
-    <div className="mx-5">
+    <div className="mx-3">
       <div className="relative z-0 mb-6 w-full group">
         <input
+          required
           className="
         block
         py-2.5 px-0 w-full
@@ -28,7 +31,7 @@ function RequiredTextfield({ label, type, id }) {
           placeholder=" "
           id={id}
           name={id}
-          required
+          onChange={onChange}
         />
         <label
           className="
