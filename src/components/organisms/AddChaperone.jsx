@@ -16,21 +16,22 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import CreatableSelect from 'react-select/creatable';
-import hospitalList from '../others/hopsitalList';
 
 /*
  * ========================================================
  * ========================================================
  *
- *        Component for rendering add hospital form
+ *        Component for rendering add chaperone form
  *
  * ========================================================
  * ========================================================
  */
 export default function AddChaperone() {
-  const [hospital, setHospital] = useState('');
+  const [family, setFamily] = useState('');
   const [patientId, setPatientId] = useState('');
   const [patientName, setPatientName] = useState('');
+  const [chaperoneName, setChaperoneName] = useState('');
+  const [chaperoneId, setChaperoneId] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [patientArr, setPatientArr] = useState();
   const navigate = useNavigate();
@@ -40,35 +41,52 @@ export default function AddChaperone() {
     const data = new URLSearchParams();
     // ################################## HARDCODED FOR NOW  ##################################
     // data.append('userId', userId);
+    // data.append('userName', userName);
     data.append('userId', '62259eddb4a77ae0343f7305');
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/all-patients-list?${data.toString()}`)
       .then((result) => {
         setPatientArr(result.data.patientDetailsObj);
       });
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/all-family?${data.toString()}`)
+      .then((result) => {
+        const familyArr = result.data.data;
+        const tempArr = [];
+        for (let i = 0; i < familyArr.length; i += 1) {
+          tempArr.push({ value: `${familyArr[i].name},${familyArr[i].familyMemberId}`, label: familyArr[i].name });
+        }
+        // Show user their own name to add as a chaperone
+        // ################################## HARDCODED FOR NOW  ##################################
+        tempArr.push({ value: 'Shannon,62259eddb4a77ae0343f7305', label: 'Shannon' });
+        setFamily(tempArr);
+      });
   }, []);
 
   const updatePatient = (string) => {
-    console.log('string', string);
     const patientSplitStr = string.split(',');
     setPatientId(patientSplitStr[0]);
     setPatientName(patientSplitStr[1]);
+  };
+
+  const updateChaperone = (value) => {
+    const chaperoneSplitStr = value.split(',');
+    setChaperoneId(chaperoneSplitStr[1]);
+    setChaperoneName(chaperoneSplitStr[0]);
   };
 
   // On form submit, send data to backend to store in DB
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = {
-      hospital,
+      chaperoneName,
+      chaperoneId: chaperoneId || '',
       patientId,
     };
-    console.log('data', data);
-    axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-hospital`, data).then((response) => {
-      console.log(response.data);
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-chaperone`, data).then((response) => {
       if (response.status === 200) {
         setSuccessMessage(
           <div>
             <p>
-              {`You have added ${hospital} to ${patientName}'s profile.`}
+              {`You have added ${chaperoneName} as ${patientName}'s chaperone.`}
             </p>
           </div>,
         );
@@ -98,7 +116,7 @@ export default function AddChaperone() {
                 </select>
               </div>
 
-              <CreatableSelect isClearable options={hospitalList} onChange={(option) => setHospital(option.value)} required />
+              <CreatableSelect isClearable options={family} onChange={(option) => updateChaperone(option.value)} />
 
               <button type="submit"> Submit</button>
             </form>

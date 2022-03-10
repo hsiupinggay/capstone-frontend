@@ -48,7 +48,6 @@ export default function AddHospital() {
   }, []);
 
   const updatePatient = (string) => {
-    console.log('string', string);
     const patientSplitStr = string.split(',');
     setPatientId(patientSplitStr[0]);
     setPatientName(patientSplitStr[1]);
@@ -61,9 +60,7 @@ export default function AddHospital() {
       hospital,
       patientId,
     };
-    console.log('data', data);
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-hospital`, data).then((response) => {
-      console.log(response.data);
       if (response.status === 200) {
         setSuccessMessage(
           <div>
@@ -98,7 +95,7 @@ export default function AddHospital() {
                 </select>
               </div>
 
-              <CreatableSelect isClearable options={hospitalList} onChange={(option) => setHospital(option.value)} required />
+              <CreatableSelect isClearable options={hospitalList} onChange={(option) => setHospital(option.value)} />
 
               <button type="submit"> Submit</button>
             </form>

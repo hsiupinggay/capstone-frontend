@@ -51,7 +51,6 @@ export default function AddDepartment() {
   }, []);
 
   const updatePatient = (string) => {
-    console.log('string', string);
     const patientSplitStr = string.split(',');
     setPatientId(patientSplitStr[0]);
     setPatientName(patientSplitStr[1]);
@@ -70,9 +69,7 @@ export default function AddDepartment() {
       patientId,
       department,
     };
-    console.log('data', data);
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-department`, data).then((response) => {
-      console.log(response.data);
       if (response.status === 200) {
         setSuccessMessage(
           <div>

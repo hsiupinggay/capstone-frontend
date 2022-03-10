@@ -45,9 +45,7 @@ export default function AddPatient() {
       DOB,
       relationship,
     };
-    console.log('data', data);
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-patient`, data).then((response) => {
-      // console.log(response.data);
       if (response.status === 200) {
         setSuccessMessage(
           <div>

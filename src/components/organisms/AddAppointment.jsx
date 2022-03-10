@@ -67,7 +67,6 @@ export default function AddAppointment() {
       // Redirect to add patient component
       navigate('/add-patient');
     } else {
-      console.log('string', string);
       const patientSplitStr = string.split(',');
       setPatientId(patientSplitStr[0]);
       setPatientName(patientSplitStr[1]);
@@ -118,9 +117,7 @@ export default function AddAppointment() {
       chaperoneId,
       dateTime,
     };
-    console.log('data', data);
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-appointment`, data).then((response) => {
-      console.log(response.data);
       if (response.status === 200) {
         setSuccessMessage(
           <div>
