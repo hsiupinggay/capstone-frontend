@@ -1,3 +1,6 @@
+/* eslint-disable consistent-return */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-use-before-define */
 /*
  * ========================================================
  * ========================================================
@@ -8,6 +11,7 @@
  * ========================================================
  */
 import React, { useReducer } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 /*
@@ -39,22 +43,27 @@ export const initialState = {
 export function medicalReducer(state, action) {
   switch (action.type) {
     case LOGIN:
-      return { 
-        ...state, 
-        userId: action.payload.userDetails.userId,
-        firstName: action.payload.userDetails.name.first,
-        lastName: action.payload.userDetails.name.last,
-        email: action.payload.userDetails.email,
+      return {
+        ...state,
+        userId: action.payload.id,
+        firstName: action.payload.name.first,
+        lastName: action.payload.name.last,
+        email: action.payload.email,
       };
     case LOGOUT:
-      return { 
-        ...state, 
+      return {
+        ...state,
         userId: '',
         firstName: '',
         lastName: '',
         email: '',
         photo: '',
       };
+    case SIGNUP:
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }
@@ -72,11 +81,19 @@ export function medicalReducer(state, action) {
 // Action Types
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
+const SIGNUP = 'SIGNUP';
 
-export function loginAction(userDetails) {
+export function loginAction(payload) {
   return {
     type: LOGIN,
-    payload: userDetails,
+    payload,
+  };
+}
+
+export function signupAction(payload) {
+  return {
+    type: SIGNUP,
+    payload,
   };
 }
 
@@ -112,6 +129,16 @@ export function MedicalProvider({ children }) {
   );
 }
 
+export function useMedicalContext() {
+  const context = React.useContext(MedicalContext);
+  if (context === undefined) {
+    throw new Error(
+      'useMedicalContext must be used within a MedicalProvider',
+    );
+  }
+  return context;
+}
+
 /*
  * ========================================================
  * ========================================================
@@ -127,15 +154,53 @@ axios.defaults.withCredentials = true;
 
 const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3004';
 
-export function login(dispatch, data) {
-  return axios.post(`${REACT_APP_BACKEND_URL}/login`, data).then((result) => {
-    if (result.data !== null) {
-      localStorage.setItem('token', result.data.token);
-      dispatch((loginAction(result.data)));
-    }
-  });
+// Login function
+// Successful login is sent as data
+// Error login are caught and error messages are passed to components
+export async function login(dispatch, data) {
+  try {
+    const res = await axios.post(`${REACT_APP_BACKEND_URL}/user/login`, data);
+
+    localStorage.setItem('token', res.data.token);
+    dispatch(loginAction(res.data.payload));
+
+    return res.data;
+  } catch (error) {
+    return error.response.data;
+  }
 }
 
+// Signup function
+// Successful signup is sent as data
+// Error signup are caught and error messages are passed to components
+export async function signup(dispatch, data) {
+  try {
+    const res = await axios.post(`${REACT_APP_BACKEND_URL}/user/signup`, data);
+
+    dispatch(signupAction());
+    return res.data;
+  } catch (error) {
+    return error.response.data;
+  }
+}
+
+// Authenticate JWT
+// This fucntion does not use dispatch
+// Might consider moving out of store into helper.js
+export function authenticate() {
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert('Something went wrong, please sign in again.');
+    navigate('/');
+  }
+  const config = { headers: { authorization: `Bearer ${token}` } };
+
+  // config to be sent to backend with relevant protected requests
+  return config;
+}
+
+// Not done
 export function logout(dispatch) {
   localStorage.removeItem('token');
   dispatch((logoutAction()));

@@ -233,6 +233,6 @@ const AppointmentsPage = () => {
       </div>
     </>
   );
-};
+}
 
 export default AppointmentsPage;

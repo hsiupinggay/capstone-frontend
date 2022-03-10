@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
+import {
+  BrowserRouter as Router, Routes, Route, NavLink,
+} from 'react-router-dom';
 import axios from 'axios';
-import { MedicalProvider } from './components/others/store'
+import { MedicalProvider } from './components/others/store';
 
 // Pages import
 import AuthPage from './components/pages/AuthPage';
@@ -11,14 +14,16 @@ import AppointmentsPage from './components/pages/AppointmentsPage';
 import PeoplePage from './components/pages/PeoplePage';
 import ProfilePage from './components/pages/ProfilePage';
 import LogoutPage from './components/pages/LogoutPage';
+import AddAppointment from './components/organisms/AddAppointment';
+import UserAuthPage from './components/pages/UserAuthPage';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || `http://localhost:3004`;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3004';
 
 export default function App() {
   // state to check jwt from backend
   const [auth, setAuth] = useState(true);
 
-  // on load, check for token... if no token, 
+  // on load, check for token... if no token,
   // useEffect(() => {
   //   const token = localStorage.getItem('authToken');
   //   if (!token) return setAuth(false)/
@@ -43,32 +48,35 @@ export default function App() {
   return (
     <MedicalProvider>
       <Router>
-        { auth  ?
-          <div className="main-container w-screen h-screen 
-          flex flex-col items-center">
+        { auth ? (
+          <div className="main-container w-screen h-screen
+          flex flex-col items-center"
+          >
             <div className="nav-div w-full border-solid border-black border-2">
               <nav className="flex justify-evenly items-center">
-                <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/">Home</NavLink>
-                <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/appointments">Appointments</NavLink>
-                <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/people">People</NavLink>
-                <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/profile">Profile</NavLink>
-                <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/logout">Logout</NavLink>
+                <NavLink className={({ isActive }) => `${isActive && 'font-bold'} hover:underline`} to="/">Home</NavLink>
+                <NavLink className={({ isActive }) => `${isActive && 'font-bold'} hover:underline`} to="/appointments">Appointments</NavLink>
+                <NavLink className={({ isActive }) => `${isActive && 'font-bold'} hover:underline`} to="/people">People</NavLink>
+                <NavLink className={({ isActive }) => `${isActive && 'font-bold'} hover:underline`} to="/profile">Profile</NavLink>
+                <NavLink className={({ isActive }) => `${isActive && 'font-bold'} hover:underline`} to="/logout">Logout</NavLink>
               </nav>
             </div>
             <div className="display">
               <Routes>
-                <Route path="/" element={<HomePage />} />
+                <Route path="/" element={<UserAuthPage />} />
+                <Route path="/home" element={<HomePage />} />
                 <Route path="/appointments" element={<AppointmentsPage />} />
                 <Route path="/people" element={<PeoplePage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/logout" element={<LogoutPage setAuth={setAuth} />} />
+                <Route path="/add-appt" element={<AddAppointment />} />
               </Routes>
             </div>
-          </div> 
+          </div>
+        )
           // Log In page displays if there's no auth token
-        : <AuthPage /> }
+          : <AuthPage /> }
       </Router>
     </MedicalProvider>
   );
 }
-
