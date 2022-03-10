@@ -11,7 +11,6 @@
  * ========================================================
  * ========================================================
  */
->>>>>>> 4ed469913036321d059220164648f4bf03c60987
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -156,109 +155,6 @@ export default function AddAppointment() {
         : (
           <form onSubmit={handleSubmit}>
 
-<<<<<<< HEAD
-            <div>
-              <label htmlFor="dateTime" name="dateTime" />
-              <input type="datetime-local" id="dateTime" name="dateTime" onChange={(event) => setDateTime(event.target.value)} required />
-            </div>
-
-            <div>
-              <label htmlFor="patient"> </label>
-              <select name="patient" id="patient" onChange={(event) => updateHosChapDropdowns(event.target.value)} required>
-                <option value="" disabled selected>Select Patient</option>
-                {
-            patientArr.map((patient, index) => (
-              <option value={`${patient._id},${`${patient.identity.name.first} ${patient.identity.name.last}`}`} key={index}>
-                {`${patient.identity.name.first} ${patient.identity.name.last}`}
-              </option>
-            ))
-          }
-              </select>
-            </div>
-
-            {
-        hospArr.length === 0
-          ? (
-            <div>
-              <label htmlFor="hospital"> </label>
-              <select>
-                <option disabled selected>Select Hospital</option>
-              </select>
-              <label htmlFor="department"> </label>
-              <div>
-                <select>
-                  <option disabled selected>Select Department</option>
-                </select>
-              </div>
-              <label htmlFor="chaperone"> </label>
-              <div>
-                <select>
-                  <option disabled selected>Select Chaperone</option>
-                </select>
-              </div>
-            </div>
-          )
-          : (
-            <div>
-              <div>
-                <label htmlFor="hospital"> </label>
-                <select name="hospital" id="hospital" onChange={(event) => updateDept(event.target.value)} required>
-                  <option value="" disabled selected>Select Hospital</option>
-                  {
-                hospArr.map((hospital, index) => (
-                  <option value={hospital.hospital} key={index}>
-                    {hospital.hospital}
-                  </option>
-                ))
-              }
-                </select>
-              </div>
-
-              {
-            deptArr.length === 0
-              ? (
-                <div>
-                  <label htmlFor="department"> </label>
-                  <select>
-                    <option disabled selected>Select Department</option>
-                  </select>
-                </div>
-              )
-              : (
-                <div>
-                  <label htmlFor="department"> </label>
-                  <select name="department" id="department" onChange={(event) => setDepartment(event.target.value)} required>
-                    <option value="" disabled selected>Select Department</option>
-                    {
-                  deptArr.map((department, index) => (
-                    <option value={department} key={index}>
-                      {department}
-                    </option>
-                  ))
-                }
-                  </select>
-                </div>
-              )
-            }
-
-              <div>
-                <label htmlFor="chaperone"> </label>
-                <select name="chaperone" id="chaperone" onChange={(event) => updateChaperoneState(event.target.value)}>
-                  <option disabled selected>Select Chaperone</option>
-                  {
-                chaperoneArr.map((chaperone, index) => (
-                  <option value={`${chaperone.name},${chaperone.chaperoneId}`} key={index}>
-                    {chaperone.name}
-                  </option>
-                ))
-              }
-                </select>
-              </div>
-            </div>
-          )
-}
-
-=======
             <div>
               <label htmlFor="dateTime" name="dateTime" />
               <input type="datetime-local" id="dateTime" name="dateTime" onChange={(event) => setDateTime(event.target.value)} required />
@@ -365,7 +261,6 @@ export default function AddAppointment() {
                 </div>
               )}
 
->>>>>>> 4ed469913036321d059220164648f4bf03c60987
             <button type="submit"> Submit</button>
           </form>
         )}

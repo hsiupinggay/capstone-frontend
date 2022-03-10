@@ -37,6 +37,26 @@ function Navbar() {
     name: 'Profile',
   },
   {
+    path: '/nav/add-appt',
+    name: 'Add Appt',
+  },
+  {
+    path: '/nav/add-patient',
+    name: 'Add Patient',
+  },
+  {
+    path: '/nav/add-hospital',
+    name: 'Add Hospital',
+  },
+  {
+    path: '/nav/add-department',
+    name: 'Add Dept',
+  },
+  {
+    path: '/nav/add-chaperone',
+    name: 'Add Chaperone',
+  },
+  {
     path: '/logout',
     name: 'Logout',
   }];

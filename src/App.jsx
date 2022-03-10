@@ -70,6 +70,10 @@ export default function App() {
                   path="add-appt"
                   element={<ProtectedRoute><AddAppointment /></ProtectedRoute>}
                 />
+                <Route path="add-patient" element={<ProtectedRoute><AddPatient /></ProtectedRoute>} />
+                <Route path="add-hospital" element={<ProtectedRoute><AddHospital /></ProtectedRoute>} />
+                <Route path="add-department" element={<ProtectedRoute><AddDepartment /></ProtectedRoute>} />
+                <Route path="add-chaperone" element={<ProtectedRoute><AddChaperone /></ProtectedRoute>} />
 
               </Route>
               <Route
