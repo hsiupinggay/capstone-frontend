@@ -187,7 +187,7 @@ export async function signup(dispatch, data) {
 // Authenticate JWT
 // This fucntion does not use dispatch
 // Might consider moving out of store into helper.js
-export function authenticate() {
+export async function authenticate() {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   if (!token) {
@@ -195,9 +195,15 @@ export function authenticate() {
     navigate('/');
   }
   const config = { headers: { authorization: `Bearer ${token}` } };
-
-  // config to be sent to backend with relevant protected requests
-  return config;
+  try {
+    const res = await axios.get(`${REACT_APP_BACKEND_URL}/user/authenticate`, config);
+    if (res.data.verified) {
+      return res.data.verified;
+    }
+  } catch (err) {
+    console.log(err);
+    navigate('/');
+  }
 }
 
 // Not done

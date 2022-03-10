@@ -51,7 +51,7 @@ function Login() {
       const res = await login(dispatch, data);
 
       if (res.loginSuccess) {
-        navigate('/home');
+        navigate('/nav/home');
       } else if (!res.loginSuccess) {
         setError(true);
         setErrorMessage(res.error);
