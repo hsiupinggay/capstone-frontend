@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-shadow */
-/* eslint-disable no-underscore-dangle */
-=======
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -22,13 +16,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-<<<<<<< HEAD
-export default function AddAppointment() {
-  const [patientArr, setPatientArr] = useState([]);
-  const [hospArr, setHospArr] = useState([]);
-  const [deptArr, setDeptArr] = useState([]);
-  const [chaperoneArr, setChaperoneArr] = useState([]);
-=======
 /*
  * ========================================================
  * ========================================================
@@ -43,7 +30,6 @@ export default function AddAppointment() {
   const [hospArr, setHospArr] = useState();
   const [deptArr, setDeptArr] = useState();
   const [chaperoneArr, setChaperoneArr] = useState();
->>>>>>> 4ed469913036321d059220164648f4bf03c60987
   const [patientId, setPatientId] = useState('');
   const [patientName, setPatientName] = useState('');
   const [hospital, setHospital] = useState('');
@@ -53,11 +39,8 @@ export default function AddAppointment() {
   const [dateTime, setDateTime] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-<<<<<<< HEAD
-=======
   const navigate = useNavigate();
 
->>>>>>> 4ed469913036321d059220164648f4bf03c60987
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
     const data = new URLSearchParams();
@@ -81,16 +64,6 @@ export default function AddAppointment() {
 
   // When user has selected a patient, find related hospitals and chaperones
   const updateHosChapDropdowns = (string) => {
-<<<<<<< HEAD
-    console.log('string', string);
-    const patientSplitStr = string.split(',');
-    setPatientId(patientSplitStr[0]);
-    setPatientName(patientSplitStr[1]);
-    for (let i = 0; i < patientArr.length; i += 1) {
-      if (patientArr[i]._id === patientSplitStr[0]) {
-        setChaperoneArr(patientArr[i].visitDetails.chaperones);
-        setHospArr(patientArr[i].visitDetails.clinics);
-=======
     if (string === 'ADD-PATIENT') {
       // Redirect to add patient component
       navigate('/add-patient');
@@ -103,19 +76,11 @@ export default function AddAppointment() {
           setChaperoneArr(patientArr[i].visitDetails.chaperones);
           setHospArr(patientArr[i].visitDetails.clinics);
         }
->>>>>>> 4ed469913036321d059220164648f4bf03c60987
       }
     }
   };
 
   // When user has selected a hospital, find related departments
-<<<<<<< HEAD
-  const updateDept = (hospital) => {
-    setHospital(hospital);
-    for (let i = 0; i < hospArr.length; i += 1) {
-      if (hospArr[i].hospital === hospital) {
-        setDeptArr(hospArr[i].departments);
-=======
   const updateDept = (hospitalInput) => {
     if (hospitalInput === 'ADD-HOSPITAL') {
       // Redirect to add hospital component
@@ -126,18 +91,12 @@ export default function AddAppointment() {
         if (hospArr[i].hospital === hospitalInput) {
           setDeptArr(hospArr[i].departments);
         }
->>>>>>> 4ed469913036321d059220164648f4bf03c60987
       }
     }
   };
 
   // When user selects a chaperone, save name and id in useState
   const updateChaperoneState = (value) => {
-<<<<<<< HEAD
-    const chaperoneSplitStr = value.split(',');
-    setChaperone(chaperoneSplitStr[0]);
-    setChaperoneId(chaperoneSplitStr[1]);
-=======
     if (value === 'ADD-CHAPERONE') {
       // Redirect to add chaperone component
       navigate('/add-chaperone');
@@ -146,7 +105,6 @@ export default function AddAppointment() {
       setChaperone(chaperoneSplitStr[0]);
       setChaperoneId(chaperoneSplitStr[1]);
     }
->>>>>>> 4ed469913036321d059220164648f4bf03c60987
   };
 
   // On form submit, send data to backend to store in DB
@@ -160,13 +118,7 @@ export default function AddAppointment() {
       chaperoneId,
       dateTime,
     };
-<<<<<<< HEAD
-    console.log('data', data);
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-appointment`, data).then((response) => {
-      console.log(response.data);
-=======
-    axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-appointment`, data).then((response) => {
->>>>>>> 4ed469913036321d059220164648f4bf03c60987
       if (response.status === 200) {
         setSuccessMessage(
           <div>
@@ -199,11 +151,7 @@ export default function AddAppointment() {
 
   return (
     <div>
-<<<<<<< HEAD
-      { patientArr.length === 0
-=======
       { patientArr === undefined
->>>>>>> 4ed469913036321d059220164648f4bf03c60987
         ? <div />
         : (
           <form onSubmit={handleSubmit}>
