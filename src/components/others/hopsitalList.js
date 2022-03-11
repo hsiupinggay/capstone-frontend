@@ -37,7 +37,6 @@ export default [
   { value: 'Sengkang Polyclinic', label: 'Sengkang Polyclinic' },
   { value: 'Singapore General Hospital', label: 'Singapore General Hospital' },
   { value: 'St Andrew\'s Community Hospital', label: 'St Andrew\'s Community Hospital' },
-  { value: 'St Andrew\'s Community Hospital', label: 'St Andrew\'s Community Hospital' },
   { value: 'St Luke\'s Hospital', label: 'St Luke\'s Hospital' },
   { value: 'Tampines Polyclinic', label: 'Tampines Polyclinic' },
   { value: 'Tan Tock Seng Hospital', label: 'Tan Tock Seng Hospital' },

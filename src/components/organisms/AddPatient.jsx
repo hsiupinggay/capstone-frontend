@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable max-len */
 /* eslint-disable no-console */
@@ -13,6 +14,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { TextField } from '@mui/material';
+import DatePicker from '@mui/lab/DatePicker';
+import DateAdapter from '@mui/lab/AdapterLuxon';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import moment from 'moment';
+import Button from '@mui/material/Button';
 
 /*
  * ========================================================
@@ -28,7 +35,7 @@ export default function AddPatient() {
   const [lastName, setLastName] = useState('');
   const [relationship, setRelationship] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [DOB, setDOB] = useState('');
+  const [DOB, setDOB] = useState(null);
   const navigate = useNavigate();
 
   // ################################## HARDCODED FOR NOW  ##################################
@@ -59,16 +66,32 @@ export default function AddPatient() {
   };
   return (
     <div>
-      <button type="button" onClick={() => navigate('/add-appt')}>Back</button>
+      <Button variant="contained" onClick={() => navigate('/nav/add-appt')}>Back</Button>
+      <Button variant="contained" disabled>+ Patient</Button>
+      <Button variant="contained" onClick={() => navigate('/nav/add-hospital')}>+ Hospital</Button>
+      <Button variant="contained" onClick={() => navigate('/nav/add-department')}>+ Department</Button>
+      <Button variant="contained" onClick={() => navigate('/nav/add-chaperone')}>+ Chaperone</Button>
+
+      <br />
+      <br />
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="First Name" onChange={(e) => setFirstName(e.target.value)} required />
-        <input type="text" placeholder="Last Name" onChange={(e) => setLastName(e.target.value)} required />
-        <input type="text" placeholder="Relationship" onChange={(e) => setRelationship(e.target.value)} required />
-        <div>
-          <label htmlFor="date" name="date">DOB</label>
-          <input type="date" id="date" name="date" onChange={(event) => setDOB(event.target.value)} required />
-        </div>
-        <button type="submit"> Submit</button>
+        <TextField label="First Name" onChange={(e) => setFirstName(e.target.value)} required />
+        <TextField label="Last Name" onChange={(e) => setLastName(e.target.value)} required />
+        <TextField label="Relationship" onChange={(e) => setRelationship(e.target.value)} required />
+
+        <LocalizationProvider dateAdapter={DateAdapter}>
+          <DatePicker
+            label="Date Of Birth"
+            value={DOB}
+            onChange={(newValue) => {
+              setDOB(moment(`${newValue.c.year}-${newValue.c.month}-${newValue.c.day}`).format('YYYY-MM-DD'));
+            }}
+            renderInput={(params) => <TextField {...params} required />}
+          />
+        </LocalizationProvider>
+        <br />
+        <br />
+        <Button variant="contained" type="submit">Submit</Button>
       </form>
       <div>
         {
