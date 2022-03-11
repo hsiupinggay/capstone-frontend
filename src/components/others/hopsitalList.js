@@ -1,3 +1,12 @@
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *      List of hospitals and polyclinics in Singapore
+ *
+ * ========================================================
+ * ========================================================
+ */
 export default [
   { value: 'Alexandra Hospital', label: 'Alexandra Hospital' },
   { value: 'Ang Mo Kio - Thye Hua Kwan Hospital', label: 'Ang Mo Kio - Thye Hua Kwan Hospital' },

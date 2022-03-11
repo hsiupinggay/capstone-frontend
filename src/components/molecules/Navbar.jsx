@@ -1,10 +1,29 @@
 /* eslint-disable max-len */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useRef, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { MenuIcon } from '@heroicons/react/solid';
 import { useMedicalContext } from '../others/store';
-// Navbar Component. Renders after user logs in and is authenticated
-function Navbar() {
+
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                      Navbar Component
+ *     Renders after user logs in and is authenticated
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function Navbar() {
   const [toggle, setToggle] = useState('hidden');
   const navMenu = useRef();
   const { store } = useMedicalContext();
@@ -94,5 +113,3 @@ function Navbar() {
     </div>
   );
 }
-
-export default Navbar;

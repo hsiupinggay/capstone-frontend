@@ -1,8 +1,26 @@
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useState, useRef } from 'react';
 import Login from '../molecules/LoginForm';
 import Signup from '../molecules/SignupForm';
 
-function UserAuthTab() {
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                   UserAuthTab Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function UserAuthTab() {
   // States for aria label and conditional rendering of login/signup components
   const [loginSelected, setLoginSelected] = useState(true);
   const [signupSelected, setSignupSelected] = useState(false);
@@ -113,5 +131,3 @@ function UserAuthTab() {
     </div>
   );
 }
-
-export default UserAuthTab;

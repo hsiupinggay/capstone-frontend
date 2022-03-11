@@ -1,9 +1,26 @@
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useEffect } from 'react';
 import axios from 'axios';
-
 import AppointmentCalendar from '../organisms/AppointmentCalendar';
 
-function AppointmentsPage() {
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                AppointmentsPage Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function AppointmentsPage() {
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
     const data = new URLSearchParams();
@@ -20,5 +37,3 @@ function AppointmentsPage() {
     <AppointmentCalendar />
   );
 }
-
-export default AppointmentsPage;
