@@ -1,9 +1,27 @@
 /* eslint-disable react/prop-types */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React from 'react';
 
 // Blue button with type "submit"
 
-function SubmitButton({ label, onClick }) {
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *              SubmitButton Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function SubmitButton({ label, onClick }) {
   return (
     <button
       className="
@@ -21,5 +39,3 @@ function SubmitButton({ label, onClick }) {
 
   );
 }
-
-export default SubmitButton;

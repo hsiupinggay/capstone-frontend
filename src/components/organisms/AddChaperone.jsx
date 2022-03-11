@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -15,7 +16,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import CreatableSelect from 'react-select/creatable';
+import TextField from '@mui/material/TextField';
+import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import Button from '@mui/material/Button';
 
 /*
  * ========================================================
@@ -35,6 +38,7 @@ export default function AddChaperone() {
   const [successMessage, setSuccessMessage] = useState('');
   const [patientArr, setPatientArr] = useState();
   const navigate = useNavigate();
+  const filter = createFilterOptions();
 
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
@@ -45,6 +49,7 @@ export default function AddChaperone() {
     data.append('userId', '62259eddb4a77ae0343f7305');
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/all-patients-list?${data.toString()}`)
       .then((result) => {
+        console.log(result.data.patientDetailsObj);
         setPatientArr(result.data.patientDetailsObj);
       });
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/all-family?${data.toString()}`)
@@ -67,8 +72,9 @@ export default function AddChaperone() {
     setPatientName(patientSplitStr[1]);
   };
 
-  const updateChaperone = (value) => {
-    const chaperoneSplitStr = value.split(',');
+  const updateChaperone = (optionValue) => {
+    console.log(optionValue);
+    const chaperoneSplitStr = optionValue.split(',');
     setChaperoneId(chaperoneSplitStr[1]);
     setChaperoneName(chaperoneSplitStr[0]);
   };
@@ -93,32 +99,58 @@ export default function AddChaperone() {
       }
     });
   };
+
   return (
     <div>
       { patientArr === undefined
         ? <div />
         : (
           <div>
-            <button type="button" onClick={() => navigate('/add-appt')}>Back</button>
+            <Button variant="contained" onClick={() => navigate('/nav/add-appt')}>Back</Button>
+            <Button variant="contained" onClick={() => navigate('/nav/add-patient')}>+ Patient</Button>
+            <Button variant="contained" onClick={() => navigate('/nav/add-hospital')}>+ Hospital</Button>
+            <Button variant="contained" onClick={() => navigate('/nav/add-department')}>+ Department</Button>
+            <Button variant="contained" disabled>+ Chaperone</Button>
+            <br />
+            <br />
             <form onSubmit={handleSubmit}>
 
-              <div>
-                <label htmlFor="patient"> </label>
-                <select name="patient" id="patient" onChange={(event) => updatePatient(event.target.value)} required>
-                  <option value="" disabled selected>Select Patient</option>
-                  {
-                    patientArr.map((patient, index) => (
-                      <option value={`${patient._id},${`${patient.identity.name.first} ${patient.identity.name.last}`}`} key={index}>
-                        {`${patient.identity.name.first} ${patient.identity.name.last}`}
-                      </option>
-                    ))
+              <Autocomplete
+                options={patientArr}
+                getOptionLabel={(option) => `${option.identity.name.first} ${option.identity.name.last}`}
+                renderInput={(params) => <TextField {...params} label="Select Patient" required />}
+                onChange={(event, newValue) => { updatePatient(`${newValue._id},${`${newValue.identity.name.first} ${newValue.identity.name.last}`}`); }}
+                selectOnFocus
+                clearOnBlur
+                handleHomeEndKeys
+                sx={{ width: 250 }}
+              />
+
+              <Autocomplete
+                options={family}
+                onChange={(event, newValue) => { updateChaperone(newValue.value); }}
+                renderInput={(params) => <TextField {...params} label="Add Chaperone" required />}
+                filterOptions={(options, params) => {
+                  const filtered = filter(options, params);
+                  const { inputValue } = params;
+                  // Suggest the creation of a new value
+                  const isExisting = options.some((option) => inputValue === option.label);
+                  if (inputValue !== '' && !isExisting) {
+                    filtered.push({
+                      inputValue,
+                      label: `Add "${inputValue}"`,
+                      value: inputValue,
+                    });
                   }
-                </select>
-              </div>
-
-              <CreatableSelect isClearable options={family} onChange={(option) => updateChaperone(option.value)} />
-
-              <button type="submit"> Submit</button>
+                  return filtered;
+                }}
+                selectOnFocus
+                clearOnBlur
+                handleHomeEndKeys
+                sx={{ width: 250 }}
+              />
+              <br />
+              <Button variant="contained" type="submit">Submit</Button>
             </form>
             <div>
               {successMessage === ''

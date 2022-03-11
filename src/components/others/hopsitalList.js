@@ -1,3 +1,12 @@
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *      List of hospitals and polyclinics in Singapore
+ *
+ * ========================================================
+ * ========================================================
+ */
 export default [
   { value: 'Alexandra Hospital', label: 'Alexandra Hospital' },
   { value: 'Ang Mo Kio - Thye Hua Kwan Hospital', label: 'Ang Mo Kio - Thye Hua Kwan Hospital' },
@@ -36,7 +45,6 @@ export default [
   { value: 'Sengkang General Hospital', label: 'Sengkang General Hospital' },
   { value: 'Sengkang Polyclinic', label: 'Sengkang Polyclinic' },
   { value: 'Singapore General Hospital', label: 'Singapore General Hospital' },
-  { value: 'St Andrew\'s Community Hospital', label: 'St Andrew\'s Community Hospital' },
   { value: 'St Andrew\'s Community Hospital', label: 'St Andrew\'s Community Hospital' },
   { value: 'St Luke\'s Hospital', label: 'St Luke\'s Hospital' },
   { value: 'Tampines Polyclinic', label: 'Tampines Polyclinic' },

@@ -1,3 +1,12 @@
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import axios from 'axios';
 import React from 'react';
 import SubmitButton from '../atoms/SubmitButton';
@@ -5,7 +14,16 @@ import { authenticate } from '../others/store';
 
 const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3004';
 
-function HomePage() {
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                      HomePage Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function HomePage() {
   const config = authenticate();
   const handleClick = async (e) => {
     e.preventDefault();
@@ -24,5 +42,3 @@ function HomePage() {
     </div>
   );
 }
-
-export default HomePage;
