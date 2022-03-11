@@ -35,8 +35,6 @@ function AppointmentCalendar() {
   const isToday = (date) => {
     const today = new Date();
     const d = new Date(year, month, date);
-    console.log('today', today);
-    console.log('d', d);
     return today.toDateString() === d.toDateString();
   };
 
