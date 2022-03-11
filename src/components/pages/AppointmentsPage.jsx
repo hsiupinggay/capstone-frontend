@@ -197,15 +197,12 @@ function AppointmentsPage() {
                   </div>
                   {/* Within non-empty days, check for event and print event */}
                   <div className="overflow-y-auto mt-1 h-20">
-                    {events.filter((e) =>
-                      new Date(e.event_date).toDateString() ===
-                      new Date(year, month, date).toDateString()
-                      ).map((e) => (
-                        <div key={e.event_title} className={classNames(eventClass(e.event_theme), "px-2 py-1 rounded-lg mt-1 overflow-hidden border")}>
+                    {events.filter((e) => new Date(e.event_date).toDateString()
+                      === new Date(year, month, date).toDateString()).map((e) => (
+                        <div key={e.event_title} className={classNames(eventClass(e.event_theme), 'px-2 py-1 rounded-lg mt-1 overflow-hidden border')}>
                           <p className="text-sm truncate leading-tight">{e.event_title}</p>
                         </div>
-                      ))
-                    }
+                    ))}
                   </div>
                 </div>
               ))}
