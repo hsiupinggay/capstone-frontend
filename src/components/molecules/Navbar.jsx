@@ -1,98 +1,170 @@
 /* eslint-disable max-len */
-import React, { useRef, useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
-import { MenuIcon } from '@heroicons/react/solid';
-import { useMedicalContext } from '../others/store';
+import React, { useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import {
+  Box, AppBar, Toolbar, IconButton, Typography, Menu, Container, Button, Tooltip, MenuItem,
+} from '@mui/material';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import { useMedicalContext, logout } from '../others/store';
 // Navbar Component. Renders after user logs in and is authenticated
-function Navbar() {
-  const [toggle, setToggle] = useState('hidden');
-  const navMenu = useRef();
-  const { store } = useMedicalContext();
-  const { lastName } = store;
 
-  // Toggle menu button that appears for menu icon
-  const handleClick = () => {
-    if (toggle === 'hidden') {
-      setToggle('flex absolute');
-    } else if (toggle === 'flex absolute') {
-      setToggle('hidden');
-    }
-  };
+const pathArray = [{
+  path: '/home',
+  name: 'Home',
+}, {
+  path: '/appointments',
+  name: 'Appointments',
+},
+{
+  path: '/add-appt',
+  name: 'Add Appt',
+},
+];
 
-  // Add/edit routes that should appear in nav bar in pathArray
-  // PathArray gets mapped into navLink component
-  const pathArray = [{
-    path: '/nav/home',
-    name: 'Home',
-  }, {
-    path: '/nav/appointments',
-    name: 'Appointments',
+const profileArray = [
+  {
+    path: '/contacts',
+    name: 'Contacts',
   },
   {
-    path: '/nav/people',
-    name: 'People',
-  },
-  {
-    path: '/nav/profile',
+    path: '/profile',
     name: 'Profile',
-  },
-  {
-    path: '/nav/add-appt',
-    name: 'Add Appt',
-  },
-  {
-    path: '/nav/add-patient',
-    name: 'Add Patient',
-  },
-  {
-    path: '/nav/add-hospital',
-    name: 'Add Hospital',
-  },
-  {
-    path: '/nav/add-department',
-    name: 'Add Dept',
-  },
-  {
-    path: '/nav/add-chaperone',
-    name: 'Add Chaperone',
-  },
-  {
-    path: '/logout',
-    name: 'Logout',
   }];
 
+export default function NavBar() {
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const navigate = useNavigate();
+
+  const { dispatch } = useMedicalContext();
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    logout(dispatch);
+    navigate('/auth');
+  };
+
   return (
-    <div className="main-container w-screen h-screen
-          flex flex-col items-center "
-    >
-      <div className="nav-div w-full my-3">
-        <div className="flex flex-row items-center justify-between">
-          <h1 className="text-sm font-semibold">{lastName}</h1>
-          <MenuIcon className="h-5 w-5 text-gray-900 md:hidden" onClick={handleClick} />
-          <nav
-            ref={navMenu}
-            className={`${toggle} flex-col z-40 md:flex md:flex-row md:justify-evenly items-center`}
-          >
+    <div>
+      <AppBar position="absolute">
+        <Container fullWidth>
+          <Toolbar disableGutters>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+            >
+              MedicalApp
+            </Typography>
 
-            {pathArray.map((e) => (
-              <NavLink
-                key={e.name}
-                className={({ isActive }) => `${isActive && 'font-bold'} 
-        px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline`}
-                to={e.path}
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
               >
-                {e.name}
+                <MenuRoundedIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                {pathArray.map((e) => (
+                  <MenuItem key={e.name} onClick={() => { navigate(e.path); }}>
+                    <Typography textAlign="center">{e.name}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+            >
+              MedicalApp
+            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              {pathArray.map((e) => (
+                <Button
+                  key={e.name}
+                  onClick={() => { navigate(e.path); }}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {e.name}
+                </Button>
+              ))}
+            </Box>
 
-              </NavLink>
-            ))}
-
-          </nav>
-        </div>
-
-      </div>
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <AccountCircle />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {profileArray.map((e) => (
+                  <MenuItem key={e.name} onClick={() => { navigate(e.path); }}>
+                    <Typography textAlign="center">{e.name}</Typography>
+                  </MenuItem>
+                ))}
+                <MenuItem key="logout" onClick={handleLogout}>
+                  <Typography textAlign="center">Log Out</Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
       <Outlet />
     </div>
   );
 }
-
-export default Navbar;

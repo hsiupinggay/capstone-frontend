@@ -3,13 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { authenticate } from '../others/store';
 
 function ProtectedRoute({ children }) {
+  // const { dispatch } = useMedicalContext();
   const navigate = useNavigate();
-  const verify = authenticate();
-  if (!verify) {
-    console.log('<== illegal route ==>');
-    return navigate('/');
-  }
-  console.log('<== verified route ==>');
+  authenticate().then(
+    (res) => {
+      console.log('<== verified route ==>', res);
+    },
+  ).catch((err) => {
+    console.log('<== illegal route ==>', err);
+    return navigate('/auth');
+  });
 
   return children;
 }

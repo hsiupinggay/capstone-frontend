@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import RequiredTextfield from '../atoms/RequiredTextfield';
 import { signup, useMedicalContext } from '../others/store';
-import validateEmail from '../others/helper';
+import { validateEmail } from '../others/helper';
 import HelperText from '../atoms/HelperText';
 import Button from '../atoms/Button';
 import SubmitButton from '../atoms/SubmitButton';
