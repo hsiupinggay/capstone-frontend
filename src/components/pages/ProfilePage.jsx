@@ -27,8 +27,7 @@ import ProfileAvatar from '../molecules/ProfileAvatar';
  * ========================================================
  */
 
-
-function ProfilePage() {
+export default function ProfilePage() {
   const [uploadedPhoto, setUploadedPhoto] = useState();
   const [currentPhoto, setCurrentPhoto] = useState(null);
   const [caption, setCaption] = useState('No files uploaded');

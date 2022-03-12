@@ -27,7 +27,6 @@ import { useMedicalContext, logout } from '../others/store';
  * ========================================================
  */
 
-
 const pathArray = [{
   path: '/home',
   name: 'Home',

@@ -16,11 +16,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import DateTimePicker from '@mui/lab/DateTimePicker';
+import { Autocomplete, TextField } from '@mui/material';
+import { DateTimePicker, LocalizationProvider } from '@mui/lab';
 import DateAdapter from '@mui/lab/AdapterLuxon';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import moment from 'moment';
 import Button from '@mui/material/Button';
 
