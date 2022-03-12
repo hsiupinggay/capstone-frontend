@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -15,7 +16,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import CreatableSelect from 'react-select/creatable';
+import TextField from '@mui/material/TextField';
+import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import Button from '@mui/material/Button';
 import departmentList from '../others/departmentList';
 
 /*
@@ -35,7 +38,7 @@ export default function AddDepartment() {
   const [patientArr, setPatientArr] = useState();
   const [hospArr, setHospArr] = useState();
   const [department, setDepartment] = useState('');
-
+  const filter = createFilterOptions();
   const navigate = useNavigate();
 
   // When component renders, retrieve all patient data related to user
@@ -88,54 +91,83 @@ export default function AddDepartment() {
         ? <div />
         : (
           <div>
-            <button type="button" onClick={() => navigate('/add-appt')}>Back</button>
+            <Button variant="contained" onClick={() => navigate('/nav/add-appt')}>Back</Button>
+            <Button variant="contained" onClick={() => navigate('/nav/add-patient')}>+ Patient</Button>
+            <Button variant="contained" onClick={() => navigate('/nav/add-hospital')}>+ Hospital</Button>
+            <Button variant="contained" disabled>+ Department</Button>
+            <Button variant="contained" onClick={() => navigate('/nav/add-chaperone')}>+ Chaperone</Button>
+            {' '}
+            <br />
+            <br />
             <form onSubmit={handleSubmit}>
 
-              <div>
-                <label htmlFor="patient"> </label>
-                <select name="patient" id="patient" onChange={(event) => updatePatient(event.target.value)} required>
-                  <option value="" disabled selected>Select Patient</option>
-                  {
-                    patientArr.map((patient, index) => (
-                      <option value={`${patient._id},${`${patient.identity.name.first} ${patient.identity.name.last}`}`} key={index}>
-                        {`${patient.identity.name.first} ${patient.identity.name.last}`}
-                      </option>
-                    ))
-                  }
-                </select>
-              </div>
+              <Autocomplete
+                options={patientArr}
+                getOptionLabel={(option) => `${option.identity.name.first} ${option.identity.name.last}`}
+                renderInput={(params) => <TextField {...params} label="Select Patient" required />}
+                onChange={(event, newValue) => { updatePatient(`${newValue._id},${`${newValue.identity.name.first} ${newValue.identity.name.last}`}`); }}
+                selectOnFocus
+                clearOnBlur
+                handleHomeEndKeys
+                sx={{ width: 250 }}
+              />
 
               { hospArr === undefined
                 ? (
                   <div>
-                    <label htmlFor="hospital"> </label>
-                    <select onChange={(event) => setHospital(event.target.value)}>
-                      <option disabled selected>Select Hospital</option>
-                    </select>
+                    <Autocomplete
+                      options={[]}
+                      renderInput={(params) => <TextField {...params} label="Select Hospital" required />}
+                      selectOnFocus
+                      clearOnBlur
+                      handleHomeEndKeys
+                      sx={{ width: 250 }}
+                    />
                   </div>
                 )
                 : (
                   <div>
                     <div>
-                      <label htmlFor="hospital"> </label>
-                      <select name="hospital" id="hospital" onChange={(event) => setHospital(event.target.value)} required>
-                        <option value="" disabled selected>Select Hospital</option>
-                        {
-                        hospArr.map((hospitalEl, index) => (
-                          <option value={hospitalEl.hospital} key={index}>
-                            {hospitalEl.hospital}
-                          </option>
-                        ))
-                      }
-                      </select>
+                      <Autocomplete
+                        options={hospArr}
+                        getOptionLabel={(option) => option.hospital}
+                        renderInput={(params) => <TextField {...params} label="Select Hospital" required />}
+                        onChange={(event, newValue) => { setHospital(newValue.hospital); }}
+                        selectOnFocus
+                        clearOnBlur
+                        handleHomeEndKeys
+                        sx={{ width: 250 }}
+                      />
                     </div>
 
                   </div>
                 )}
 
-              <CreatableSelect isClearable options={departmentList} onChange={(option) => setDepartment(option.value)} required />
-
-              <button type="submit"> Submit</button>
+              <Autocomplete
+                options={departmentList}
+                onChange={(event, newValue) => { setDepartment(newValue.value); }}
+                renderInput={(params) => <TextField {...params} label="Add Department" required />}
+                filterOptions={(options, params) => {
+                  const filtered = filter(options, params);
+                  const { inputValue } = params;
+                  // Suggest the creation of a new value
+                  const isExisting = options.some((option) => inputValue === option.label);
+                  if (inputValue !== '' && !isExisting) {
+                    filtered.push({
+                      inputValue,
+                      label: `Add "${inputValue}"`,
+                      value: inputValue,
+                    });
+                  }
+                  return filtered;
+                }}
+                selectOnFocus
+                clearOnBlur
+                handleHomeEndKeys
+                sx={{ width: 250 }}
+              />
+              <br />
+              <Button variant="contained" type="submit">Submit</Button>
             </form>
             <div>
               {successMessage === ''

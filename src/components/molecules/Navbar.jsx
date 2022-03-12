@@ -1,4 +1,13 @@
 /* eslint-disable max-len */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import {
@@ -7,7 +16,17 @@ import {
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { useMedicalContext, logout } from '../others/store';
-// Navbar Component. Renders after user logs in and is authenticated
+
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                    Navbar Component
+ *       Renders after user logs in and is authenticated
+ * ========================================================
+ * ========================================================
+ */
+
 
 const pathArray = [{
   path: '/home',

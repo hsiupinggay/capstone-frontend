@@ -1,3 +1,12 @@
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useState } from 'react';
 import RequiredTextfield from '../atoms/RequiredTextfield';
 import { signup, useMedicalContext } from '../others/store';
@@ -6,7 +15,16 @@ import HelperText from '../atoms/HelperText';
 import Button from '../atoms/Button';
 import SubmitButton from '../atoms/SubmitButton';
 
-function Signup() {
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                   Signup Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function Signup() {
   const { dispatch } = useMedicalContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -127,5 +145,3 @@ function Signup() {
     </form>
   );
 }
-
-export default Signup;

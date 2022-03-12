@@ -1,4 +1,13 @@
 /* eslint-disable no-unused-vars */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import './App.css';
 import React from 'react';
 import {
@@ -7,7 +16,7 @@ import {
 import { MedicalProvider } from './components/others/store';
 import ProtectedRoute from './components/molecules/ProtectedRoute';
 
-// Pages import
+// Component Imports
 import HomePage from './components/pages/HomePage';
 import AppointmentsPage from './components/pages/AppointmentsPage';
 import ContactsPage from './components/pages/ContactsPage';
@@ -23,6 +32,15 @@ import EditProfile from './components/organisms/EditProfile';
 import ViewProfile from './components/organisms/ViewProfile';
 import NavBar from './components/molecules/Navbar';
 
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                      App Component
+ *
+ * ========================================================
+ * ========================================================
+ */
 export default function App() {
   return (
     <MedicalProvider>

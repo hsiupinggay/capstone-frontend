@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -14,6 +16,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import DateTimePicker from '@mui/lab/DateTimePicker';
+import DateAdapter from '@mui/lab/AdapterLuxon';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import moment from 'moment';
+import Button from '@mui/material/Button';
 
 /*
  * ========================================================
@@ -35,9 +44,8 @@ export default function AddAppointment() {
   const [chaperone, setChaperone] = useState('');
   const [chaperoneId, setChaperoneId] = useState('');
   const [department, setDepartment] = useState('');
-  const [dateTime, setDateTime] = useState('');
+  const [dateTime, setDateTime] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
-
   const navigate = useNavigate();
 
   // When component renders, retrieve all patient data related to user
@@ -48,14 +56,17 @@ export default function AddAppointment() {
     data.append('userId', '62259eddb4a77ae0343f7305');
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/all-patients-list?${data.toString()}`)
       .then((result) => {
+        // Add additional option to trigger redirect to add patient popup
+        result.data.patientDetailsObj.push({ identity: { name: { first: '--ADD NEW PATIENT--', last: '' } } });
         setPatientArr(result.data.patientDetailsObj);
+        console.log(result.data.patientDetailsObj);
       });
   }, []);
 
   const selectDept = (string) => {
-    if (string === 'ADD-DEPARTMENT') {
+    if (string === '--ADD NEW DEPARTMENT--') {
       // Redirect to add department component
-      navigate('/add-department');
+      navigate('/nav/add-department');
     } else {
       setDepartment(string);
     }
@@ -63,15 +74,20 @@ export default function AddAppointment() {
 
   // When user has selected a patient, find related hospitals and chaperones
   const updateHosChapDropdowns = (string) => {
-    if (string === 'ADD-PATIENT') {
+    console.log(string);
+    const patientSplitStr = string.split(',');
+    console.log(patientSplitStr);
+    if (patientSplitStr[0] === 'undefined') {
       // Redirect to add patient component
-      navigate('/add-patient');
+
+      navigate('/nav/add-patient');
     } else {
-      const patientSplitStr = string.split(',');
       setPatientId(patientSplitStr[0]);
       setPatientName(patientSplitStr[1]);
       for (let i = 0; i < patientArr.length; i += 1) {
         if (patientArr[i]._id === patientSplitStr[0]) {
+          patientArr[i].visitDetails.clinics.push({ hospital: '--ADD NEW HOSPITAL--' });
+          patientArr[i].visitDetails.chaperones.push({ name: '--ADD NEW CHAPERONE--' });
           setChaperoneArr(patientArr[i].visitDetails.chaperones);
           setHospArr(patientArr[i].visitDetails.clinics);
         }
@@ -81,13 +97,14 @@ export default function AddAppointment() {
 
   // When user has selected a hospital, find related departments
   const updateDept = (hospitalInput) => {
-    if (hospitalInput === 'ADD-HOSPITAL') {
+    if (hospitalInput === '--ADD NEW HOSPITAL--') {
       // Redirect to add hospital component
-      navigate('/add-hospital');
+      navigate('/nav/add-hospital');
     } else {
       setHospital(hospitalInput);
       for (let i = 0; i < hospArr.length; i += 1) {
         if (hospArr[i].hospital === hospitalInput) {
+          hospArr[i].departments.push('--ADD NEW DEPARTMENT--');
           setDeptArr(hospArr[i].departments);
         }
       }
@@ -96,11 +113,12 @@ export default function AddAppointment() {
 
   // When user selects a chaperone, save name and id in useState
   const updateChaperoneState = (value) => {
-    if (value === 'ADD-CHAPERONE') {
+    console.log(value);
+    const chaperoneSplitStr = value.split(',');
+    if (chaperoneSplitStr[1] === 'undefined') {
       // Redirect to add chaperone component
-      navigate('/add-chaperone');
+      navigate('/nav/add-chaperone');
     } else {
-      const chaperoneSplitStr = value.split(',');
       setChaperone(chaperoneSplitStr[0]);
       setChaperoneId(chaperoneSplitStr[1]);
     }
@@ -155,113 +173,123 @@ export default function AddAppointment() {
         : (
           <form onSubmit={handleSubmit}>
 
-            <div>
-              <label htmlFor="dateTime" name="dateTime" />
-              <input type="datetime-local" id="dateTime" name="dateTime" onChange={(event) => setDateTime(event.target.value)} required />
-            </div>
+            <LocalizationProvider dateAdapter={DateAdapter}>
+              <DateTimePicker
+                label="Appointment Details"
+                value={dateTime}
+                onChange={(newValue) => {
+                  setDateTime(`${moment(`${newValue.c.year}-${newValue.c.month}-${newValue.c.day}`).format('YYYY-MM-DD')}T${moment(`${newValue.c.hour}:${newValue.minute}`, 'HH:m').format('HH:mm')}`);
+                }}
+                renderInput={(params) => <TextField {...params} required />}
+                sx={{ width: 250 }}
+              />
+            </LocalizationProvider>
 
-            <div>
-              <label htmlFor="patient"> </label>
-              <select name="patient" id="patient" onChange={(event) => updateHosChapDropdowns(event.target.value)} required>
-                <option value="" disabled selected>Select Patient</option>
-                {
-                  patientArr.map((patient, index) => (
-                    <option value={`${patient._id},${`${patient.identity.name.first} ${patient.identity.name.last}`}`} key={index}>
-                      {`${patient.identity.name.first} ${patient.identity.name.last}`}
-                    </option>
-                  ))
-                }
-                <option value="ADD-PATIENT">--ADD NEW PATIENT--</option>
-              </select>
-            </div>
-
+            <Autocomplete
+              options={patientArr}
+              getOptionLabel={(option) => `${option.identity.name.first} ${option.identity.name.last}`}
+              renderInput={(params) => <TextField {...params} label="Select Patient" required />}
+              onChange={(event, newValue) => { updateHosChapDropdowns(`${newValue._id},${`${newValue.identity.name.first} ${newValue.identity.name.last}`}`); }}
+              selectOnFocus
+              clearOnBlur
+              handleHomeEndKeys
+              sx={{ width: 250 }}
+            />
             { hospArr === undefined
               ? (
                 <div>
-                  <label htmlFor="hospital"> </label>
-                  <select onChange={(event) => updateDept(event.target.value)}>
-                    <option disabled selected>Select Hospital</option>
-                    <option value="ADD-HOSPITAL">--ADD NEW HOSPITAL--</option>
-                  </select>
-                  <label htmlFor="department"> </label>
-                  <div>
-                    <select onChange={(event) => selectDept(event.target.value)}>
-                      <option disabled selected>Select Department</option>
-                      <option value="ADD-DEPARTMENT">--ADD NEW DEPARTMENT--</option>
-                    </select>
-                  </div>
-                  <label htmlFor="chaperone"> </label>
-                  <div>
-                    <select onChange={(event) => updateChaperoneState(event.target.value)}>
-                      <option disabled selected>Select Chaperone</option>
-                      <option value="ADD-CHAPERONE">--ADD NEW CHAPERONE--</option>
-                    </select>
-                  </div>
+                  <Autocomplete
+                    options={[{ label: '--ADD NEW HOSPITAL--' }]}
+                    renderInput={(params) => <TextField {...params} label="Select Hospital" required />}
+                    onChange={(event, newValue) => { updateDept(newValue.label); }}
+                    selectOnFocus
+                    clearOnBlur
+                    handleHomeEndKeys
+                    sx={{ width: 250 }}
+                  />
+                  <Autocomplete
+                    options={[{ label: '--ADD NEW DEPARTMENT--' }]}
+                    renderInput={(params) => <TextField {...params} label="Select Department" required />}
+                    onChange={(event, newValue) => { selectDept(newValue.label); }}
+                    selectOnFocus
+                    clearOnBlur
+                    handleHomeEndKeys
+                    sx={{ width: 250 }}
+                  />
+                  {' '}
+                  <Autocomplete
+                    options={[{ name: '--ADD NEW CHAPERONE--' }]}
+                    getOptionLabel={(option) => option.name}
+                    renderInput={(params) => <TextField {...params} label="Select Chaperone" required />}
+                    onChange={(event, newValue) => { updateChaperoneState(`${newValue.name},${newValue.chaperoneId}`); }}
+                    selectOnFocus
+                    clearOnBlur
+                    handleHomeEndKeys
+                    sx={{ width: 250 }}
+                  />
                 </div>
               )
               : (
                 <div>
                   <div>
-                    <label htmlFor="hospital"> </label>
-                    <select name="hospital" id="hospital" onChange={(event) => updateDept(event.target.value)} required>
-                      <option value="" disabled selected>Select Hospital</option>
-                      {
-                        hospArr.map((hospitalEl, index) => (
-                          <option value={hospitalEl.hospital} key={index}>
-                            {hospitalEl.hospital}
-                          </option>
-                        ))
-                      }
-                      <option value="ADD-HOSPITAL">--ADD NEW HOSPITAL--</option>
+                    <Autocomplete
+                      options={hospArr}
+                      getOptionLabel={(option) => option.hospital}
+                      renderInput={(params) => <TextField {...params} label="Select Hospital" required />}
+                      onChange={(event, newValue) => { updateDept(newValue.hospital); }}
+                      selectOnFocus
+                      clearOnBlur
+                      handleHomeEndKeys
+                      sx={{ width: 250 }}
+                    />
 
-                    </select>
                   </div>
 
                   { deptArr === undefined
                     ? (
                       <div>
-                        <label htmlFor="department"> </label>
-                        <select onChange={(event) => selectDept(event.target.value)}>
-                          <option disabled selected>Select Department</option>
-                          <option value="ADD-DEPARTMENT">--ADD NEW DEPARTMENT--</option>
-                        </select>
+                        <Autocomplete
+                          options={[{ label: '--ADD NEW DEPARTMENT--' }]}
+                          renderInput={(params) => <TextField {...params} label="Select Department" required />}
+                          onChange={(event, newValue) => { selectDept(newValue.label); }}
+                          selectOnFocus
+                          clearOnBlur
+                          handleHomeEndKeys
+                          sx={{ width: 250 }}
+                        />
                       </div>
                     )
                     : (
                       <div>
-                        <label htmlFor="department"> </label>
-                        <select name="department" id="department" onChange={(event) => selectDept(event.target.value)} required>
-                          <option value="" disabled selected>Select Department</option>
-                          {
-                          deptArr.map((departmentEl, index) => (
-                            <option value={departmentEl} key={index}>
-                              {departmentEl}
-                            </option>
-                          ))
-                        }
-                          <option value="ADD-DEPARTMENT">--ADD NEW DEPARTMENT--</option>
-                        </select>
+                        <Autocomplete
+                          options={deptArr}
+                          getOptionLabel={(option) => option}
+                          renderInput={(params) => <TextField {...params} label="Select Deparment" required />}
+                          onChange={(event, newValue) => { selectDept(newValue); }}
+                          selectOnFocus
+                          clearOnBlur
+                          handleHomeEndKeys
+                          sx={{ width: 250 }}
+                        />
                       </div>
                     )}
 
                   <div>
-                    <label htmlFor="chaperone"> </label>
-                    <select name="chaperone" id="chaperone" onChange={(event) => updateChaperoneState(event.target.value)}>
-                      <option disabled selected>Select Chaperone</option>
-                      {
-                        chaperoneArr.map((chaperoneEl, index) => (
-                          <option value={`${chaperoneEl.name},${chaperoneEl.chaperoneId}`} key={index}>
-                            {chaperoneEl.name}
-                          </option>
-                        ))
-                      }
-                      <option value="ADD-CHAPERONE">--ADD NEW CHAPERONE--</option>
-                    </select>
+                    <Autocomplete
+                      options={chaperoneArr}
+                      getOptionLabel={(option) => option.name}
+                      renderInput={(params) => <TextField {...params} label="Select Chaperone" />}
+                      onChange={(event, newValue) => { updateChaperoneState(`${newValue.name},${newValue.chaperoneId}`); }}
+                      selectOnFocus
+                      clearOnBlur
+                      handleHomeEndKeys
+                      sx={{ width: 250 }}
+                    />
                   </div>
                 </div>
               )}
 
-            <button type="submit"> Submit</button>
+            <Button variant="contained" type="submit">Submit</Button>
           </form>
         )}
       <div>

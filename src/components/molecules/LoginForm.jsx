@@ -1,4 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HelperText from '../atoms/HelperText';
@@ -7,7 +16,16 @@ import { login, useMedicalContext } from '../others/store';
 import { validateEmail } from '../others/helper';
 import SubmitButton from '../atoms/SubmitButton';
 
-function Login() {
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                   Login Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function Login() {
   const { dispatch } = useMedicalContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -84,5 +102,3 @@ function Login() {
     </form>
   );
 }
-
-export default Login;

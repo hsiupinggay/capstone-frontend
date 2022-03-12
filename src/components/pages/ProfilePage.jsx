@@ -1,4 +1,13 @@
 /* eslint-disable max-len */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useState, useEffect } from 'react';
 import {
   Stack,
@@ -8,8 +17,16 @@ import { useMedicalContext, uploadPhoto } from '../others/store';
 import AddPhoto from '../atoms/AddPhoto';
 import ProfileAvatar from '../molecules/ProfileAvatar';
 
-// ProfilePage > ProfileAvatar (AddPhoto) > ProfilePopover
-// ProfilePage > ViewProfile || EditProfile
+/*
+ * ========================================================
+ * ========================================================
+ *                Profile Page Component
+ *  ProfilePage > ProfileAvatar (AddPhoto) > ProfilePopover
+ *           ProfilePage > ViewProfile || EditProfile
+ * ========================================================
+ * ========================================================
+ */
+
 
 function ProfilePage() {
   const [uploadedPhoto, setUploadedPhoto] = useState();
@@ -47,5 +64,3 @@ function ProfilePage() {
     </Stack>
   );
 }
-
-export default ProfilePage;

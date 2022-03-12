@@ -1,10 +1,28 @@
 /* eslint-disable react/prop-types */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React from 'react';
 
 // Helper text to appear under inputs
 // e.g. if there is an error message
 
-function HelperText({ text }) {
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                 HelperText Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function HelperText({ text }) {
   return (
     <div
       className="
@@ -18,5 +36,3 @@ function HelperText({ text }) {
     </div>
   );
 }
-
-export default HelperText;

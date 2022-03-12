@@ -1,3 +1,12 @@
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useEffect, useState } from 'react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/solid';
 
@@ -22,7 +31,17 @@ const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
-function AppointmentCalendar() {
+
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *           AppointmentCalendar Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function AppointmentCalendar() {
   // Get today's date
   const stateDate = new Date();
   // Set state to toggle between month views
@@ -210,5 +229,3 @@ function AppointmentCalendar() {
     </>
   );
 }
-
-export default AppointmentCalendar;
