@@ -22,7 +22,8 @@ const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
-function AppointmentCalendar() {
+
+function AppointmentCalendar({ displayData }) {
   // Get today's date
   const stateDate = new Date();
   // Set state to toggle between month views
@@ -65,29 +66,32 @@ function AppointmentCalendar() {
   }, [month]);
 
   // Placeholder for appointments
-  const events = [
-    {
-      event_date: new Date(2022, 8, 1),
-      event_title: 'My Birthday :)',
-      event_theme: 'red',
-    },
+  // const events = [
+  //   {
+  //     event_date: new Date(2022, 8, 1),
+  //     event_title: 'My Birthday :)',
+  //     event_theme: 'red',
+  //   },
 
-    {
-      event_date: new Date(20212, 11, 25),
-      event_title: 'Xmas Day',
-      event_theme: 'green',
-    },
-    {
-      event_date: new Date(2022, 9, 31),
-      event_title: 'Halloween',
-      event_theme: 'yellow',
-    },
-    {
-      event_date: new Date(2021, 11, 31),
-      event_title: 'New Years Eve',
-      event_theme: 'yellow',
-    },
-  ];
+  //   {
+  //     event_date: new Date(20212, 11, 25),
+  //     event_title: 'Xmas Day',
+  //     event_theme: 'green',
+  //   },
+  //   {
+  //     event_date: new Date(2022, 9, 31),
+  //     event_title: 'Halloween',
+  //     event_theme: 'yellow',
+  //   },
+  //   {
+  //     event_date: new Date(2021, 11, 31),
+  //     event_title: 'New Years Eve',
+  //     event_theme: 'yellow',
+  //   },
+  // ];
+
+  const events = []
+
 
   // const themes = [
   //   {

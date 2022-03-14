@@ -1,9 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+// Import Components
+import AppointmentsNavigator from '../organisms/AppointmentsNavigator';
 import AppointmentCalendar from '../organisms/AppointmentCalendar';
+import AppointmentList from '../organisms/AppointmentList';
 
 function AppointmentsPage() {
+  // 2 views: false - calendar; true - list
+  const [toggleView, setToggleView] = useState(false);
+  const [displayData, setDisplayData] = useState();
+
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
     const data = new URLSearchParams();
@@ -12,12 +19,22 @@ function AppointmentsPage() {
     data.append('userId', '62259eddb4a77ae0343f7305');
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/all-patients-list?${data.toString()}`)
       .then((result) => {
-        console.log(result.data);
+        // result.data === patients.array
+        // patient { appointments.array, identity.object, visitDetails.object, _id.String }
+        // appointment = { chaperone, date, hospital, notes, time }
+        console.log(result.data); // returns patientDetailsObject - maybe need better name?
+        setDisplayData(result.data);
       });
   }, []);
 
   return (
-    <AppointmentCalendar />
+    <div className="h-5/6">
+      <AppointmentsNavigator toggleView={toggleView} setToggleView={setToggleView} />
+      { toggleView 
+        ? <AppointmentList displayData={displayData} />
+        : <AppointmentCalendar displayData={displayData} />
+      }
+    </div>
   );
 }
 
