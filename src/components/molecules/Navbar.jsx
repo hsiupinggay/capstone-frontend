@@ -48,8 +48,8 @@ export default function Navbar() {
     name: 'Appointments',
   },
   {
-    path: '/nav/people',
-    name: 'People',
+    path: '/nav/contacts',
+    name: 'Contacts',
   },
   {
     path: '/nav/profile',
@@ -59,22 +59,22 @@ export default function Navbar() {
     path: '/nav/add-appt',
     name: 'Add Appt',
   },
-  {
-    path: '/nav/add-patient',
-    name: 'Add Patient',
-  },
-  {
-    path: '/nav/add-hospital',
-    name: 'Add Hospital',
-  },
-  {
-    path: '/nav/add-department',
-    name: 'Add Dept',
-  },
-  {
-    path: '/nav/add-chaperone',
-    name: 'Add Chaperone',
-  },
+  // {
+  //   path: '/nav/add-patient',
+  //   name: 'Add Patient',
+  // },
+  // {
+  //   path: '/nav/add-hospital',
+  //   name: 'Add Hospital',
+  // },
+  // {
+  //   path: '/nav/add-department',
+  //   name: 'Add Dept',
+  // },
+  // {
+  //   path: '/nav/add-chaperone',
+  //   name: 'Add Chaperone',
+  // },
   {
     path: '/logout',
     name: 'Logout',

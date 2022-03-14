@@ -20,7 +20,6 @@ import Navbar from './components/molecules/Navbar';
 // Component Imports
 import HomePage from './components/pages/HomePage';
 import AppointmentsPage from './components/pages/AppointmentsPage';
-import PeoplePage from './components/pages/PeoplePage';
 import ProfilePage from './components/pages/ProfilePage';
 import LogoutPage from './components/pages/LogoutPage';
 import AddAppointment from './components/organisms/AddAppointment';
@@ -29,6 +28,7 @@ import AddHospital from './components/organisms/AddHospital';
 import AddDepartment from './components/organisms/AddDepartment';
 import UserAuthPage from './components/pages/UserAuthPage';
 import AddChaperone from './components/organisms/AddChaperone';
+import ContactsPage from './components/pages/ContactsPage';
 
 /*
  * ========================================================
@@ -75,8 +75,8 @@ export default function App() {
                 />
                 <Route
                   exact
-                  path="people"
-                  element={<ProtectedRoute><PeoplePage /></ProtectedRoute>}
+                  path="Contacts"
+                  element={<ProtectedRoute><ContactsPage /></ProtectedRoute>}
                 />
                 <Route
                   exact
