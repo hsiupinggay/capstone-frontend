@@ -53,7 +53,7 @@ export default function SplitButton({ toggleView, setToggleView }) {
   };
 
   return (
-    <React.Fragment>
+    <div className="appt-nav-btn flex justify-end">
       <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
         <Button onClick={handleClick}>{options[selectedIndex]}</Button>
         <Button
@@ -67,13 +67,11 @@ export default function SplitButton({ toggleView, setToggleView }) {
           <ArrowDropDownIcon />
         </Button>
       </ButtonGroup>
-      {displayFilterState && <FilterComponent />}
       <Popper
         open={open}
         anchorEl={anchorRef.current}
         role={undefined}
         transition
-        disablePortal
       >
         {({ TransitionProps, placement }) => (
           <Grow
@@ -88,10 +86,10 @@ export default function SplitButton({ toggleView, setToggleView }) {
                 <MenuList id="split-button-menu">
                   {options.map((option, index) => (
                     <MenuItem
-                      key={option}
-                      disabled={index === 2 && toggleView === false}
-                      selected={index === selectedIndex}
-                      onClick={(event) => handleMenuItemClick(event, index)}
+                    key={option}
+                    disabled={index === 2 && toggleView === false}
+                    selected={index === selectedIndex}
+                    onClick={(event) => handleMenuItemClick(event, index)}
                     >
                       {option}
                     </MenuItem>
@@ -102,6 +100,6 @@ export default function SplitButton({ toggleView, setToggleView }) {
           </Grow>
         )}
       </Popper>
-    </React.Fragment>
+    </div>
   );
 }
