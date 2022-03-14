@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable no-console */
@@ -13,9 +14,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  Avatar, div, Button, Modal, Typography, Box,
+  Avatar, Button, Modal, Box,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import { getNameInitials } from '../others/helper';
 import { useMedicalContext } from '../others/store';
 import AddContact from '../organisms/AddContact';
@@ -59,7 +59,6 @@ export default function ContactsPage() {
   const [outgoingPendingList, setOutgoingPendingList] = useState();
   const { store } = useMedicalContext();
   const { userId } = store;
-  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -70,7 +69,6 @@ export default function ContactsPage() {
     data.append('userId', userId);
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/contacts/load-page?${data.toString()}`)
       .then((result) => {
-        console.log(result.data);
         const {
           allContacts, incomingRequests, outgoingRequestsRejected, outgoingRequestsAccepted, outgoingRequestsPending,
         } = result.data;
@@ -81,6 +79,48 @@ export default function ContactsPage() {
         setOutgoingRejList(outgoingRequestsRejected);
       });
   }, []);
+
+  // When user dismisses notification, remove from DB and rerender latest notifcation list
+  const dismissNotification = (notificationId, status) => {
+    const data = {
+      userId,
+      notificationId,
+      status,
+    };
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/contacts/dismiss-notification`, data)
+      .then((result) => {
+        const { updatedRequests } = result.data;
+        if (status === 'accepted') {
+          setOutgoingAcceptedList(updatedRequests);
+        } else {
+          setOutgoingRejList(updatedRequests);
+        }
+      });
+  };
+
+  // When user accepts/rejects request, make changes in DB and rerender page
+  const handleRequest = (notificationId, status, senderId, firstName, lastName, photo) => {
+    const data = {
+      userId,
+      notificationId,
+      status,
+      senderId,
+      firstName,
+      lastName,
+      photo,
+    };
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/contacts/handle-request`, data)
+      .then((result) => {
+        if (status === 'accepted') {
+          const { allContacts, incomingRequests } = result.data;
+          setContactsList(allContacts.contacts);
+          setIncomingRequestsList(incomingRequests);
+        } else {
+          const { incomingRequests } = result.data;
+          setIncomingRequestsList(incomingRequests);
+        }
+      });
+  };
 
   return (
     <div>
@@ -139,8 +179,8 @@ export default function ContactsPage() {
                   wants to add you!
                   {!request.sender.photo && <Avatar sx={{ width: 60, height: 60 }}>{getNameInitials(request.sender.firstName, request.sender.lastName)}</Avatar>}
                   {request.sender.photo && <Avatar sx={{ width: 60, height: 60 }} alt="profile" src={request.sender.photo} />}
-                  <Button onClick={() => navigate('/add-appt')}>Accept</Button>
-                  <Button variant="contained" onClick={() => navigate('/add-appt')}>Reject</Button>
+                  <Button onClick={() => handleRequest(request._id, 'accepted', request.sender.senderId, request.sender.firstName, request.sender.lastName, request.sender.photo)}>Accept</Button>
+                  <Button variant="contained" onClick={() => handleRequest(request._id, 'rejected')}>Reject</Button>
                 </div>
               ))}
             </div>
@@ -165,7 +205,7 @@ export default function ContactsPage() {
                   {' '}
                   {`${request.recipient.firstName} ${request.recipient.lastName}`}
                   {' '}
-                  is pending
+                  is pending.
                   {!request.recipient.photo && <Avatar sx={{ width: 60, height: 60 }}>{getNameInitials(request.recipient.firstName, request.recipient.lastName)}</Avatar>}
                   {request.recipient.photo && <Avatar sx={{ width: 60, height: 60 }} alt="profile" src={request.recipient.photo} />}
 
@@ -194,7 +234,7 @@ export default function ContactsPage() {
                   accepted your request!
                   {!request.recipient.photo && <Avatar sx={{ width: 60, height: 60 }}>{getNameInitials(request.recipient.firstName, request.recipient.lastName)}</Avatar>}
                   {request.recipient.photo && <Avatar sx={{ width: 60, height: 60 }} alt="profile" src={request.recipient.photo} />}
-                  <Button variant="contained" onClick={() => navigate('/add-appt')}>Dismiss</Button>
+                  <Button variant="contained" onClick={() => dismissNotification(request._id, 'accepted')}>Dismiss</Button>
                 </div>
               ))}
             </div>
@@ -215,14 +255,12 @@ export default function ContactsPage() {
               <br />
               {outgoingRejList.map((request) => (
                 <div>
-                  Your request to
-                  {' '}
                   {`${request.recipient.firstName} ${request.recipient.lastName}`}
                   {' '}
-                  was rejected
+                  declined your request.
                   {!request.recipient.photo && <Avatar sx={{ width: 60, height: 60 }}>{getNameInitials(request.recipient.firstName, request.recipient.lastName)}</Avatar>}
                   {request.recipient.photo && <Avatar sx={{ width: 60, height: 60 }} alt="profile" src={request.recipient.photo} />}
-                  <Button variant="contained" onClick={() => navigate('/add-appt')}>Dismiss</Button>
+                  <Button variant="contained" onClick={() => dismissNotification(request._id, 'rejected')}>Dismiss</Button>
                 </div>
               ))}
             </div>
