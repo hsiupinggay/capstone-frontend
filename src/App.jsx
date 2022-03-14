@@ -15,11 +15,11 @@ import {
 } from 'react-router-dom';
 import { MedicalProvider } from './components/others/store';
 import ProtectedRoute from './components/molecules/ProtectedRoute';
-import Navbar from './components/molecules/Navbar';
 
 // Component Imports
 import HomePage from './components/pages/HomePage';
 import AppointmentsPage from './components/pages/AppointmentsPage';
+import ContactsPage from './components/pages/ContactsPage';
 import ProfilePage from './components/pages/ProfilePage';
 import LogoutPage from './components/pages/LogoutPage';
 import AddAppointment from './components/organisms/AddAppointment';
@@ -28,7 +28,9 @@ import AddHospital from './components/organisms/AddHospital';
 import AddDepartment from './components/organisms/AddDepartment';
 import UserAuthPage from './components/pages/UserAuthPage';
 import AddChaperone from './components/organisms/AddChaperone';
-import ContactsPage from './components/pages/ContactsPage';
+import EditProfile from './components/organisms/EditProfile';
+import ViewProfile from './components/organisms/ViewProfile';
+import NavBar from './components/molecules/Navbar';
 
 /*
  * ========================================================
@@ -44,20 +46,20 @@ export default function App() {
     <MedicalProvider>
       <Router>
         <div className="main-container w-screen h-screen
-          flex flex-col items-center"
+          flex flex-col items-center relative pt-20"
         >
 
           <div className="display">
             <Routes>
               <Route
                 exact
-                path="/"
+                path="/auth"
                 element={<UserAuthPage />}
               />
               <Route
                 exact
-                path="/nav/"
-                element={<Navbar />}
+                path="/"
+                element={<NavBar />}
               >
                 <Route
                   index
@@ -75,14 +77,29 @@ export default function App() {
                 />
                 <Route
                   exact
-                  path="Contacts"
+                  path="contacts"
                   element={<ProtectedRoute><ContactsPage /></ProtectedRoute>}
                 />
                 <Route
                   exact
                   path="profile"
                   element={<ProtectedRoute><ProfilePage /></ProtectedRoute>}
-                />
+                >
+                  <Route
+                    index
+                    element={<ProtectedRoute><ViewProfile /></ProtectedRoute>}
+                  />
+                  <Route
+                    exact
+                    path="view"
+                    element={<ProtectedRoute><ViewProfile /></ProtectedRoute>}
+                  />
+                  <Route
+                    exact
+                    path="edit"
+                    element={<ProtectedRoute><EditProfile /></ProtectedRoute>}
+                  />
+                </Route>
                 <Route
                   exact
                   path="add-appt"

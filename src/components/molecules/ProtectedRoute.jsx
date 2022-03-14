@@ -22,12 +22,14 @@ import { authenticate } from '../others/store';
  */
 export default function ProtectedRoute({ children }) {
   const navigate = useNavigate();
-  const verify = authenticate();
-  if (!verify) {
-    console.log('<== illegal route ==>');
-    return navigate('/');
-  }
-  console.log('<== verified route ==>');
+  authenticate().then(
+    (res) => {
+      console.log('<== verified route ==>', res);
+    },
+  ).catch((err) => {
+    console.log('<== illegal route ==>', err);
+    return navigate('/auth');
+  });
 
   return children;
 }

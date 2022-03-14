@@ -1,7 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable max-len */
-/* eslint-disable no-console */
 /*
  * ========================================================
  * ========================================================
@@ -14,12 +11,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { TextField } from '@mui/material';
-import DatePicker from '@mui/lab/DatePicker';
+import { TextField, Button } from '@mui/material';
+import { DatePicker, LocalizationProvider } from '@mui/lab';
 import DateAdapter from '@mui/lab/AdapterLuxon';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import moment from 'moment';
-import Button from '@mui/material/Button';
+import { useMedicalContext } from '../others/store';
 
 /*
  * ========================================================
@@ -31,16 +27,15 @@ import Button from '@mui/material/Button';
  * ========================================================
  */
 export default function AddPatient() {
+  const { store } = useMedicalContext();
+  const { userId } = store;
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [relationship, setRelationship] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [DOB, setDOB] = useState(null);
   const navigate = useNavigate();
-
-  // ################################## HARDCODED FOR NOW  ##################################
-  // data.append('userId', userId);
-  const userId = '62259eddb4a77ae0343f7305';
 
   // On form submit, send data to backend to store in DB
   const handleSubmit = (event) => {
@@ -66,11 +61,11 @@ export default function AddPatient() {
   };
   return (
     <div>
-      <Button variant="contained" onClick={() => navigate('/nav/add-appt')}>Back</Button>
+      <Button variant="contained" onClick={() => navigate('/add-appt')}>Back</Button>
       <Button variant="contained" disabled>+ Patient</Button>
-      <Button variant="contained" onClick={() => navigate('/nav/add-hospital')}>+ Hospital</Button>
-      <Button variant="contained" onClick={() => navigate('/nav/add-department')}>+ Department</Button>
-      <Button variant="contained" onClick={() => navigate('/nav/add-chaperone')}>+ Chaperone</Button>
+      <Button variant="contained" onClick={() => navigate('/add-hospital')}>+ Hospital</Button>
+      <Button variant="contained" onClick={() => navigate('/add-department')}>+ Department</Button>
+      <Button variant="contained" onClick={() => navigate('/add-chaperone')}>+ Chaperone</Button>
 
       <br />
       <br />

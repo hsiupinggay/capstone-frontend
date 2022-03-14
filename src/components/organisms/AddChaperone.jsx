@@ -1,9 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable max-len */
-/* eslint-disable no-console */
 /*
  * ========================================================
  * ========================================================
@@ -19,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
+import { useMedicalContext } from '../others/store';
 
 /*
  * ========================================================
@@ -30,6 +27,9 @@ import Button from '@mui/material/Button';
  * ========================================================
  */
 export default function AddChaperone() {
+  const { store } = useMedicalContext();
+  const { userId, firstName, lastName } = store;
+
   const [family, setFamily] = useState('');
   const [patientId, setPatientId] = useState('');
   const [patientName, setPatientName] = useState('');
@@ -43,13 +43,9 @@ export default function AddChaperone() {
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
     const data = new URLSearchParams();
-    // ################################## HARDCODED FOR NOW  ##################################
-    // data.append('userId', userId);
-    // data.append('userName', userName);
-    data.append('userId', '62259eddb4a77ae0343f7305');
+    data.append('userId', userId);
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/all-patients-list?${data.toString()}`)
       .then((result) => {
-        console.log(result.data.patientDetailsObj);
         setPatientArr(result.data.patientDetailsObj);
       });
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/all-family?${data.toString()}`)
@@ -60,8 +56,7 @@ export default function AddChaperone() {
           tempArr.push({ value: `${familyArr[i].name},${familyArr[i].familyMemberId}`, label: familyArr[i].name });
         }
         // Show user their own name to add as a chaperone
-        // ################################## HARDCODED FOR NOW  ##################################
-        tempArr.push({ value: 'Shannon,62259eddb4a77ae0343f7305', label: 'Shannon' });
+        tempArr.push({ value: `${firstName} ${lastName},${userId}`, label: `${firstName} ${lastName}` });
         setFamily(tempArr);
       });
   }, []);
@@ -73,7 +68,6 @@ export default function AddChaperone() {
   };
 
   const updateChaperone = (optionValue) => {
-    console.log(optionValue);
     const chaperoneSplitStr = optionValue.split(',');
     setChaperoneId(chaperoneSplitStr[1]);
     setChaperoneName(chaperoneSplitStr[0]);
@@ -106,10 +100,10 @@ export default function AddChaperone() {
         ? <div />
         : (
           <div>
-            <Button variant="contained" onClick={() => navigate('/nav/add-appt')}>Back</Button>
-            <Button variant="contained" onClick={() => navigate('/nav/add-patient')}>+ Patient</Button>
-            <Button variant="contained" onClick={() => navigate('/nav/add-hospital')}>+ Hospital</Button>
-            <Button variant="contained" onClick={() => navigate('/nav/add-department')}>+ Department</Button>
+            <Button variant="contained" onClick={() => navigate('/add-appt')}>Back</Button>
+            <Button variant="contained" onClick={() => navigate('/add-patient')}>+ Patient</Button>
+            <Button variant="contained" onClick={() => navigate('/add-hospital')}>+ Hospital</Button>
+            <Button variant="contained" onClick={() => navigate('/add-department')}>+ Department</Button>
             <Button variant="contained" disabled>+ Chaperone</Button>
             <br />
             <br />

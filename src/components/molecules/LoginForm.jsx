@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import HelperText from '../atoms/HelperText';
 import RequiredTextfield from '../atoms/RequiredTextfield';
 import { login, useMedicalContext } from '../others/store';
-import validateEmail from '../others/helper';
+import { validateEmail } from '../others/helper';
 import SubmitButton from '../atoms/SubmitButton';
 
 /*
@@ -64,12 +64,13 @@ export default function Login() {
       email,
       password,
     };
+    console.log('<== login data ==>', data);
     try {
       // Calls login function from store
       const res = await login(dispatch, data);
 
       if (res.loginSuccess) {
-        navigate('/nav/home');
+        navigate('/home');
       } else if (!res.loginSuccess) {
         setError(true);
         setErrorMessage(res.error);
