@@ -246,7 +246,8 @@ export async function authenticate() {
 
     // Sets user details again, in case user closed window
     // dispatch(authAction(res.data));
-    return res.data.verified;
+    console.log('<== dispatch auth action ==>', authAction(res.data));
+    return res.data;
   } catch (err) {
     console.log(err);
     navigate('/auth');

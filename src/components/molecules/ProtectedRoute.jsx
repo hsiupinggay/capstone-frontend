@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /*
  * ========================================================
@@ -8,7 +9,10 @@
  * ========================================================
  * ========================================================
  */
-import { useNavigate } from 'react-router-dom';
+
+// import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate, Navigate, Outlet } from 'react-router-dom';
 import { authenticate } from '../others/store';
 
 /*
@@ -20,16 +24,24 @@ import { authenticate } from '../others/store';
  * ========================================================
  * ========================================================
  */
-export default function ProtectedRoute({ children }) {
+export default function ProtectedRoute() {
+  // const { dispatch } = useMedicalContext();
   const navigate = useNavigate();
-  authenticate().then(
-    (res) => {
-      console.log('<== verified route ==>', res);
-    },
-  ).catch((err) => {
-    console.log('<== illegal route ==>', err);
-    return navigate('/auth');
-  });
+  const [error, setError] = useState(false);
 
-  return children;
+  const waitForPromise = async () => {
+    const res = await authenticate();
+    console.log('<== verified route ==>', res);
+    // dispatch(authAction(res));
+    if (res.error) {
+      console.log('<== illegal route ==>', res);
+      setError(true);
+      return navigate('/auth');
+    }
+    return true;
+  };
+
+  waitForPromise();
+
+  return error ? <Navigate to="/auth" replace /> : <Outlet />;
 }
