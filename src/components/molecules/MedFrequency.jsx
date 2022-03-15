@@ -1,12 +1,11 @@
 /* eslint-disable max-len */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React from 'react';
 import {
   CardContent, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField, Typography, Switch, Stack,
 } from '@mui/material';
 
 function MedFrequency({
-  dosage,
   dosageCounter,
   times,
   duration, handleDosage,
@@ -16,13 +15,6 @@ function MedFrequency({
   checked,
   handleSwitch,
 }) {
-  const data = {
-    dosage,
-    dosageCounter,
-    times,
-    duration,
-  };
-
   return (
     <div>
       <CardContent>

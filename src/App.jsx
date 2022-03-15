@@ -34,6 +34,7 @@ import UserAuthPage from './components/pages/UserAuthPage';
 import AddChaperone from './components/organisms/AddChaperone';
 import EditProfile from './components/organisms/EditProfile';
 import ViewProfile from './components/organisms/ViewProfile';
+import AddMedPage from './components/pages/AddMedPage';
 import NavBar from './components/molecules/Navbar';
 
 /*
@@ -62,64 +63,65 @@ export default function App() {
                   element={<UserAuthPage />}
                 />
                 {/* ProtectedRoute wraps around all rounds that are authenticated */}
-                <Route element={<ProtectedRoute />}>
+                {/* <Route element={<ProtectedRoute />}> */}
+                <Route
+                  exact
+                  path="/"
+                  element={<NavBar />}
+                >
+                  <Route
+                    index
+                    element={<HomePage />}
+                  />
+
                   <Route
                     exact
-                    path="/"
-                    element={<NavBar />}
+                    path="home"
+                    element={<HomePage />}
+                  />
+                  <Route
+                    exact
+                    path="appointments"
+                    element={<AppointmentsPage />}
+                  />
+                  <Route
+                    exact
+                    path="contacts"
+                    element={<ContactsPage />}
+                  />
+                  <Route
+                    exact
+                    path="profile"
+                    element={<ProfilePage />}
                   >
                     <Route
                       index
-                      element={<HomePage />}
-                    />
-
-                    <Route
-                      exact
-                      path="home"
-                      element={<HomePage />}
+                      element={<ViewProfile />}
                     />
                     <Route
                       exact
-                      path="appointments"
-                      element={<AppointmentsPage />}
+                      path="view"
+                      element={<ViewProfile />}
                     />
                     <Route
                       exact
-                      path="contacts"
-                      element={<ContactsPage />}
+                      path="edit"
+                      element={<EditProfile />}
                     />
-                    <Route
-                      exact
-                      path="profile"
-                      element={<ProfilePage />}
-                    >
-                      <Route
-                        index
-                        element={<ViewProfile />}
-                      />
-                      <Route
-                        exact
-                        path="view"
-                        element={<ViewProfile />}
-                      />
-                      <Route
-                        exact
-                        path="edit"
-                        element={<EditProfile />}
-                      />
-                    </Route>
-                    <Route
-                      exact
-                      path="add-appt"
-                      element={<AddAppointment />}
-                    />
-                    <Route path="add-patient" element={<AddPatient />} />
-                    <Route path="add-hospital" element={<AddHospital />} />
-                    <Route path="add-department" element={<AddDepartment />} />
-                    <Route path="add-chaperone" element={<AddChaperone />} />
-
                   </Route>
+                  <Route
+                    exact
+                    path="add-appt"
+                    element={<AddAppointment />}
+                  />
+                  <Route path="add-patient" element={<AddPatient />} />
+                  <Route path="add-hospital" element={<AddHospital />} />
+                  <Route path="add-department" element={<AddDepartment />} />
+                  <Route path="add-chaperone" element={<AddChaperone />} />
+                  <Route path="add-med" element={<AddMedPage />} />
+
                 </Route>
+                {/* </Route> */}
                 <Route
                   exact
                   path="/logout"

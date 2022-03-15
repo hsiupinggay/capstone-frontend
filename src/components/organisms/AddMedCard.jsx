@@ -1,19 +1,18 @@
 /* eslint-disable max-len */
 /* eslint-disable array-callback-return */
 import React, { useState } from 'react';
-import {
-  Card, CardContent, FormControl, TextField, Button,
-} from '@mui/material';
+import { Card } from '@mui/material';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+
 import MedFrequency from '../molecules/MedFrequency';
+import Prescription from '../molecules/Prescription';
+import MedName from '../molecules/MedName';
+import MedStepper from '../atoms/MedStepper';
 
 function AddMedCard() {
-  const navigate = useNavigate();
+  // related to MedName
   const [name, setName] = useState('');
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [frequencyData, setFrequencyData] = useState('');
 
   //  related to MedFrequency
   const [dosage, setDosage] = useState('');
@@ -22,7 +21,20 @@ function AddMedCard() {
   const [times, setTimes] = useState('');
   const [checked, setChecked] = useState(false);
 
-  console.log(setFrequencyData);
+  // related to Prescription
+  const [prescriptionDate, setPrescriptionDate] = useState(new Date());
+  const [prescriptionQty, setPrescriptionQty] = useState('');
+  const [reminderChecked, setReminderChecked] = useState(true);
+
+  // related to stepper
+  const [activeStep, setActiveStep] = useState(0);
+
+  // Hardcoded patient id for Humpty Dumpty
+  const patientId = '62259fadb4a77ae0343f7306';
+
+  const handleName = (e) => {
+    setName(e.target.value);
+  };
   const handleSwitch = (e) => {
     setChecked(e.target.checked);
   };
@@ -35,54 +47,75 @@ function AddMedCard() {
   const handleTimes = (e) => {
     setTimes(e.target.value);
   };
-
   const handleDuration = (e) => {
     setDuration(e.target.value);
   };
-
-  const handleName = (e) => {
-    setName(e.target.value);
+  const handlePrescriptionDate = (e) => {
+    setPrescriptionDate(e.target.value);
+  };
+  const handlePrescriptionQty = (e) => {
+    setPrescriptionQty(e.target.value);
+  };
+  const handleReminder = (e) => {
+    setReminderChecked(e.target.checked);
   };
 
   const handleSubmit = async () => {
     const data = {
+      patientId,
       name,
-      frequencyData,
+      dosage,
+      dosageCounter,
+      times,
+      duration,
+      prescriptionDate,
+      prescriptionQty,
+      reminderChecked,
     };
+
     try {
-      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-med`, data);
-      navigate('/home');
+      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-medicine`, data);
+      console.log('<== res.data add med ==>', res.data);
     } catch (err) {
-      const { message } = error.data;
-      setError(true);
-      setErrorMessage(message);
-      console.log(errorMessage);
+      console.log(err);
     }
   };
 
   return (
     <div>
       <Card>
-        <CardContent>
-          <FormControl>
-            <TextField variant="outlined" label="Name" onChange={handleName} />
-          </FormControl>
-        </CardContent>
-        <MedFrequency
-          dosage={dosage}
-          handleDosage={handleDosage}
-          dosageCounter={dosageCounter}
-          handleDosageCounter={handleDosageCounter}
-          times={times}
-          handleTimes={handleTimes}
-          duration={duration}
-          handleDuration={handleDuration}
-          checked={checked}
-          handleSwitch={handleSwitch}
+        {activeStep === 0 && (
+          <MedName handleName={handleName} />
+        )}
+        {activeStep === 1 && (
 
-        />
+          <MedFrequency
+            dosage={dosage}
+            handleDosage={handleDosage}
+            dosageCounter={dosageCounter}
+            handleDosageCounter={handleDosageCounter}
+            times={times}
+            handleTimes={handleTimes}
+            duration={duration}
+            handleDuration={handleDuration}
+            checked={checked}
+            handleSwitch={handleSwitch}
 
-        <Button variant="contained" onClick={handleSubmit}>Add</Button>
+          />
+        )}
+        {activeStep === 2 && (
+
+          <Prescription
+            dosageCounter={dosageCounter}
+            handlePrescriptionDate={handlePrescriptionDate}
+            handlePrescriptionQty={handlePrescriptionQty}
+            reminderChecked={reminderChecked}
+            handleReminder={handleReminder}
+          />
+
+        )}
+        <MedStepper setActiveStep={setActiveStep} activeStep={activeStep} handleSubmit={handleSubmit} />
+        {/* <Button variant="contained" onClick={}>Add</Button> */}
       </Card>
 
     </div>
