@@ -19,6 +19,7 @@ import {
 import { getNameInitials } from '../others/helper';
 import { useMedicalContext } from '../others/store';
 import AddContact from '../organisms/AddContact';
+import ContactVisibility from '../organisms/ContactVisibility';
 
 /*
  * ========================================================
@@ -57,21 +58,36 @@ export default function ContactsPage() {
   const [outgoingRejList, setOutgoingRejList] = useState();
   const [outgoingAcceptedList, setOutgoingAcceptedList] = useState();
   const [outgoingPendingList, setOutgoingPendingList] = useState();
+  const [contactId, setContactId] = useState();
+
+  const [open, setOpen] = useState(false);
+  const [modal, setModal] = useState('add contact');
+
   const { store } = useMedicalContext();
   const { userId } = store;
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+
+  const openAddContactPopup = () => {
+    setOpen(true);
+    setModal('add contact');
+  };
+  const openContactVisibilityPopup = (id) => {
+    setContactId(id);
+    setOpen(true);
+    setModal('open contact');
+  };
+  const closeAddContactPopup = () => {
+    setOpen(false);
+  };
 
   // When component renders, retrieve all contacts and patients data related to user
   useEffect(() => {
     const data = new URLSearchParams();
     data.append('userId', userId);
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/contacts/load-page?${data.toString()}`)
-      .then((result) => {
+      .then((response) => {
         const {
           allContacts, incomingRequests, outgoingRequestsRejected, outgoingRequestsAccepted, outgoingRequestsPending,
-        } = result.data;
+        } = response.data;
         setContactsList(allContacts.contacts);
         setIncomingRequestsList(incomingRequests);
         setOutgoingPendingList(outgoingRequestsPending);
@@ -110,13 +126,13 @@ export default function ContactsPage() {
       photo,
     };
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/contacts/handle-request`, data)
-      .then((result) => {
+      .then((response) => {
         if (status === 'accepted') {
-          const { allContacts, incomingRequests } = result.data;
+          const { allContacts, incomingRequests } = response.data;
           setContactsList(allContacts.contacts);
           setIncomingRequestsList(incomingRequests);
         } else {
-          const { incomingRequests } = result.data;
+          const { incomingRequests } = response.data;
           setIncomingRequestsList(incomingRequests);
         }
       });
@@ -137,7 +153,7 @@ export default function ContactsPage() {
             <div>
               <strong>
                 Your Contacts
-                <Button variant="contained" onClick={handleOpen}>Add New Contact</Button>
+                <Button variant="contained" onClick={openAddContactPopup}>Add New Contact</Button>
               </strong>
             </div>
           )
@@ -146,7 +162,7 @@ export default function ContactsPage() {
               <strong>
                 {' '}
                 Your Contacts
-                <Button variant="contained" onClick={handleOpen}>Add New Contact</Button>
+                <Button variant="contained" onClick={openAddContactPopup}>Add New Contact</Button>
               </strong>
               <br />
               {contactsList.map((contact) => (
@@ -154,6 +170,7 @@ export default function ContactsPage() {
                   {`${contact.firstName} ${contact.lastName}`}
                   {!contact.photo && <Avatar sx={{ width: 60, height: 60 }}>{getNameInitials(contact.firstName, contact.lastName)}</Avatar>}
                   {contact.photo && <Avatar sx={{ width: 60, height: 60 }} alt="profile" src={contact.photo} />}
+                  <Button variant="contained" onClick={() => openContactVisibilityPopup(contact.contactId)}>Settings</Button>
                 </div>
               ))}
             </div>
@@ -268,12 +285,16 @@ export default function ContactsPage() {
       }
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={closeAddContactPopup}
         // aria-labelledby="modal-modal-title"
         // aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <AddContact />
+          {
+          modal === 'add contact'
+            ? <AddContact setOutgoingPendingList={setOutgoingPendingList} />
+            : <ContactVisibility contactId={contactId} />
+           }
         </Box>
       </Modal>
     </div>
