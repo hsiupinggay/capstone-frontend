@@ -80,7 +80,7 @@ export default function NavBar() {
   return (
     <div>
       <AppBar position="absolute">
-        <Container fullWidth>
+        <Container>
           <Toolbar disableGutters>
             <Typography
               variant="h6"

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 /*
  * ========================================================
@@ -13,8 +14,11 @@ import React from 'react';
 import {
   BrowserRouter as Router, Routes, Route,
 } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material';
 import { MedicalProvider } from './components/others/store';
 import ProtectedRoute from './components/molecules/ProtectedRoute';
+
+import mainTheme from './theme';
 
 // Component Imports
 import HomePage from './components/pages/HomePage';
@@ -43,84 +47,90 @@ import NavBar from './components/molecules/Navbar';
  */
 export default function App() {
   return (
-    <MedicalProvider>
-      <Router>
-        <div className="main-container w-screen h-screen
+    <ThemeProvider theme={mainTheme}>
+      <MedicalProvider>
+        <Router>
+          <div className="main-container w-screen h-screen
           flex flex-col items-center relative pt-20"
-        >
+          >
 
-          <div className="display">
-            <Routes>
-              <Route
-                exact
-                path="/auth"
-                element={<UserAuthPage />}
-              />
-              <Route
-                exact
-                path="/"
-                element={<NavBar />}
-              >
-                <Route
-                  index
-                  element={<ProtectedRoute><HomePage /></ProtectedRoute>}
-                />
+            <div className="display">
+              <Routes>
                 <Route
                   exact
-                  path="home"
-                  element={<ProtectedRoute><HomePage /></ProtectedRoute>}
+                  path="/auth"
+                  element={<UserAuthPage />}
                 />
-                <Route
-                  exact
-                  path="appointments"
-                  element={<ProtectedRoute><AppointmentsPage /></ProtectedRoute>}
-                />
-                <Route
-                  exact
-                  path="contacts"
-                  element={<ProtectedRoute><ContactsPage /></ProtectedRoute>}
-                />
-                <Route
-                  exact
-                  path="profile"
-                  element={<ProtectedRoute><ProfilePage /></ProtectedRoute>}
-                >
-                  <Route
-                    index
-                    element={<ProtectedRoute><ViewProfile /></ProtectedRoute>}
-                  />
+                {/* ProtectedRoute wraps around all rounds that are authenticated */}
+                <Route element={<ProtectedRoute />}>
                   <Route
                     exact
-                    path="view"
-                    element={<ProtectedRoute><ViewProfile /></ProtectedRoute>}
-                  />
-                  <Route
-                    exact
-                    path="edit"
-                    element={<ProtectedRoute><EditProfile /></ProtectedRoute>}
-                  />
+                    path="/"
+                    element={<NavBar />}
+                  >
+                    <Route
+                      index
+                      element={<HomePage />}
+                    />
+
+                    <Route
+                      exact
+                      path="home"
+                      element={<HomePage />}
+                    />
+                    <Route
+                      exact
+                      path="appointments"
+                      element={<AppointmentsPage />}
+                    />
+                    <Route
+                      exact
+                      path="contacts"
+                      element={<ContactsPage />}
+                    />
+                    <Route
+                      exact
+                      path="profile"
+                      element={<ProfilePage />}
+                    >
+                      <Route
+                        index
+                        element={<ViewProfile />}
+                      />
+                      <Route
+                        exact
+                        path="view"
+                        element={<ViewProfile />}
+                      />
+                      <Route
+                        exact
+                        path="edit"
+                        element={<EditProfile />}
+                      />
+                    </Route>
+                    <Route
+                      exact
+                      path="add-appt"
+                      element={<AddAppointment />}
+                    />
+                    <Route path="add-patient" element={<AddPatient />} />
+                    <Route path="add-hospital" element={<AddHospital />} />
+                    <Route path="add-department" element={<AddDepartment />} />
+                    <Route path="add-chaperone" element={<AddChaperone />} />
+
+                  </Route>
                 </Route>
                 <Route
                   exact
-                  path="add-appt"
-                  element={<ProtectedRoute><AddAppointment /></ProtectedRoute>}
+                  path="/logout"
+                  element={<LogoutPage />}
                 />
-                <Route path="add-patient" element={<ProtectedRoute><AddPatient /></ProtectedRoute>} />
-                <Route path="add-hospital" element={<ProtectedRoute><AddHospital /></ProtectedRoute>} />
-                <Route path="add-department" element={<ProtectedRoute><AddDepartment /></ProtectedRoute>} />
-                <Route path="add-chaperone" element={<ProtectedRoute><AddChaperone /></ProtectedRoute>} />
 
-              </Route>
-              <Route
-                exact
-                path="/logout"
-                element={<LogoutPage />}
-              />
-
-            </Routes>
+              </Routes>
+            </div>
           </div>
-        </div>
-      </Router>
-    </MedicalProvider>
+        </Router>
+      </MedicalProvider>
+    </ThemeProvider>
   );
 }
