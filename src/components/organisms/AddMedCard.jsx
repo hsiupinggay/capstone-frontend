@@ -1,5 +1,14 @@
 /* eslint-disable max-len */
 /* eslint-disable array-callback-return */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useState } from 'react';
 import {
   Card, CardContent, FormControl, TextField, Button,
@@ -8,7 +17,16 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import MedFrequency from '../molecules/MedFrequency';
 
-function AddMedCard() {
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *              AddMedCard Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function AddMedCard() {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [error, setError] = useState(false);
@@ -88,5 +106,3 @@ function AddMedCard() {
     </div>
   );
 }
-
-export default AddMedCard;

@@ -1,10 +1,28 @@
 /* eslint-disable no-unused-vars */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useState, useEffect } from 'react';
 import { TextField, Stack, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useMedicalContext, editProfile } from '../others/store';
 
-function EditProfile() {
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                   EditProfile Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function EditProfile() {
   const { store, dispatch } = useMedicalContext();
   const [currentFirstName, setCurrentFirstName] = useState('');
   const [currentLastName, setCurrentLastName] = useState('');
@@ -61,5 +79,3 @@ function EditProfile() {
 
   );
 }
-
-export default EditProfile;

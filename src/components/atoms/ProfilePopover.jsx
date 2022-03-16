@@ -1,8 +1,26 @@
 /* eslint-disable react/prop-types */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React from 'react';
 import { Stack, Popover, Button } from '@mui/material';
 
-function ProfilePopover({
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *               ProfilePopover Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function ProfilePopover({
   open, id, anchorEl, onClose, popoverContent, submitClick,
 }) {
   return (
@@ -30,5 +48,3 @@ function ProfilePopover({
     </div>
   );
 }
-
-export default ProfilePopover;

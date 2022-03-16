@@ -1,11 +1,29 @@
 /* eslint-disable max-len */
 /* eslint-disable react/prop-types */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useState } from 'react';
 import {
   CardContent, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField, Typography, Switch, Stack,
 } from '@mui/material';
 
-function MedFrequency({
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                   MedFrequency Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function MedFrequency({
   dosage,
   dosageCounter,
   times,
@@ -138,5 +156,3 @@ function MedFrequency({
     </div>
   );
 }
-
-export default MedFrequency;

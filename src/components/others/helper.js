@@ -18,8 +18,9 @@ export default function validateEmail(input) {
  * ========================================================
  * ========================================================
  *
- *             Get user initials
- *        For profile avatar when no photo
+ *                  Get user initials
+ *           For profile avatar when no photo
+ *
  * ========================================================
  * ========================================================
  */

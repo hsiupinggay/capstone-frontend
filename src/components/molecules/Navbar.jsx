@@ -23,6 +23,7 @@ import { useMedicalContext, logout } from '../others/store';
  *
  *                    Navbar Component
  *       Renders after user logs in and is authenticated
+ *
  * ========================================================
  * ========================================================
  */
