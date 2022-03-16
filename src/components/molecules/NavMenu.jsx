@@ -1,4 +1,13 @@
 /* eslint-disable max-len */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import {
@@ -9,6 +18,15 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { useMedicalContext, logout } from '../others/store';
 // Navbar Component. Renders after user logs in and is authenticated
 
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                 NavOptions Component
+ *
+ * ========================================================
+ * ========================================================
+ */
 function NavOptions() {
   const navigate = useNavigate();
   const { dispatch } = useMedicalContext();
@@ -81,6 +99,15 @@ function NavOptions() {
   );
 }
 
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                  NavMenu Component
+ *
+ * ========================================================
+ * ========================================================
+ */
 export default function NavMenu() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);

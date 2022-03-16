@@ -59,6 +59,7 @@ export default function ContactsPage() {
   const [outgoingAcceptedList, setOutgoingAcceptedList] = useState();
   const [outgoingPendingList, setOutgoingPendingList] = useState();
   const [contactId, setContactId] = useState();
+  const [contactName, setContactName] = useState();
 
   const [open, setOpen] = useState(false);
   const [modal, setModal] = useState('add contact');
@@ -70,7 +71,8 @@ export default function ContactsPage() {
     setOpen(true);
     setModal('add contact');
   };
-  const openContactVisibilityPopup = (id) => {
+  const openContactVisibilityPopup = (id, name) => {
+    setContactName(name);
     setContactId(id);
     setOpen(true);
     setModal('open contact');
@@ -170,7 +172,7 @@ export default function ContactsPage() {
                   {`${contact.firstName} ${contact.lastName}`}
                   {!contact.photo && <Avatar sx={{ width: 60, height: 60 }}>{getNameInitials(contact.firstName, contact.lastName)}</Avatar>}
                   {contact.photo && <Avatar sx={{ width: 60, height: 60 }} alt="profile" src={contact.photo} />}
-                  <Button variant="contained" onClick={() => openContactVisibilityPopup(contact.contactId)}>Settings</Button>
+                  <Button variant="contained" onClick={() => openContactVisibilityPopup(contact.contactId, `${contact.firstName} ${contact.lastName}`)}>Settings</Button>
                 </div>
               ))}
             </div>
@@ -293,7 +295,7 @@ export default function ContactsPage() {
           {
           modal === 'add contact'
             ? <AddContact setOutgoingPendingList={setOutgoingPendingList} />
-            : <ContactVisibility contactId={contactId} />
+            : <ContactVisibility contactId={contactId} contactName={contactName} />
            }
         </Box>
       </Modal>

@@ -1,5 +1,14 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useState } from 'react';
 import {
   Avatar, Badge,
@@ -9,9 +18,17 @@ import ProfilePopover from '../atoms/ProfilePopover';
 import { getNameInitials } from '../others/helper';
 import { useMedicalContext } from '../others/store';
 
-// ProfilePage > ProfileAvatar (AddPhoto) > ProfilePopover
-
-function ProfileAvatar({
+/*
+* ========================================================
+* ========================================================
+*
+*                 ProfileAvatar Component
+*
+* ========================================================
+* ========================================================
+*/
+// Component order: ProfilePage > ProfileAvatar (AddPhoto) > ProfilePopover
+export default function ProfileAvatar({
   popoverContent, currentPhoto, submitClick,
 }) {
   const [anchorEl, setAnchorEl] = useState();
@@ -62,5 +79,3 @@ function ProfileAvatar({
     </div>
   );
 }
-
-export default ProfileAvatar;

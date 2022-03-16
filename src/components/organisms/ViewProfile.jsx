@@ -1,10 +1,28 @@
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React from 'react';
 import { IconButton, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import { useMedicalContext } from '../others/store';
 
-function ViewProfile() {
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                   ViewProfile Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function ViewProfile() {
   const { store } = useMedicalContext();
 
   const {
@@ -27,5 +45,3 @@ function ViewProfile() {
 
   );
 }
-
-export default ViewProfile;

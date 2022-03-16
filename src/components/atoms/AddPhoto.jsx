@@ -1,10 +1,28 @@
 /* eslint-disable react/prop-types */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React from 'react';
 import { FormControl, Box, Typography } from '@mui/material';
 
 // ProfilePage > ProfileAvatar (AddPhoto) > ProfilePopover
 
-function AddPhoto({
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                 AddPhoto Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function AddPhoto({
   caption, setCaption, setUploadedPhoto,
 }) {
   const imageHandler = (e) => {
@@ -32,5 +50,3 @@ function AddPhoto({
     </div>
   );
 }
-
-export default AddPhoto;

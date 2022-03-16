@@ -30,7 +30,7 @@ export default function AddChaperone() {
   const { store } = useMedicalContext();
   const { userId, firstName, lastName } = store;
 
-  const [family, setFamily] = useState('');
+  const [contacts, setContacts] = useState('');
   const [patientId, setPatientId] = useState('');
   const [patientName, setPatientName] = useState('');
   const [chaperoneName, setChaperoneName] = useState('');
@@ -48,16 +48,16 @@ export default function AddChaperone() {
       .then((result) => {
         setPatientArr(result.data.patientDetailsObj);
       });
-    axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/all-family?${data.toString()}`)
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/all-contacts?${data.toString()}`)
       .then((result) => {
-        const familyArr = result.data.data;
+        const contactArr = result.data.data;
         const tempArr = [];
-        for (let i = 0; i < familyArr.length; i += 1) {
-          tempArr.push({ value: `${familyArr[i].name},${familyArr[i].familyMemberId}`, label: familyArr[i].name });
+        for (let i = 0; i < contactArr.length; i += 1) {
+          tempArr.push({ value: `${contactArr[i].firstName} ${contactArr[i].lastName},${contactArr[i].contactId}`, label: `${contactArr[i].firstName} ${contactArr[i].lastName}` });
         }
         // Show user their own name to add as a chaperone
         tempArr.push({ value: `${firstName} ${lastName},${userId}`, label: `${firstName} ${lastName}` });
-        setFamily(tempArr);
+        setContacts(tempArr);
       });
   }, []);
 
@@ -121,7 +121,7 @@ export default function AddChaperone() {
               />
 
               <Autocomplete
-                options={family}
+                options={contacts}
                 onChange={(event, newValue) => { updateChaperone(newValue.value); }}
                 renderInput={(params) => <TextField {...params} label="Add Chaperone" required />}
                 filterOptions={(options, params) => {
