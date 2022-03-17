@@ -34,6 +34,9 @@ import UserAuthPage from './components/pages/UserAuthPage';
 import AddChaperone from './components/organisms/AddChaperone';
 import EditProfile from './components/organisms/EditProfile';
 import ViewProfile from './components/organisms/ViewProfile';
+import AddMedPage from './components/pages/AddMedPage';
+import MedList from './components/organisms/MedList';
+import EditMedCard from './components/organisms/EditMedCard';
 import NavBar from './components/molecules/Navbar';
 
 /*
@@ -117,6 +120,9 @@ export default function App() {
                     <Route path="add-hospital" element={<AddHospital />} />
                     <Route path="add-department" element={<AddDepartment />} />
                     <Route path="add-chaperone" element={<AddChaperone />} />
+                    <Route path="add-med" element={<AddMedPage />} />
+                    <Route path="med-list" element={<MedList />} />
+                    <Route path="edit-med" element={<EditMedCard />} />
 
                   </Route>
                 </Route>
