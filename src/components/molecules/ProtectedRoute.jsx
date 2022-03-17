@@ -11,9 +11,9 @@
  */
 
 // import React, { useEffect, useState } from 'react';
-import React, { useState } from 'react';
-import { useNavigate, Navigate, Outlet } from 'react-router-dom';
-import { authenticate } from '../others/store';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, Outlet, useLocation } from 'react-router-dom';
+import { authenticate, useMedicalContext } from '../others/store';
 
 /*
  * ========================================================
@@ -25,23 +25,27 @@ import { authenticate } from '../others/store';
  * ========================================================
  */
 export default function ProtectedRoute() {
-  // const { dispatch } = useMedicalContext();
+  const { dispatch } = useMedicalContext();
   const navigate = useNavigate();
-  const [error, setError] = useState(false);
+  const location = useLocation();
 
-  const waitForPromise = async () => {
-    const res = await authenticate();
-    console.log('<== verified route ==>', res);
-    // dispatch(authAction(res));
-    if (res.error) {
-      console.log('<== illegal route ==>', res);
-      setError(true);
-      return navigate('/auth');
-    }
-    return true;
-  };
+  // useEffect runs on load and everytime the URL changes
+  // location.pathname provides the current url
+  // the path gets authenticated everytime there is a url change
+  // also dispatches user details from token to the medicalReducer in store
 
-  waitForPromise();
+  useEffect(() => {
+    // authenticate contains a promise, hence it is executed within an async function
+    // and called at the bottom
+    const isAuth = async () => {
+      // authenticate(dispatch) returns a boolean
+      // true if token sent is authenticated
+      // false if no token or token sent is not authenticated
+      const res = await authenticate(dispatch);
+      if (!res) navigate('/auth');
+    };
+    isAuth();
+  }, [location.pathname]);
 
-  return error ? <Navigate to="/auth" replace /> : <Outlet />;
+  return <Outlet />;
 }

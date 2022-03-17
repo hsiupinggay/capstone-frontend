@@ -1,13 +1,20 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { CardContent, FormControl, TextField } from '@mui/material';
+import {
+  CardContent, FormControl, Stack, TextField, Typography,
+} from '@mui/material';
 
-function MedName({ handleName }) {
+function MedName({ name, handleName, title }) {
   return (
     <div>
       <CardContent>
         <FormControl>
-          <TextField variant="outlined" label="Name" onChange={handleName} />
+          <Stack
+            spacing={1}
+          >
+            <Typography variant="h3">{title}</Typography>
+            <TextField variant="outlined" label="Name" onChange={handleName} value={name} />
+          </Stack>
         </FormControl>
       </CardContent>
     </div>

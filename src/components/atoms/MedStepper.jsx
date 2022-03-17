@@ -5,14 +5,19 @@ import {
 } from '@mui/material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import { useNavigate } from 'react-router-dom';
 
 function MedStepper({ setActiveStep, activeStep, handleSubmit }) {
+  const navigate = useNavigate();
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    if (activeStep === 0) {
+      return navigate(-1);
+    }
+    return setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
   return (
     <MobileStepper
@@ -34,7 +39,7 @@ function MedStepper({ setActiveStep, activeStep, handleSubmit }) {
 
       )}
       backButton={(
-        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+        <Button size="small" onClick={handleBack}>
           <KeyboardArrowLeft />
           Back
         </Button>

@@ -14,6 +14,7 @@ function Prescription({
   handlePrescriptionQty,
   reminderChecked,
   handleReminder,
+  prescriptionQty,
   prescriptionDate,
 }) {
   return (
@@ -46,6 +47,7 @@ function Prescription({
                 variant="outlined"
                 label="Prescription Qty"
                 type="number"
+                value={prescriptionQty}
                 onChange={handlePrescriptionQty}
               />
             </FormControl>

@@ -14,6 +14,9 @@ function MedFrequency({
   handleDuration,
   checked,
   handleSwitch,
+  handleNote,
+  dosage,
+  note,
 }) {
   return (
     <div>
@@ -54,6 +57,7 @@ function MedFrequency({
                 min="1"
                 max="20"
                 onChange={handleDosage}
+                value={dosage}
                 disabled={checked}
               />
             </FormControl>
@@ -111,7 +115,6 @@ function MedFrequency({
             {' '}
             <Typography variant="body1">Every</Typography>
             <FormControl>
-
               <TextField
                 variant="outlined"
                 label="Duration"
@@ -123,8 +126,17 @@ function MedFrequency({
                 value={duration}
               />
             </FormControl>
+
             <Typography variant="body1">{duration === '1' ? 'Day' : 'Days'}</Typography>
           </Stack>
+          <FormControl>
+            <TextField
+              variant="outlined"
+              label="Note"
+              value={note}
+              onChange={handleNote}
+            />
+          </FormControl>
         </Stack>
       </CardContent>
     </div>

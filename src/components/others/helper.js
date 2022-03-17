@@ -29,4 +29,20 @@ const getNameInitials = (first, last) => {
   const letter2 = getFirstLetter(last);
   return letter1.concat(letter2);
 };
-export { validateEmail, getNameInitials };
+
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *             Get user initials
+ *        For profile avatar when no photo
+ * ========================================================
+ * ========================================================
+ */
+const getDate = (date, days) => {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+};
+
+export { validateEmail, getNameInitials, getDate };

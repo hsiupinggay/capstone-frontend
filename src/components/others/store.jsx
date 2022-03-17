@@ -11,7 +11,7 @@
  * ========================================================
  */
 import React, { useReducer } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 /*
@@ -233,11 +233,10 @@ export async function signup(dispatch, data) {
 // Authenticate JWT
 // This fucntion does not use dispatch
 // Might consider moving out of store into helper.js
-export async function authenticate() {
-  const navigate = useNavigate();
+export async function authenticate(dispatch) {
   const token = localStorage.getItem('token');
   if (!token) {
-    navigate('/auth');
+    return false;
   }
   const config = { headers: { authorization: `Bearer ${token}` } };
   try {
@@ -245,12 +244,12 @@ export async function authenticate() {
     console.log('<== authenticate res.data ==>', res.data);
 
     // Sets user details again, in case user closed window
-    // dispatch(authAction(res.data));
+    dispatch(authAction(res.data));
     console.log('<== dispatch auth action ==>', authAction(res.data));
-    return res.data;
+    return true;
   } catch (err) {
     console.log(err);
-    navigate('/auth');
+    return false;
   }
 }
 
