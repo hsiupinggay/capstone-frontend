@@ -60,7 +60,6 @@ export default function ContactsPage() {
   const [outgoingPendingList, setOutgoingPendingList] = useState();
   const [contactId, setContactId] = useState();
   const [contactName, setContactName] = useState();
-
   const [open, setOpen] = useState(false);
   const [modal, setModal] = useState('add contact');
 

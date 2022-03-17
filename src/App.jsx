@@ -35,6 +35,9 @@ import AddChaperone from './components/organisms/AddChaperone';
 import EditProfile from './components/organisms/EditProfile';
 import ViewProfile from './components/organisms/ViewProfile';
 import NavBar from './components/molecules/Navbar';
+import PatientListPage from './components/pages/PatientListPage';
+import PatientProfilePage from './components/pages/PatientProfilePage';
+import PatientVisitLocationPage from './components/pages/PatientVisitLocationPage';
 
 /*
  * ========================================================
@@ -117,7 +120,17 @@ export default function App() {
                     <Route path="add-hospital" element={<AddHospital />} />
                     <Route path="add-department" element={<AddDepartment />} />
                     <Route path="add-chaperone" element={<AddChaperone />} />
-
+                    <Route
+                      exact
+                      path="patients"
+                      element={<PatientListPage />}
+                    />
+                    <Route
+                      exact
+                      path="patient"
+                      element={<PatientProfilePage />}
+                    />
+                    <Route path="location-details" element={<PatientVisitLocationPage />} />
                   </Route>
                 </Route>
                 <Route

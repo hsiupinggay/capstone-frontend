@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 /*
  * ========================================================
@@ -26,7 +27,7 @@ import { useMedicalContext } from '../others/store';
  * ========================================================
  * ========================================================
  */
-export default function AddPatient() {
+export default function AddPatient({ accessedFromPatientPage, setRefresh, refresh }) {
   const { store } = useMedicalContext();
   const { userId } = store;
 
@@ -56,20 +57,36 @@ export default function AddPatient() {
             </p>
           </div>,
         );
+        // Trigger patient list page to rerender
+        if (refresh) {
+          setRefresh(false);
+        } else {
+          setRefresh(true);
+        }
       }
     });
   };
   return (
     <div>
-      <Button variant="contained" onClick={() => navigate('/add-appt')}>Back</Button>
-      <Button variant="contained" disabled>+ Patient</Button>
-      <Button variant="contained" onClick={() => navigate('/add-hospital')}>+ Hospital</Button>
-      <Button variant="contained" onClick={() => navigate('/add-department')}>+ Department</Button>
-      <Button variant="contained" onClick={() => navigate('/add-chaperone')}>+ Chaperone</Button>
-
+      {
+        accessedFromPatientPage === true
+          ? <div />
+          : (
+            <div>
+              <Button variant="contained" onClick={() => navigate('/add-appt')}>Back</Button>
+              <Button variant="contained" disabled>+ Patient</Button>
+              <Button variant="contained" onClick={() => navigate('/add-hospital')}>+ Hospital</Button>
+              <Button variant="contained" onClick={() => navigate('/add-department')}>+ Department</Button>
+              <Button variant="contained" onClick={() => navigate('/add-chaperone')}>+ Chaperone</Button>
+            </div>
+          )
+      }
       <br />
       <br />
       <form onSubmit={handleSubmit}>
+        Add New Patient
+        <br />
+        <br />
         <TextField label="First Name" onChange={(e) => setFirstName(e.target.value)} required />
         <TextField label="Last Name" onChange={(e) => setLastName(e.target.value)} required />
         <TextField label="Relationship" onChange={(e) => setRelationship(e.target.value)} required />
