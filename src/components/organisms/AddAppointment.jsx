@@ -1,9 +1,5 @@
-/* eslint-disable max-len */
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/no-array-index-key */
 /*
  * ========================================================
  * ========================================================
@@ -21,6 +17,7 @@ import { DateTimePicker, LocalizationProvider } from '@mui/lab';
 import DateAdapter from '@mui/lab/AdapterLuxon';
 import moment from 'moment';
 import Button from '@mui/material/Button';
+import { useMedicalContext } from '../others/store';
 
 /*
  * ========================================================
@@ -32,6 +29,9 @@ import Button from '@mui/material/Button';
  * ========================================================
  */
 export default function AddAppointment() {
+  const { store } = useMedicalContext();
+  const { userId } = store;
+
   const [patientArr, setPatientArr] = useState();
   const [hospArr, setHospArr] = useState();
   const [deptArr, setDeptArr] = useState();
@@ -49,22 +49,19 @@ export default function AddAppointment() {
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
     const data = new URLSearchParams();
-    // ################################## HARDCODED FOR NOW  ##################################
-    // data.append('userId', userId);
-    data.append('userId', '62259eddb4a77ae0343f7305');
+    data.append('userId', userId);
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/all-patients-list?${data.toString()}`)
       .then((result) => {
         // Add additional option to trigger redirect to add patient popup
         result.data.patientDetailsObj.push({ identity: { name: { first: '--ADD NEW PATIENT--', last: '' } } });
         setPatientArr(result.data.patientDetailsObj);
-        console.log(result.data.patientDetailsObj);
       });
   }, []);
 
   const selectDept = (string) => {
     if (string === '--ADD NEW DEPARTMENT--') {
       // Redirect to add department component
-      navigate('/nav/add-department');
+      navigate('/add-department');
     } else {
       setDepartment(string);
     }
@@ -72,13 +69,11 @@ export default function AddAppointment() {
 
   // When user has selected a patient, find related hospitals and chaperones
   const updateHosChapDropdowns = (string) => {
-    console.log(string);
     const patientSplitStr = string.split(',');
-    console.log(patientSplitStr);
     if (patientSplitStr[0] === 'undefined') {
       // Redirect to add patient component
 
-      navigate('/nav/add-patient');
+      navigate('/add-patient');
     } else {
       setPatientId(patientSplitStr[0]);
       setPatientName(patientSplitStr[1]);
@@ -97,7 +92,7 @@ export default function AddAppointment() {
   const updateDept = (hospitalInput) => {
     if (hospitalInput === '--ADD NEW HOSPITAL--') {
       // Redirect to add hospital component
-      navigate('/nav/add-hospital');
+      navigate('/add-hospital');
     } else {
       setHospital(hospitalInput);
       for (let i = 0; i < hospArr.length; i += 1) {
@@ -111,11 +106,10 @@ export default function AddAppointment() {
 
   // When user selects a chaperone, save name and id in useState
   const updateChaperoneState = (value) => {
-    console.log(value);
     const chaperoneSplitStr = value.split(',');
     if (chaperoneSplitStr[1] === 'undefined') {
       // Redirect to add chaperone component
-      navigate('/nav/add-chaperone');
+      navigate('/add-chaperone');
     } else {
       setChaperone(chaperoneSplitStr[0]);
       setChaperoneId(chaperoneSplitStr[1]);

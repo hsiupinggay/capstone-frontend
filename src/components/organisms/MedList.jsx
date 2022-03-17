@@ -1,12 +1,31 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Import
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useEffect, useState } from 'react';
 import {
   Card, CardContent, Stack, Typography,
 } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *          Lists medicine of particular patient
+ *
+ * ========================================================
+ * ========================================================
+ */
 
 function MedList() {
   const [medicineList, setMedicineList] = useState();

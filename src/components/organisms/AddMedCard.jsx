@@ -1,6 +1,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable array-callback-return */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useState } from 'react';
 import { Card } from '@mui/material';
 import axios from 'axios';
@@ -12,8 +21,16 @@ import MedName from '../molecules/MedName';
 import MedStepper from '../atoms/MedStepper';
 import MedReminder from '../molecules/MedReminder';
 
-function AddMedCard() {
-  // related to MedName
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *              Card for adding medicine
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function AddMedCard() {
   const [name, setName] = useState('');
 
   //  related to MedFrequency
@@ -154,5 +171,3 @@ function AddMedCard() {
     </div>
   );
 }
-
-export default AddMedCard;

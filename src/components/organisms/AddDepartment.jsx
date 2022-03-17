@@ -1,9 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable max-len */
-/* eslint-disable no-console */
 /*
  * ========================================================
  * ========================================================
@@ -20,6 +16,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import departmentList from '../others/departmentList';
+import { useMedicalContext } from '../others/store';
 
 /*
  * ========================================================
@@ -31,6 +28,9 @@ import departmentList from '../others/departmentList';
  * ========================================================
  */
 export default function AddDepartment() {
+  const { store } = useMedicalContext();
+  const { userId } = store;
+
   const [hospital, setHospital] = useState('');
   const [patientId, setPatientId] = useState('');
   const [patientName, setPatientName] = useState('');
@@ -44,9 +44,7 @@ export default function AddDepartment() {
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
     const data = new URLSearchParams();
-    // ################################## HARDCODED FOR NOW  ##################################
-    // data.append('userId', userId);
-    data.append('userId', '62259eddb4a77ae0343f7305');
+    data.append('userId', userId);
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/all-patients-list?${data.toString()}`)
       .then((result) => {
         setPatientArr(result.data.patientDetailsObj);
@@ -91,11 +89,11 @@ export default function AddDepartment() {
         ? <div />
         : (
           <div>
-            <Button variant="contained" onClick={() => navigate('/nav/add-appt')}>Back</Button>
-            <Button variant="contained" onClick={() => navigate('/nav/add-patient')}>+ Patient</Button>
-            <Button variant="contained" onClick={() => navigate('/nav/add-hospital')}>+ Hospital</Button>
+            <Button variant="contained" onClick={() => navigate('/add-appt')}>Back</Button>
+            <Button variant="contained" onClick={() => navigate('/add-patient')}>+ Patient</Button>
+            <Button variant="contained" onClick={() => navigate('/add-hospital')}>+ Hospital</Button>
             <Button variant="contained" disabled>+ Department</Button>
-            <Button variant="contained" onClick={() => navigate('/nav/add-chaperone')}>+ Chaperone</Button>
+            <Button variant="contained" onClick={() => navigate('/add-chaperone')}>+ Chaperone</Button>
             {' '}
             <br />
             <br />

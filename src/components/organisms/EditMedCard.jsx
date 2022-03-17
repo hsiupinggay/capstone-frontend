@@ -13,7 +13,17 @@ import MedName from '../molecules/MedName';
 import MedStepper from '../atoms/MedStepper';
 import MedReminder from '../molecules/MedReminder';
 
-function AddMedCard() {
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *              Edit Medicine Card Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+
+function EditMedCard() {
   // related to MedName
   const [name, setName] = useState('');
 
@@ -188,4 +198,4 @@ function AddMedCard() {
   );
 }
 
-export default AddMedCard;
+export default EditMedCard;

@@ -1,11 +1,30 @@
 /* eslint-disable max-len */
 /* eslint-disable react/prop-types */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React from 'react';
 import {
   CardContent, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField, Typography, Switch, Stack,
 } from '@mui/material';
 
-function MedFrequency({
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                   MedFrequency Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function MedFrequency({
+  dosage,
   dosageCounter,
   times,
   duration, handleDosage,
@@ -15,7 +34,6 @@ function MedFrequency({
   checked,
   handleSwitch,
   handleNote,
-  dosage,
   note,
 }) {
   return (
@@ -142,5 +160,3 @@ function MedFrequency({
     </div>
   );
 }
-
-export default MedFrequency;
