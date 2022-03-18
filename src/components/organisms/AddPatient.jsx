@@ -1,6 +1,5 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable max-len */
-/* eslint-disable no-console */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-props-no-spreading */
 /*
  * ========================================================
  * ========================================================
@@ -13,6 +12,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { TextField, Button } from '@mui/material';
+import { DatePicker, LocalizationProvider } from '@mui/lab';
+import DateAdapter from '@mui/lab/AdapterLuxon';
+import moment from 'moment';
+import { useMedicalContext } from '../others/store';
 
 /*
  * ========================================================
@@ -23,17 +27,16 @@ import { useNavigate } from 'react-router-dom';
  * ========================================================
  * ========================================================
  */
-export default function AddPatient() {
+export default function AddPatient({ accessedFromPatientPage, setRefresh, refresh }) {
+  const { store } = useMedicalContext();
+  const { userId } = store;
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [relationship, setRelationship] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [DOB, setDOB] = useState('');
+  const [DOB, setDOB] = useState(null);
   const navigate = useNavigate();
-
-  // ################################## HARDCODED FOR NOW  ##################################
-  // data.append('userId', userId);
-  const userId = '62259eddb4a77ae0343f7305';
 
   // On form submit, send data to backend to store in DB
   const handleSubmit = (event) => {
@@ -54,21 +57,53 @@ export default function AddPatient() {
             </p>
           </div>,
         );
+        // Trigger patient list page to rerender
+        if (refresh) {
+          setRefresh(false);
+        } else {
+          setRefresh(true);
+        }
       }
     });
   };
   return (
     <div>
-      <button type="button" onClick={() => navigate('/add-appt')}>Back</button>
+      {
+        accessedFromPatientPage === true
+          ? <div />
+          : (
+            <div>
+              <Button variant="contained" onClick={() => navigate('/add-appt')}>Back</Button>
+              <Button variant="contained" disabled>+ Patient</Button>
+              <Button variant="contained" onClick={() => navigate('/add-hospital')}>+ Hospital</Button>
+              <Button variant="contained" onClick={() => navigate('/add-department')}>+ Department</Button>
+              <Button variant="contained" onClick={() => navigate('/add-chaperone')}>+ Chaperone</Button>
+            </div>
+          )
+      }
+      <br />
+      <br />
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="First Name" onChange={(e) => setFirstName(e.target.value)} required />
-        <input type="text" placeholder="Last Name" onChange={(e) => setLastName(e.target.value)} required />
-        <input type="text" placeholder="Relationship" onChange={(e) => setRelationship(e.target.value)} required />
-        <div>
-          <label htmlFor="date" name="date">DOB</label>
-          <input type="date" id="date" name="date" onChange={(event) => setDOB(event.target.value)} required />
-        </div>
-        <button type="submit"> Submit</button>
+        Add New Patient
+        <br />
+        <br />
+        <TextField label="First Name" onChange={(e) => setFirstName(e.target.value)} required />
+        <TextField label="Last Name" onChange={(e) => setLastName(e.target.value)} required />
+        <TextField label="Relationship" onChange={(e) => setRelationship(e.target.value)} required />
+
+        <LocalizationProvider dateAdapter={DateAdapter}>
+          <DatePicker
+            label="Date Of Birth"
+            value={DOB}
+            onChange={(newValue) => {
+              setDOB(moment(`${newValue.c.year}-${newValue.c.month}-${newValue.c.day}`).format('YYYY-MM-DD'));
+            }}
+            renderInput={(params) => <TextField {...params} required />}
+          />
+        </LocalizationProvider>
+        <br />
+        <br />
+        <Button variant="contained" type="submit">Submit</Button>
       </form>
       <div>
         {

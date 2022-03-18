@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-underscore-dangle */
 /*
@@ -11,7 +12,6 @@
  */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
@@ -26,28 +26,22 @@ import { useMedicalContext } from '../others/store';
  * ========================================================
  * ========================================================
  */
-export default function AddChaperone() {
+export default function AddChaperoneTruncated({ name, setChaperonesArr }) {
   const { store } = useMedicalContext();
-  const { userId, firstName, lastName } = store;
+  const {
+    userId, firstName, lastName, patientId,
+  } = store;
 
   const [contacts, setContacts] = useState('');
-  const [patientId, setPatientId] = useState('');
-  const [patientName, setPatientName] = useState('');
   const [chaperoneName, setChaperoneName] = useState('');
   const [chaperoneId, setChaperoneId] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [patientArr, setPatientArr] = useState();
-  const navigate = useNavigate();
   const filter = createFilterOptions();
 
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
     const data = new URLSearchParams();
     data.append('userId', userId);
-    axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/all-patients-list?${data.toString()}`)
-      .then((result) => {
-        setPatientArr(result.data.patientDetailsObj);
-      });
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/all-contacts?${data.toString()}`)
       .then((result) => {
         const contactArr = result.data.data;
@@ -60,12 +54,6 @@ export default function AddChaperone() {
         setContacts(tempArr);
       });
   }, []);
-
-  const updatePatient = (string) => {
-    const patientSplitStr = string.split(',');
-    setPatientId(patientSplitStr[0]);
-    setPatientName(patientSplitStr[1]);
-  };
 
   const updateChaperone = (optionValue) => {
     const chaperoneSplitStr = optionValue.split(',');
@@ -80,13 +68,17 @@ export default function AddChaperone() {
       chaperoneName,
       chaperoneId: chaperoneId || '',
       patientId,
+      getAllPatientDetails: true,
     };
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-chaperone`, data).then((response) => {
       if (response.status === 200) {
+        const { chaperones } = response.data;
+        setChaperonesArr(chaperones);
         setSuccessMessage(
+
           <div>
             <p>
-              {`You have added ${chaperoneName} as ${patientName}'s chaperone.`}
+              {`You have added ${chaperoneName} as ${name}'s chaperone.`}
             </p>
           </div>,
         );
@@ -96,29 +88,17 @@ export default function AddChaperone() {
 
   return (
     <div>
-      { patientArr === undefined
+      { contacts === undefined
         ? <div />
         : (
           <div>
-            <Button variant="contained" onClick={() => navigate('/add-appt')}>Back</Button>
-            <Button variant="contained" onClick={() => navigate('/add-patient')}>+ Patient</Button>
-            <Button variant="contained" onClick={() => navigate('/add-hospital')}>+ Hospital</Button>
-            <Button variant="contained" onClick={() => navigate('/add-department')}>+ Department</Button>
-            <Button variant="contained" disabled>+ Chaperone</Button>
-            <br />
-            <br />
+            <strong>
+              {' '}
+              You are adding a chaperone for
+              {' '}
+              {name}
+            </strong>
             <form onSubmit={handleSubmit}>
-
-              <Autocomplete
-                options={patientArr}
-                getOptionLabel={(option) => `${option.identity.name.first} ${option.identity.name.last}`}
-                renderInput={(params) => <TextField {...params} label="Select Patient" required />}
-                onChange={(event, newValue) => { updatePatient(`${newValue._id},${`${newValue.identity.name.first} ${newValue.identity.name.last}`}`); }}
-                selectOnFocus
-                clearOnBlur
-                handleHomeEndKeys
-                sx={{ width: 250 }}
-              />
 
               <Autocomplete
                 options={contacts}

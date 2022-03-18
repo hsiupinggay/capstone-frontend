@@ -1,13 +1,28 @@
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-// Import Components
 import AppointmentsNavigator from '../organisms/AppointmentsNavigator';
 import AppointmentCalendar from '../organisms/AppointmentCalendar';
 import AppointmentList from '../organisms/AppointmentList';
 
-function AppointmentsPage() {
-  // 2 views: false - calendar; true - list
+/*
+* ========================================================
+* ========================================================
+*
+*                AppointmentsPage Component
+*
+* ========================================================
+* ========================================================
+*/
+export default function AppointmentsPage() {
   const [toggleView, setToggleView] = useState(false);
   const [displayData, setDisplayData] = useState();
   const [filterData, setFilterData] = useState()
@@ -38,5 +53,3 @@ function AppointmentsPage() {
     </div>
   );
 }
-
-export default AppointmentsPage;

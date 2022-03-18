@@ -11,7 +11,7 @@
  * ========================================================
  */
 import React, { useReducer } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 /*
@@ -28,7 +28,8 @@ export const initialState = {
   firstName: '',
   lastName: '',
   email: '',
-  photo: '',
+  photo: null,
+  patientId: '',
 };
 
 /*
@@ -49,7 +50,22 @@ export function medicalReducer(state, action) {
         firstName: action.payload.name.first,
         lastName: action.payload.name.last,
         email: action.payload.email,
+        photo: action.payload.photo,
       };
+    case AUTH:
+      return {
+        ...state,
+        userId: action.payload.id,
+        firstName: action.payload.name.first,
+        lastName: action.payload.name.last,
+        email: action.payload.email,
+      };
+    case UPLOAD_PHOTO:
+      return {
+        ...state,
+        photo: action.payload,
+      };
+
     case LOGOUT:
       return {
         ...state,
@@ -62,6 +78,18 @@ export function medicalReducer(state, action) {
     case SIGNUP:
       return {
         ...state,
+      };
+    case EDIT_USER:
+      return {
+        ...state,
+        firstName: action.payload.name.first,
+        lastName: action.payload.name.last,
+        email: action.payload.email,
+      };
+    case SELECT_PATIENT:
+      return {
+        ...state,
+        patientId: action.payload,
       };
 
     default:
@@ -82,6 +110,10 @@ export function medicalReducer(state, action) {
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
 const SIGNUP = 'SIGNUP';
+const AUTH = 'AUTH';
+const UPLOAD_PHOTO = 'UPLOAD_PHOTO';
+const EDIT_USER = 'EDIT_USER';
+const SELECT_PATIENT = 'SELECT_PATIENT';
 
 export function loginAction(payload) {
   return {
@@ -97,9 +129,37 @@ export function signupAction(payload) {
   };
 }
 
+export function authAction(payload) {
+  return {
+    type: AUTH,
+    payload,
+  };
+}
+
+export function uploadPhotoAction(payload) {
+  return {
+    type: UPLOAD_PHOTO,
+    payload,
+  };
+}
+
+export function editUserAction(payload) {
+  return {
+    type: EDIT_USER,
+    payload,
+  };
+}
+
 export function logoutAction() {
   return {
     type: LOGOUT,
+  };
+}
+
+export function setPatientAction(payload) {
+  return {
+    type: SELECT_PATIENT,
+    payload,
   };
 }
 
@@ -187,22 +247,48 @@ export async function signup(dispatch, data) {
 // Authenticate JWT
 // This fucntion does not use dispatch
 // Might consider moving out of store into helper.js
-export async function authenticate() {
-  const navigate = useNavigate();
+export async function authenticate(dispatch) {
   const token = localStorage.getItem('token');
   if (!token) {
-    alert('Something went wrong, please sign in again.');
-    navigate('/');
+    return false;
   }
   const config = { headers: { authorization: `Bearer ${token}` } };
   try {
     const res = await axios.get(`${REACT_APP_BACKEND_URL}/user/authenticate`, config);
-    if (res.data.verified) {
-      return res.data.verified;
-    }
+    console.log('<== authenticate res.data ==>', res.data);
+
+    // Sets user details again, in case user closed window
+    dispatch(authAction(res.data));
+    console.log('<== dispatch auth action ==>', authAction(res.data));
+    return true;
   } catch (err) {
     console.log(err);
-    navigate('/');
+    return false;
+  }
+}
+
+// Upload Photo
+export async function uploadPhoto(dispatch, data) {
+  try {
+    const res = await axios.post(`${REACT_APP_BACKEND_URL}/user/photo`, data);
+    dispatch(uploadPhotoAction(res.data.userPhoto));
+    console.log('<== STORE: res.data ==>', res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return error.response.data;
+  }
+}
+
+// Edit Profile
+export async function editProfile(dispatch, data) {
+  try {
+    const res = await axios.post(`${REACT_APP_BACKEND_URL}/user/edit`, data);
+    dispatch(editUserAction(res.data.payload));
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return error.response.data;
   }
 }
 

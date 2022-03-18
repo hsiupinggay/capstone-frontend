@@ -3,36 +3,40 @@
  * ========================================================
  * ========================================================
  *
- *                        Imports
+ *              Imports
  *
  * ========================================================
  * ========================================================
  */
 import React from 'react';
-
-// Helper text to appear under inputs
-// e.g. if there is an error message
+import {
+  CardContent, FormControl, Stack, TextField, Typography,
+} from '@mui/material';
 
 /*
  * ========================================================
  * ========================================================
  *
- *                 HelperText Component
+ *              MedName Component
  *
  * ========================================================
  * ========================================================
  */
-export default function HelperText({ text }) {
+function MedName({ name, handleName, title }) {
   return (
-    <div
-      className="
-    text-xs
-    font-medium
-    text-red-600
-    text-center
-    my-2"
-    >
-      <p>{text}</p>
+    <div>
+      <CardContent>
+        <FormControl>
+          <Stack
+            spacing={1}
+          >
+            <Typography variant="h3">{title}</Typography>
+            <TextField variant="outlined" label="Name" onChange={handleName} value={name} />
+          </Stack>
+        </FormControl>
+      </CardContent>
     </div>
   );
 }
+
+export default MedName;

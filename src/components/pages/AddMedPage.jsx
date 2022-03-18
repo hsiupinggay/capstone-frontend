@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /*
  * ========================================================
  * ========================================================
@@ -9,30 +8,21 @@
  * ========================================================
  */
 import React from 'react';
-
-// Helper text to appear under inputs
-// e.g. if there is an error message
+import AddMedCard from '../organisms/AddMedCard';
 
 /*
  * ========================================================
  * ========================================================
  *
- *                 HelperText Component
+ *                   AddMedPage Component
  *
  * ========================================================
  * ========================================================
  */
-export default function HelperText({ text }) {
+export default function AddMedPage() {
   return (
-    <div
-      className="
-    text-xs
-    font-medium
-    text-red-600
-    text-center
-    my-2"
-    >
-      <p>{text}</p>
+    <div>
+      <AddMedCard />
     </div>
   );
 }

@@ -1,5 +1,14 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React from 'react';
 
 // label: label of input e.g. "Password"
@@ -9,7 +18,16 @@ import React from 'react';
 // this input does not have a required attribute,
 // for required input, please use RequiredTextfield in './atoms/RequiredTextfield'
 
-function OptionalTextfield({ label, type, id }) {
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *              OptionalTextfield Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function OptionalTextfield({ label, type, id }) {
   return (
 
     <div className="mx-3">
@@ -47,5 +65,3 @@ function OptionalTextfield({ label, type, id }) {
 
   );
 }
-
-export default OptionalTextfield;
