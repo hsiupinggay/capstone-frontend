@@ -38,6 +38,7 @@ import NavBar from './components/molecules/Navbar';
 import PatientListPage from './components/pages/PatientListPage';
 import PatientProfilePage from './components/pages/PatientProfilePage';
 import PatientVisitLocationPage from './components/pages/PatientVisitLocationPage';
+import PatientMemoPage from './components/pages/PatientMemoPage';
 
 /*
  * ========================================================
@@ -131,6 +132,7 @@ export default function App() {
                       element={<PatientProfilePage />}
                     />
                     <Route path="location-details" element={<PatientVisitLocationPage />} />
+                    <Route path="patient-memos" element={<PatientMemoPage />} />
                   </Route>
                 </Route>
                 <Route

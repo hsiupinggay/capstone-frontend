@@ -145,7 +145,7 @@ export default function PatientProfilePage() {
               </div>
               <div>
                 {' '}
-                <Button variant="contained" onClick={() => navigate('/add-appt')}>memos</Button>
+                <Button variant="contained" onClick={() => navigate('/patient-memos')}>Memos</Button>
               </div>
             </div>
           )
