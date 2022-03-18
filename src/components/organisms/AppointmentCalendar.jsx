@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/solid';
+import Typography from '@mui/material/Typography';
+import Popover from '@mui/material/Popover';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 // Global variables to help print  Calendar
 const monthNames = [
@@ -24,6 +27,8 @@ function classNames(...classes) {
 }
 
 function AppointmentCalendar({ displayData }) {
+  
+
   // Get today's date
   const stateDate = new Date();
   // Set state to toggle between month views
@@ -31,6 +36,21 @@ function AppointmentCalendar({ displayData }) {
   const [year] = useState(stateDate.getFullYear());
   const [numOfDays, setNumOfDays] = useState([]);
   const [emptyDays, setEmptyDays] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [popoverText, setPopoverText] = useState('');
+
+  // Modal Handlers
+  const handleOpen = (event, eventText) => {
+    setAnchorEl(event.currentTarget);
+    setPopoverText(eventText);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
   // Function to check for "today"
   const isToday = (date) => {
@@ -60,62 +80,59 @@ function AppointmentCalendar({ displayData }) {
     setNumOfDays(daysArray);
   };
 
+  // useEffect to console.log and check if calendar is on correct month
   useEffect(() => {
     getNoOfDays();
     console.log(month, year);
   }, [month]);
 
-  // Placeholder for appointments
-  // const events = [
-  //   {
-  //     event_date: new Date(2022, 8, 1),
-  //     event_title: 'My Birthday :)',
-  //     event_theme: 'red',
-  //   },
+  // useEffect waiting on displayData from axios call
+  // maps data to events and display accordingly
+  useEffect(() => {
+    if (!displayData) return; // handles error if axios call still not done
+    const userDataArray = displayData.patientDetailsObj;
+    console.log(userDataArray);
 
-  //   {
-  //     event_date: new Date(20212, 11, 25),
-  //     event_title: 'Xmas Day',
-  //     event_theme: 'green',
-  //   },
-  //   {
-  //     event_date: new Date(2022, 9, 31),
-  //     event_title: 'Halloween',
-  //     event_theme: 'yellow',
-  //   },
-  //   {
-  //     event_date: new Date(2021, 11, 31),
-  //     event_title: 'New Years Eve',
-  //     event_theme: 'yellow',
-  //   },
-  // ];
+    const testDate = new Date(2022, 8, 15);
+    console.log('this is testDate: ', testDate);
 
-  const events = []
+    // after there is userDataArray... map to events
+    let updatedEvents = []
 
+    userDataArray.forEach(patient => {
+      const { identity, appointments } = patient
+      const displayName = `${identity.name.first} ${identity.name.last}`;
+      console.log(displayName);
+      const displayArray = [];
+      appointments.forEach(appointment => {
+        // operate on appointment.date -> string 'DD-MMM-YYYY'
+        const appointmentDate = appointment.date.split('-');
+        const appointmentDay = Number(appointmentDate[0]);
+        const appointmentMonth = Number(monthNames.findIndex(month => month === appointmentDate[1]));
+        const appointmentYear = Number(appointmentDate[2]);
+        // console.log(appointmentDate, appointmentDay, appointmentMonth, appointmentYear); DELETE LATER!!
 
-  // const themes = [
-  //   {
-  //     value: 'blue',
-  //     label: 'Blue Theme',
-  //   },
-  //   {
-  //     value: 'red',
-  //     label: 'Red Theme',
-  //   },
-  //   {
-  //     value: 'yellow',
-  //     label: 'Yellow Theme',
-  //   },
-  //   {
-  //     value: 'green',
-  //     label: 'Green Theme',
-  //   },
-  //   {
-  //     value: 'purple',
-  //     label: 'Purple Theme',
-  //   },
-  // ];
+        const appointmentObject = {
+          date: `${appointment.date} | ${appointment.time}`,
+          event_date: new Date(appointmentYear, appointmentMonth, appointmentDay),
+          event_title: `${appointment.time}: ${displayName} @ ${appointment.hospital.name}, ${appointment.hospital.department}`,
+          event_theme: 'blue', // blue red yellow green purple
+        };
+        displayArray.push(appointmentObject);
+      });
+      // console.log('this is display array: ', displayArray); DELETE LATER!!
+      updatedEvents = [...updatedEvents, ...displayArray];
+      // console.log(updatedEvents); DELETE LATER!!
+    });
+    setEvents(updatedEvents);
+  }, [displayData]);
 
+  // useEffect to check that events are updated correctly
+  useEffect(() => {
+    console.log('events updated!');
+    console.log(events);
+  }, [events]);
+  
   // Arrow button classNames
   const btnClass = (limit) => classNames(
     month === limit ? 'cursor-not-allowed opacity-25' : '',
@@ -133,6 +150,7 @@ function AppointmentCalendar({ displayData }) {
     getNoOfDays();
   };
 
+  // tailwind CSS classNames for color swapping
   const eventClass = (t) => {
     switch (t) {
       case 'blue':
@@ -147,6 +165,8 @@ function AppointmentCalendar({ displayData }) {
         return 'border-purple-200 text-purple-800 bg-purple-100';
     }
   };
+
+  // handle onClick on events to display full details
 
   return (
     <>
@@ -200,13 +220,25 @@ function AppointmentCalendar({ displayData }) {
                   <div className="overflow-y-auto mt-1 h-20">
                     {events.filter((e) => new Date(e.event_date).toDateString()
                     === new Date(year, month, date).toDateString()).map((e) => (
-                      <div key={e.event_title} className={classNames(eventClass(e.event_theme), 'px-2 py-1 rounded-lg mt-1 overflow-hidden border')}>
+                      <div key={e.event_title} className={classNames(eventClass(e.event_theme), 'px-2 py-1 rounded-lg mt-1 overflow-hidden border')} onClick={(event) => handleOpen(event, e.event_title)}>
                         <p className="text-sm truncate leading-tight">{e.event_title}</p>
                       </div>
                     ))}
                   </div>
                 </div>
               ))}
+              <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+              >
+                <Typography sx={{ p: 2 }}>{popoverText}</Typography>
+              </Popover>
             </div>
           </div>
         </div>

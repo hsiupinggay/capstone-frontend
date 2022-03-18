@@ -10,6 +10,7 @@ function AppointmentsPage() {
   // 2 views: false - calendar; true - list
   const [toggleView, setToggleView] = useState(false);
   const [displayData, setDisplayData] = useState();
+  const [filterData, setFilterData] = useState()
 
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
@@ -29,9 +30,9 @@ function AppointmentsPage() {
 
   return (
     <div className="h-5/6">
-      <AppointmentsNavigator toggleView={toggleView} setToggleView={setToggleView} />
+      <AppointmentsNavigator toggleView={toggleView} setToggleView={setToggleView} setFilterData={setFilterData} />
       { toggleView 
-        ? <AppointmentList displayData={displayData} />
+        ? <AppointmentList displayData={displayData} filterData={filterData} />
         : <AppointmentCalendar displayData={displayData} />
       }
     </div>

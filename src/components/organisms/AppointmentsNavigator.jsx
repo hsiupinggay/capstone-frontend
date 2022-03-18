@@ -29,7 +29,7 @@ export default function SplitButton({ toggleView, setToggleView }) {
         setToggleView(toggleView => !toggleView);
         break;
       case OPTION_FILTER:
-        // display the dropdown
+        // display the dropdown / modal
         break;
     }
   };

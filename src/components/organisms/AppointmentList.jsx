@@ -2,43 +2,20 @@ import React from 'react';
 import { Box, Paper, List, Card } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 
-// var arr = [{id:1, date:'2020-12-01'}, {id:1, date:'2020-12-15'}, {id:1, date:'2020-12-12'}]
-
-// function sortByDate(a, b) {
-//     if (a.date < b.date) {
-//         return 1;
-//     }
-//     if (a.date > b.date) {
-//         return -1;
-//     }
-//     return 0;
-// }
-
-// const sorted = arr.sort(sortByDate);
-// console.log(sorted);
-
-// array.sort(function(a,b){
-//   // Turn your strings into dates, and then subtract them
-//   // to get a value that is either negative, positive, or zero.
-//   return new Date(b.date) - new Date(a.date);
-// });
-
-// var arr = [{id:1, date:'2020-12-01'}, {id:1, date:'2020-12-15'}, {id:1, date:'2020-12-12'}]
-
-// function sortByDate(a, b) {
-//     if (a.date < b.date) {
-//         return 1;
-//     }
-//     if (a.date > b.date) {
-//         return -1;
-//     }
-//     return 0;
-// }
-
-// const sorted = arr.sort(sortByDate);
-// console.log(sorted);
-
-
+const monthNames = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
 
 function AppointmentList({ displayData }) {
   // const displayObj = {
@@ -59,17 +36,27 @@ function AppointmentList({ displayData }) {
     console.log(displayName);
     const displayArray = [];
     appointments.forEach(appointment => {
+      // const displayDate = appointment.date;
+      // console.log('slicing out months: ', appointment.date.slice(3, 6));
+      // const eventDate = appointment.date.replace(appointment.date.slice(3, 6), monthNames.findIndex(month => month === appointment.date.slice(3, 6)));
+      // console.log(eventDate);
+      const appointmentDate = appointment.date.split('-');
+      const appointmentDay = Number(appointmentDate[0]);
+      const appointmentMonth = Number(monthNames.findIndex(month => month === appointmentDate[1]));
+      const appointmentYear = Number(appointmentDate[2]);
       if (!appointment.chaperone) appointment.chaperone = 'none assigned';
       const displayObject = {
         patientName: displayName,
         chaperone: appointment.chaperone.name || 'none assigned',
         date: `${appointment.date} | ${appointment.time}`,
         hospital: `${appointment.hospital.name}, ${appointment.hospital.department}`,
+        event_date: new Date(`${appointmentYear}-${appointmentMonth}-${appointmentDay}`),
       }
       displayArray.push(displayObject);
     });
     console.log(displayArray);
     userDisplayArray = [...userDisplayArray, ...displayArray];
+    userDisplayArray.sort((a, b) => a.event_date - b.event_date)
   });
 
   const displayAppointmentList = userDisplayArray.map(appointment => (
