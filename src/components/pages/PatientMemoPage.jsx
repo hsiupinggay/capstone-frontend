@@ -13,14 +13,16 @@
  */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button, Modal, Box } from '@mui/material';
+import { Avatar, Modal, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import Tooltip from '@mui/material/Tooltip';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useMedicalContext } from '../others/store';
-import AddHospitalTruncated from '../organisms/AddHospitalTruncated';
-import AddDepartmentTruncated from '../organisms/AddDepartmentTruncated';
-import AddChaperoneTruncated from '../organisms/AddChaperoneTruncated';
+import { getNameInitials } from '../others/helper';
+import FilterPatientMemos from '../organisms/FilterPatientMemos';
 
 /*
  * ========================================================
@@ -54,14 +56,17 @@ const style = {
  * ========================================================
  */
 export default function PatientMemoPage() {
-  const [clinicsArr, setClinicsArr] = useState();
-  const [chaperonesArr, setChaperonesArr] = useState();
+  const [order, setOrder] = useState('latest first');
   const [name, setName] = useState();
-  const [hospital, setHospital] = useState();
-  const [open, setOpen] = useState(false);
-  const [modal, setModal] = useState('add hospital');
-
+  const [memoList, setMemoList] = useState();
+  const [fullMemoList, setFullMemoList] = useState();
+  const [deptArr, setDeptArr] = useState();
+  const [dateArr, setDatetArr] = useState();
+  const [hospArr, setHospArr] = useState();
+  const [chapArr, setChapArr] = useState();
   const { store } = useMedicalContext();
+  const [open, setOpen] = useState(false);
+
   const { patientId } = store;
   const navigate = useNavigate();
 
@@ -69,102 +74,141 @@ export default function PatientMemoPage() {
   useEffect(() => {
     const data = new URLSearchParams();
     data.append('patientId', patientId);
-    axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/patient-data-visit-details?${data.toString()}`)
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/patient-memos?${data.toString()}`)
       .then((response) => {
-        const { chaperones, clinics, fullName } = response.data;
-        console.log(chaperones, clinics);
-        setClinicsArr(clinics);
-        setChaperonesArr(chaperones);
-        setName(fullName);
+        const {
+          appointmentArr, patientName, uniqueChaps, uniqueDates, uniqueDepts, uniqueHosps,
+        } = response.data;
+        setName(patientName);
+        setMemoList(appointmentArr);
+        // Remeber original array to reset filter
+        setFullMemoList(appointmentArr);
+        // Filter array options
+        setDeptArr(uniqueDepts);
+        setDatetArr(uniqueDates);
+        setHospArr(uniqueHosps);
+        setChapArr(uniqueChaps);
       });
   }, []);
 
-  const openAddHospitalTruncatedPopup = () => {
-    setOpen(true);
-    setModal('add hospital');
+  // Sort memos based on appointment date
+  const sortDate = () => {
+    if (order === 'latest first') {
+      memoList.sort((a, b) => new Date(a.convertedDate) - new Date(b.convertedDate));
+      setOrder('oldest first');
+      setMemoList(memoList);
+    } else {
+      memoList.sort((a, b) => new Date(b.convertedDate) - new Date(a.convertedDate));
+      console.log('hi');
+      setOrder('latest first');
+      setMemoList(memoList);
+    }
+    console.log(memoList);
   };
-  const openAddDeptPopup = (hosp) => {
-    setHospital(hosp);
+
+  // When user clicks on button, render popup to filter memos
+  const openPopUp = () => {
     setOpen(true);
-    setModal('add department');
-  };
-  const openAddChapPopup = () => {
-    setOpen(true);
-    setModal('add chaperone');
   };
   const closePopup = () => {
     setOpen(false);
   };
 
+  const resetFilters = () => {
+    setMemoList(fullMemoList);
+  };
+
   return (
     <div>
-      <Button variant="contained" onClick={() => navigate('/patient')}>Back</Button>
+      <Tooltip title="Go Back">
+        <ArrowBackIosIcon variant="contained" onClick={() => navigate('/patient')} />
+      </Tooltip>
       <br />
       <br />
 
       {
-        clinicsArr === undefined
+        memoList === undefined || memoList.length === 0
           ? (
-            <div />
-          )
-          : (
-
             <div>
-              PATIENT MEMOMMMMOO
-              <strong>
-                List of
-                {' '}
-                {name}
-                's Clinics and Departments
-              </strong>
-              <Tooltip title="Add New Hospital">
-                <AddCircleIcon variant="contained" onClick={openAddHospitalTruncatedPopup} />
+              {' '}
+              Nil memos found
+              <Tooltip title="Filter Memos">
+                <FilterAltIcon variant="contained" onClick={openPopUp} />
               </Tooltip>
-              <br />
-              <br />
-              <div>
-                {clinicsArr.map((clinic) => (
-                  <div>
-                    <strong>
-                      {' '}
-                      {`${clinic.hospital}`}
-                    </strong>
-                    <Tooltip title="Add New Department">
-                      <AddCircleIcon variant="contained" onClick={() => openAddDeptPopup(clinic.hospital)} />
-                    </Tooltip>
-                    {clinic.departments.map((department) => (
-                      <div>
-                        {`${department}`}
-                      </div>
-                    ))}
-                    <br />
-                    <br />
-                  </div>
-                ))}
-              </div>
-
+              <Tooltip title="Reset Filters">
+                <RestartAltIcon variant="contained" onClick={resetFilters} />
+              </Tooltip>
             </div>
           )
-      }
-      {
-        chaperonesArr === undefined
-          ? <div />
           : (
             <div>
               <strong>
                 List of
                 {' '}
                 {name}
-                's Chaperones
+                's Memos
               </strong>
-              <Tooltip title="Add New Chaperone">
-                <AddCircleIcon variant="contained" onClick={openAddChapPopup} />
+              <Tooltip title="Sort By Appointment Date">
+                <CalendarMonthIcon variant="contained" onClick={sortDate} />
               </Tooltip>
-              <br />
+              <Tooltip title="Filter Memos">
+                <FilterAltIcon variant="contained" onClick={openPopUp} />
+              </Tooltip>
+              <Tooltip title="Reset Filters">
+                <RestartAltIcon variant="contained" onClick={resetFilters} />
+              </Tooltip>
               <div>
-                {chaperonesArr.map((chaperone) => (
+                {memoList.map((memo) => (
                   <div>
-                    {`${chaperone.name}`}
+                    <div>
+                      Uploaded by:
+                      {' '}
+                      <br />
+                      {memo.notes.userName.first}
+                      {' '}
+                      {memo.notes.userName.last}
+                      {' '}
+                      on
+                      {' '}
+                      {memo.notes.date}
+                      <br />
+                    </div>
+                    <div>
+                      {!memo.notes.userImage && <Avatar sx={{ width: 40, height: 40 }}>{getNameInitials(memo.notes.userName.first, memo.notes.userName.last)}</Avatar>}
+                      {memo.notes.userImage && <Avatar sx={{ width: 40, height: 40 }} alt="profile" src={memo.notes.userImage} />}
+                    </div>
+                    Memo:
+                    <div>
+                      Appt Date:
+                      {`${memo.date}`}
+                      <br />
+                    </div>
+                    <div>
+                      Hospital:
+                      {`${memo.hospital.name}`}
+                      <br />
+                    </div>
+                    <div>
+                      Appt Date:
+                      {`${memo.hospital.department}`}
+                      <br />
+                    </div>
+                    <div>
+                      Chaperone:
+                      {memo.chaperone !== undefined
+                        ? (
+                          <div>
+                            {memo.chaperone.name }
+                          </div>
+                        )
+                        : <div>Nil</div>}
+                    </div>
+                    <div>
+                      Memo:
+                      {`${memo.notes.note}`}
+                      <br />
+                    </div>
+                    <br />
                     <br />
                   </div>
                 ))}
@@ -177,13 +221,7 @@ export default function PatientMemoPage() {
         onClose={closePopup}
       >
         <Box sx={style}>
-          {
-          modal === 'add hospital'
-            ? <AddHospitalTruncated name={name} setClinicsArr={setClinicsArr} />
-            : modal === 'add department'
-              ? <AddDepartmentTruncated hospital={hospital} name={name} setClinicsArr={setClinicsArr} />
-              : <AddChaperoneTruncated setChaperonesArr={setChaperonesArr} name={name} />
-           }
+          <FilterPatientMemos deptArr={deptArr} dateArr={dateArr} hospArr={hospArr} chapArr={chapArr} fullMemoList={fullMemoList} setMemoList={setMemoList} name={name} />
         </Box>
       </Modal>
     </div>

@@ -52,7 +52,6 @@ export default function PatientProfilePage() {
   const [displayAge, setDisplayAge] = useState();
   const [displayRelationship, setDisplayRelationship] = useState();
   const [open, setOpen] = useState(false);
-  console.log(displayAge, displayRelationship);
   const { store } = useMedicalContext();
   const { userId, patientId } = store;
   const navigate = useNavigate();
