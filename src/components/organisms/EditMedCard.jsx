@@ -1,18 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable array-callback-return */
-/*
- * ========================================================
- * ========================================================
- *
- *                        Imports
- *
- * ========================================================
- * ========================================================
- */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from '@mui/material';
 import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getDate } from '../others/helper';
 
 import MedFrequency from '../molecules/MedFrequency';
@@ -25,12 +17,14 @@ import MedReminder from '../molecules/MedReminder';
  * ========================================================
  * ========================================================
  *
- *              Card for adding medicine
+ *              Edit Medicine Card Component
  *
  * ========================================================
  * ========================================================
  */
-export default function AddMedCard() {
+
+function EditMedCard() {
+  // related to MedName
   const [name, setName] = useState('');
 
   //  related to MedFrequency
@@ -52,9 +46,38 @@ export default function AddMedCard() {
   // related to stepper
   const [activeStep, setActiveStep] = useState(0);
 
+  // initiate navigate
+  const navigate = useNavigate();
+
   // Hardcoded patient id for Humpty Dumpty
   const patientId = '62259fadb4a77ae0343f7306';
+  const location = useLocation();
+  const medicineId = location.state;
+  console.log('<== location.state ==>', location.state);
 
+  useEffect(() => {
+    const callBack = async () => {
+      const data = new URLSearchParams();
+      data.append('patientId', patientId);
+      data.append('medicineId', medicineId);
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/view-med?${data.toString()}`);
+      console.log('<== get data ==>', res.data);
+      const { selectedMedicine } = res.data;
+      const { frequency, lastPrescribed, reminder } = selectedMedicine;
+      setName(selectedMedicine.name);
+      setDosage(frequency.dosage);
+      setDosageCounter(frequency.dosageCounter);
+      setTimes(frequency.times);
+      setDuration(frequency.perDuration);
+      setNote(frequency.note);
+      setPrescriptionDate(lastPrescribed.prescriptionDate);
+      setPrescriptionQty(lastPrescribed.prescriptionQty);
+      setReminderDays(reminder.reminderDays);
+      setReminderChecked(reminder.reminderChecked);
+    };
+
+    callBack();
+  }, []);
   const handleName = (e) => {
     setName(e.target.value);
   };
@@ -98,6 +121,7 @@ export default function AddMedCard() {
   const handleSubmit = async () => {
     const data = {
       patientId,
+      medicineId,
       name,
       dosage,
       dosageCounter,
@@ -112,8 +136,9 @@ export default function AddMedCard() {
     };
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-medicine`, data);
+      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/edit-med`, data);
       console.log('<== res.data add med ==>', res.data);
+      navigate('/med-list');
       // need to navigate somewhere after form submit
     } catch (err) {
       console.log(err);
@@ -124,7 +149,7 @@ export default function AddMedCard() {
     <div>
       <Card>
         {activeStep === 0 && (
-          <MedName handleName={handleName} title="Add Medicine" />
+          <MedName name={name} handleName={handleName} title="Edit Medicine" />
         )}
         {activeStep === 1 && (
 
@@ -148,6 +173,7 @@ export default function AddMedCard() {
         <div>
           <Prescription
             dosageCounter={dosageCounter}
+            prescriptionQty={prescriptionQty}
             handlePrescriptionDate={handlePrescriptionDate}
             handlePrescriptionQty={handlePrescriptionQty}
             reminderChecked={reminderChecked}
@@ -171,3 +197,5 @@ export default function AddMedCard() {
     </div>
   );
 }
+
+export default EditMedCard;

@@ -31,12 +31,20 @@ export default function ProfilePage() {
   const [uploadedPhoto, setUploadedPhoto] = useState();
   const [currentPhoto, setCurrentPhoto] = useState(null);
   const [caption, setCaption] = useState('No files uploaded');
+  // const [isAuth, setIsAuth] = useState(false)
   const { store, dispatch } = useMedicalContext();
   const { userId } = store;
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const { photo } = store;
     setCurrentPhoto(photo);
+    // const isAuth = async () => {
+    //   const res = await authenticate(dispatch);
+    //   console.log('<== res ==>', res);
+    //   if (!res) navigate('/auth');
+    // };
+    // isAuth();
   }, []);
 
   const submitPhoto = async () => {
