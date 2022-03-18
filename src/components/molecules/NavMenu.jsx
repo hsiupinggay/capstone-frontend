@@ -40,8 +40,8 @@ function NavOptions() {
     name: 'Appointments',
   },
   {
-    path: '/people',
-    name: 'People',
+    path: '/patients',
+    name: 'Patients',
   },
   {
     path: '/profile',

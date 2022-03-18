@@ -38,6 +38,10 @@ import AddMedPage from './components/pages/AddMedPage';
 import MedList from './components/organisms/MedList';
 import EditMedCard from './components/organisms/EditMedCard';
 import NavBar from './components/molecules/Navbar';
+import PatientListPage from './components/pages/PatientListPage';
+import PatientProfilePage from './components/pages/PatientProfilePage';
+import PatientVisitLocationPage from './components/pages/PatientVisitLocationPage';
+import PatientMemoPage from './components/pages/PatientMemoPage';
 
 /*
  * ========================================================
@@ -120,10 +124,21 @@ export default function App() {
                     <Route path="add-hospital" element={<AddHospital />} />
                     <Route path="add-department" element={<AddDepartment />} />
                     <Route path="add-chaperone" element={<AddChaperone />} />
+                    <Route
+                      exact
+                      path="patients"
+                      element={<PatientListPage />}
+                    />
+                    <Route
+                      exact
+                      path="patient"
+                      element={<PatientProfilePage />}
+                    />
+                    <Route path="location-details" element={<PatientVisitLocationPage />} />
+                    <Route path="patient-memos" element={<PatientMemoPage />} />
                     <Route path="add-med" element={<AddMedPage />} />
                     <Route path="med-list" element={<MedList />} />
                     <Route path="edit-med" element={<EditMedCard />} />
-
                   </Route>
                 </Route>
                 <Route

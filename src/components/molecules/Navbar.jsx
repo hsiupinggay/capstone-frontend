@@ -39,6 +39,10 @@ const pathArray = [{
   path: '/add-appt',
   name: 'Add Appt',
 },
+{
+  path: '/patients',
+  name: 'Patients',
+},
 ];
 
 const profileArray = [

@@ -29,6 +29,7 @@ export const initialState = {
   lastName: '',
   email: '',
   photo: null,
+  patientId: '',
 };
 
 /*
@@ -85,6 +86,11 @@ export function medicalReducer(state, action) {
         lastName: action.payload.name.last,
         email: action.payload.email,
       };
+    case SELECT_PATIENT:
+      return {
+        ...state,
+        patientId: action.payload,
+      };
 
     default:
       return state;
@@ -107,6 +113,7 @@ const SIGNUP = 'SIGNUP';
 const AUTH = 'AUTH';
 const UPLOAD_PHOTO = 'UPLOAD_PHOTO';
 const EDIT_USER = 'EDIT_USER';
+const SELECT_PATIENT = 'SELECT_PATIENT';
 
 export function loginAction(payload) {
   return {
@@ -146,6 +153,13 @@ export function editUserAction(payload) {
 export function logoutAction() {
   return {
     type: LOGOUT,
+  };
+}
+
+export function setPatientAction(payload) {
+  return {
+    type: SELECT_PATIENT,
+    payload,
   };
 }
 
