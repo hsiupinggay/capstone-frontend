@@ -16,8 +16,13 @@ import axios from 'axios';
 import {
   Avatar, Button, Modal, Box,
 } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import Tooltip from '@mui/material/Tooltip';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ChatIcon from '@mui/icons-material/Chat';
+import { useNavigate } from 'react-router-dom';
 import { getNameInitials } from '../others/helper';
-import { useMedicalContext } from '../others/store';
+import { useMedicalContext, setTexteeAction } from '../others/store';
 import AddContact from '../organisms/AddContact';
 import ContactVisibility from '../organisms/ContactVisibility';
 
@@ -63,8 +68,9 @@ export default function ContactsPage() {
   const [open, setOpen] = useState(false);
   const [modal, setModal] = useState('add contact');
 
-  const { store } = useMedicalContext();
+  const { store, dispatch } = useMedicalContext();
   const { userId } = store;
+  const navigate = useNavigate();
 
   const openAddContactPopup = () => {
     setOpen(true);
@@ -79,7 +85,13 @@ export default function ContactsPage() {
   const closeAddContactPopup = () => {
     setOpen(false);
   };
-
+  const openChat = (id, firstName, lastName, photo) => {
+    const data = {
+      id, firstName, lastName, photo,
+    };
+    dispatch(setTexteeAction(data));
+    navigate('/chat');
+  };
   // When component renders, retrieve all contacts and patients data related to user
   useEffect(() => {
     const data = new URLSearchParams();
@@ -163,7 +175,9 @@ export default function ContactsPage() {
               <strong>
                 {' '}
                 Your Contacts
-                <Button variant="contained" onClick={openAddContactPopup}>Add New Contact</Button>
+                <Tooltip title="Add New Contact">
+                  <AddCircleIcon variant="contained" onClick={openAddContactPopup} />
+                </Tooltip>
               </strong>
               <br />
               {contactsList.map((contact) => (
@@ -171,7 +185,12 @@ export default function ContactsPage() {
                   {`${contact.firstName} ${contact.lastName}`}
                   {!contact.photo && <Avatar sx={{ width: 60, height: 60 }}>{getNameInitials(contact.firstName, contact.lastName)}</Avatar>}
                   {contact.photo && <Avatar sx={{ width: 60, height: 60 }} alt="profile" src={contact.photo} />}
-                  <Button variant="contained" onClick={() => openContactVisibilityPopup(contact.contactId, `${contact.firstName} ${contact.lastName}`)}>Settings</Button>
+                  <Tooltip title="Control Contact Permission">
+                    <VisibilityIcon variant="contained" onClick={() => openContactVisibilityPopup(contact.contactId, `${contact.firstName} ${contact.lastName}`)} />
+                  </Tooltip>
+                  <Tooltip title="Chat">
+                    <ChatIcon variant="contained" onClick={() => openChat(contact.contactId, contact.firstName, contact.lastName, contact.photo)} />
+                  </Tooltip>
                 </div>
               ))}
             </div>
