@@ -42,6 +42,7 @@ import PatientListPage from './components/pages/PatientListPage';
 import PatientProfilePage from './components/pages/PatientProfilePage';
 import PatientVisitLocationPage from './components/pages/PatientVisitLocationPage';
 import PatientMemoPage from './components/pages/PatientMemoPage';
+import ChatRoomPage from './components/pages/ChatRoomPage';
 
 /*
  * ========================================================
@@ -135,6 +136,7 @@ export default function App() {
                       element={<PatientProfilePage />}
                     />
                     <Route path="location-details" element={<PatientVisitLocationPage />} />
+                    <Route path="chat" element={<ChatRoomPage />} />
                     <Route path="patient-memos" element={<PatientMemoPage />} />
                     <Route path="add-med" element={<AddMedPage />} />
                     <Route path="med-list" element={<MedList />} />
