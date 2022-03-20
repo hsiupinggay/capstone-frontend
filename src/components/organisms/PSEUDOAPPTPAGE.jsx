@@ -31,12 +31,20 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
-  height: 500,
+  width: {
+    md: 600,
+    sm: 500,
+    xs: 475,
+  },
+  height: 600,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  overflow: 'scroll',
+  display: 'flex',
+  justifyContent: 'center',
+  // alignItems: 'center',
 };
 
 /*
@@ -61,6 +69,7 @@ export default function PSEUDOAPPTPAGE() {
 
   const closePopup = () => {
     setOpen(false);
+    setModal();
   };
 
   return (
@@ -74,7 +83,7 @@ export default function PSEUDOAPPTPAGE() {
           {
           modal === 'add appointment'
             ? <AddAppointment setAddition={setAddition} setModal={setModal} />
-            : <AddDetailsTabs addition={addition} setAddition={setAddition} />
+            : <AddDetailsTabs addition={addition} setAddition={setAddition} setModal={setModal} />
            }
         </Box>
       </Modal>

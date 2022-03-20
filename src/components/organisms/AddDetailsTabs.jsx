@@ -25,17 +25,17 @@ import AddDepartment from './AddDepartment';
  * ========================================================
  * ========================================================
  */
-export default function AddDetailsTabs({ addition, setAddition }) {
+export default function AddDetailsTabs({ addition, setAddition, setModal }) {
   return (
     <div>
       {
           addition === 'hospital'
-            ? <AddHospital setAddition={setAddition} />
+            ? <AddHospital setAddition={setAddition} setModal={setModal} />
             : addition === 'patient'
-              ? <AddPatient setAddition={setAddition} />
+              ? <AddPatient setAddition={setAddition} setModal={setModal} />
               : addition === 'department'
-                ? <AddDepartment setAddition={setAddition} />
-                : <AddChaperone setAddition={setAddition} />
+                ? <AddDepartment setAddition={setAddition} setModal={setModal} />
+                : <AddChaperone setAddition={setAddition} setModal={setModal} />
         }
     </div>
   );

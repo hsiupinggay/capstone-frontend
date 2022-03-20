@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-underscore-dangle */
@@ -12,12 +13,15 @@
  */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Autocomplete, TextField } from '@mui/material';
+import {
+  Autocomplete, TextField, Typography, Box,
+} from '@mui/material';
 import { DateTimePicker, LocalizationProvider } from '@mui/lab';
 import DateAdapter from '@mui/lab/AdapterLuxon';
 import moment from 'moment';
 import Button from '@mui/material/Button';
 import { useMedicalContext } from '../others/store';
+import apptPopupStyles from './AddAppointmentCss';
 
 /*
  * ========================================================
@@ -136,29 +140,40 @@ export default function AddAppointment({ setModal, setAddition }) {
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-appointment`, data).then((response) => {
       if (response.status === 200) {
         setSuccessMessage(
-          <div>
-            <p>
-              {'You have added a new appointment: '}
-            </p>
-            <p>
-              {`Patient: ${patientName}`}
-            </p>
-            <p>
-              {`Hospital: ${hospital}`}
-            </p>
-            <p>
-              {`Department: ${department}`}
-            </p>
-            <p>
-              {`Date: ${response.data.data[response.data.data.length - 1].date}`}
-            </p>
-            <p>
-              {`Time: ${response.data.data[response.data.data.length - 1].time}`}
-            </p>
-            <p>
-              {`Chaperone: ${chaperone || 'Nil'}`}
-            </p>
-          </div>,
+          <Typography sx={apptPopupStyles.outcomeMessage}>
+            <strong>You have Added a New Appointment! </strong>
+            <div>
+              <strong>Patient:</strong>
+              {' '}
+              {`${patientName}`}
+            </div>
+            <div>
+              <strong>Hospital:</strong>
+              {' '}
+              {`${hospital}`}
+            </div>
+            <div>
+              <strong>Department:</strong>
+              {' '}
+              {`${department}`}
+            </div>
+            <div>
+              <strong>Date:</strong>
+              {' '}
+              {`${response.data.data[response.data.data.length - 1].date}`}
+            </div>
+            <div>
+              <strong>Time:</strong>
+              {' '}
+              {`${response.data.data[response.data.data.length - 1].time}`}
+            </div>
+            <div>
+              <strong>Chaperone:</strong>
+              {' '}
+              {`${chaperone || 'Nil'}`}
+            </div>
+
+          </Typography>,
         );
       }
     });
@@ -170,18 +185,18 @@ export default function AddAppointment({ setModal, setAddition }) {
         ? <div />
         : (
           <form onSubmit={handleSubmit}>
-
-            <LocalizationProvider dateAdapter={DateAdapter}>
-              <DateTimePicker
-                label="Appointment Details"
-                value={dateTime}
-                onChange={(newValue) => {
-                  setDateTime(`${moment(`${newValue.c.year}-${newValue.c.month}-${newValue.c.day}`).format('YYYY-MM-DD')}T${moment(`${newValue.c.hour}:${newValue.minute}`, 'HH:m').format('HH:mm')}`);
-                }}
-                renderInput={(params) => <TextField {...params} required />}
-                sx={{ width: 250 }}
-              />
-            </LocalizationProvider>
+            <Box sx={apptPopupStyles.dateTimeContainer}>
+              <LocalizationProvider dateAdapter={DateAdapter}>
+                <DateTimePicker
+                  label="Appointment Details"
+                  value={dateTime}
+                  onChange={(newValue) => {
+                    setDateTime(`${moment(`${newValue.c.year}-${newValue.c.month}-${newValue.c.day}`).format('YYYY-MM-DD')}T${moment(`${newValue.c.hour}:${newValue.minute}`, 'HH:m').format('HH:mm')}`);
+                  }}
+                  renderInput={(params) => <TextField {...params} required sx={apptPopupStyles.inputField} />}
+                />
+              </LocalizationProvider>
+            </Box>
 
             <Autocomplete
               options={patientArr}
@@ -191,7 +206,7 @@ export default function AddAppointment({ setModal, setAddition }) {
               selectOnFocus
               clearOnBlur
               handleHomeEndKeys
-              sx={{ width: 250 }}
+              sx={apptPopupStyles.inputField}
             />
             { hospArr === undefined
               ? (
@@ -203,7 +218,7 @@ export default function AddAppointment({ setModal, setAddition }) {
                     selectOnFocus
                     clearOnBlur
                     handleHomeEndKeys
-                    sx={{ width: 250 }}
+                    sx={apptPopupStyles.inputField}
                   />
                   <Autocomplete
                     options={[{ label: '--ADD NEW DEPARTMENT--' }]}
@@ -212,7 +227,7 @@ export default function AddAppointment({ setModal, setAddition }) {
                     selectOnFocus
                     clearOnBlur
                     handleHomeEndKeys
-                    sx={{ width: 250 }}
+                    sx={apptPopupStyles.inputField}
                   />
                   {' '}
                   <Autocomplete
@@ -223,7 +238,7 @@ export default function AddAppointment({ setModal, setAddition }) {
                     selectOnFocus
                     clearOnBlur
                     handleHomeEndKeys
-                    sx={{ width: 250 }}
+                    sx={apptPopupStyles.inputField}
                   />
                 </div>
               )
@@ -238,7 +253,7 @@ export default function AddAppointment({ setModal, setAddition }) {
                       selectOnFocus
                       clearOnBlur
                       handleHomeEndKeys
-                      sx={{ width: 250 }}
+                      sx={apptPopupStyles.inputField}
                     />
 
                   </div>
@@ -253,7 +268,7 @@ export default function AddAppointment({ setModal, setAddition }) {
                           selectOnFocus
                           clearOnBlur
                           handleHomeEndKeys
-                          sx={{ width: 250 }}
+                          sx={apptPopupStyles.inputField}
                         />
                       </div>
                     )
@@ -267,7 +282,7 @@ export default function AddAppointment({ setModal, setAddition }) {
                           selectOnFocus
                           clearOnBlur
                           handleHomeEndKeys
-                          sx={{ width: 250 }}
+                          sx={apptPopupStyles.inputField}
                         />
                       </div>
                     )}
@@ -281,13 +296,14 @@ export default function AddAppointment({ setModal, setAddition }) {
                       selectOnFocus
                       clearOnBlur
                       handleHomeEndKeys
-                      sx={{ width: 250 }}
+                      sx={apptPopupStyles.inputField}
                     />
                   </div>
                 </div>
               )}
-
-            <Button variant="contained" type="submit">Submit</Button>
+            <Box sx={apptPopupStyles.submitBtn}>
+              <Button variant="contained" type="submit">Submit</Button>
+            </Box>
           </form>
         )}
       <div>
@@ -295,9 +311,9 @@ export default function AddAppointment({ setModal, setAddition }) {
         successMessage === ''
           ? <div />
           : (
-            <div>
+            <Typography>
               {successMessage}
-            </div>
+            </Typography>
           )
         }
       </div>
