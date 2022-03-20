@@ -14,7 +14,7 @@ import React from 'react';
 import {
   BrowserRouter as Router, Routes, Route,
 } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import { MedicalProvider } from './components/others/store';
 import ProtectedRoute from './components/molecules/ProtectedRoute';
 
@@ -43,7 +43,7 @@ import PatientProfilePage from './components/pages/PatientProfilePage';
 import PatientVisitLocationPage from './components/pages/PatientVisitLocationPage';
 import PatientMemoPage from './components/pages/PatientMemoPage';
 import ChatRoomPage from './components/pages/ChatRoomPage';
-
+import PSEUDOAPPTPAGE from './components/organisms/PSEUDOAPPTPAGE';
 /*
  * ========================================================
  * ========================================================
@@ -141,6 +141,11 @@ export default function App() {
                     <Route path="add-med" element={<AddMedPage />} />
                     <Route path="med-list" element={<MedList />} />
                     <Route path="edit-med" element={<EditMedCard />} />
+                    <Route
+                      exact
+                      path="/test"
+                      element={<PSEUDOAPPTPAGE />}
+                    />
                   </Route>
                 </Route>
                 <Route
@@ -148,7 +153,6 @@ export default function App() {
                   path="/logout"
                   element={<LogoutPage />}
                 />
-
               </Routes>
             </div>
           </div>

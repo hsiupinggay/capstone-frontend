@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-underscore-dangle */
 /*
@@ -11,7 +12,6 @@
  */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { Autocomplete, TextField } from '@mui/material';
 import { DateTimePicker, LocalizationProvider } from '@mui/lab';
 import DateAdapter from '@mui/lab/AdapterLuxon';
@@ -28,7 +28,7 @@ import { useMedicalContext } from '../others/store';
  * ========================================================
  * ========================================================
  */
-export default function AddAppointment() {
+export default function AddAppointment({ setModal, setAddition }) {
   const { store } = useMedicalContext();
   const { userId } = store;
 
@@ -44,7 +44,6 @@ export default function AddAppointment() {
   const [department, setDepartment] = useState('');
   const [dateTime, setDateTime] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
-  const navigate = useNavigate();
 
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
@@ -61,7 +60,9 @@ export default function AddAppointment() {
   const selectDept = (string) => {
     if (string === '--ADD NEW DEPARTMENT--') {
       // Redirect to add department component
-      navigate('/add-department');
+      setModal('add others');
+      setAddition('department');
+      // navigate('/add-department');
     } else {
       setDepartment(string);
     }
@@ -72,8 +73,9 @@ export default function AddAppointment() {
     const patientSplitStr = string.split(',');
     if (patientSplitStr[0] === 'undefined') {
       // Redirect to add patient component
-
-      navigate('/add-patient');
+      setModal('add others');
+      setAddition('patient');
+      // navigate('/add-patient');
     } else {
       setPatientId(patientSplitStr[0]);
       setPatientName(patientSplitStr[1]);
@@ -92,7 +94,9 @@ export default function AddAppointment() {
   const updateDept = (hospitalInput) => {
     if (hospitalInput === '--ADD NEW HOSPITAL--') {
       // Redirect to add hospital component
-      navigate('/add-hospital');
+      // navigate('/add-hospital');
+      setModal('add others');
+      setAddition('hospital');
     } else {
       setHospital(hospitalInput);
       for (let i = 0; i < hospArr.length; i += 1) {
@@ -109,7 +113,9 @@ export default function AddAppointment() {
     const chaperoneSplitStr = value.split(',');
     if (chaperoneSplitStr[1] === 'undefined') {
       // Redirect to add chaperone component
-      navigate('/add-chaperone');
+      // navigate('/add-chaperone');
+      setModal('add others');
+      setAddition('chaperone');
     } else {
       setChaperone(chaperoneSplitStr[0]);
       setChaperoneId(chaperoneSplitStr[1]);

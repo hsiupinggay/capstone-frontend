@@ -16,7 +16,11 @@ import { TextField, Button } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/lab';
 import DateAdapter from '@mui/lab/AdapterLuxon';
 import moment from 'moment';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
 import { useMedicalContext } from '../others/store';
+import BackIcon from '../molecules/BackIcon';
 
 /*
  * ========================================================
@@ -37,6 +41,13 @@ export default function AddPatient({ accessedFromPatientPage, setRefresh, refres
   const [successMessage, setSuccessMessage] = useState('');
   const [DOB, setDOB] = useState(null);
   const navigate = useNavigate();
+
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    // navigate(newValue);
+  };
 
   // On form submit, send data to backend to store in DB
   const handleSubmit = (event) => {
@@ -66,6 +77,12 @@ export default function AddPatient({ accessedFromPatientPage, setRefresh, refres
       }
     });
   };
+
+  const a11yProps = (index) => ({
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  });
+
   return (
     <div>
       {
@@ -73,20 +90,23 @@ export default function AddPatient({ accessedFromPatientPage, setRefresh, refres
           ? <div />
           : (
             <div>
-              <Button variant="contained" onClick={() => navigate('/add-appt')}>Back</Button>
-              <Button variant="contained" disabled>+ Patient</Button>
-              <Button variant="contained" onClick={() => navigate('/add-hospital')}>+ Hospital</Button>
-              <Button variant="contained" onClick={() => navigate('/add-department')}>+ Department</Button>
-              <Button variant="contained" onClick={() => navigate('/add-chaperone')}>+ Chaperone</Button>
+              <BackIcon variant="contained" onClick={() => navigate('/add-appt')} />
+              <Box sx={{ width: '100%' }}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                  <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                    <Tab label=" +Patient" value="/add-patient" {...a11yProps(0)} disabed />
+                    <Tab label=" +Hospital" value="/add-hospital" {...a11yProps(1)} />
+                    <Tab label=" +Department" value="/add-department" {...a11yProps(2)} />
+                    <Tab label=" +Chaperone" value="/add-chaperone" {...a11yProps(3)} />
+                  </Tabs>
+                </Box>
+              </Box>
             </div>
           )
       }
       <br />
       <br />
       <form onSubmit={handleSubmit}>
-        Add New Patient
-        <br />
-        <br />
         <TextField label="First Name" onChange={(e) => setFirstName(e.target.value)} required />
         <TextField label="Last Name" onChange={(e) => setLastName(e.target.value)} required />
         <TextField label="Relationship" onChange={(e) => setRelationship(e.target.value)} required />

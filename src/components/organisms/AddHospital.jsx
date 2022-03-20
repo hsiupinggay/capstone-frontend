@@ -15,9 +15,12 @@ import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
 import hospitalList from '../others/hopsitalList';
 import { useMedicalContext } from '../others/store';
-
+import BackIcon from '../molecules/BackIcon';
 /*
  * ========================================================
  * ========================================================
@@ -38,7 +41,11 @@ export default function AddHospital() {
   const [patientArr, setPatientArr] = useState();
   const navigate = useNavigate();
   const filter = createFilterOptions();
-
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    navigate(newValue);
+  };
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
     const data = new URLSearchParams();
@@ -74,17 +81,35 @@ export default function AddHospital() {
       }
     });
   };
+
+  const a11yProps = (index) => ({
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  });
+
   return (
     <div>
       { patientArr === undefined
         ? <div />
         : (
           <div>
-            <Button variant="contained" onClick={() => navigate('/add-appt')}>Back</Button>
-            <Button variant="contained" onClick={() => navigate('/add-patient')}>+ Patient</Button>
-            <Button variant="contained" disabled>+ Hospital</Button>
-            <Button variant="contained" onClick={() => navigate('/add-department')}>+ Department</Button>
-            <Button variant="contained" onClick={() => navigate('/add-chaperone')}>+ Chaperone</Button>
+            <div>
+              <BackIcon variant="contained" onClick={() => navigate('/add-appt')} />
+              <Box sx={{ width: '100%' }}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                  <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="basic tabs example"
+                  >
+                    <Tab label=" +Patient" value="/add-patient" {...a11yProps(0)} borderColor="#000000" />
+                    <Tab label=" +Hospital" value="/add-hospital" {...a11yProps(1)} disabled />
+                    <Tab label=" +Department" value="/add-department" {...a11yProps(2)} />
+                    <Tab label=" +Chaperone" value="/add-chaperone" {...a11yProps(3)} />
+                  </Tabs>
+                </Box>
+              </Box>
+            </div>
             <br />
             <br />
             <form onSubmit={handleSubmit}>
