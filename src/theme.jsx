@@ -18,16 +18,15 @@ import { createTheme } from '@mui/material/styles';
  * ========================================================
  * ========================================================
  */
-
 const mainTheme = createTheme(
   {
     palette: {
       type: 'light',
       primary: {
-        main: '#1F18C0',
+        main: '#22577A',
       },
       secondary: {
-        main: '#456e3f',
+        main: '#38A3A5',
       },
       error: {
         main: '#f45636',
@@ -38,21 +37,25 @@ const mainTheme = createTheme(
       },
     },
     typography: {
+      fontFamily: 'Quicksand',
       h1: {
-        fontWeight: 400,
+        fontFamily: 'Quicksand',
+        fontWeight: 700,
         fontSize: '3rem',
         lineHeight: 1.167,
         letterSpacing: '0em',
       },
       h2: {
-        fontSize: '2.125rem',
+        fontFamily: 'Quicksand',
+        fontSize: '2rem',
         letterSpacing: '0.00857em',
-        fontWeight: 400,
+        fontWeight: 700,
       },
       h3: {
+        fontFamily: 'Quicksand',
         fontSize: '1.5rem',
         lineHeight: 1.334,
-        fontWeight: 400,
+        fontWeight: 600,
       },
       // body1: {
       //   fontSize: 14,
@@ -71,22 +74,20 @@ const mainTheme = createTheme(
         fontWeight: 500,
       },
       h4: {
-        fontSize: 44,
-        textTransform: 'uppercase',
-        letterSpacing: '0.02857em',
-        lineHeight: 1,
+        fontFamily: 'Quicksand',
+        fontSize: '1rem',
+        lineHeight: 1.334,
         fontWeight: 500,
-        textAlign: 'end',
       },
-
     },
     breakpoints: {
       values: {
-        xs: 0,
-        sm: 300,
-        md: 600,
-        lg: 900,
-        xl: 1536,
+        xxs: 0,
+        xs: 400,
+        sm: 600,
+        md: 900,
+        lg: 1200,
+        xl: 1500,
       },
     },
   },

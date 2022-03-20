@@ -14,7 +14,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  Avatar, Button, Modal, Box,
+  Avatar, Button, Modal, Box, Typography,
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Tooltip from '@mui/material/Tooltip';
@@ -153,36 +153,27 @@ export default function ContactsPage() {
 
   return (
     <div>
-      <strong>
-        Contacts Page
-      </strong>
-      <br />
-
-      <br />
-      <br />
       {
         contactsList === undefined
           ? (
-            <div>
-              <strong>
-                Your Contacts
-                <Button variant="contained" onClick={openAddContactPopup}>Add New Contact</Button>
-              </strong>
-            </div>
+            <div />
           )
           : (
             <div>
-              <strong>
+              <Typography variant="h2">
                 {' '}
                 Your Contacts
                 <Tooltip title="Add New Contact">
                   <AddCircleIcon variant="contained" onClick={openAddContactPopup} />
                 </Tooltip>
-              </strong>
+              </Typography>
               <br />
               {contactsList.map((contact) => (
                 <div>
-                  {`${contact.firstName} ${contact.lastName}`}
+                  <Typography variant="h4">
+
+                    {`${contact.firstName} ${contact.lastName}`}
+                  </Typography>
                   {!contact.photo && <Avatar sx={{ width: 60, height: 60 }}>{getNameInitials(contact.firstName, contact.lastName)}</Avatar>}
                   {contact.photo && <Avatar sx={{ width: 60, height: 60 }} alt="profile" src={contact.photo} />}
                   <Tooltip title="Control Contact Permission">
@@ -201,13 +192,12 @@ export default function ContactsPage() {
       {
         incomingRequestsList === undefined
           ? (
-            <div>
-              <strong>Requests</strong>
-            </div>
+
+            <div />
           )
           : (
             <div>
-              <strong>Requests</strong>
+              <Typography variant="h2">Requests</Typography>
               <br />
               {incomingRequestsList.map((request) => (
                 <div>
@@ -229,12 +219,12 @@ export default function ContactsPage() {
         outgoingPendingList === undefined
           ? (
             <div>
-              <strong>Sent Requests</strong>
+              <Typography variant="h3">Sent Requests</Typography>
             </div>
           )
           : (
             <div>
-              <strong>Sent Requests</strong>
+              <Typography variant="h3">Sent Requests</Typography>
               <br />
               {outgoingPendingList.map((request) => (
                 <div>
@@ -257,12 +247,12 @@ export default function ContactsPage() {
         outgoingAcceptedList === undefined
           ? (
             <div>
-              <strong>Accepted Requests</strong>
+              <Typography variant="h3">Accepted Requests</Typography>
             </div>
           )
           : (
             <div>
-              <strong>Accepted Requests</strong>
+              <Typography variant="h3">Accepted Requests</Typography>
               <br />
               {outgoingAcceptedList.map((request) => (
                 <div>
@@ -283,12 +273,12 @@ export default function ContactsPage() {
         outgoingRejList === undefined
           ? (
             <div>
-              <strong>Rejected Requests</strong>
+              <Typography variant="h3">Rejected Requests</Typography>
             </div>
           )
           : (
             <div>
-              <strong>Rejected Requests</strong>
+              <Typography variant="h3">Rejected Requests</Typography>
               <br />
               {outgoingRejList.map((request) => (
                 <div>

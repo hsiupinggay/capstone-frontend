@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable react/prop-types */
 /*
  * ========================================================
  * ========================================================
@@ -11,12 +12,17 @@
  */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
-import departmentList from '../others/departmentList';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import { Typography } from '@mui/material';
 import { useMedicalContext } from '../others/store';
+import departmentList from '../others/departmentList';
+import BackIcon from '../molecules/BackIcon';
+import departmentPopupStyles from './AddDepartmentCss';
 
 /*
  * ========================================================
@@ -27,7 +33,7 @@ import { useMedicalContext } from '../others/store';
  * ========================================================
  * ========================================================
  */
-export default function AddDepartment() {
+export default function AddDepartment({ setModal, setAddition }) {
   const { store } = useMedicalContext();
   const { userId } = store;
 
@@ -39,7 +45,6 @@ export default function AddDepartment() {
   const [hospArr, setHospArr] = useState();
   const [department, setDepartment] = useState('');
   const filter = createFilterOptions();
-  const navigate = useNavigate();
 
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
@@ -74,14 +79,22 @@ export default function AddDepartment() {
       if (response.status === 200) {
         setSuccessMessage(
           <div>
-            <p>
-              {`You have added the ${department} department to ${hospital} under ${patientName}'s profile.`}
-            </p>
+            {`You have added the ${department} department to ${hospital} under ${patientName}'s profile.`}
           </div>,
         );
       }
     });
   };
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    setAddition(newValue);
+  };
+
+  const a11yProps = (index) => ({
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  });
 
   return (
     <div>
@@ -89,91 +102,101 @@ export default function AddDepartment() {
         ? <div />
         : (
           <div>
-            <Button variant="contained" onClick={() => navigate('/add-appt')}>Back</Button>
-            <Button variant="contained" onClick={() => navigate('/add-patient')}>+ Patient</Button>
-            <Button variant="contained" onClick={() => navigate('/add-hospital')}>+ Hospital</Button>
-            <Button variant="contained" disabled>+ Department</Button>
-            <Button variant="contained" onClick={() => navigate('/add-chaperone')}>+ Chaperone</Button>
-            {' '}
+            <BackIcon variant="contained" onClick={() => setModal('add appointment')} />
+            <Box sx={departmentPopupStyles.inputContainer}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <Tab label=" +Patient" value="patient" {...a11yProps(0)} borderColor="#000000" />
+                <Tab label=" +Hospital" value="hospital" {...a11yProps(1)} />
+                <Tab label=" +Department" value="department" {...a11yProps(2)} disabled />
+                <Tab label=" +Chaperone" value="chaperone" {...a11yProps(3)} />
+              </Tabs>
+            </Box>
             <br />
             <br />
             <form onSubmit={handleSubmit}>
+              <Box sx={departmentPopupStyles.inputContainer}>
+                <Autocomplete
+                  options={patientArr}
+                  getOptionLabel={(option) => `${option.identity.name.first} ${option.identity.name.last}`}
+                  renderInput={(params) => <TextField {...params} label="Select Patient" required sx={departmentPopupStyles.inputField} />}
+                  onChange={(event, newValue) => { updatePatient(`${newValue._id},${`${newValue.identity.name.first} ${newValue.identity.name.last}`}`); }}
+                  selectOnFocus
+                  clearOnBlur
+                  handleHomeEndKeys
+                  sx={{ width: 250 }}
+                />
 
-              <Autocomplete
-                options={patientArr}
-                getOptionLabel={(option) => `${option.identity.name.first} ${option.identity.name.last}`}
-                renderInput={(params) => <TextField {...params} label="Select Patient" required />}
-                onChange={(event, newValue) => { updatePatient(`${newValue._id},${`${newValue.identity.name.first} ${newValue.identity.name.last}`}`); }}
-                selectOnFocus
-                clearOnBlur
-                handleHomeEndKeys
-                sx={{ width: 250 }}
-              />
-
-              { hospArr === undefined
-                ? (
-                  <div>
-                    <Autocomplete
-                      options={[]}
-                      renderInput={(params) => <TextField {...params} label="Select Hospital" required />}
-                      selectOnFocus
-                      clearOnBlur
-                      handleHomeEndKeys
-                      sx={{ width: 250 }}
-                    />
-                  </div>
-                )
-                : (
-                  <div>
+                { hospArr === undefined
+                  ? (
                     <div>
                       <Autocomplete
-                        options={hospArr}
-                        getOptionLabel={(option) => option.hospital}
-                        renderInput={(params) => <TextField {...params} label="Select Hospital" required />}
-                        onChange={(event, newValue) => { setHospital(newValue.hospital); }}
+                        options={[]}
+                        renderInput={(params) => <TextField {...params} label="Select Hospital" sx={departmentPopupStyles.inputField} required />}
                         selectOnFocus
                         clearOnBlur
                         handleHomeEndKeys
                         sx={{ width: 250 }}
                       />
                     </div>
+                  )
+                  : (
+                    <div>
+                      <div>
+                        <Autocomplete
+                          options={hospArr}
+                          getOptionLabel={(option) => option.hospital}
+                          renderInput={(params) => <TextField {...params} label="Select Hospital" sx={departmentPopupStyles.inputField} required />}
+                          onChange={(event, newValue) => { setHospital(newValue.hospital); }}
+                          selectOnFocus
+                          clearOnBlur
+                          handleHomeEndKeys
+                          sx={{ width: 250 }}
+                        />
+                      </div>
 
-                  </div>
-                )}
+                    </div>
+                  )}
 
-              <Autocomplete
-                options={departmentList}
-                onChange={(event, newValue) => { setDepartment(newValue.value); }}
-                renderInput={(params) => <TextField {...params} label="Add Department" required />}
-                filterOptions={(options, params) => {
-                  const filtered = filter(options, params);
-                  const { inputValue } = params;
-                  // Suggest the creation of a new value
-                  const isExisting = options.some((option) => inputValue === option.label);
-                  if (inputValue !== '' && !isExisting) {
-                    filtered.push({
-                      inputValue,
-                      label: `Add "${inputValue}"`,
-                      value: inputValue,
-                    });
-                  }
-                  return filtered;
-                }}
-                selectOnFocus
-                clearOnBlur
-                handleHomeEndKeys
-                sx={{ width: 250 }}
-              />
-              <br />
-              <Button variant="contained" type="submit">Submit</Button>
+                <Autocomplete
+                  options={departmentList}
+                  onChange={(event, newValue) => { setDepartment(newValue.value); }}
+                  renderInput={(params) => <TextField {...params} label="Add Department" sx={departmentPopupStyles.inputField} required />}
+                  filterOptions={(options, params) => {
+                    const filtered = filter(options, params);
+                    const { inputValue } = params;
+                    // Suggest the creation of a new value
+                    const isExisting = options.some((option) => inputValue === option.label);
+                    if (inputValue !== '' && !isExisting) {
+                      filtered.push({
+                        inputValue,
+                        label: `Add "${inputValue}"`,
+                        value: inputValue,
+                      });
+                    }
+                    return filtered;
+                  }}
+                  selectOnFocus
+                  clearOnBlur
+                  handleHomeEndKeys
+                  sx={{ width: 250 }}
+                />
+              </Box>
+
+              <Box sx={departmentPopupStyles.submitBtn}>
+                <Button variant="contained" type="submit">Submit</Button>
+              </Box>
             </form>
             <div>
               {successMessage === ''
                 ? <div />
                 : (
-                  <div>
+                  <Typography sx={departmentPopupStyles.outcomeMessage}>
                     {successMessage}
-                  </div>
+                  </Typography>
                 )}
             </div>
           </div>

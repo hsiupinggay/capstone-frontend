@@ -15,6 +15,7 @@ import { Button, Modal, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useMedicalContext } from '../others/store';
 import AddRelationship from '../organisms/AddRelationship';
+import BackIcon from '../molecules/BackIcon';
 
 /*
  * ========================================================
@@ -88,7 +89,7 @@ export default function PatientProfilePage() {
 
   return (
     <div>
-      <Button variant="contained" onClick={() => navigate('/patients')}>Back</Button>
+      <BackIcon variant="contained" onClick={() => navigate('/patients')} />
       <br />
       <br />
 
