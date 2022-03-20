@@ -8,10 +8,11 @@
  * ========================================================
  */
 import React from 'react';
-import { IconButton, Typography } from '@mui/material';
+import { IconButton, Typography, Box } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import { useMedicalContext } from '../others/store';
+import viewProfileStyles from './ViewProfileCss';
 
 /*
  * ========================================================
@@ -34,14 +35,22 @@ export default function ViewProfile() {
     navigate('/profile/edit');
   };
   return (
+    <Box sx={viewProfileStyles.profileContainer}>
+      <Typography sx={viewProfileStyles.userDetails}>
+        <strong>Name:</strong>
+        {' '}
+        {`${firstName} ${lastName}`}
+        <br />
+        {' '}
+        <strong>Email:</strong>
+        {' '}
+        {email}
 
-    <div>
-      <Typography>{`${firstName} ${lastName}`}</Typography>
-      <Typography>{email}</Typography>
+      </Typography>
       <IconButton color="primary" onClick={handleEdit}>
-        <EditIcon />
+        <EditIcon sx={viewProfileStyles.editIcon} />
       </IconButton>
-    </div>
+    </Box>
 
   );
 }

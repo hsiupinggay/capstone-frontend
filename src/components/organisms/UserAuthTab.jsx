@@ -8,8 +8,10 @@
  * ========================================================
  */
 import React, { useState, useRef } from 'react';
+import { Box, Typography } from '@mui/material';
 import Login from '../molecules/LoginForm';
 import Signup from '../molecules/SignupForm';
+import authStyle from './UserAuthTabCss';
 
 /*
  * ========================================================
@@ -55,22 +57,28 @@ export default function UserAuthTab() {
   };
 
   return (
-    <div
-      className="drop-shadow-md
+    <Box sx={authStyle.mainContainer}>
+      <Typography sx={authStyle.appName}>
+        APP NAME
+      </Typography>
+
+      <Box sx={authStyle.loginContainer}>
+        <div
+          className="drop-shadow-md
     rounded-2xl
     bg-white
     p-4 my-12"
-    >
-      <ul
-        className="flex flex-row flex-wrap list-none "
-        id="tabs-tab"
-        role="tablist"
-      >
-        <li className="nav-item" role="presentation">
-          <a
-            ref={loginTab}
-            href="#tabs-login"
-            className="
+        >
+          <ul
+            className="flex flex-row flex-wrap list-none "
+            id="tabs-tab"
+            role="tablist"
+          >
+            <li className="nav-item" role="presentation">
+              <a
+                ref={loginTab}
+                href="#tabs-login"
+                className="
       nav-link
       block
       font-medium
@@ -82,21 +90,21 @@ export default function UserAuthTab() {
       my-2
       hover:border-blue-600 hover:bg-gray-100
     "
-            id="tabs-login-tab"
-            role="tab"
-            aria-controls="tabs-login"
-            aria-selected={loginSelected}
-            onClick={handleLogin}
-          >
-            log in
+                id="tabs-login-tab"
+                role="tab"
+                aria-controls="tabs-login"
+                aria-selected={loginSelected}
+                onClick={handleLogin}
+              >
+                log in
 
-          </a>
-        </li>
-        <li className="nav-item" role="presentation">
-          <a
-            ref={signupTab}
-            href="#tabs-signup"
-            className="
+              </a>
+            </li>
+            <li className="nav-item" role="presentation">
+              <a
+                ref={signupTab}
+                href="#tabs-signup"
+                className="
       nav-link
       block
       font-medium
@@ -108,26 +116,28 @@ export default function UserAuthTab() {
       my-2
       hover:border-blue-600 hover:bg-gray-100
     "
-            id="tabs-signup-tab"
-            role="tab"
-            aria-controls="tabs-signup"
-            aria-selected={signupSelected}
-            onClick={handleSignup}
-          >
-            sign up
+                id="tabs-signup-tab"
+                role="tab"
+                aria-controls="tabs-signup"
+                aria-selected={signupSelected}
+                onClick={handleSignup}
+              >
+                sign up
 
-          </a>
-        </li>
+              </a>
+            </li>
 
-      </ul>
-      <div className="tab-content" id="tabs-tabContent">
-        {loginSelected && (
-          <Login />
-        )}
+          </ul>
+          <div className="tab-content" id="tabs-tabContent">
+            {loginSelected && (
+            <Login />
+            )}
 
-        {signupSelected && (<Signup />)}
+            {signupSelected && (<Signup />)}
 
-      </div>
-    </div>
+          </div>
+        </div>
+      </Box>
+    </Box>
   );
 }

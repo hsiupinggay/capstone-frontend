@@ -26,7 +26,7 @@ import AddDetailsTabs from './AddDetailsTabs';
  * ========================================================
  * ========================================================
  */
-const style = {
+const modalStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -79,7 +79,7 @@ export default function PSEUDOAPPTPAGE() {
         open={open}
         onClose={closePopup}
       >
-        <Box sx={style}>
+        <Box sx={modalStyle}>
           {
           modal === 'add appointment'
             ? <AddAppointment setAddition={setAddition} setModal={setModal} />
