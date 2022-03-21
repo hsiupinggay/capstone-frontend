@@ -35,17 +35,25 @@ import ContactVisibility from '../organisms/ContactVisibility';
  * ========================================================
  * ========================================================
  */
-const style = {
+const modalStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
-  height: 500,
+  width: {
+    md: 600,
+    sm: 500,
+    xs: 475,
+  },
+  height: 600,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  overflow: 'scroll',
+  display: 'flex',
+  justifyContent: 'center',
+  // alignItems: 'center',
 };
 
 /*
@@ -299,7 +307,7 @@ export default function ContactsPage() {
         // aria-labelledby="modal-modal-title"
         // aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={modalStyle}>
           {
           modal === 'add contact'
             ? <AddContact setOutgoingPendingList={setOutgoingPendingList} />

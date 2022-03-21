@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable max-len */
 /* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 /*
@@ -11,8 +13,11 @@
  */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useMedicalContext } from '../others/store';
+import visibilityPopupStyles from './ContactVisibilityCss';
 
 /*
  * ========================================================
@@ -83,50 +88,63 @@ export default function ContactVisibility({ contactId, contactName }) {
   };
 
   return (
-    <div>
+    <Box sx={visibilityPopupStyles.inputContainer}>
+      <Typography sx={visibilityPopupStyles.title}>
+        <strong>
+          Alter
+          {' '}
+          {contactName}
+          's Patient Access
+        </strong>
+      </Typography>
+
+      {successMessage === ''
+        ? <div />
+        : (
+          <Typography sx={visibilityPopupStyles.outcomeMessage}>
+            {successMessage}
+          </Typography>
+        )}
       {
         visiblePatientList === undefined
           ? <div />
           : (
             <div>
-              <strong>Visible Patients</strong>
+              <Typography sx={visibilityPopupStyles.subtitle}><strong>Visible Patients</strong></Typography>
               { visiblePatientList.map((patient) => (
-                <div>
-                  {patient.name}
-                  <Button variant="contained" onClick={() => removeAccess(patient.patientId, patient.name)}>Remove Access</Button>
-                </div>
+                <Box sx={visibilityPopupStyles.nameContainer}>
+                  <Typography sx={visibilityPopupStyles.names}>{patient.name}</Typography>
+                  <VisibilityOffIcon
+                    sx={visibilityPopupStyles.iconColor}
+                    variant="contained"
+                    onClick={() => removeAccess(patient.patientId, patient.name)}
+                  />
+                </Box>
               ))}
             </div>
           )
 
       }
       <br />
-      <br />
-      <br />
       {
         otherPatientList === undefined
           ? <div />
           : (
             <div>
-              <strong>Other Patients</strong>
+              <Typography sx={visibilityPopupStyles.subtitle}><strong>Other Patients</strong></Typography>
               {otherPatientList.map((patient) => (
-                <div>
-                  {patient.name}
-                  <Button variant="contained" onClick={() => giveAccess(patient.patientId, patient.name, patient.admin)}>Give Access</Button>
-                </div>
+                <Box sx={visibilityPopupStyles.nameContainer}>
+                  <Typography sx={visibilityPopupStyles.names}>{patient.name}</Typography>
+                  <VisibilityIcon
+                    sx={visibilityPopupStyles.lightIconColor}
+                    variant="contained"
+                    onClick={() => giveAccess(patient.patientId, patient.name, patient.admin)}
+                  />
+                </Box>
               ))}
             </div>
           )
       }
-      <div>
-        {successMessage === ''
-          ? <div />
-          : (
-            <div>
-              {successMessage}
-            </div>
-          )}
-      </div>
-    </div>
+    </Box>
   );
 }

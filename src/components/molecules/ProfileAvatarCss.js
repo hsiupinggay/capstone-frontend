@@ -24,6 +24,16 @@ const profileAvatarStyles = {
       xs: 40,
     },
   },
+
+  noPicName: {
+    fontSize: {
+      lg: 100,
+      md: 90,
+      sm: 80,
+      xs: 70,
+    },
+  },
+
 };
 
 export default profileAvatarStyles;
