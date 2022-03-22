@@ -32,6 +32,9 @@ const mainTheme = createTheme(
       error: {
         main: '#f45636',
       },
+      disabled: {
+        main: '#bcbcbc',
+      },
       dusty: {
         main: '#BE9FB0',
         dark: '#581845',

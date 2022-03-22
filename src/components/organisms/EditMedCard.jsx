@@ -11,7 +11,7 @@ import MedFrequency from '../molecules/MedFrequency';
 import Prescription from '../molecules/Prescription';
 import MedName from '../molecules/MedName';
 import MedStepper from '../atoms/MedStepper';
-import MedReminder from '../molecules/MedReminder';
+import ReminderRecap from '../molecules/ReminderRecap';
 
 /*
  * ========================================================
@@ -32,16 +32,17 @@ function EditMedCard() {
   const [dosageCounter, setDosageCounter] = useState('pills');
   const [duration, setDuration] = useState('');
   const [times, setTimes] = useState('');
-  const [checked, setChecked] = useState(false);
+  const [asRequiredChecked, setAsRequiredChecked] = useState(false);
   const [note, setNote] = useState('');
 
   // related to Prescription
   const [prescriptionDate, setPrescriptionDate] = useState(new Date());
   const [prescriptionQty, setPrescriptionQty] = useState('');
-  const [reminderChecked, setReminderChecked] = useState(true);
+  const [reminderChecked, setReminderChecked] = useState();
 
   // related to MedReminder
   const [reminderDays, setReminderDays] = useState(0);
+  const [reminderDateTime, setReminderDateTime] = useState('');
 
   // related to stepper
   const [activeStep, setActiveStep] = useState(0);
@@ -49,10 +50,9 @@ function EditMedCard() {
   // initiate navigate
   const navigate = useNavigate();
 
-  // Hardcoded patient id for Humpty Dumpty
-  const patientId = '62259fadb4a77ae0343f7306';
   const location = useLocation();
-  const medicineId = location.state;
+  const medicineId = location.state.id;
+  const { patientId } = location.state;
   console.log('<== location.state ==>', location.state);
 
   useEffect(() => {
@@ -65,6 +65,7 @@ function EditMedCard() {
       const { selectedMedicine } = res.data;
       const { frequency, lastPrescribed, reminder } = selectedMedicine;
       setName(selectedMedicine.name);
+      setAsRequiredChecked(frequency.asRequiredChecked);
       setDosage(frequency.dosage);
       setDosageCounter(frequency.dosageCounter);
       setTimes(frequency.times);
@@ -72,8 +73,9 @@ function EditMedCard() {
       setNote(frequency.note);
       setPrescriptionDate(lastPrescribed.prescriptionDate);
       setPrescriptionQty(lastPrescribed.prescriptionQty);
-      setReminderDays(reminder.reminderDays);
       setReminderChecked(reminder.reminderChecked);
+      setReminderDays(reminder.reminderDays);
+      setReminderDateTime(reminder.reminderDateTime);
     };
 
     callBack();
@@ -82,7 +84,7 @@ function EditMedCard() {
     setName(e.target.value);
   };
   const handleSwitch = (e) => {
-    setChecked(e.target.checked);
+    setAsRequiredChecked(e.target.checked);
   };
   const handleDosage = (e) => {
     setDosage(e.target.value);
@@ -123,6 +125,7 @@ function EditMedCard() {
       patientId,
       medicineId,
       name,
+      asRequiredChecked,
       dosage,
       dosageCounter,
       times,
@@ -162,7 +165,7 @@ function EditMedCard() {
             handleTimes={handleTimes}
             duration={duration}
             handleDuration={handleDuration}
-            checked={checked}
+            asRequiredChecked={asRequiredChecked}
             handleSwitch={handleSwitch}
             handleNote={handleNote}
             note={note}
@@ -179,7 +182,11 @@ function EditMedCard() {
             reminderChecked={reminderChecked}
             handleReminder={handleReminder}
           />
-          <MedReminder
+          <ReminderRecap
+            reminderChecked={reminderChecked}
+            reminderDateTime={reminderDateTime}
+          />
+          {/* <MedReminder
             handleReminderDays={handleReminderDays}
             dosage={dosage}
             times={times}
@@ -187,7 +194,7 @@ function EditMedCard() {
             duration={duration}
             reminderDays={reminderDays}
             prescriptionDate={prescriptionDate}
-          />
+          /> */}
         </div>
 
         )}
