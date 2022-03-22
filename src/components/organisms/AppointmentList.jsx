@@ -20,7 +20,6 @@ const monthNames = [
 
 function AppointmentList({ displayDataArray, filterData, setOpenApptModal, setApptModalType }) {
   const [listDisplay, setListDisplay] = useState([]);
-  console.log('filter data in appointment list: ', filterData);
   let userDisplayArray = [];
 
   displayDataArray.forEach(patient => {
@@ -48,13 +47,11 @@ function AppointmentList({ displayDataArray, filterData, setOpenApptModal, setAp
     userDisplayArray = [...userDisplayArray, ...displayArray];
   });
 
-  console.log(userDisplayArray);
   // Sort userDisplayArray based on dates
   userDisplayArray.sort((a, b) => a.event_date - b.event_date);
 
   useEffect(() => {
     const filteredDisplayArray = [];
-    console.log('in appointments list, filterData change detected, running filters');
     
     if (filterData !== null) {  
       // Hospital Filter
@@ -102,13 +99,9 @@ function AppointmentList({ displayDataArray, filterData, setOpenApptModal, setAp
       }
       setListDisplay(filteredDisplayArray);
     }
-    console.log('validating that filteredDisplayArray is empty', filteredDisplayArray.length === 0);
     // Validation, if there are no filters, filtereredDisplayArray is empty
     if (filteredDisplayArray.length === 0) setListDisplay(userDisplayArray);
   }, [filterData]);
-  
-  useEffect(() => {console.log('list display changed... checking'); console.log(listDisplay);}, [listDisplay])
-
   
   const displayAppointmentList = listDisplay.map(appointment => (
     <div key={appointment.id}>
