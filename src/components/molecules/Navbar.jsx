@@ -68,6 +68,15 @@ export default function NavBar() {
   const navigate = useNavigate();
   const { store, dispatch } = useMedicalContext();
   const { photo, firstName, lastName } = store;
+
+  // Function to logout
+  // Clears local storage and all user info
+  // Navigates to login page
+  const handleLogout = () => {
+    logout(dispatch);
+    navigate('/auth');
+  };
+
   return (
     <div>
       <AppBar sx={navStyles.appBar}>
@@ -86,10 +95,7 @@ export default function NavBar() {
               </Button>
             ))}
             <Button
-              onClick={() => {
-                logout(dispatch);
-                navigate('/auth');
-              }}
+              onClick={handleLogout}
               sx={navStyles.navBtn}
             >
               Logout
@@ -161,7 +167,8 @@ export default function NavBar() {
 
           />
           <BottomNavigationAction
-            value="/logout"
+            value="/auth"
+            onClick={handleLogout}
             label="Logout"
             icon={<PowerSettingsNewIcon />}
             sx={navStyles.bottomNavBtn}

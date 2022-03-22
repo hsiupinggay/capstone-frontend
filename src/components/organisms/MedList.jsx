@@ -12,9 +12,12 @@
  */
 import React, { useEffect, useState } from 'react';
 import {
-  Card, CardActions, CardContent, Stack, Typography, Button,
+  Card, CardActions, CardContent, Stack, Typography, Grid, IconButton, Tooltip, Button, Modal, Box,
 } from '@mui/material';
 import axios from 'axios';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 /*
@@ -67,45 +70,62 @@ function MedList() {
   };
   return (
     <div>
-      <Typography>
-        Medication
-      </Typography>
-      <Button variant="text" onClick={handleAdd}>Add Medication</Button>
       <Stack
-        spacing={1}
+        direction="row"
+        spacing={2}
+        mb={2}
       >
-        {!loading && (
-          <div>
-            {medicineList.map((e) => (
-              <Card key={e._id}>
-                <CardContent>
-                  <Typography variant="h3">
-                    {e.name}
-                  </Typography>
-                  <Typography variant="body1">
-                    {`take ${e.frequency.dosage}
-            ${e.frequency.dosageCounter}`}
-                    <br />
-                    {e.frequency.times}
-                    {' '}
-                    {e.frequency.time === '1' ? 'time' : 'times'}
-                    {' '}
-                    {e.frequency.perDuration === '1' ? 'everyday' : `every ${e.frequency.perDuration} days`}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button onClick={() => { handleDelete(e._id); }}>
-                    Delete
-                  </Button>
-                  <Button onClick={() => { handleClick(e._id); }}>
-                    Edit
-                  </Button>
-                </CardActions>
-              </Card>
-            ))}
-          </div>
-        )}
+        <Typography variant="h1">
+          Medication
+        </Typography>
+        <Tooltip title="Add Medication" arrow>
+          <IconButton aria-label="add medication" color="primary" onClick={handleAdd}>
+            <AddCircleRoundedIcon />
+          </IconButton>
+        </Tooltip>
       </Stack>
+
+      {!loading && (
+      <Grid container spacing={2}>
+        {medicineList.map((e) => (
+          <Grid item xs={12} md={6}>
+            <Card key={e._id}>
+              <CardContent>
+                <Typography variant="h3">
+                  {e.name}
+                </Typography>
+                <Typography variant="body1">
+                  {`${e.frequency.dosage}
+            ${e.frequency.dosageCounter}`}
+                  <br />
+                  {e.frequency.times}
+                  {' '}
+                  {e.frequency.times === 1 ? 'time' : 'times'}
+                  {' '}
+                  {e.frequency.perDuration === '1' ? 'everyday' : `every ${e.frequency.perDuration} days`}
+                </Typography>
+                <Typography variant="body1">
+                  {`${e.lastPrescribed.prescriptionDate.split('T')[0]} `}
+                </Typography>
+              </CardContent>
+              <CardActions sx={{ justifyContent: 'flex-end' }}>
+                <Tooltip title="Delete" arrow>
+                  <IconButton aria-label="Delete medication" color="secondary" onClick={() => { handleDelete(e._id); }}>
+                    <DeleteRoundedIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Edit" arrow>
+                  <IconButton aria-label="Edit medication" color="secondary" onClick={() => { handleClick(e._id); }}>
+                    <EditRoundedIcon />
+                  </IconButton>
+                </Tooltip>
+              </CardActions>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+      )}
+
     </div>
   );
 }
