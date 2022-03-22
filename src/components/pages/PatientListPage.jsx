@@ -105,7 +105,7 @@ export default function PatientListPage() {
               </Tooltip>
               <br />
               {patientList.map((patient) => (
-                <div>
+                <div key={patient.name}>
                   {`${patient.name}`}
                   <Tooltip title="View Profile">
                     <ArrowCircleRightIcon onClick={() => openPatientProfile(patient.patientId)} />

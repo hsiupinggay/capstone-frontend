@@ -137,7 +137,7 @@ export default function PatientProfilePage() {
               </div>
               <div>
                 {' '}
-                <Button variant="contained" onClick={() => navigate('/add-appt')}>Medication</Button>
+                <Button variant="contained" onClick={() => navigate('/med-list', { state: patientId })}>Medication</Button>
               </div>
               <div>
                 {' '}

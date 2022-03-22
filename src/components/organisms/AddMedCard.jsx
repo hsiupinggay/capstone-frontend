@@ -10,11 +10,12 @@
  * ========================================================
  * ========================================================
  */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Card } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { getDate } from '../others/helper';
+import { useMedicalContext } from '../others/store';
 
 import MedFrequency from '../molecules/MedFrequency';
 import Prescription from '../molecules/Prescription';
@@ -56,8 +57,8 @@ export default function AddMedCard() {
 
   const navigate = useNavigate();
 
-  // Hardcoded patient id for Patrick Star
-  const patientId = '6225a54b80a1f0c98884563f';
+  const { store } = useMedicalContext();
+  const { patientId } = store;
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -140,7 +141,6 @@ export default function AddMedCard() {
     try {
       const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-medicine`, data);
       console.log('<== res.data add med ==>', res.data);
-      // need to navigate somewhere after form submit
       navigate('/med-list');
     } catch (err) {
       console.log(err);
