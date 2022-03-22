@@ -21,7 +21,7 @@ import SickIcon from '@mui/icons-material/Sick';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import { useMedicalContext } from '../others/store';
+import { useMedicalContext, logout } from '../others/store';
 import { getNameInitials } from '../others/helper';
 import navStyles from './NavbarCss';
 
@@ -51,10 +51,6 @@ const pathArray = [{
   path: '/profile',
   name: 'Profile',
 },
-{
-  path: '/logout',
-  name: 'Logout',
-},
 ];
 
 /*
@@ -70,9 +66,8 @@ const pathArray = [{
 export default function NavBar() {
   const [value, setValue] = useState();
   const navigate = useNavigate();
-  const { store } = useMedicalContext();
+  const { store, dispatch } = useMedicalContext();
   const { photo, firstName, lastName } = store;
-
   return (
     <div>
       <AppBar sx={navStyles.appBar}>
@@ -90,6 +85,16 @@ export default function NavBar() {
                 {e.name}
               </Button>
             ))}
+            <Button
+              onClick={() => {
+                logout(dispatch);
+                navigate('/auth');
+              }}
+              sx={navStyles.navBtn}
+            >
+              Logout
+
+            </Button>
           </Box>
 
           <Box
