@@ -2,18 +2,20 @@ import React from 'react';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
-const ApptFilterDisplay = ({filterData}) => {
-  if(filterData === null) return (<div></div>);
+export default function ApptFilterDisplay({ filterData }) {
+  if (filterData === null) return (<div />);
   const hospitalDisplay = (
     <>
       {
-        filterData.hospitalFilter !== null && 
-        <div>
-          Hospital:
-          <Stack direction="row" spacing={1}>
-            {filterData.hospitalFilter.map(filter => <Chip label={filter} />)}
-          </Stack>
-        </div>
+        filterData.hospitalFilter !== null
+        && (
+          <div>
+            Hospital:
+            <Stack direction="row" spacing={1}>
+              {filterData.hospitalFilter.map((filter) => <Chip label={filter} />)}
+            </Stack>
+          </div>
+        )
       }
     </>
   );
@@ -81,5 +83,3 @@ const ApptFilterDisplay = ({filterData}) => {
     </div>
   );
 }
-
-export default ApptFilterDisplay;

@@ -156,7 +156,7 @@ export default function AppointmentCalendar({ displayDataArray, setOpenApptModal
   return (
     <>
       {/* calendar body */}
-      <div className="container mx-auto py-4 px-6">
+      <div className="container mx-0 py-4 px-6">
         {/* calendar outer frame */}
         <div className="bg-white rounded-lg shadow overflow-hidden">
           {/* top row: display month, year; display nav arrows */}
@@ -197,7 +197,7 @@ export default function AppointmentCalendar({ displayDataArray, setOpenApptModal
               ))}
               {/* Print {date} and conditionally format - can add onClick here to open modal */}
               {numOfDays.map((date) => (
-                <div key={date} className="px-4 pt-2 border-r border-b relative h-32 w-[14.28%]">
+                <div key={date} className="px-4 pt-8 border-r border-b relative h-32 w-[14.28%]">
                   <div className={classNames(isToday(date) ? 'bg-blue-500 text-white' : 'text-gray-700 hover:bg-blue-200', 'inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100')}>
                     {date}
                   </div>

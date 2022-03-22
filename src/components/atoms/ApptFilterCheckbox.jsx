@@ -8,37 +8,39 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default function ApptFilterCheckbox({ id, label, dataArray, setFilterValue, filterValue }) {
+export default function ApptFilterCheckbox({
+  id, label, dataArray, setFilterValue,
+}) {
   const [value, setValue] = useState([]);
 
   useEffect(() => {
     switch (label) {
       case 'Hospital':
-        setFilterValue({hospital: value});
+        setFilterValue({ hospital: value });
         break;
       case 'Department':
-        setFilterValue({department: value});
+        setFilterValue({ department: value });
         break;
       case 'Patient':
-        setFilterValue({patient: value});
+        setFilterValue({ patient: value });
         break;
       case 'Chaperone':
-        setFilterValue({chaperone: value});
+        setFilterValue({ chaperone: value });
         break;
       case 'Date':
-        setFilterValue({date: value});
+        setFilterValue({ date: value });
         break;
       default:
         console.log('incorrect label');
         break;
     }
-  }, [value])
+  }, [value]);
 
   return (
     <Autocomplete
       multiple
       value={value}
-      onChange={(event, newValue) => {setValue(newValue)} }
+      onChange={(event, newValue) => setValue(newValue)}
       options={dataArray}
       disableCloseOnSelect
       getOptionLabel={(option) => option}

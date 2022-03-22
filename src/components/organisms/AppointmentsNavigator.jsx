@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useState , useRef } from 'react';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -15,12 +16,13 @@ const OPTION_FILTER = 'Filter'
 const options = [OPTION_ADD_APPOINTMENT, OPTION_CHANGE_VIEW, OPTION_FILTER];
 
 export default function SplitButton({ toggleView, setToggleView, setOpenApptModal, setApptModalType }) {
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef(null);
+  const [selectedIndex, setSelectedIndex] = useState(1);
 
+  // Click function for nav button click
   const handleClick = () => {
-    // console.info(`You clicked ${options[selectedIndex]}`);
+    // Switch Case on which option was chosen
     switch (options[selectedIndex]) {
       case OPTION_ADD_APPOINTMENT:
         setOpenApptModal(true);
@@ -36,11 +38,13 @@ export default function SplitButton({ toggleView, setToggleView, setOpenApptModa
     }
   };
 
+  // Click function for button drop down menu
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
     setOpen(false);
   };
 
+  // Function to toggle menu open and close
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -54,7 +58,7 @@ export default function SplitButton({ toggleView, setToggleView, setOpenApptModa
   };
 
   return (
-    <div className="appt-nav-btn flex justify-end">
+    <Box sx={{ display: 'flex', justifyContent: 'end', px: 3 }}>
       <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
         <Button onClick={handleClick}>{options[selectedIndex]}</Button>
         <Button
@@ -101,6 +105,6 @@ export default function SplitButton({ toggleView, setToggleView, setOpenApptModa
           </Grow>
         )}
       </Popper>
-    </div>
+    </Box>
   );
 }

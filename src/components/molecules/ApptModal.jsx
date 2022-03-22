@@ -120,11 +120,11 @@ function FilterModal({ openApptModal, setOpenApptModal, setFilterData, filterPar
         }
         >
           <h1>Apply Filters</h1>
-          <ApptFilterCheckbox label="Hospital" dataArray={filterParams.hospitals} filterValue={filterValue} setFilterValue={setFilterValue} />
-          <ApptFilterCheckbox label="Department" dataArray={filterParams.departments} filterValue={filterValue} setFilterValue={setFilterValue} />
-          <ApptFilterCheckbox label="Patient" dataArray={filterParams.patients} filterValue={filterValue} setFilterValue={setFilterValue} />
-          <ApptFilterCheckbox label="Chaperone" dataArray={filterParams.chaperones} filterValue={filterValue} setFilterValue={setFilterValue} />
-          <ApptFilterCheckbox label="Date" dataArray={filterParams.dates} filterValue={filterValue} setFilterValue={setFilterValue} />
+          <ApptFilterCheckbox label="Hospital" dataArray={filterParams.hospitals} setFilterValue={setFilterValue} />
+          <ApptFilterCheckbox label="Department" dataArray={filterParams.departments} setFilterValue={setFilterValue} />
+          <ApptFilterCheckbox label="Patient" dataArray={filterParams.patients} setFilterValue={setFilterValue} />
+          <ApptFilterCheckbox label="Chaperone" dataArray={filterParams.chaperones} setFilterValue={setFilterValue} />
+          <ApptFilterCheckbox label="Date" dataArray={filterParams.dates} setFilterValue={setFilterValue} />
           <Button onClick={submitFilters}>Submit</Button>
         </Box>
       </Modal>
