@@ -15,6 +15,7 @@ import { Button, Modal, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useMedicalContext } from '../others/store';
 import AddRelationship from '../organisms/AddRelationship';
+import BackIcon from '../molecules/BackIcon';
 
 /*
  * ========================================================
@@ -52,7 +53,6 @@ export default function PatientProfilePage() {
   const [displayAge, setDisplayAge] = useState();
   const [displayRelationship, setDisplayRelationship] = useState();
   const [open, setOpen] = useState(false);
-  console.log(displayAge, displayRelationship);
   const { store } = useMedicalContext();
   const { userId, patientId } = store;
   const navigate = useNavigate();
@@ -89,7 +89,7 @@ export default function PatientProfilePage() {
 
   return (
     <div>
-      <Button variant="contained" onClick={() => navigate('/patients')}>Back</Button>
+      <BackIcon variant="contained" onClick={() => navigate('/patients')} />
       <br />
       <br />
 
@@ -137,7 +137,7 @@ export default function PatientProfilePage() {
               </div>
               <div>
                 {' '}
-                <Button variant="contained" onClick={() => navigate('/add-appt')}>Medication</Button>
+                <Button variant="contained" onClick={() => navigate('/med-list', { state: patientId })}>Medication</Button>
               </div>
               <div>
                 {' '}

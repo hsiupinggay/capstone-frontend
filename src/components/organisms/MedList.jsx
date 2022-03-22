@@ -12,10 +12,10 @@
  */
 import React, { useEffect, useState } from 'react';
 import {
-  Card, CardContent, Stack, Typography,
+  Card, CardActions, CardContent, Stack, Typography, Button,
 } from '@mui/material';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 /*
  * ========================================================
@@ -31,11 +31,12 @@ function MedList() {
   const [medicineList, setMedicineList] = useState();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
+  const patientId = location.state;
+  console.log('<== patientId ==>', patientId);
 
   useEffect(() => {
     const callBack = async () => {
-      // Hardcoded patient id for Humpty Dumpty
-      const patientId = '62259fadb4a77ae0343f7306';
       const data = new URLSearchParams();
       data.append('patientId', patientId);
       const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/med-list?${data.toString()}`);
@@ -47,21 +48,36 @@ function MedList() {
     callBack();
   }, []);
   console.log(medicineList);
-
   const handleClick = (id) => {
-    navigate('/edit-med', { state: id });
+    navigate('/edit-med', { state: { id, patientId } });
     console.log('<== e.target ==>', id);
   };
 
+  const handleDelete = async (id) => {
+    console.log('medicine id delete', id);
+    const data = new URLSearchParams();
+    data.append('medicineId', id);
+    data.append('patientId', patientId);
+    const res = await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/patient/delete?${data.toString()}`);
+    console.log(res.data);
+  };
+
+  const handleAdd = async () => {
+    navigate('/add-med');
+  };
   return (
     <div>
+      <Typography>
+        Medication
+      </Typography>
+      <Button variant="text" onClick={handleAdd}>Add Medication</Button>
       <Stack
         spacing={1}
       >
         {!loading && (
           <div>
             {medicineList.map((e) => (
-              <Card key={e._id} onClick={() => { handleClick(e._id); }}>
+              <Card key={e._id}>
                 <CardContent>
                   <Typography variant="h3">
                     {e.name}
@@ -77,6 +93,14 @@ function MedList() {
                     {e.frequency.perDuration === '1' ? 'everyday' : `every ${e.frequency.perDuration} days`}
                   </Typography>
                 </CardContent>
+                <CardActions>
+                  <Button onClick={() => { handleDelete(e._id); }}>
+                    Delete
+                  </Button>
+                  <Button onClick={() => { handleClick(e._id); }}>
+                    Edit
+                  </Button>
+                </CardActions>
               </Card>
             ))}
           </div>

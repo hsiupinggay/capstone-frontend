@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 import {
-  CardContent, FormControl, FormControlLabel, Stack, Switch, TextField, Typography,
+  CardContent, FormControl, Stack, TextField, Typography,
 } from '@mui/material';
 import DateAdapter from '@mui/lab/AdapterLuxon';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -12,17 +12,16 @@ function Prescription({
   dosageCounter,
   handlePrescriptionDate,
   handlePrescriptionQty,
-  reminderChecked,
-  handleReminder,
   prescriptionQty,
   prescriptionDate,
+
 }) {
   return (
     <div>
       <CardContent>
 
         <Stack
-          spacing={1}
+          spacing={2}
           justifyContent="space-between"
         >
           <Typography variant="h3">Prescription</Typography>
@@ -53,18 +52,35 @@ function Prescription({
             </FormControl>
             <Typography variant="body1">{dosageCounter}</Typography>
           </Stack>
-          <FormControlLabel
-            control={(
-              <Switch
-                checked={reminderChecked}
-                onChange={handleReminder}
-                inputProps={{ 'aria-label': 'controlled' }}
-                color="secondary"
+          {/* {asRequiredChecked ? (
+            <Tooltip title="Reminder not available for use as required medication">
+              <FormControlLabel
+                control={(
+                  <Switch
+                    checked={false}
+                    disabled
+                    inputProps={{ 'aria-label': 'controlled' }}
+                    color="secondary"
+                  />
+          )}
+                label="Remind me to refill"
               />
+            </Tooltip>
+          ) : (
+            <FormControlLabel
+              control={(
+                <Switch
+                  checked={reminderChecked}
+                  onChange={handleReminder}
+                  inputProps={{ 'aria-label': 'controlled' }}
+                  color="secondary"
+                />
 
           )}
-            label="Remind me to refill"
-          />
+              label="Remind me to refill"
+            />
+
+          )} */}
         </Stack>
       </CardContent>
     </div>

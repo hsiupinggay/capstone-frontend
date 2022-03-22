@@ -14,34 +14,20 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  Avatar, Button, Modal, Box,
+  Avatar, Button, Modal, Box, Typography, Badge,
 } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import Tooltip from '@mui/material/Tooltip';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ChatIcon from '@mui/icons-material/Chat';
+import { useNavigate } from 'react-router-dom';
+import DoneIcon from '@mui/icons-material/Done';
+import CloseIcon from '@mui/icons-material/Close';
 import { getNameInitials } from '../others/helper';
-import { useMedicalContext } from '../others/store';
+import { useMedicalContext, setTexteeAction } from '../others/store';
 import AddContact from '../organisms/AddContact';
 import ContactVisibility from '../organisms/ContactVisibility';
-
-/*
- * ========================================================
- * ========================================================
- *
- *                   Modal styling
- *
- * ========================================================
- * ========================================================
- */
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  height: 500,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+import contactPageStyles from './ContactsPageCss';
 
 /*
  * ========================================================
@@ -63,8 +49,9 @@ export default function ContactsPage() {
   const [open, setOpen] = useState(false);
   const [modal, setModal] = useState('add contact');
 
-  const { store } = useMedicalContext();
+  const { store, dispatch } = useMedicalContext();
   const { userId } = store;
+  const navigate = useNavigate();
 
   const openAddContactPopup = () => {
     setOpen(true);
@@ -79,7 +66,13 @@ export default function ContactsPage() {
   const closeAddContactPopup = () => {
     setOpen(false);
   };
-
+  const openChat = (id, firstName, lastName, photo) => {
+    const data = {
+      id, firstName, lastName, photo,
+    };
+    dispatch(setTexteeAction(data));
+    navigate('/chat');
+  };
   // When component renders, retrieve all contacts and patients data related to user
   useEffect(() => {
     const data = new URLSearchParams();
@@ -140,157 +133,171 @@ export default function ContactsPage() {
   };
 
   return (
-    <div>
-      <strong>
-        Contacts Page
-      </strong>
-      <br />
-
-      <br />
-      <br />
+    <Box sx={contactPageStyles.pageContainer}>
       {
         contactsList === undefined
           ? (
-            <div>
-              <strong>
-                Your Contacts
-                <Button variant="contained" onClick={openAddContactPopup}>Add New Contact</Button>
-              </strong>
-            </div>
+            <div />
           )
           : (
             <div>
-              <strong>
-                {' '}
-                Your Contacts
-                <Button variant="contained" onClick={openAddContactPopup}>Add New Contact</Button>
-              </strong>
+              <Box sx={contactPageStyles.titleContainer}>
+                <Typography sx={contactPageStyles.title}>
+                  {' '}
+                  Your Contacts
+                </Typography>
+                <Tooltip arrow title="Add New Contact">
+                  <AddCircleIcon variant="contained" sx={contactPageStyles.addIcon} onClick={openAddContactPopup} />
+                </Tooltip>
+              </Box>
               <br />
-              {contactsList.map((contact) => (
-                <div>
-                  {`${contact.firstName} ${contact.lastName}`}
-                  {!contact.photo && <Avatar sx={{ width: 60, height: 60 }}>{getNameInitials(contact.firstName, contact.lastName)}</Avatar>}
-                  {contact.photo && <Avatar sx={{ width: 60, height: 60 }} alt="profile" src={contact.photo} />}
-                  <Button variant="contained" onClick={() => openContactVisibilityPopup(contact.contactId, `${contact.firstName} ${contact.lastName}`)}>Settings</Button>
-                </div>
-              ))}
+              <Box sx={contactPageStyles.allContactsContainer}>
+                {contactsList.map((contact) => (
+                  <Box sx={contactPageStyles.contactContainer}>
+                    <Typography sx={contactPageStyles.contactName}>
+                      {`${contact.firstName} ${contact.lastName}`}
+                    </Typography>
+                    {!contact.photo && <Avatar sx={contactPageStyles.avatar}>{getNameInitials(contact.firstName, contact.lastName)}</Avatar>}
+                    {contact.photo && <Avatar sx={contactPageStyles.avatar} alt="profile" src={contact.photo} />}
+                    <Box sx={contactPageStyles.iconContainer}>
+                      <Tooltip arrow title="Control Contact Permission">
+                        <VisibilityIcon sx={contactPageStyles.icon} variant="contained" onClick={() => openContactVisibilityPopup(contact.contactId, `${contact.firstName} ${contact.lastName}`)} />
+                      </Tooltip>
+                      <Tooltip arrow title="Chat">
+                        <ChatIcon variant="contained" sx={contactPageStyles.icon} onClick={() => openChat(contact.contactId, contact.firstName, contact.lastName, contact.photo)} />
+                      </Tooltip>
+                    </Box>
+
+                  </Box>
+                ))}
+              </Box>
             </div>
           )
       }
       <br />
+      <Box sx={contactPageStyles.titleContainer}>
+        <Typography sx={contactPageStyles.title}>Requests</Typography>
+      </Box>
       <br />
-      {
+      <Box sx={contactPageStyles.requestsContainer}>
+        {
         incomingRequestsList === undefined
           ? (
-            <div>
-              <strong>Requests</strong>
-            </div>
+
+            <div />
           )
           : (
             <div>
-              <strong>Requests</strong>
-              <br />
-              {incomingRequestsList.map((request) => (
-                <div>
-                  {`${request.sender.firstName} ${request.sender.lastName}`}
-                  {' '}
-                  wants to add you!
-                  {!request.sender.photo && <Avatar sx={{ width: 60, height: 60 }}>{getNameInitials(request.sender.firstName, request.sender.lastName)}</Avatar>}
-                  {request.sender.photo && <Avatar sx={{ width: 60, height: 60 }} alt="profile" src={request.sender.photo} />}
-                  <Button onClick={() => handleRequest(request._id, 'accepted', request.sender.senderId, request.sender.firstName, request.sender.lastName, request.sender.photo)}>Accept</Button>
-                  <Button variant="contained" onClick={() => handleRequest(request._id, 'rejected')}>Reject</Button>
-                </div>
-              ))}
+              <Typography sx={contactPageStyles.smallTitle}>Incoming Requests</Typography>
+              <Box sx={contactPageStyles.outGoingContainer}>
+                {incomingRequestsList.map((request) => (
+                  <Box sx={contactPageStyles.smallContactContainer}>
+                    <Typography sx={contactPageStyles.smallContactName}>
+                      {`${request.sender.firstName} ${request.sender.lastName}`}
+                    </Typography>
+                    <Box sx={contactPageStyles.secondRowContainer}>
+                      {!request.sender.photo && <Avatar sx={contactPageStyles.smallAvatar}>{getNameInitials(request.sender.firstName, request.sender.lastName)}</Avatar>}
+                      {request.sender.photo && <Avatar sx={contactPageStyles.smallAvatar} alt="profile" src={request.sender.photo} />}
+                      <Box sx={contactPageStyles.iconsContainer}>
+                        <Tooltip arrow title="Accept" placement="top">
+                          <DoneIcon onClick={() => handleRequest(request._id, 'accepted', request.sender.senderId, request.sender.firstName, request.sender.lastName, request.sender.photo)} sx={contactPageStyles.acceptIcon} />
+                        </Tooltip>
+                        <Tooltip arrow title="Reject">
+                          <CloseIcon variant="contained" onClick={() => handleRequest(request._id, 'rejected')} sx={contactPageStyles.rejectIcon} />
+                        </Tooltip>
+                      </Box>
+                    </Box>
+                  </Box>
+                ))}
+              </Box>
             </div>
           )
       }
-      <br />
-      <br />
-      {
+        <br />
+        <br />
+        {
         outgoingPendingList === undefined
           ? (
-            <div>
-              <strong>Sent Requests</strong>
-            </div>
+            <div />
           )
           : (
             <div>
-              <strong>Sent Requests</strong>
-              <br />
-              {outgoingPendingList.map((request) => (
-                <div>
-                  Your request to
-                  {' '}
-                  {`${request.recipient.firstName} ${request.recipient.lastName}`}
-                  {' '}
-                  is pending.
-                  {!request.recipient.photo && <Avatar sx={{ width: 60, height: 60 }}>{getNameInitials(request.recipient.firstName, request.recipient.lastName)}</Avatar>}
-                  {request.recipient.photo && <Avatar sx={{ width: 60, height: 60 }} alt="profile" src={request.recipient.photo} />}
-
-                </div>
-              ))}
+              <Typography sx={contactPageStyles.smallTitle}>Sent Requests</Typography>
+              <Box sx={contactPageStyles.outGoingContainer}>
+                {outgoingPendingList.map((request) => (
+                  <Box sx={contactPageStyles.smallContactContainer}>
+                    {!request.recipient.photo && <Avatar sx={contactPageStyles.smallAvatar}>{getNameInitials(request.recipient.firstName, request.recipient.lastName)}</Avatar>}
+                    {request.recipient.photo && <Avatar sx={contactPageStyles.smallAvatar} alt="profile" src={request.recipient.photo} />}
+                    <Typography sx={contactPageStyles.smallContactName}>
+                      {`${request.recipient.firstName} ${request.recipient.lastName}`}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
             </div>
+
           )
       }
-      <br />
-      <br />
-      {
+        <br />
+        <br />
+        {
         outgoingAcceptedList === undefined
           ? (
-            <div>
-              <strong>Accepted Requests</strong>
-            </div>
+            <div />
           )
           : (
             <div>
-              <strong>Accepted Requests</strong>
-              <br />
-              {outgoingAcceptedList.map((request) => (
-                <div>
-                  {`${request.recipient.firstName} ${request.recipient.lastName}`}
-                  {' '}
-                  accepted your request!
-                  {!request.recipient.photo && <Avatar sx={{ width: 60, height: 60 }}>{getNameInitials(request.recipient.firstName, request.recipient.lastName)}</Avatar>}
-                  {request.recipient.photo && <Avatar sx={{ width: 60, height: 60 }} alt="profile" src={request.recipient.photo} />}
-                  <Button variant="contained" onClick={() => dismissNotification(request._id, 'accepted')}>Dismiss</Button>
-                </div>
-              ))}
+              <Typography sx={contactPageStyles.smallTitle}>Accepted Requests</Typography>
+              <Box sx={contactPageStyles.outGoingContainer}>
+                {outgoingAcceptedList.map((request) => (
+                  <Box sx={contactPageStyles.smallContactContainer}>
+                    <Typography sx={contactPageStyles.smallContactName}>
+                      {`${request.recipient.firstName} ${request.recipient.lastName}`}
+                    </Typography>
+
+                    {!request.recipient.photo && <Avatar sx={contactPageStyles.smallAvatar}>{getNameInitials(request.recipient.firstName, request.recipient.lastName)}</Avatar>}
+                    {request.recipient.photo && <Avatar sx={contactPageStyles.smallAvatar} alt="profile" src={request.recipient.photo} />}
+                    <Button variant="contained" onClick={() => dismissNotification(request._id, 'accepted')}>Dismiss</Button>
+                  </Box>
+                ))}
+              </Box>
             </div>
           )
       }
-      <br />
-      <br />
-      {
+        <br />
+        <br />
+        {
         outgoingRejList === undefined
           ? (
-            <div>
-              <strong>Rejected Requests</strong>
-            </div>
+            <div />
           )
           : (
             <div>
-              <strong>Rejected Requests</strong>
-              <br />
-              {outgoingRejList.map((request) => (
-                <div>
-                  {`${request.recipient.firstName} ${request.recipient.lastName}`}
-                  {' '}
-                  declined your request.
-                  {!request.recipient.photo && <Avatar sx={{ width: 60, height: 60 }}>{getNameInitials(request.recipient.firstName, request.recipient.lastName)}</Avatar>}
-                  {request.recipient.photo && <Avatar sx={{ width: 60, height: 60 }} alt="profile" src={request.recipient.photo} />}
-                  <Button variant="contained" onClick={() => dismissNotification(request._id, 'rejected')}>Dismiss</Button>
-                </div>
-              ))}
+              <Typography sx={contactPageStyles.smallTitle}>Rejected Requests</Typography>
+              <Box sx={contactPageStyles.outGoingContainer}>
+                {outgoingRejList.map((request) => (
+                  <Box sx={contactPageStyles.smallContactContainer}>
+                    <Typography sx={contactPageStyles.smallContactName}>
+                      {`${request.recipient.firstName} ${request.recipient.lastName}`}
+                    </Typography>
+                    {!request.recipient.photo && <Avatar sx={contactPageStyles.smallAvatar}>{getNameInitials(request.recipient.firstName, request.recipient.lastName)}</Avatar>}
+                    {request.recipient.photo && <Avatar sx={contactPageStyles.smallAvatar} alt="profile" src={request.recipient.photo} />}
+                    <Button variant="contained" onClick={() => dismissNotification(request._id, 'rejected')}>Dismiss</Button>
+                  </Box>
+                ))}
+              </Box>
             </div>
           )
       }
+      </Box>
+
       <Modal
         open={open}
         onClose={closeAddContactPopup}
         // aria-labelledby="modal-modal-title"
         // aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={contactPageStyles.modalStyle}>
           {
           modal === 'add contact'
             ? <AddContact setOutgoingPendingList={setOutgoingPendingList} />
@@ -298,6 +305,6 @@ export default function ContactsPage() {
            }
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }

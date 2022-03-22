@@ -10,11 +10,12 @@
  */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import HelperText from '../atoms/HelperText';
-import RequiredTextfield from '../atoms/RequiredTextfield';
+import {
+  TextField, Stack, Button, CardContent,
+} from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
 import { login, useMedicalContext } from '../others/store';
 import { validateEmail } from '../others/helper';
-import SubmitButton from '../atoms/SubmitButton';
 
 /*
  * ========================================================
@@ -83,22 +84,64 @@ export default function Login() {
   };
 
   return (
-    <form>
-      <div className="
-    flex
-    flex-col
-    justify-center
-    p-3
-    "
+    <CardContent>
+      {!error && (
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+        padding={3}
       >
-        <RequiredTextfield label="Email" type="email" id="floating-email" onChange={handleEmail} />
-        <RequiredTextfield label="Password" type="password" id="password-input" onChange={handlePassword} />
-        {error && <HelperText text={errorMessage} />}
-        <div className="flex justify-center">
-          <SubmitButton label="Submit" onClick={handleSubmit} />
-        </div>
+        <PersonIcon />
+        <TextField fullWidth label="E-mail" variant="outlined" onChange={handleEmail} />
+        <TextField fullWidth label="Password" type="password" variant="outlined" onChange={handlePassword} />
+      </Stack>
+      )}
 
-      </div>
-    </form>
+      {error && (
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+        padding={3}
+      >
+        <PersonIcon />
+        <TextField fullWidth error label="E-mail" variant="outlined" onChange={handleEmail} />
+        <TextField fullWidth error label="Password" type="password" variant="outlined" onChange={handlePassword} helperText={errorMessage} />
+      </Stack>
+      )}
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        px={3}
+        pt={1}
+      >
+        <Button fullWidth variant="contained" onClick={handleSubmit}>Log In</Button>
+      </Stack>
+    </CardContent>
+
+  // <form>
+  //   <div className="
+  // flex
+  // flex-col
+  // justify-center
+  // p-3
+  // "
+  //   >
+  //     <Stack
+  //       spacing={2}
+  //     >
+  //       <TextField type="email" onChange={handleEmail} label="Email" />
+  //       <TextField type="password" onChange={handlePassword} label="Password" />
+  //       {error && <HelperText text={errorMessage} />}
+  //       <div className="flex justify-center">
+  //         <SubmitButton label="Submit" onClick={handleSubmit} />
+  //       </div>
+  //     </Stack>
+  //   </div>
+  // </form>
   );
 }

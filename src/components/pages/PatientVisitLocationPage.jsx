@@ -13,7 +13,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button, Modal, Box } from '@mui/material';
+import { Modal, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Tooltip from '@mui/material/Tooltip';
@@ -21,6 +21,7 @@ import { useMedicalContext } from '../others/store';
 import AddHospitalTruncated from '../organisms/AddHospitalTruncated';
 import AddDepartmentTruncated from '../organisms/AddDepartmentTruncated';
 import AddChaperoneTruncated from '../organisms/AddChaperoneTruncated';
+import BackIcon from '../molecules/BackIcon';
 
 /*
  * ========================================================
@@ -98,7 +99,7 @@ export default function PatientVisitLocationPage() {
 
   return (
     <div>
-      <Button variant="contained" onClick={() => navigate('/patient')}>Back</Button>
+      <BackIcon variant="contained" onClick={() => navigate('/patient')} />
       <br />
       <br />
 

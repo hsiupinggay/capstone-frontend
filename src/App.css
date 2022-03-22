@@ -2,3 +2,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Press+Start+2P&family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+body {
+  background-color: var(--background-color);
+}
+:root {
+  --background-color: #f0f2f5;
+  /* --grey-color: #456e3f;
+  --primary-color: #581845; */
+}
