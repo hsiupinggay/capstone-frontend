@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable react/prop-types */
 /*
  * ========================================================
  * ========================================================
@@ -11,11 +12,16 @@
  */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import { Typography } from '@mui/material';
 import { useMedicalContext } from '../others/store';
+import BackIcon from '../molecules/BackIcon';
+import chaperonePopupStyles from './AddChaperoneCss';
 
 /*
  * ========================================================
@@ -26,7 +32,7 @@ import { useMedicalContext } from '../others/store';
  * ========================================================
  * ========================================================
  */
-export default function AddChaperone() {
+export default function AddChaperone({ setModal, setAddition }) {
   const { store } = useMedicalContext();
   const { userId, firstName, lastName } = store;
 
@@ -37,9 +43,12 @@ export default function AddChaperone() {
   const [chaperoneId, setChaperoneId] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [patientArr, setPatientArr] = useState();
-  const navigate = useNavigate();
+  const [value, setValue] = useState(0);
   const filter = createFilterOptions();
-
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    setAddition(newValue);
+  };
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
     const data = new URLSearchParams();
@@ -85,14 +94,17 @@ export default function AddChaperone() {
       if (response.status === 200) {
         setSuccessMessage(
           <div>
-            <p>
-              {`You have added ${chaperoneName} as ${patientName}'s chaperone.`}
-            </p>
+            {`You have added ${chaperoneName} as ${patientName}'s chaperone.`}
           </div>,
         );
       }
     });
   };
+
+  const a11yProps = (index) => ({
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  });
 
   return (
     <div>
@@ -100,59 +112,71 @@ export default function AddChaperone() {
         ? <div />
         : (
           <div>
-            <Button variant="contained" onClick={() => navigate('/add-appt')}>Back</Button>
-            <Button variant="contained" onClick={() => navigate('/add-patient')}>+ Patient</Button>
-            <Button variant="contained" onClick={() => navigate('/add-hospital')}>+ Hospital</Button>
-            <Button variant="contained" onClick={() => navigate('/add-department')}>+ Department</Button>
-            <Button variant="contained" disabled>+ Chaperone</Button>
+            <BackIcon variant="contained" onClick={() => setModal('add appointment')} />
+            <Box sx={chaperonePopupStyles.inputContainer}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <Tab label=" +Patient" value="patient" {...a11yProps(0)} />
+                <Tab label=" +Hospital" value="hospital" {...a11yProps(1)} />
+                <Tab label=" +Department" value="department" {...a11yProps(2)} />
+                <Tab label=" +Chaperone" value="chaperone" {...a11yProps(3)} disabled />
+              </Tabs>
+            </Box>
             <br />
             <br />
             <form onSubmit={handleSubmit}>
+              <Box sx={chaperonePopupStyles.inputContainer}>
 
-              <Autocomplete
-                options={patientArr}
-                getOptionLabel={(option) => `${option.identity.name.first} ${option.identity.name.last}`}
-                renderInput={(params) => <TextField {...params} label="Select Patient" required />}
-                onChange={(event, newValue) => { updatePatient(`${newValue._id},${`${newValue.identity.name.first} ${newValue.identity.name.last}`}`); }}
-                selectOnFocus
-                clearOnBlur
-                handleHomeEndKeys
-                sx={{ width: 250 }}
-              />
+                <Autocomplete
+                  options={patientArr}
+                  getOptionLabel={(option) => `${option.identity.name.first} ${option.identity.name.last}`}
+                  renderInput={(params) => <TextField {...params} label="Select Patient" sx={chaperonePopupStyles.inputField} required />}
+                  onChange={(event, newValue) => { updatePatient(`${newValue._id},${`${newValue.identity.name.first} ${newValue.identity.name.last}`}`); }}
+                  selectOnFocus
+                  clearOnBlur
+                  handleHomeEndKeys
+                  sx={{ width: 250 }}
+                />
 
-              <Autocomplete
-                options={contacts}
-                onChange={(event, newValue) => { updateChaperone(newValue.value); }}
-                renderInput={(params) => <TextField {...params} label="Add Chaperone" required />}
-                filterOptions={(options, params) => {
-                  const filtered = filter(options, params);
-                  const { inputValue } = params;
-                  // Suggest the creation of a new value
-                  const isExisting = options.some((option) => inputValue === option.label);
-                  if (inputValue !== '' && !isExisting) {
-                    filtered.push({
-                      inputValue,
-                      label: `Add "${inputValue}"`,
-                      value: inputValue,
-                    });
-                  }
-                  return filtered;
-                }}
-                selectOnFocus
-                clearOnBlur
-                handleHomeEndKeys
-                sx={{ width: 250 }}
-              />
+                <Autocomplete
+                  options={contacts}
+                  onChange={(event, newValue) => { updateChaperone(newValue.value); }}
+                  renderInput={(params) => <TextField {...params} label="Add Chaperone" sx={chaperonePopupStyles.inputField} required />}
+                  filterOptions={(options, params) => {
+                    const filtered = filter(options, params);
+                    const { inputValue } = params;
+                    // Suggest the creation of a new value
+                    const isExisting = options.some((option) => inputValue === option.label);
+                    if (inputValue !== '' && !isExisting) {
+                      filtered.push({
+                        inputValue,
+                        label: `Add "${inputValue}"`,
+                        value: inputValue,
+                      });
+                    }
+                    return filtered;
+                  }}
+                  selectOnFocus
+                  clearOnBlur
+                  handleHomeEndKeys
+                  sx={{ width: 250 }}
+                />
+              </Box>
               <br />
-              <Button variant="contained" type="submit">Submit</Button>
+              <Box sx={chaperonePopupStyles.submitBtn}>
+                <Button variant="contained" type="submit">Submit</Button>
+              </Box>
             </form>
             <div>
               {successMessage === ''
                 ? <div />
                 : (
-                  <div>
+                  <Typography sx={chaperonePopupStyles.outcomeMessage}>
                     {successMessage}
-                  </div>
+                  </Typography>
                 )}
             </div>
           </div>

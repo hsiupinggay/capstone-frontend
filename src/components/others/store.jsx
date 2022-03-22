@@ -29,6 +29,11 @@ export const initialState = {
   lastName: '',
   email: '',
   photo: null,
+  patientId: '',
+  texteeId: '',
+  texteeFirstName: '',
+  texteeLastName: '',
+  texteePhoto: '',
 };
 
 /*
@@ -85,6 +90,20 @@ export function medicalReducer(state, action) {
         lastName: action.payload.name.last,
         email: action.payload.email,
       };
+    case SELECT_PATIENT:
+      return {
+        ...state,
+        patientId: action.payload,
+      };
+
+    case SELECT_TEXTEE:
+      return {
+        ...state,
+        texteeId: action.payload.id,
+        texteeFirstName: action.payload.firstName,
+        texteeLastName: action.payload.lastName,
+        texteePhoto: action.payload.photo,
+      };
 
     default:
       return state;
@@ -107,6 +126,8 @@ const SIGNUP = 'SIGNUP';
 const AUTH = 'AUTH';
 const UPLOAD_PHOTO = 'UPLOAD_PHOTO';
 const EDIT_USER = 'EDIT_USER';
+const SELECT_PATIENT = 'SELECT_PATIENT';
+const SELECT_TEXTEE = 'SELECT_TEXTEE';
 
 export function loginAction(payload) {
   return {
@@ -146,6 +167,20 @@ export function editUserAction(payload) {
 export function logoutAction() {
   return {
     type: LOGOUT,
+  };
+}
+
+export function setPatientAction(payload) {
+  return {
+    type: SELECT_PATIENT,
+    payload,
+  };
+}
+
+export function setTexteeAction(payload) {
+  return {
+    type: SELECT_TEXTEE,
+    payload,
   };
 }
 

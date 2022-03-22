@@ -11,11 +11,51 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import {
-  Box, AppBar, Toolbar, IconButton, Typography, Menu, Container, Button, Tooltip, MenuItem,
+  Box, AppBar, Toolbar, Typography, Button, Avatar,
 } from '@mui/material';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import { useMedicalContext, logout } from '../others/store';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import HomeIcon from '@mui/icons-material/Home';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import SickIcon from '@mui/icons-material/Sick';
+import ContactPageIcon from '@mui/icons-material/ContactPage';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import { useMedicalContext } from '../others/store';
+import { getNameInitials } from '../others/helper';
+import navStyles from './NavbarCss';
+
+/*
+ * ========================================================
+ * ========================================================
+ *                  Array of navbar paths
+ * ========================================================
+ * ========================================================
+ */
+const pathArray = [{
+  path: '/home',
+  name: 'Home',
+}, {
+  path: '/appointments',
+  name: 'Appointments',
+},
+{
+  path: '/patients',
+  name: 'Patients',
+},
+{
+  path: '/contacts',
+  name: 'Contacts',
+},
+{
+  path: '/profile',
+  name: 'Profile',
+},
+{
+  path: '/logout',
+  name: 'Logout',
+},
+];
 
 /*
  * ========================================================
@@ -27,162 +67,103 @@ import { useMedicalContext, logout } from '../others/store';
  * ========================================================
  * ========================================================
  */
-
-const pathArray = [{
-  path: '/home',
-  name: 'Home',
-}, {
-  path: '/appointments',
-  name: 'Appointments',
-},
-{
-  path: '/add-appt',
-  name: 'Add Appt',
-},
-];
-
-const profileArray = [
-  {
-    path: '/contacts',
-    name: 'Contacts',
-  },
-  {
-    path: '/profile',
-    name: 'Profile',
-  }];
-
 export default function NavBar() {
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [value, setValue] = useState();
   const navigate = useNavigate();
-
-  const { dispatch } = useMedicalContext();
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-  const handleLogout = () => {
-    logout(dispatch);
-    navigate('/auth');
-  };
+  const { store } = useMedicalContext();
+  const { photo, firstName, lastName } = store;
 
   return (
     <div>
-      <AppBar position="absolute">
-        <Container>
-          <Toolbar disableGutters>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-            >
-              MedicalApp
-            </Typography>
+      <AppBar sx={navStyles.appBar}>
+        <Toolbar sx={navStyles.toolBar}>
+          <Typography sx={navStyles.appName}>
+            MedicalApp
+          </Typography>
+          <Box sx={navStyles.navContainer}>
+            {pathArray.map((e) => (
+              <Button
+                key={e.name}
+                onClick={() => { navigate(e.path); }}
+                sx={navStyles.navBtn}
+              >
+                {e.name}
+              </Button>
+            ))}
+          </Box>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-              >
-                <MenuRoundedIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: 'block', md: 'none' },
-                }}
-              >
-                {pathArray.map((e) => (
-                  <MenuItem key={e.name} onClick={() => { navigate(e.path); }}>
-                    <Typography textAlign="center">{e.name}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-            >
-              MedicalApp
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pathArray.map((e) => (
-                <Button
-                  key={e.name}
-                  onClick={() => { navigate(e.path); }}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  {e.name}
-                </Button>
-              ))}
-            </Box>
+          <Box
+            sx={navStyles.navProfileContainer}
+          >
+            <Box sx={navStyles.navNameContainer}>
+              <Typography sx={navStyles.navProfileName}>
+                {firstName}
+                {' '}
+                {lastName}
+              </Typography>
 
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <AccountCircle />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {profileArray.map((e) => (
-                  <MenuItem key={e.name} onClick={() => { navigate(e.path); }}>
-                    <Typography textAlign="center">{e.name}</Typography>
-                  </MenuItem>
-                ))}
-                <MenuItem key="logout" onClick={handleLogout}>
-                  <Typography textAlign="center">Log Out</Typography>
-                </MenuItem>
-              </Menu>
             </Box>
-          </Toolbar>
-        </Container>
+            <Box sx={navStyles.navProfilePic}>
+              {!photo && <Avatar sx={{ width: 45, height: 45 }}>{getNameInitials(firstName, lastName)}</Avatar>}
+              {photo && <Avatar sx={{ width: 45, height: 45 }} alt="profile" src={photo} />}
+            </Box>
+          </Box>
+
+        </Toolbar>
       </AppBar>
+      <Box sx={navStyles.bottomNavContainer}>
+        <BottomNavigation
+          sx={navStyles.bottomNavBar}
+          showLabels
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+            navigate(newValue);
+          }}
+        >
+          <BottomNavigationAction
+            value="/"
+            label="Home"
+            icon={<HomeIcon />}
+            sx={navStyles.bottomNavBtn}
+          />
+          <BottomNavigationAction
+            value="/appointments"
+            label="Appointments"
+            icon={<CalendarMonthIcon />}
+            sx={navStyles.bottomNavBtn}
+
+          />
+          <BottomNavigationAction
+            value="/patients"
+            label="Patients"
+            icon={<SickIcon />}
+            sx={navStyles.bottomNavBtn}
+
+          />
+          <BottomNavigationAction
+            value="/contacts"
+            label="Contacts"
+            icon={<PeopleAltIcon />}
+            sx={navStyles.bottomNavBtn}
+
+          />
+          <BottomNavigationAction
+            value="/profile"
+            label="Profile"
+            icon={<ContactPageIcon />}
+            sx={navStyles.bottomNavBtn}
+
+          />
+          <BottomNavigationAction
+            value="/logout"
+            label="Logout"
+            icon={<PowerSettingsNewIcon />}
+            sx={navStyles.bottomNavBtn}
+
+          />
+        </BottomNavigation>
+      </Box>
       <Outlet />
     </div>
   );

@@ -14,10 +14,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  Avatar, Button, Modal, Box,
+  Avatar, Button, Modal, Box, Typography,
 } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import Tooltip from '@mui/material/Tooltip';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ChatIcon from '@mui/icons-material/Chat';
+import { useNavigate } from 'react-router-dom';
 import { getNameInitials } from '../others/helper';
-import { useMedicalContext } from '../others/store';
+import { useMedicalContext, setTexteeAction } from '../others/store';
 import AddContact from '../organisms/AddContact';
 import ContactVisibility from '../organisms/ContactVisibility';
 
@@ -60,12 +65,12 @@ export default function ContactsPage() {
   const [outgoingPendingList, setOutgoingPendingList] = useState();
   const [contactId, setContactId] = useState();
   const [contactName, setContactName] = useState();
-
   const [open, setOpen] = useState(false);
   const [modal, setModal] = useState('add contact');
 
-  const { store } = useMedicalContext();
+  const { store, dispatch } = useMedicalContext();
   const { userId } = store;
+  const navigate = useNavigate();
 
   const openAddContactPopup = () => {
     setOpen(true);
@@ -80,7 +85,13 @@ export default function ContactsPage() {
   const closeAddContactPopup = () => {
     setOpen(false);
   };
-
+  const openChat = (id, firstName, lastName, photo) => {
+    const data = {
+      id, firstName, lastName, photo,
+    };
+    dispatch(setTexteeAction(data));
+    navigate('/chat');
+  };
   // When component renders, retrieve all contacts and patients data related to user
   useEffect(() => {
     const data = new URLSearchParams();
@@ -142,37 +153,35 @@ export default function ContactsPage() {
 
   return (
     <div>
-      <strong>
-        Contacts Page
-      </strong>
-      <br />
-
-      <br />
-      <br />
       {
         contactsList === undefined
           ? (
-            <div>
-              <strong>
-                Your Contacts
-                <Button variant="contained" onClick={openAddContactPopup}>Add New Contact</Button>
-              </strong>
-            </div>
+            <div />
           )
           : (
             <div>
-              <strong>
+              <Typography variant="h2">
                 {' '}
                 Your Contacts
-                <Button variant="contained" onClick={openAddContactPopup}>Add New Contact</Button>
-              </strong>
+                <Tooltip title="Add New Contact">
+                  <AddCircleIcon variant="contained" onClick={openAddContactPopup} />
+                </Tooltip>
+              </Typography>
               <br />
               {contactsList.map((contact) => (
                 <div>
-                  {`${contact.firstName} ${contact.lastName}`}
+                  <Typography variant="h4">
+
+                    {`${contact.firstName} ${contact.lastName}`}
+                  </Typography>
                   {!contact.photo && <Avatar sx={{ width: 60, height: 60 }}>{getNameInitials(contact.firstName, contact.lastName)}</Avatar>}
                   {contact.photo && <Avatar sx={{ width: 60, height: 60 }} alt="profile" src={contact.photo} />}
-                  <Button variant="contained" onClick={() => openContactVisibilityPopup(contact.contactId, `${contact.firstName} ${contact.lastName}`)}>Settings</Button>
+                  <Tooltip title="Control Contact Permission">
+                    <VisibilityIcon variant="contained" onClick={() => openContactVisibilityPopup(contact.contactId, `${contact.firstName} ${contact.lastName}`)} />
+                  </Tooltip>
+                  <Tooltip title="Chat">
+                    <ChatIcon variant="contained" onClick={() => openChat(contact.contactId, contact.firstName, contact.lastName, contact.photo)} />
+                  </Tooltip>
                 </div>
               ))}
             </div>
@@ -183,13 +192,12 @@ export default function ContactsPage() {
       {
         incomingRequestsList === undefined
           ? (
-            <div>
-              <strong>Requests</strong>
-            </div>
+
+            <div />
           )
           : (
             <div>
-              <strong>Requests</strong>
+              <Typography variant="h2">Requests</Typography>
               <br />
               {incomingRequestsList.map((request) => (
                 <div>
@@ -211,12 +219,12 @@ export default function ContactsPage() {
         outgoingPendingList === undefined
           ? (
             <div>
-              <strong>Sent Requests</strong>
+              <Typography variant="h3">Sent Requests</Typography>
             </div>
           )
           : (
             <div>
-              <strong>Sent Requests</strong>
+              <Typography variant="h3">Sent Requests</Typography>
               <br />
               {outgoingPendingList.map((request) => (
                 <div>
@@ -239,12 +247,12 @@ export default function ContactsPage() {
         outgoingAcceptedList === undefined
           ? (
             <div>
-              <strong>Accepted Requests</strong>
+              <Typography variant="h3">Accepted Requests</Typography>
             </div>
           )
           : (
             <div>
-              <strong>Accepted Requests</strong>
+              <Typography variant="h3">Accepted Requests</Typography>
               <br />
               {outgoingAcceptedList.map((request) => (
                 <div>
@@ -265,12 +273,12 @@ export default function ContactsPage() {
         outgoingRejList === undefined
           ? (
             <div>
-              <strong>Rejected Requests</strong>
+              <Typography variant="h3">Rejected Requests</Typography>
             </div>
           )
           : (
             <div>
-              <strong>Rejected Requests</strong>
+              <Typography variant="h3">Rejected Requests</Typography>
               <br />
               {outgoingRejList.map((request) => (
                 <div>

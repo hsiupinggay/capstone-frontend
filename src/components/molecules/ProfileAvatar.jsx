@@ -12,11 +12,13 @@
 import React, { useState } from 'react';
 import {
   Avatar, Badge,
+  Box,
 } from '@mui/material';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import ProfilePopover from '../atoms/ProfilePopover';
 import { getNameInitials } from '../others/helper';
 import { useMedicalContext } from '../others/store';
+import profileAvatarStyles from './ProfileAvatarCss';
 
 /*
 * ========================================================
@@ -55,18 +57,18 @@ export default function ProfileAvatar({
   const id = open ? 'simple-popover' : undefined;
 
   return (
-    <div>
+    <Box>
       <Badge
         overlap="circular"
         onClick={editPhotoClick}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         badgeContent={
-          <AddAPhotoIcon color="primary" />
-      }
+          <AddAPhotoIcon color="primary" sx={profileAvatarStyles.cameraIcon} />
+          }
       >
-        {!currentPhoto && <Avatar sx={{ width: 60, height: 60 }}>{userInitials}</Avatar>}
+        {!currentPhoto && <Avatar sx={profileAvatarStyles.avatar}>{userInitials}</Avatar>}
         {currentPhoto
-        && <Avatar sx={{ width: 60, height: 60 }} alt={firstName.concat(lastName)} src={currentPhoto} />}
+          && <Avatar sx={profileAvatarStyles.avatar} alt={firstName.concat(lastName)} src={currentPhoto} />}
       </Badge>
       <ProfilePopover
         id={id}
@@ -76,6 +78,7 @@ export default function ProfileAvatar({
         submitClick={submitClick}
         popoverContent={popoverContent}
       />
-    </div>
+    </Box>
+
   );
 }
