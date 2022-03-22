@@ -30,7 +30,7 @@ import ProfileAvatar from '../molecules/ProfileAvatar';
 export default function ProfilePage() {
   const [uploadedPhoto, setUploadedPhoto] = useState();
   const [currentPhoto, setCurrentPhoto] = useState(null);
-  const [caption, setCaption] = useState('No files uploaded');
+  const [caption, setCaption] = useState('No pic uploaded');
   // const [isAuth, setIsAuth] = useState(false)
   const { store, dispatch } = useMedicalContext();
   const { userId } = store;
@@ -63,7 +63,13 @@ export default function ProfilePage() {
       justifyContent="center"
     >
       <ProfileAvatar
-        popoverContent={<AddPhoto caption={caption} setCaption={setCaption} setUploadedPhoto={setUploadedPhoto} />}
+        popoverContent={(
+          <AddPhoto
+            setUploadedPhoto={setUploadedPhoto}
+            caption={caption}
+            setCaption={setCaption}
+          />
+)}
         currentPhoto={currentPhoto}
         submitClick={submitPhoto}
       />

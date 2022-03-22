@@ -13,6 +13,7 @@ import React, { useState } from 'react';
 import {
   Avatar, Badge,
   Box,
+  Typography,
 } from '@mui/material';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import ProfilePopover from '../atoms/ProfilePopover';
@@ -66,7 +67,7 @@ export default function ProfileAvatar({
           <AddAPhotoIcon color="primary" sx={profileAvatarStyles.cameraIcon} />
           }
       >
-        {!currentPhoto && <Avatar sx={profileAvatarStyles.avatar}>{userInitials}</Avatar>}
+        {!currentPhoto && <Avatar sx={profileAvatarStyles.avatar}><Typography sx={profileAvatarStyles.noPicName}>{userInitials}</Typography></Avatar>}
         {currentPhoto
           && <Avatar sx={profileAvatarStyles.avatar} alt={firstName.concat(lastName)} src={currentPhoto} />}
       </Badge>
