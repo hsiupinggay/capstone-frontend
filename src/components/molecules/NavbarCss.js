@@ -13,6 +13,7 @@ const navStyles = {
       xs: 'none',
       sm: 'flex',
     },
+
   },
 
   appName: {
@@ -103,6 +104,7 @@ const navStyles = {
   },
 
   bottomNavContainer: {
+    zIndex: 1,
     display: {
       sm: 'none',
       xs: 'block',

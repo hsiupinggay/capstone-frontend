@@ -17,7 +17,10 @@ import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import axios from 'axios';
+import { Typography, Box, Button } from '@mui/material';
 import { useMedicalContext } from '../others/store';
+import addContactPopupStyles from './AddContactCss';
+
 /*
  * ========================================================
  * ========================================================
@@ -95,39 +98,33 @@ export default function AddContact({ setOutgoingPendingList }) {
       {
         otherUsersList === undefined
           ? (
-            <div>
-              <strong>Add Contact</strong>
-            </div>
+            <div />
           )
           : (
-            <div>
-              <strong>Add Contact</strong>
-              <br />
-              <br />
+            <Box sx={addContactPopupStyles.inputContainer}>
+              <Typography sx={addContactPopupStyles.title}><strong>Send Request to a Contact</strong></Typography>
+              <Autocomplete
+                options={otherUsersList}
+                getOptionLabel={(option) => `${option.identity.name.first} ${option.identity.name.last}`}
+                renderInput={(params) => <TextField {...params} label="Add Contact" sx={addContactPopupStyles.inputField} required />}
+                onChange={(event, newValue) => { updateContactValues(newValue); }}
+                selectOnFocus
+                clearOnBlur
+                handleHomeEndKeys
+              />
+              <Box sx={addContactPopupStyles.submitBtn}>
+                <Button variant="contained" type="submit" onClick={sendRequest}>Submit</Button>
+              </Box>
               <div>
-                <Autocomplete
-                  options={otherUsersList}
-                  getOptionLabel={(option) => `${option.identity.name.first} ${option.identity.name.last}`}
-                  renderInput={(params) => <TextField {...params} label="Add Contact" required />}
-                  onChange={(event, newValue) => { updateContactValues(newValue); }}
-                  selectOnFocus
-                  clearOnBlur
-                  handleHomeEndKeys
-                  sx={{ width: 250 }}
-                />
-                <br />
-                <button type="button" onClick={sendRequest}>Submit </button>
-                <div>
-                  {successMessage === ''
-                    ? <div />
-                    : (
-                      <div>
-                        {successMessage}
-                      </div>
-                    )}
-                </div>
+                {successMessage === ''
+                  ? <div />
+                  : (
+                    <Typography sx={addContactPopupStyles.outcomeMessage}>
+                      {successMessage}
+                    </Typography>
+                  )}
               </div>
-            </div>
+            </Box>
           )
       }
     </div>

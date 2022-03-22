@@ -8,16 +8,27 @@ function MessageInput({ id, handleInput, handleSend }) {
     <Paper sx={{
       display: 'flex',
       justifyContent: 'space-between',
-      width: '300px',
+      width: {
+        lg: 1000,
+        md: 800,
+        sm: 600,
+        xs: 400,
+      },
       borderRadius: '20px',
-      bgcolor: '#fffff',
       px: '10px',
       py: '4px',
       position: 'absolute',
-      bottom: '30px',
+      bottom: {
+        lg: 10,
+        md: 10,
+        sm: 10,
+        xs: 70,
+      },
       left: '50%',
       zIndex: 50,
       transform: 'translateX(-50%)',
+      backgroundColor: '#fffffe',
+      border: 'solid #5b94bb',
     }}
     >
       <InputBase
@@ -26,7 +37,7 @@ function MessageInput({ id, handleInput, handleSend }) {
         onChange={handleInput}
       />
       <IconButton onClick={handleSend}>
-        <SendRoundedIcon />
+        <SendRoundedIcon sx={{ color: '#22577A' }} />
       </IconButton>
     </Paper>
 

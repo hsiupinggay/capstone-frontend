@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Typography, Stack } from '@mui/material';
+import { Avatar, Typography, Box } from '@mui/material';
 import { useMedicalContext } from '../others/store';
 import BackIcon from '../molecules/BackIcon';
 import TexterBubble from '../molecules/TexterBubble';
 import TexteeBubble from '../molecules/TexteeBubble';
 import MessageInput from '../molecules/MessageInput';
+import chatStyles from './ChatRoomPageCss';
 
 export default function ChatRoomPage() {
   // Establish socket connection upon entering room
@@ -86,30 +87,24 @@ export default function ChatRoomPage() {
   };
 
   return (
-    <div className="mobile">
-      <BackIcon onClick={goBack} />
-      <Stack
-        direction="row"
-        spacing={1}
-        alignItems="center"
-      >
-        <Avatar src={texteePhoto} alt="Textee photo" sx={{ width: 40, height: 40 }} />
-        <Typography>
+    <Box sx={chatStyles.container}>
+      <Box sx={chatStyles.header}>
+        <BackIcon onClick={goBack} />
+        <Avatar src={texteePhoto} alt="Textee photo" sx={chatStyles.avatar} />
+        <Typography sx={chatStyles.name}>
           {texteeFirstName}
           {' '}
           {texteeLastName}
         </Typography>
-      </Stack>
-      <br />
-      <Stack
+      </Box>
+      <Box
         spacing={1}
         overflow="scroll"
-        height="400px"
       >
         {conversation}
-      </Stack>
+      </Box>
       <br />
       <MessageInput id="message" handleInput={(e) => setDisplayMessage(e.target.value)} handleSend={sendInfoToDB} />
-    </div>
+    </Box>
   );
 }
