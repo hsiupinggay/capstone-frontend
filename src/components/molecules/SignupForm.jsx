@@ -8,12 +8,16 @@
  * ========================================================
  */
 import React, { useState } from 'react';
-import RequiredTextfield from '../atoms/RequiredTextfield';
+import {
+  Button, CardContent, MobileStepper, Stack, TextField,
+} from '@mui/material';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import PersonIcon from '@mui/icons-material/Person';
+import LockRoundedIcon from '@mui/icons-material/LockRounded';
 import { signup, useMedicalContext } from '../others/store';
 import { validateEmail } from '../others/helper';
 import HelperText from '../atoms/HelperText';
-import Button from '../atoms/Button';
-import SubmitButton from '../atoms/SubmitButton';
 
 /*
  * ========================================================
@@ -32,7 +36,7 @@ export default function Signup() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   // This is a 2-step form
-  const [step, setStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(1);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -53,9 +57,14 @@ export default function Signup() {
     setLastName(e.target.value);
   };
 
+  // Handle back click on stepper
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
   // Handle button clicks
   const handleNext = async (e) => {
     e.preventDefault();
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
     if (email === '' || firstName === '' || lastName === '') {
       setError(true);
       setErrorMessage('Please fill in all fields.');
@@ -70,7 +79,7 @@ export default function Signup() {
     }
     setError(false);
     setErrorMessage('');
-    setStep(2);
+    setActiveStep(2);
   };
 
   const handleSubmit = async (e) => {
@@ -106,42 +115,64 @@ export default function Signup() {
   };
 
   return (
-    <form>
-      <div className="
-    flex
-    flex-col
-    justify-center
-    p-3
-    "
-      >
-        {step === 1
+    <CardContent>
+
+      {activeStep === 1
        && (
-       <div>
-         <RequiredTextfield label="First Name" type="text" id="first-name" onChange={handleFirstName} />
-         <RequiredTextfield label="Last Name" type="text" id="last-name" onChange={handleLastName} />
-         <RequiredTextfield label="Email" type="email" id="floating-email" onChange={handleEmail} />
-         {error
-         && <HelperText text={errorMessage} />}
-         <div className="flex justify-center">
-           <Button label="Next" onClick={handleNext} />
-         </div>
-       </div>
+         <Stack
+           spacing={2}
+           direction="column"
+           justifyContent="center"
+           alignItems="center"
+         >
+           <PersonIcon />
+           <TextField label="First Name" variant="outlined" onChange={handleFirstName} value={firstName} />
+           <TextField label="Last Name" variant="outlined" onChange={handleLastName} value={lastName} />
+           <TextField label="E-mail" type="email" variant="outlined" onChange={handleEmail} value={email} />
+         </Stack>
        )}
 
-        {step === 2
+      {activeStep === 2
         && (
-        <div>
-          <RequiredTextfield label="Password" type="password" id="password-input" onChange={handlePassword} />
-          <RequiredTextfield label="Re-enter Password" type="password" id="password-confirmation" onChange={handlePasswordConfirmation} />
+        <Stack
+          spacing={2}
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <LockRoundedIcon />
+          <TextField label="Password" type="password" variant="outlined" onChange={handlePassword} value={password} />
+          <TextField label="Re-enter Password" type="password" variant="outlined" onChange={handlePasswordConfirmation} value={passwordConfrimation} />
           {error
           && <HelperText text={errorMessage} />}
-          <div className="flex justify-center">
-            <SubmitButton label="Submit" onClick={handleSubmit} />
-          </div>
-        </div>
+        </Stack>
         )}
 
-      </div>
-    </form>
+      <MobileStepper
+        variant="dots"
+        steps={2}
+        position="static"
+        activeStep={activeStep}
+        sx={{ maxWidth: 230, flexGrow: 1 }}
+        nextButton={activeStep === 2 ? (
+          <Button size="small" onClick={handleSubmit}>
+            Submit
+            <KeyboardArrowRight />
+          </Button>
+        ) : (
+          <Button size="small" onClick={handleNext} disabled={activeStep === 2}>
+            Next
+            <KeyboardArrowRight />
+          </Button>
+
+        )}
+        backButton={(
+          <Button size="small" onClick={handleBack} disabled={activeStep === 1}>
+            <KeyboardArrowLeft />
+            Back
+          </Button>
+      )}
+      />
+    </CardContent>
   );
 }

@@ -31,11 +31,13 @@ export default function MedFrequency({
   handleDosageCounter,
   handleTimes,
   handleDuration,
-  checked,
+  asRequiredChecked,
   handleSwitch,
   handleNote,
   note,
 }) {
+  // Changes text color to white grey when asRequiredChecked is true,  to show that function is disabled
+  const handleColor = asRequiredChecked ? '#bcbcbc' : '#000000';
   return (
     <div>
       <CardContent>
@@ -48,7 +50,7 @@ export default function MedFrequency({
           <FormControlLabel
             control={(
               <Switch
-                checked={checked}
+                checked={asRequiredChecked}
                 onChange={handleSwitch}
                 inputProps={{ 'aria-label': 'controlled' }}
                 color="secondary"
@@ -76,17 +78,16 @@ export default function MedFrequency({
                 max="20"
                 onChange={handleDosage}
                 value={dosage}
-                disabled={checked}
+                disabled={asRequiredChecked}
               />
             </FormControl>
-            <FormControl>
+            <FormControl fullWidth>
               <InputLabel id="Dosage Counter">Dosage Counter</InputLabel>
               <Select
                 value={dosageCounter}
                 onChange={handleDosageCounter}
                 label="Dosage Counter"
                 name="Dosage Counter"
-                disabled={checked}
               >
                 <MenuItem value="pills">
                   Pill(s)
@@ -118,10 +119,10 @@ export default function MedFrequency({
                 max="6"
                 value={times}
                 onChange={handleTimes}
-                disabled={checked}
+                disabled={asRequiredChecked}
               />
             </FormControl>
-            <Typography variant="body1">{times === '1' ? 'Time' : 'Times'}</Typography>
+            <Typography variant="body1" color={handleColor}>{times === '1' ? 'Time' : 'Times'}</Typography>
 
           </Stack>
           <Stack
@@ -131,7 +132,7 @@ export default function MedFrequency({
             justifyContent="space-around"
           >
             {' '}
-            <Typography variant="body1">Every</Typography>
+            <Typography variant="body1" color={handleColor}>Every</Typography>
             <FormControl>
               <TextField
                 variant="outlined"
@@ -140,12 +141,12 @@ export default function MedFrequency({
                 min="1"
                 max="14"
                 onChange={handleDuration}
-                disabled={checked}
+                disabled={asRequiredChecked}
                 value={duration}
               />
             </FormControl>
 
-            <Typography variant="body1">{duration === '1' ? 'Day' : 'Days'}</Typography>
+            <Typography variant="body1" color={handleColor}>{duration === '1' ? 'Day' : 'Days'}</Typography>
           </Stack>
           <FormControl>
             <TextField

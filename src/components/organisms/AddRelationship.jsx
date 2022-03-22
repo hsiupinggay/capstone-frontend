@@ -12,8 +12,10 @@
  */
 import React, { useState } from 'react';
 import axios from 'axios';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import {
+  TextField, Button, Typography, Box,
+} from '@mui/material';
+import relationshipStyles from './AddRelationshipCss';
 
 /*
  * ========================================================
@@ -55,23 +57,25 @@ export default function AddRelationship({
 
   return (
     <div>
-      <div>
+      <Typography sx={relationshipStyles.description}>
         Add your Relationship to
         {' '}
         {patientName}
-      </div>
+      </Typography>
       <form onSubmit={handleSubmit}>
-        <TextField label="Relationship" id="relationship" onChange={(e) => setRelationship(e.target.value)} required />
-        <br />
-        <Button variant="contained" type="submit">Submit</Button>
+        <Box sx={relationshipStyles.inputContainer}>
+          <TextField label="Relationship" id="relationship" onChange={(e) => setRelationship(e.target.value)} sx={relationshipStyles.inputField} required />
+          <br />
+          <Button variant="contained" type="submit">Submit</Button>
+        </Box>
       </form>
       <div>
         {successMessage === ''
           ? <div />
           : (
-            <div>
+            <Typography sx={relationshipStyles.outcomeMessage}>
               {successMessage}
-            </div>
+            </Typography>
           )}
       </div>
     </div>

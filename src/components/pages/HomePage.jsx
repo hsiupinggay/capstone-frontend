@@ -60,7 +60,7 @@ export default function HomePage() {
                 onMouseOver={() => setShow(true)}
                 onMouseOut={() => setShow(false)}
               >
-                Appointment
+                Appointments
                 { show === true
                   ? (
                     <Typography
@@ -68,7 +68,7 @@ export default function HomePage() {
                       onMouseOver={() => setShow(true)}
                       onMouseOut={() => setShow(false)}
                     >
-                      Create, Check & Edit Appointments
+                      Create, check & edit appointments
                     </Typography>
                   )
                   : <div />}
@@ -95,14 +95,14 @@ export default function HomePage() {
                         onMouseOver={() => setPatientShow(true)}
                         onMouseOut={() => setPatientShow(false)}
                       >
-                        Medication, Appointments,
+                        Medication, appointments,
                       </Typography>
                       <Typography
                         sx={homePageStyles.categoryDescription}
                         onMouseOver={() => setPatientShow(true)}
                         onMouseOut={() => setPatientShow(false)}
                       >
-                        Memos & Reminders
+                        memos & reminders
                       </Typography>
 
                     </>
@@ -133,7 +133,7 @@ export default function HomePage() {
                       onMouseOver={() => setContactsShow(true)}
                       onMouseOut={() => setContactsShow(false)}
                     >
-                      Add Contacts & Alter Patient Access
+                      Add contacts & alter patient access
                     </Typography>
                   )
                   : <div />}
@@ -157,7 +157,7 @@ export default function HomePage() {
                       sx={homePageStyles.categoryDescription}
                       onMouseOver={() => setProfileShow(true)}
                     >
-                      Update Personal Details
+                      Update personal details
                     </Typography>
                   )
                   : <div />}

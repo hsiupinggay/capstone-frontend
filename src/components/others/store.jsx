@@ -63,6 +63,7 @@ export function medicalReducer(state, action) {
         firstName: action.payload.name.first,
         lastName: action.payload.name.last,
         email: action.payload.email,
+        photo: action.payload.photo,
       };
     case UPLOAD_PHOTO:
       return {
