@@ -13,7 +13,9 @@
 import React, { useState } from 'react';
 import { Card } from '@mui/material';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { getDate } from '../others/helper';
+import { useMedicalContext } from '../others/store';
 
 import MedFrequency from '../molecules/MedFrequency';
 import Prescription from '../molecules/Prescription';
@@ -38,7 +40,7 @@ export default function AddMedCard() {
   const [dosageCounter, setDosageCounter] = useState('pills');
   const [duration, setDuration] = useState('');
   const [times, setTimes] = useState('');
-  const [checked, setChecked] = useState(false);
+  const [asRequiredChecked, setAsRequiredChecked] = useState(false);
   const [note, setNote] = useState('');
 
   // related to Prescription
@@ -48,18 +50,29 @@ export default function AddMedCard() {
 
   // related to MedReminder
   const [reminderDays, setReminderDays] = useState(0);
+  const [reminderTime, setReminderTime] = useState();
 
   // related to stepper
   const [activeStep, setActiveStep] = useState(0);
 
-  // Hardcoded patient id for Humpty Dumpty
-  const patientId = '62259fadb4a77ae0343f7306';
+  const navigate = useNavigate();
+
+  const { store } = useMedicalContext();
+  const { patientId } = store;
 
   const handleName = (e) => {
     setName(e.target.value);
   };
   const handleSwitch = (e) => {
-    setChecked(e.target.checked);
+    setAsRequiredChecked(e.target.checked);
+    // if asRequiredChecked is true then app cannot help set reminders
+    // because app won't be able to estimate when the medicine will be finished
+    if (e.target.checked) {
+      setReminderChecked(false);
+      setDosage('');
+      setTimes('');
+      setDuration('');
+    } else if (!e.target.checked) { setReminderChecked(true); }
   };
   const handleDosage = (e) => {
     setDosage(e.target.value);
@@ -88,17 +101,30 @@ export default function AddMedCard() {
   const handleReminderDays = (e) => {
     setReminderDays(e.target.value);
   };
+  const handleReminderTime = (e) => {
+    setReminderTime(e);
+  };
 
-  const prescriptionDuration = (Number(dosage) * Number(times) * Number(prescriptionQty)) / Number(duration);
+  const qtyPerDay = (Number(dosage) * Number(times)) / Number(duration);
+  const prescriptionDuration = Number(prescriptionQty) / Number(qtyPerDay);
+
+  console.log('<== prescription duration ==>', prescriptionDuration);
 
   const daysBeforeReminder = prescriptionDuration - reminderDays;
+  console.log('<== daysBeforeReminder ==>', daysBeforeReminder);
+  console.log('<== reminderDays ==>', reminderDays);
 
   const reminderDate = getDate(prescriptionDate, daysBeforeReminder);
+
+  console.log('<== reminderDate ==>', reminderDate);
+  console.log('<== prescriptionDate ==>', prescriptionDate);
+  console.log('<== daysBeforeReminder ==>', daysBeforeReminder);
 
   const handleSubmit = async () => {
     const data = {
       patientId,
       name,
+      asRequiredChecked,
       dosage,
       dosageCounter,
       times,
@@ -109,12 +135,13 @@ export default function AddMedCard() {
       reminderChecked,
       reminderDays,
       reminderDate,
+      reminderTime,
     };
 
     try {
       const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-medicine`, data);
       console.log('<== res.data add med ==>', res.data);
-      // need to navigate somewhere after form submit
+      navigate('/med-list');
     } catch (err) {
       console.log(err);
     }
@@ -137,7 +164,7 @@ export default function AddMedCard() {
             handleTimes={handleTimes}
             duration={duration}
             handleDuration={handleDuration}
-            checked={checked}
+            asRequiredChecked={asRequiredChecked}
             handleSwitch={handleSwitch}
             handleNote={handleNote}
             note={note}
@@ -152,15 +179,17 @@ export default function AddMedCard() {
             handlePrescriptionQty={handlePrescriptionQty}
             reminderChecked={reminderChecked}
             handleReminder={handleReminder}
+            asRequiredChecked={asRequiredChecked}
           />
           <MedReminder
+            asRequiredChecked={asRequiredChecked}
             handleReminderDays={handleReminderDays}
-            dosage={dosage}
-            times={times}
-            prescriptionQty={prescriptionQty}
-            duration={duration}
             reminderDays={reminderDays}
-            prescriptionDate={prescriptionDate}
+            reminderDate={reminderDate}
+            reminderTime={reminderTime}
+            handleReminderTime={handleReminderTime}
+            reminderChecked={reminderChecked}
+            handleReminder={handleReminder}
           />
         </div>
 
