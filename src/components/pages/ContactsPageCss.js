@@ -21,7 +21,7 @@ const contactPageStyles = {
   },
 
   title: {
-    fontSize: 40,
+    fontSize: 25,
     fontWeight: 600,
   },
 
@@ -40,8 +40,8 @@ const contactPageStyles = {
   },
 
   avatar: {
-    width: 160,
-    height: 160,
+    width: 70,
+    height: 70,
   },
 
   smallAvatar: {
@@ -50,13 +50,13 @@ const contactPageStyles = {
   },
 
   contactName: {
-    marginBottom: 2,
-    fontSize: 20,
+    marginBottom: 1,
+    fontSize: 16,
     fontWeight: 400,
   },
 
   smallContactName: {
-    marginBottom: 2,
+    marginBottom: 1,
     fontSize: 12,
     fontWeight: 400,
     height: 20,
@@ -78,33 +78,28 @@ const contactPageStyles = {
   },
 
   requestsContainer: {
-    backgroundColor: '#f8f3e9',
-    // backgroundColor: '#000',
-    boxShadow: '0 1px 4px 0',
+    backgroundColor: '#eeeeee',
+    boxShadow: '0 10px 6px -6px #777',
     borderRadius: 10,
     width: 1500,
     display: 'flex',
-    // justifyContent: 'center',
     flexDirection: 'column',
-    flexWrap: 'nowrap',
-    overflow: 'auto',
+
   },
 
   outGoingContainer: {
     backgroundColor: '#fff',
-    // backgroundColor: '#000',
-    // boxShadow: '0 1px 4px 0',
     borderTop: 'black solid 0.5px',
     borderBottom: 'black solid 0.5px',
     width: 1500,
     display: 'flex',
-    // justifyContent: 'center',
+    flexWrap: 'nowrap',
+    overflow: 'scroll',
   },
 
   allContactsContainer: {
-    backgroundColor: '#f8f3e9',
-    // backgroundColor: '#000',
-    boxShadow: '0 1px 4px 0',
+    backgroundColor: '#eeeeee',
+    boxShadow: '0 10px 6px -6px #777',
     borderRadius: 10,
     width: 1500,
     padding: 3,
@@ -119,10 +114,36 @@ const contactPageStyles = {
     fontWeight: 500,
   },
 
-  iconColor: {
+  icon: {
+    fontSize: 25,
     color: '#22577A',
     '&:hover': {
       color: '#2facfe',
+    },
+  },
+
+  secondRowContainer: {
+    display: 'flex',
+  },
+
+  iconsContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+
+  acceptIcon: {
+    fontSize: 20,
+    color: 'green',
+    '&:hover': {
+      color: '#00FF00',
+    },
+  },
+
+  rejectIcon: {
+    fontSize: 20,
+    color: '#bd0000',
+    '&:hover': {
+      color: '#ff0000',
     },
   },
 
@@ -132,22 +153,6 @@ const contactPageStyles = {
     width: '100%',
     justifyContent: 'space-around',
   },
-  // cardContainer: {
-  //   padding: 10,
-  //   height: 250,
-  //   display: 'flex',
-  //   flexWrap: 'nowrap',
-  //   overflow: 'auto',
-  // },
-
-  // card: {
-  //   width: '150px',
-  //   height: '200px',
-  //   my: '10px',
-  //   mr: '16px',
-  //   borderRadius: '20px',
-  // },
-
 };
 
 export default contactPageStyles;

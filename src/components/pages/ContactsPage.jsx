@@ -14,13 +14,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  Avatar, Button, Modal, Box, Typography, Grid, Card,
+  Avatar, Button, Modal, Box, Typography, Badge,
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Tooltip from '@mui/material/Tooltip';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useNavigate } from 'react-router-dom';
+import DoneIcon from '@mui/icons-material/Done';
+import CloseIcon from '@mui/icons-material/Close';
 import { getNameInitials } from '../others/helper';
 import { useMedicalContext, setTexteeAction } from '../others/store';
 import AddContact from '../organisms/AddContact';
@@ -131,7 +133,7 @@ export default function ContactsPage() {
   };
 
   return (
-    <div>
+    <Box sx={contactPageStyles.pageContainer}>
       {
         contactsList === undefined
           ? (
@@ -159,10 +161,10 @@ export default function ContactsPage() {
                     {contact.photo && <Avatar sx={contactPageStyles.avatar} alt="profile" src={contact.photo} />}
                     <Box sx={contactPageStyles.iconContainer}>
                       <Tooltip arrow title="Control Contact Permission">
-                        <VisibilityIcon sx={contactPageStyles.iconColor} variant="contained" onClick={() => openContactVisibilityPopup(contact.contactId, `${contact.firstName} ${contact.lastName}`)} />
+                        <VisibilityIcon sx={contactPageStyles.icon} variant="contained" onClick={() => openContactVisibilityPopup(contact.contactId, `${contact.firstName} ${contact.lastName}`)} />
                       </Tooltip>
                       <Tooltip arrow title="Chat">
-                        <ChatIcon variant="contained" sx={contactPageStyles.iconColor} onClick={() => openChat(contact.contactId, contact.firstName, contact.lastName, contact.photo)} />
+                        <ChatIcon variant="contained" sx={contactPageStyles.icon} onClick={() => openChat(contact.contactId, contact.firstName, contact.lastName, contact.photo)} />
                       </Tooltip>
                     </Box>
 
@@ -193,10 +195,18 @@ export default function ContactsPage() {
                     <Typography sx={contactPageStyles.smallContactName}>
                       {`${request.sender.firstName} ${request.sender.lastName}`}
                     </Typography>
-                    {!request.sender.photo && <Avatar sx={contactPageStyles.smallAvatar}>{getNameInitials(request.sender.firstName, request.sender.lastName)}</Avatar>}
-                    {request.sender.photo && <Avatar sx={contactPageStyles.smallAvatar} alt="profile" src={request.sender.photo} />}
-                    <Button onClick={() => handleRequest(request._id, 'accepted', request.sender.senderId, request.sender.firstName, request.sender.lastName, request.sender.photo)}>Accept</Button>
-                    <Button variant="contained" onClick={() => handleRequest(request._id, 'rejected')}>Reject</Button>
+                    <Box sx={contactPageStyles.secondRowContainer}>
+                      {!request.sender.photo && <Avatar sx={contactPageStyles.smallAvatar}>{getNameInitials(request.sender.firstName, request.sender.lastName)}</Avatar>}
+                      {request.sender.photo && <Avatar sx={contactPageStyles.smallAvatar} alt="profile" src={request.sender.photo} />}
+                      <Box sx={contactPageStyles.iconsContainer}>
+                        <Tooltip arrow title="Accept" placement="top">
+                          <DoneIcon onClick={() => handleRequest(request._id, 'accepted', request.sender.senderId, request.sender.firstName, request.sender.lastName, request.sender.photo)} sx={contactPageStyles.acceptIcon} />
+                        </Tooltip>
+                        <Tooltip arrow title="Reject">
+                          <CloseIcon variant="contained" onClick={() => handleRequest(request._id, 'rejected')} sx={contactPageStyles.rejectIcon} />
+                        </Tooltip>
+                      </Box>
+                    </Box>
                   </Box>
                 ))}
               </Box>
@@ -244,6 +254,7 @@ export default function ContactsPage() {
                     <Typography sx={contactPageStyles.smallContactName}>
                       {`${request.recipient.firstName} ${request.recipient.lastName}`}
                     </Typography>
+
                     {!request.recipient.photo && <Avatar sx={contactPageStyles.smallAvatar}>{getNameInitials(request.recipient.firstName, request.recipient.lastName)}</Avatar>}
                     {request.recipient.photo && <Avatar sx={contactPageStyles.smallAvatar} alt="profile" src={request.recipient.photo} />}
                     <Button variant="contained" onClick={() => dismissNotification(request._id, 'accepted')}>Dismiss</Button>
@@ -294,6 +305,6 @@ export default function ContactsPage() {
            }
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }
