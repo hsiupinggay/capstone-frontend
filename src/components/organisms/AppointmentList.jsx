@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Paper, List, Card } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
 
 const monthNames = [
   'Jan',
@@ -17,29 +18,16 @@ const monthNames = [
   'Dec',
 ];
 
-function AppointmentList({ displayData }) {
-  // const displayObj = {
-  //   Who, // Patient Identity
-  //   With, // Chaperone
-  //   When, // Date
-  //   Where, // Hospital
-  // };
-
-  const userDataArray = displayData.patientDetailsObj;
-  console.log(userDataArray);
-
+function AppointmentList({ displayDataArray, filterData, setOpenApptModal, setApptModalType }) {
+  const [listDisplay, setListDisplay] = useState([]);
+  console.log('filter data in appointment list: ', filterData);
   let userDisplayArray = [];
 
-  userDataArray.forEach(patient => {
+  displayDataArray.forEach(patient => {
     const { identity, appointments } = patient
     const displayName = `${identity.name.first} ${identity.name.last}`;
-    console.log(displayName);
     const displayArray = [];
     appointments.forEach(appointment => {
-      // const displayDate = appointment.date;
-      // console.log('slicing out months: ', appointment.date.slice(3, 6));
-      // const eventDate = appointment.date.replace(appointment.date.slice(3, 6), monthNames.findIndex(month => month === appointment.date.slice(3, 6)));
-      // console.log(eventDate);
       const appointmentDate = appointment.date.split('-');
       const appointmentDay = Number(appointmentDate[0]);
       const appointmentMonth = Number(monthNames.findIndex(month => month === appointmentDate[1]));
@@ -48,31 +36,95 @@ function AppointmentList({ displayData }) {
       const displayObject = {
         patientName: displayName,
         chaperone: appointment.chaperone.name || 'none assigned',
-        date: `${appointment.date} | ${appointment.time}`,
-        hospital: `${appointment.hospital.name}, ${appointment.hospital.department}`,
+        date: `${appointment.date}`,
+        time: `${appointment.time}`,
+        hospital: `${appointment.hospital.name}`,
+        department: `${appointment.hospital.department}`,
         event_date: new Date(`${appointmentYear}-${appointmentMonth}-${appointmentDay}`),
+        id: appointment._id,
       }
       displayArray.push(displayObject);
     });
-    console.log(displayArray);
     userDisplayArray = [...userDisplayArray, ...displayArray];
-    userDisplayArray.sort((a, b) => a.event_date - b.event_date)
   });
 
-  const displayAppointmentList = userDisplayArray.map(appointment => (
-    <div key={appointment.patientName + appointment.date}>
+  console.log(userDisplayArray);
+  // Sort userDisplayArray based on dates
+  userDisplayArray.sort((a, b) => a.event_date - b.event_date);
+
+  useEffect(() => {
+    const filteredDisplayArray = [];
+    console.log('in appointments list, filterData change detected, running filters');
+    
+    if (filterData !== null) {  
+      // Hospital Filter
+      if (filterData.hospitalFilter !== null) {
+        for (let i = 0; i < filterData.hospitalFilter.length; i += 1) {
+          for (let j = 0; j < userDisplayArray.length; j += 1) {
+            if (userDisplayArray[j].hospital === filterData.hospitalFilter[i]) filteredDisplayArray.push(userDisplayArray[j])
+          }
+        }
+      }
+      // Department Filter
+      if (filterData.departmentFilter !== null) {
+        for (let i = 0; i < filterData.departmentFilter.length; i += 1) {
+          for (let j = 0; j < userDisplayArray.length; j += 1) {
+            console.log(userDisplayArray[j].department);
+            console.log(filterData.departmentFilter[i]);
+            console.log(userDisplayArray[j].department === filterData.departmentFilter[i])
+            if (userDisplayArray[j].department === filterData.departmentFilter[i]) filteredDisplayArray.push(userDisplayArray[j])
+          }
+        }
+      }
+      // Patient Filter
+      if (filterData.patientFilter !== null) {
+        for (let i = 0; i < filterData.patientFilter.length; i += 1) {
+          for (let j = 0; j < userDisplayArray.length; j += 1) {
+            if (userDisplayArray[j].patientName === filterData.patientFilter[i]) filteredDisplayArray.push(userDisplayArray[j])
+          }
+        }
+      }
+      // Chaperone Filter
+      if (filterData.chaperoneFilter !== null) {
+        for (let i = 0; i < filterData.chaperoneFilter.length; i += 1) {
+          for (let j = 0; j < userDisplayArray.length; j += 1) {
+            if (userDisplayArray[j].chaperone === filterData.chaperoneFilter[i]) filteredDisplayArray.push(userDisplayArray[j])
+          }
+        }
+      }
+      // Date Filter
+      if (filterData.dateFilter !== null) {
+        for (let i = 0; i < filterData.dateFilter.length; i += 1) {
+          for (let j = 0; j < userDisplayArray.length; j += 1) {
+            if (userDisplayArray[j].date === filterData.dateFilter[i]) filteredDisplayArray.push(userDisplayArray[j])
+          }
+        }
+      }
+      setListDisplay(filteredDisplayArray);
+    }
+    console.log('validating that filteredDisplayArray is empty', filteredDisplayArray.length === 0);
+    // Validation, if there are no filters, filtereredDisplayArray is empty
+    if (filteredDisplayArray.length === 0) setListDisplay(userDisplayArray);
+  }, [filterData]);
+  
+  useEffect(() => {console.log('list display changed... checking'); console.log(listDisplay);}, [listDisplay])
+
+  
+  const displayAppointmentList = listDisplay.map(appointment => (
+    <div key={appointment.id}>
       <Card variant="outlined">
         <CardContent>
           {appointment.patientName}<br/>
           {appointment.chaperone}<br/>
           {appointment.date}<br/>
-          {appointment.hospital}
+          {appointment.hospital}<br/>
+          {appointment.department}
         </CardContent>
+        <Button onClick={(e) => {setOpenApptModal(true); setApptModalType('edit')}}>Edit</Button>
       </Card>
     </div>
   ));
 
-  console.log(userDisplayArray);
   return (
     <div className="h-5/6 overflow-hidden">
       <h1>Appointment List</h1>

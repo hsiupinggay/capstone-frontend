@@ -16,6 +16,7 @@ import {
 } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { MedicalProvider } from './components/others/store';
+import { ApptProvider } from './components/others/ApptContext';
 import ProtectedRoute from './components/molecules/ProtectedRoute';
 
 import mainTheme from './theme';
@@ -88,7 +89,7 @@ export default function App() {
                     <Route
                       exact
                       path="appointments"
-                      element={<AppointmentsPage />}
+                      element={<ApptProvider><AppointmentsPage /></ApptProvider>}
                     />
                     <Route
                       exact

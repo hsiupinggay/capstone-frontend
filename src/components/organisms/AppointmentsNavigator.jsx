@@ -14,28 +14,29 @@ const OPTION_CHANGE_VIEW = 'Change View';
 const OPTION_FILTER = 'Filter'
 const options = [OPTION_ADD_APPOINTMENT, OPTION_CHANGE_VIEW, OPTION_FILTER];
 
-export default function SplitButton({ toggleView, setToggleView }) {
+export default function SplitButton({ toggleView, setToggleView, setOpenApptModal, setApptModalType }) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
 
   const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`);
+    // console.info(`You clicked ${options[selectedIndex]}`);
     switch (options[selectedIndex]) {
       case OPTION_ADD_APPOINTMENT:
-        // open modal
+        setOpenApptModal(true);
+        setApptModalType('add-appt');
         break;
       case OPTION_CHANGE_VIEW:
         setToggleView(toggleView => !toggleView);
         break;
       case OPTION_FILTER:
-        // display the dropdown / modal
+        setOpenApptModal(true);
+        setApptModalType('filter');
         break;
     }
   };
 
   const handleMenuItemClick = (event, index) => {
-    console.log(event);
     setSelectedIndex(index);
     setOpen(false);
   };
