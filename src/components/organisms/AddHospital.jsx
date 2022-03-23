@@ -34,6 +34,7 @@ import hospitalPopupStyles from './AddHospitalCss';
  * ========================================================
  */
 export default function AddHospital({ setModal, setAddition }) {
+  console.log('inside hospital');
   const { store } = useMedicalContext();
   const { userId } = store;
 
@@ -94,7 +95,7 @@ export default function AddHospital({ setModal, setAddition }) {
         : (
           <div>
             <div>
-              <BackIcon variant="contained" onClick={() => setModal('add appointment')} />
+              <BackIcon variant="contained" onClick={() => setModal('add-appt')} />
               <Box sx={hospitalPopupStyles.inputContainer}>
                 <Tabs
                   value={value}

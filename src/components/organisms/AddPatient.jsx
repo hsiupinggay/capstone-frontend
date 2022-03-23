@@ -89,7 +89,7 @@ export default function AddPatient({
           ? <div />
           : (
             <div>
-              <BackIcon variant="contained" onClick={() => setModal('add appointment')} />
+              <BackIcon variant="contained" onClick={() => setModal('add-appt')} />
               <Box sx={patientPopupStyles.tabsContainer}>
                 <Tabs
                   value={value}

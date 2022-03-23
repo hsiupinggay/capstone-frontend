@@ -32,7 +32,7 @@ import apptPopupStyles from './AddAppointmentCss';
  * ========================================================
  * ========================================================
  */
-export default function AddAppointment({ setModal, setAddition }) {
+export default function AddAppointment({ setModal, setAddition, setDisplayDataArray }) {
   const { store } = useMedicalContext();
   const { userId } = store;
 
@@ -64,7 +64,7 @@ export default function AddAppointment({ setModal, setAddition }) {
   const selectDept = (string) => {
     if (string === '--ADD NEW DEPARTMENT--') {
       // Redirect to add department component
-      setModal('add others');
+      setModal('add-category');
       setAddition('department');
       // navigate('/add-department');
     } else {
@@ -77,7 +77,7 @@ export default function AddAppointment({ setModal, setAddition }) {
     const patientSplitStr = string.split(',');
     if (patientSplitStr[0] === 'undefined') {
       // Redirect to add patient component
-      setModal('add others');
+      setModal('add-category');
       setAddition('patient');
       // navigate('/add-patient');
     } else {
@@ -99,7 +99,9 @@ export default function AddAppointment({ setModal, setAddition }) {
     if (hospitalInput === '--ADD NEW HOSPITAL--') {
       // Redirect to add hospital component
       // navigate('/add-hospital');
-      setModal('add others');
+      console.log('weeee');
+      setModal('add-category');
+      // setOpenApptModal(true);
       setAddition('hospital');
     } else {
       setHospital(hospitalInput);
@@ -118,7 +120,7 @@ export default function AddAppointment({ setModal, setAddition }) {
     if (chaperoneSplitStr[1] === 'undefined') {
       // Redirect to add chaperone component
       // navigate('/add-chaperone');
-      setModal('add others');
+      setModal('add-category');
       setAddition('chaperone');
     } else {
       setChaperone(chaperoneSplitStr[0]);
@@ -130,6 +132,7 @@ export default function AddAppointment({ setModal, setAddition }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = {
+      userId,
       patientId,
       department,
       hospital,
@@ -139,6 +142,8 @@ export default function AddAppointment({ setModal, setAddition }) {
     };
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-appointment`, data).then((response) => {
       if (response.status === 200) {
+        console.log(response.data.patientDetailsObj);
+        setDisplayDataArray(response.data.patientDetailsObj);
         setSuccessMessage(
           <Typography sx={apptPopupStyles.outcomeMessage}>
             <strong>You have Added a New Appointment! </strong>

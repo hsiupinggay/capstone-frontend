@@ -31,6 +31,7 @@ import { useMedicalContext } from '../others/store';
 export default function AppointmentsPage() {
   const [toggleView, setToggleView] = useState(false);
   const [displayDataArray, setDisplayDataArray] = useState();
+  // const [originialDataArray, setOriginalDataArray] = useState();
   const [openApptModal, setOpenApptModal] = useState(false);
   const [apptModalType, setApptModalType] = useState('');
   const [filterData, setFilterData] = useState(null);
@@ -55,8 +56,9 @@ export default function AppointmentsPage() {
       .then((result) => {
         const axiosData = result.data.patientDetailsObj;
         // Save the array of patients data under the USER as a state
+        console.log('axiosData', axiosData);
         setDisplayDataArray(axiosData);
-
+        // setOriginalDataArray(axiosData);
         // Get filter params through axiosData.visitDetails
         // Filter params are the options for the filter button
         const hospitalArr = [];
@@ -115,6 +117,7 @@ export default function AppointmentsPage() {
               filterData={filterData}
               setOpenApptModal={setOpenApptModal}
               setApptModalType={setApptModalType}
+              // originialDataArray={originialDataArray}
             />
           </>
         )
@@ -132,6 +135,8 @@ export default function AppointmentsPage() {
         setFilterData={setFilterData}
         filterParams={filterParams}
         filterData={filterData}
+        setApptModalType={setApptModalType}
+        setDisplayDataArray={setDisplayDataArray}
       />
     </Box>
   );
