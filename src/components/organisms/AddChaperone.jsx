@@ -112,7 +112,7 @@ export default function AddChaperone({ setModal, setAddition }) {
         ? <div />
         : (
           <div>
-            <BackIcon variant="contained" onClick={() => setModal('add appointment')} />
+            <BackIcon variant="contained" onClick={() => setModal('add-appt')} />
             <Box sx={chaperonePopupStyles.inputContainer}>
               <Tabs
                 value={value}
