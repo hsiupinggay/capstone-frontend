@@ -28,6 +28,8 @@ import AddDepartment from './AddDepartment';
 export default function AddDetailsTabs({ addition, setAddition, setModal }) {
   return (
     <div>
+      { console.log('run?')}
+      { console.log(addition)}
       {
           addition === 'hospital'
             ? <AddHospital setAddition={setAddition} setModal={setModal} />

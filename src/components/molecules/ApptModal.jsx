@@ -1,9 +1,10 @@
+/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-
+import AddDetailsTabs from '../organisms/AddDetailsTabs';
 import AddAppointment from '../organisms/AddAppointment';
 import ApptFilterCheckbox from '../atoms/ApptFilterCheckbox';
 
@@ -25,7 +26,36 @@ const style = {
   overflow: 'scroll',
 };
 
-function AddApptModal({ openApptModal, setOpenApptModal }) {
+function AddDetailsModal({
+  openApptModal, setOpenApptModal, setAddition, addition, setModal,
+}) {
+  const handleClose = () => {
+    setOpenApptModal(false);
+  };
+  return (
+    <div>
+      <Modal
+        open={openApptModal}
+        onClose={handleClose}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <Box sx={
+          {
+            ...style, width: 400, height: 500, flexDirection: 'column',
+          }
+        }
+        >
+          <AddDetailsTabs addition={addition} setAddition={setAddition} setModal={setModal} />
+        </Box>
+      </Modal>
+    </div>
+  );
+}
+
+function AddApptModal({
+  openApptModal, setOpenApptModal, setModal, setAddition, setDisplayDataArray,
+}) {
   const handleClose = () => {
     setOpenApptModal(false);
   };
@@ -44,7 +74,7 @@ function AddApptModal({ openApptModal, setOpenApptModal }) {
         }
         >
           <h1>Add Appointment</h1>
-          <AddAppointment />
+          <AddAppointment setAddition={setAddition} setModal={setModal} setOpenApptModal={setOpenApptModal} setDisplayDataArray={setDisplayDataArray} />
         </Box>
       </Modal>
     </div>
@@ -193,12 +223,17 @@ function TestModal({ openApptModal, setOpenApptModal }) {
 
 export default function ApptModal(
   {
-    openApptModal, setOpenApptModal, apptModalType, setFilterData, filterParams, filterData,
+    openApptModal, setOpenApptModal, apptModalType, setFilterData, filterParams, filterData, setApptModalType, setDisplayDataArray,
   },
 ) {
+  const [addition, setAddition] = useState(false);
+
   switch (apptModalType) {
     case 'add-appt':
-      return <AddApptModal openApptModal={openApptModal} setOpenApptModal={setOpenApptModal} />;
+      return <AddApptModal openApptModal={openApptModal} setOpenApptModal={setOpenApptModal} setModal={setApptModalType} setAddition={setAddition} setDisplayDataArray={setDisplayDataArray} />;
+    case 'add-category':
+      return <AddDetailsModal openApptModal={openApptModal} addition={addition} setAddition={setAddition} setModal={setApptModalType} setOpenApptModal={setOpenApptModal} />;
+      // <AddDetailsTabs addition={addition} setAddition={setAddition} setModal={setApptModalType} setOpenApptModal={setOpenApptModal} />;
     case 'edit':
       break;
     case 'filter':

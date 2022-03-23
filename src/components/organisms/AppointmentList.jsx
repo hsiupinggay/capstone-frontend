@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
 /* eslint-disable max-len */
@@ -8,6 +9,9 @@ import {
 } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import Tooltip from '@mui/material/Tooltip';
+import moment from 'moment';
 
 const monthNames = [
   'Jan',
@@ -28,8 +32,8 @@ function AppointmentList({
   displayDataArray, filterData, setOpenApptModal, setApptModalType,
 }) {
   const [listDisplay, setListDisplay] = useState([]);
+  const [order, setOrder] = useState('latest first');
   let userDisplayArray = [];
-
   displayDataArray.forEach((patient) => {
     const { identity, appointments } = patient;
     const displayName = `${identity.name.first} ${identity.name.last}`;
@@ -55,8 +59,12 @@ function AppointmentList({
     userDisplayArray = [...userDisplayArray, ...displayArray];
   });
 
+  console.log(userDisplayArray);
   // Sort userDisplayArray based on dates
-  userDisplayArray.sort((a, b) => a.event_date - b.event_date);
+  userDisplayArray.forEach((appointment) => (appointment.convertedDate = moment(appointment.date, 'DD-MMM-YYYY').format('YYYY-MM-DD')));
+  userDisplayArray.sort((a, b) => new Date(a.convertedDate) - new Date(b.convertedDate));
+  // userDisplayArray.sort((a, b) => a.event_date - b.event_date);
+  console.log('after', userDisplayArray);
 
   useEffect(() => {
     const filteredDisplayArray = [];
@@ -109,7 +117,22 @@ function AppointmentList({
     }
     // Validation, if there are no filters, filtereredDisplayArray is empty
     if (filteredDisplayArray.length === 0) setListDisplay(userDisplayArray);
-  }, [filterData]);
+  }, [filterData, displayDataArray]);
+
+  const sortDate = () => {
+    listDisplay.forEach((appointment) => (appointment.convertedDate = moment(appointment.date, 'DD-MMM-YYYY').format('YYYY-MM-DD')));
+    if (order === 'latest first') {
+      listDisplay.sort((a, b) => new Date(b.convertedDate) - new Date(a.convertedDate));
+      setOrder('oldest first');
+      setListDisplay(listDisplay);
+    } else {
+      listDisplay.sort((a, b) => new Date(a.convertedDate) - new Date(b.convertedDate));
+      console.log('hi');
+      setOrder('latest first');
+      setListDisplay(listDisplay);
+    }
+    console.log(listDisplay);
+  };
 
   const displayAppointmentList = listDisplay.map((appointment) => (
     <div key={appointment.id}>
@@ -125,6 +148,7 @@ function AppointmentList({
           <br />
           {appointment.department}
         </CardContent>
+
         <Button onClick={() => { setOpenApptModal(true); setApptModalType('edit'); }}>Edit</Button>
       </Card>
     </div>
@@ -135,6 +159,9 @@ function AppointmentList({
       <h1>Appointment List</h1>
       <div className="h-full overflow-auto">
         <Box>
+          <Tooltip arrow title="Sort By Appointment Date">
+            <CalendarMonthIcon variant="contained" onClick={sortDate} />
+          </Tooltip>
           <List>
             {displayAppointmentList}
           </List>

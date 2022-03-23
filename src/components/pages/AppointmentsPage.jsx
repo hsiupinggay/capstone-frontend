@@ -132,6 +132,8 @@ export default function AppointmentsPage() {
         setFilterData={setFilterData}
         filterParams={filterParams}
         filterData={filterData}
+        setApptModalType={setApptModalType}
+        setDisplayDataArray={setDisplayDataArray}
       />
     </Box>
   );

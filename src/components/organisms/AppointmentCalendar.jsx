@@ -35,7 +35,9 @@ function classNames(...classes) {
  * ========================================================
  * ========================================================
  */
-export default function AppointmentCalendar({ displayDataArray, setOpenApptModal, setApptModalType }) {
+export default function AppointmentCalendar({
+  displayDataArray, setOpenApptModal, setApptModalType,
+}) {
   // Get today's date
   const stateDate = new Date();
   // Set state to toggle between month views
