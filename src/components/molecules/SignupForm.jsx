@@ -38,6 +38,9 @@ export default function Signup() {
   // This is a 2-step form
   const [activeStep, setActiveStep] = useState(1);
   const [error, setError] = useState(false);
+  const [stepOneError, setStepOneError] = useState(false);
+  const [stepOneErrorMessage, setStepOneErrorMessage] = useState('');
+
   const [errorMessage, setErrorMessage] = useState('');
 
   // Handle input changes
@@ -64,21 +67,22 @@ export default function Signup() {
   // Handle button clicks
   const handleNext = async (e) => {
     e.preventDefault();
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
     if (email === '' || firstName === '' || lastName === '') {
-      setError(true);
-      setErrorMessage('Please fill in all fields.');
+      setStepOneError(true);
+      setStepOneErrorMessage('Please fill in all fields.');
       return;
     }
 
     // Ensure email is valid
     if (!validateEmail(email)) {
-      setError(true);
-      setErrorMessage('Please input a valid email.');
+      setStepOneError(true);
+      setStepOneErrorMessage('Please input a valid email.');
       return;
     }
-    setError(false);
-    setErrorMessage('');
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setStepOneError(false);
+    setStepOneErrorMessage('');
     setActiveStep(2);
   };
 
@@ -116,7 +120,6 @@ export default function Signup() {
 
   return (
     <CardContent>
-
       {activeStep === 1
        && (
          <Stack
@@ -125,7 +128,8 @@ export default function Signup() {
            justifyContent="center"
            alignItems="center"
          >
-           <PersonIcon />
+           {stepOneError ? <HelperText text={stepOneErrorMessage} />
+             : <PersonIcon />}
            <TextField label="First Name" variant="outlined" onChange={handleFirstName} value={firstName} />
            <TextField label="Last Name" variant="outlined" onChange={handleLastName} value={lastName} />
            <TextField label="E-mail" type="email" variant="outlined" onChange={handleEmail} value={email} />
@@ -139,12 +143,16 @@ export default function Signup() {
           direction="column"
           justifyContent="center"
           alignItems="center"
+          height="240px"
         >
-          <LockRoundedIcon />
+          {error
+            ? <HelperText text={errorMessage} />
+            : <LockRoundedIcon />}
+
           <TextField label="Password" type="password" variant="outlined" onChange={handlePassword} value={password} />
           <TextField label="Re-enter Password" type="password" variant="outlined" onChange={handlePasswordConfirmation} value={passwordConfrimation} />
-          {error
-          && <HelperText text={errorMessage} />}
+          {/* <Box sx={{ height: '56px' }} /> */}
+
         </Stack>
         )}
 
@@ -153,7 +161,7 @@ export default function Signup() {
         steps={2}
         position="static"
         activeStep={activeStep}
-        sx={{ maxWidth: 230, flexGrow: 1 }}
+        sx={{ flexGrow: 1 }}
         nextButton={activeStep === 2 ? (
           <Button size="small" onClick={handleSubmit}>
             Submit

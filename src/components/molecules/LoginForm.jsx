@@ -74,6 +74,7 @@ export default function Login() {
         navigate('/');
       } else if (!res.loginSuccess) {
         setError(true);
+        // sets error message from backend
         setErrorMessage(res.error);
       }
     } catch (err) {
@@ -122,26 +123,5 @@ export default function Login() {
         <Button fullWidth variant="contained" onClick={handleSubmit}>Log In</Button>
       </Stack>
     </CardContent>
-
-  // <form>
-  //   <div className="
-  // flex
-  // flex-col
-  // justify-center
-  // p-3
-  // "
-  //   >
-  //     <Stack
-  //       spacing={2}
-  //     >
-  //       <TextField type="email" onChange={handleEmail} label="Email" />
-  //       <TextField type="password" onChange={handlePassword} label="Password" />
-  //       {error && <HelperText text={errorMessage} />}
-  //       <div className="flex justify-center">
-  //         <SubmitButton label="Submit" onClick={handleSubmit} />
-  //       </div>
-  //     </Stack>
-  //   </div>
-  // </form>
   );
 }
