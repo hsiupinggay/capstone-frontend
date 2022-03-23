@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
@@ -11,16 +12,20 @@
  * ========================================================
  * ========================================================
  */
-import React, { useState } from 'react';
-// import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   Typography, Box, TextField,
+  Tooltip, IconButton,
 } from '@mui/material';
 import { TimePicker, LocalizationProvider, DesktopDatePicker } from '@mui/lab';
 import DateAdapter from '@mui/lab/AdapterLuxon';
 import moment from 'moment';
 import Button from '@mui/material/Button';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { DateTime } from 'luxon';
+import { useMedicalContext } from '../others/store';
 // import appointmentPopupStyles from './AppointmentDetailPopupCss';
 
 /*
@@ -32,80 +37,74 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
  * ========================================================
  * ========================================================
  */
-// export default function AppointmentDetailPopup({ apptObj, arraySetterFunction }) {
-export default function AppointmentDetailPopup() {
+export default function AppointmentDetailPopup({ apptPopupDetails, setDisplayDataArray }) {
   const [editAppt, setEditAppt] = useState(false);
   const [date, setDate] = useState();
+  const [isEditing, setIsEditing] = useState(false);
+  const [displayDate, setDisplayDate] = useState();
+  const [successMessage, setSuccessMessage] = useState('');
   const [value, setValue] = useState();
-
-  // ################################ Placeholder appointment object ################################
-  const apptObj = {
-    patientName: 'Humpty Dumpty',
-    patientId: '62259fadb4a77ae0343f7306',
-    appointmentId: '6233f9b6c41fb01960e60203',
-    date: '10-Apr-2022',
-    time: '11:00',
-    hospital: 'Tan Tock Seng Hospital',
-    department: 'Cadiology',
-    chaperone: 'Bryan',
-    chaperoneId: '62259eddb4a77ae0343f7305',
-    notes: {
-      userImage: 'https://neighbourhood-app.s3.ap-southeast-1.amazonaws.com/daniel-radcliffe-harry-potter.jpeg',
-      userName: 'Shannon Suresh',
-      date: '11-Apr-2022',
-      note: 'Doc says all good but need to watch cholesterol.',
-    },
-  };
+  const [memo, setMemo] = useState('');
+  const [memoDate, setMemoDate] = useState('');
+  const [memoUserName, setMemoUserName] = useState('');
+  const { store } = useMedicalContext();
+  const { userId, firstName, lastName } = store;
+  useEffect(() => {
+    console.log(apptPopupDetails.date);
+    console.log(apptPopupDetails.time);
+    setMemo(apptPopupDetails.notes.note);
+    setMemoDate(apptPopupDetails.notes.date);
+    setMemoUserName(apptPopupDetails.notes.userName);
+    setDate(new Date(apptPopupDetails.date));
+    setValue(DateTime.fromFormat(apptPopupDetails.time, 'h:mm a').toISO());
+  }, []);
+  // useEffect(() => {
+  // });
 
   // On form submit, send data to backend to store in DB
   const handleSubmit = (formattedDate, unformattedTime) => {
+    if (!formattedDate && !unformattedTime) {
+      return setSuccessMessage('No changes detected. Please try again.');
+    }
     const data = {
-      patientId: apptObj.patientId,
-      appointmentId: apptObj.appointmentId,
-      date: formattedDate || null,
-      time: `${moment(`${unformattedTime.c.hour}:${unformattedTime.minute}`, 'HH:m').format('HH:mm')}` || null,
+      userId,
+      patientId: apptPopupDetails.patientId,
+      appointmentId: apptPopupDetails.appointmentId,
+      date: formattedDate !== undefined ? formattedDate : null,
+      time: unformattedTime !== undefined ? `${moment(unformattedTime, 'HH:mm').format('h:mm a')}` : null,
     };
-    console.log(data);
-    //   axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-appointment`, data).then((response) => {
-    //     if (response.status === 200) {
-    //       setSuccessMessage(
-    //         <Typography sx={apptPopupStyles.outcomeMessage}>
-    //           <strong>You have Added a New Appointment! </strong>
-    //           <div>
-    //             <strong>Patient:</strong>
-    //             {' '}
-    //             {`${patientName}`}
-    //           </div>
-    //           <div>
-    //             <strong>Hospital:</strong>
-    //             {' '}
-    //             {`${hospital}`}
-    //           </div>
-    //           <div>
-    //             <strong>Department:</strong>
-    //             {' '}
-    //             {`${department}`}
-    //           </div>
-    //           <div>
-    //             <strong>Date:</strong>
-    //             {' '}
-    //             {`${response.data.data[response.data.data.length - 1].date}`}
-    //           </div>
-    //           <div>
-    //             <strong>Time:</strong>
-    //             {' '}
-    //             {`${response.data.data[response.data.data.length - 1].time}`}
-    //           </div>
-    //           <div>
-    //             <strong>Chaperone:</strong>
-    //             {' '}
-    //             {`${chaperone || 'Nil'}`}
-    //           </div>
-
-  //         </Typography>,
-  //       );
-  //     }
-  //   });
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/edit-appointment`, data).then((response) => {
+      if (response.status === 200) {
+        setDisplayDataArray(response.data.patientDetailsObj);
+        setSuccessMessage(
+          <Typography>
+            Your new appointment details:
+            {
+              formattedDate !== undefined
+                ? (
+                  <Box>
+                    <strong>Date:</strong>
+                    {' '}
+                    {`${displayDate}`}
+                  </Box>
+                )
+                : <Box />
+            }
+            {
+              unformattedTime !== undefined
+                ? (
+                  <Box>
+                    <strong>Time:</strong>
+                    {' '}
+                    {`${moment(unformattedTime, 'HH:mm').format('h:mm a')}`}
+                  </Box>
+                )
+                : <Box />
+            }
+          </Typography>,
+        );
+      }
+    });
   };
 
   const toggleEditting = () => {
@@ -116,28 +115,57 @@ export default function AppointmentDetailPopup() {
     }
   };
 
+  const updateDate = (newValue) => {
+    setDate(`${moment(`${newValue.c.year}-${newValue.c.month}-${newValue.c.day}`).format('YYYY-MM-DD')}`);
+    setDisplayDate(`${moment(`${newValue.c.year}-${newValue.c.month}-${newValue.c.day}`).format('DD-MMM-YY')}`);
+  };
+
+  const toggleNoteEditing = () => {
+    if (isEditing) {
+      setIsEditing(false);
+    } else {
+      setIsEditing(true);
+    }
+  };
+
+  const handleMemoSubmit = () => {
+    const data = {
+      userId,
+      firstName,
+      lastName,
+      patientId: apptPopupDetails.patientId,
+      appointmentId: apptPopupDetails.appointmentId,
+      note: memo,
+    };
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-memo`, data).then((response) => {
+      setDisplayDataArray(response.data.patientDetailsObj);
+      setIsEditing(false);
+      console.log(response.data.note);
+      setMemo(response.data.note);
+      setMemoDate(response.data.formattedDate);
+      setMemoUserName(response.data.uploader);
+    });
+  };
   return (
-    <div>
-      <Button onClick={toggleEditting}>Edit</Button>
+    <Box>
+      <Button variant="contained" onClick={toggleEditting}>Edit</Button>
       <Typography>
         <Box>
-          {apptObj.patientName}
+          {apptPopupDetails.patientName}
           {' '}
           has an appointment
           {' '}
           on
         </Box>
         { !editAppt
-          ? <Box>{apptObj.date}</Box>
+          ? <Box><strong>{apptPopupDetails.date}</strong></Box>
           : (
             <Box>
               <LocalizationProvider dateAdapter={DateAdapter}>
                 <DesktopDatePicker
                   label="Reschedule Date"
                   value={date}
-                  onChange={(newValue) => {
-                    setDate(`${moment(`${newValue.c.year}-${newValue.c.month}-${newValue.c.day}`).format('YYYY-MM-DD')}`);
-                  }}
+                  onChange={(newValue) => { updateDate(newValue); }}
                   renderInput={(params) => <TextField {...params} />}
                 />
               </LocalizationProvider>
@@ -147,7 +175,7 @@ export default function AppointmentDetailPopup() {
           at
         </Box>
         { !editAppt
-          ? <Box>{apptObj.time}</Box>
+          ? <Box><strong>{apptPopupDetails.time}</strong></Box>
           : (
             <Box>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -165,27 +193,87 @@ export default function AppointmentDetailPopup() {
         <Box>
           at the
           {' '}
-          {apptObj.department}
+          <strong>{apptPopupDetails.department}</strong>
           {' '}
           department in
         </Box>
         <Box>
-          {apptObj.hospital}
+          <strong>{apptPopupDetails.hospital}</strong>
           {' '}
           <br />
-          Chaperone:
+          <strong>Chaperone:</strong>
           {' '}
-          {apptObj.chaperone}
+          {
+            apptPopupDetails.chaperone === undefined || apptPopupDetails.chaperone === ''
+              ? <Box>Nil</Box>
+              : <Box>{apptPopupDetails.chaperone}</Box>
+          }
         </Box>
         { !editAppt
           ? <Box />
           : (
-            <Button onClick={() => { handleSubmit(date, value); }}>
+            <Button variant="contained" onClick={() => { handleSubmit(date, value); }}>
               Submit
             </Button>
           )}
         <Box />
+        <Box>
+          <br />
+          <br />
+          <br />
+          <strong>Memos:</strong>
+          <Tooltip arrow title="Add/Edit Memo">
+            <IconButton>
+              <AddCircleIcon variant="contained" onClick={toggleNoteEditing} />
+            </IconButton>
+          </Tooltip>
+          {isEditing === false
+            ? (
+              <Box>
+                {memo === '' || memo === undefined
+                  ? <div>Nil</div>
+                  : (
+                    <Box>
+                      {memo}
+                      <br />
+                      Uploaded By:
+                      {' '}
+                      {memoUserName}
+                      <br />
+                      on
+                      {' '}
+                      {memoDate}
+                    </Box>
+                  )}
+              </Box>
+            )
+            : (
+              <Box>
+                <br />
+                <TextField
+                  label="Add Memo"
+                  inputProps={{
+                    defaultValue: `${memo || ''}`,
+                  }}
+                  onChange={(e) => { setMemo(e.target.value); }}
+                />
+                <Button variant="contained" onClick={handleMemoSubmit}>Submit</Button>
+              </Box>
+            )}
+
+        </Box>
       </Typography>
-    </div>
+      <Box>
+        {
+        successMessage === ''
+          ? <Box />
+          : (
+            <Typography>
+              {successMessage}
+            </Typography>
+          )
+        }
+      </Box>
+    </Box>
   );
 }
