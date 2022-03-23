@@ -1,4 +1,4 @@
-const homePageStyles = {
+const AppointmentPageStyles = {
   titleFont: {
     fontSize: {
       xs: 35,
@@ -11,6 +11,11 @@ const homePageStyles = {
     color: '#22577A',
     marginBottom: 1,
     textShadow: '1px 1px black',
+  },
+
+  mainContainer: {
+    width: '80%',
+    mx: 'auto',
   },
 
   apptReminder: {
@@ -30,13 +35,6 @@ const homePageStyles = {
     alignItems: 'center',
   },
 
-  mainContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
   allCategoryContainer: {
     paddingTop: {
       xs: 10,
@@ -48,6 +46,7 @@ const homePageStyles = {
   },
 
   categoryContainer: {
+    width: 1300,
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
@@ -114,4 +113,4 @@ const homePageStyles = {
 
 };
 
-export default homePageStyles;
+export default AppointmentPageStyles;

@@ -17,6 +17,7 @@ import {
 import { ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { MedicalProvider } from './components/others/store';
+import { ApptProvider } from './components/others/ApptContext';
 import ProtectedRoute from './components/molecules/ProtectedRoute';
 import mainTheme from './theme';
 
@@ -42,6 +43,7 @@ import PatientVisitLocationPage from './components/pages/PatientVisitLocationPag
 import PatientMemoPage from './components/pages/PatientMemoPage';
 import ChatRoomPage from './components/pages/ChatRoomPage';
 import PSEUDOAPPTPAGE from './components/organisms/PSEUDOAPPTPAGE';
+import PSEUDOAPPTPAGE2 from './components/organisms/PSEUDOAPPTPAGE2';
 import style from './AppCss';
 import MedicationPage from './components/pages/MedicationPage';
 
@@ -147,6 +149,11 @@ export default function App() {
                         exact
                         path="/test"
                         element={<PSEUDOAPPTPAGE />}
+                      />
+                      <Route
+                        exact
+                        path="/test2"
+                        element={<PSEUDOAPPTPAGE2 />}
                       />
                     </Route>
                   </Route>

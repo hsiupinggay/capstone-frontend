@@ -1,3 +1,9 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
+/* eslint-disable max-len */
 /*
  * ========================================================
  * ========================================================
@@ -9,29 +15,17 @@
  */
 import React, { useEffect, useState } from 'react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/solid';
+import Typography from '@mui/material/Typography';
+import Popover from '@mui/material/Popover';
+import Button from '@mui/material/Button';
 
 // Global variables to help print  Calendar
-const monthNames = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
-
+const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
-
 /*
  * ========================================================
  * ========================================================
@@ -41,7 +35,7 @@ function classNames(...classes) {
  * ========================================================
  * ========================================================
  */
-export default function AppointmentCalendar() {
+export default function AppointmentCalendar({ displayDataArray, setOpenApptModal, setApptModalType }) {
   // Get today's date
   const stateDate = new Date();
   // Set state to toggle between month views
@@ -49,6 +43,21 @@ export default function AppointmentCalendar() {
   const [year] = useState(stateDate.getFullYear());
   const [numOfDays, setNumOfDays] = useState([]);
   const [emptyDays, setEmptyDays] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [popoverText, setPopoverText] = useState('');
+
+  // Popover Handlers
+  const handleOpen = (event, eventText) => {
+    setAnchorEl(event.currentTarget);
+    setPopoverText(eventText);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
   // Function to check for "today"
   const isToday = (date) => {
@@ -78,58 +87,45 @@ export default function AppointmentCalendar() {
     setNumOfDays(daysArray);
   };
 
+  // useEffect to console.log and check if calendar is on correct month
   useEffect(() => {
     getNoOfDays();
-    console.log(month, year);
   }, [month]);
 
-  // Placeholder for appointments
-  const events = [
-    {
-      event_date: new Date(2022, 8, 1),
-      event_title: 'My Birthday :)',
-      event_theme: 'red',
-    },
+  // useEffect waiting on displayData from axios call
+  // maps data to events and display accordingly
+  useEffect(() => {
+    if (!displayDataArray) return; // handles error if axios call still not done
+    let updatedEvents = [];
 
-    {
-      event_date: new Date(20212, 11, 25),
-      event_title: 'Xmas Day',
-      event_theme: 'green',
-    },
-    {
-      event_date: new Date(2022, 9, 31),
-      event_title: 'Halloween',
-      event_theme: 'yellow',
-    },
-    {
-      event_date: new Date(2021, 11, 31),
-      event_title: 'New Years Eve',
-      event_theme: 'yellow',
-    },
-  ];
+    console.log('displayyyy', displayDataArray);
 
-  // const themes = [
-  //   {
-  //     value: 'blue',
-  //     label: 'Blue Theme',
-  //   },
-  //   {
-  //     value: 'red',
-  //     label: 'Red Theme',
-  //   },
-  //   {
-  //     value: 'yellow',
-  //     label: 'Yellow Theme',
-  //   },
-  //   {
-  //     value: 'green',
-  //     label: 'Green Theme',
-  //   },
-  //   {
-  //     value: 'purple',
-  //     label: 'Purple Theme',
-  //   },
-  // ];
+    // after there is userDataArray... map to events
+    displayDataArray.forEach((patient) => {
+      const { identity, appointments } = patient;
+      console.log('appt', appointments);
+      const displayName = `${identity.name.first} ${identity.name.last}`;
+      const displayArray = [];
+      appointments.forEach((appointment) => {
+        // operate on appointment.date -> string 'DD-MMM-YYYY'
+        const appointmentDate = appointment.date.split('-');
+        const appointmentDay = Number(appointmentDate[0]);
+        const appointmentMonth = Number(monthNames.findIndex((month) => month === appointmentDate[1]));
+        const appointmentYear = Number(appointmentDate[2]);
+
+        const appointmentObject = {
+          date: `${appointment.date} | ${appointment.time}`,
+          event_date: new Date(appointmentYear, appointmentMonth, appointmentDay),
+          event_title: `${appointment.time}: ${displayName} @ ${appointment.hospital.name}, ${appointment.hospital.department}`,
+          event_theme: 'blue', // blue red yellow green purple
+          id: appointment._id,
+        };
+        displayArray.push(appointmentObject);
+      });
+      updatedEvents = [...updatedEvents, ...displayArray];
+    });
+    setEvents(updatedEvents);
+  }, [displayDataArray]);
 
   // Arrow button classNames
   const btnClass = (limit) => classNames(
@@ -148,6 +144,7 @@ export default function AppointmentCalendar() {
     getNoOfDays();
   };
 
+  // tailwind CSS classNames for color swapping
   const eventClass = (t) => {
     switch (t) {
       case 'blue':
@@ -163,10 +160,12 @@ export default function AppointmentCalendar() {
     }
   };
 
+  // handle onClick on events to display full details
+
   return (
     <>
       {/* calendar body */}
-      <div className="container mx-auto py-4 px-6">
+      <div className="container mx-0 py-4 px-6">
         {/* calendar outer frame */}
         <div className="bg-white rounded-lg shadow overflow-hidden">
           {/* top row: display month, year; display nav arrows */}
@@ -207,7 +206,7 @@ export default function AppointmentCalendar() {
               ))}
               {/* Print {date} and conditionally format - can add onClick here to open modal */}
               {numOfDays.map((date) => (
-                <div key={date} className="px-4 pt-2 border-r border-b relative h-32 w-[14.28%]">
+                <div key={date} className="px-4 pt-8 border-r border-b relative h-32 w-[14.28%]">
                   <div className={classNames(isToday(date) ? 'bg-blue-500 text-white' : 'text-gray-700 hover:bg-blue-200', 'inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100')}>
                     {date}
                   </div>
@@ -215,13 +214,26 @@ export default function AppointmentCalendar() {
                   <div className="overflow-y-auto mt-1 h-20">
                     {events.filter((e) => new Date(e.event_date).toDateString()
                     === new Date(year, month, date).toDateString()).map((e) => (
-                      <div key={e.event_title} className={classNames(eventClass(e.event_theme), 'px-2 py-1 rounded-lg mt-1 overflow-hidden border')}>
+                      <div key={e.id} className={classNames(eventClass(e.event_theme), 'px-2 py-1 rounded-lg mt-1 overflow-hidden border')} onClick={(event) => handleOpen(event, e.event_title)}>
                         <p className="text-sm truncate leading-tight">{e.event_title}</p>
                       </div>
                     ))}
                   </div>
                 </div>
               ))}
+              <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+              >
+                <Typography sx={{ p: 2 }}>{popoverText}</Typography>
+                <Button onClick={() => { setOpenApptModal(true); setApptModalType('edit'); }}>Edit</Button>
+              </Popover>
             </div>
           </div>
         </div>

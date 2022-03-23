@@ -65,15 +65,7 @@ export default function AddPatient({
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-patient`, data).then((response) => {
       if (response.status === 200) {
         setSuccessMessage(
-          <div>
-            You have added
-            {firstName}
-            {' '}
-            {lastName}
-            {' '}
-            as your
-            {relationship}
-          </div>,
+          `You have added ${firstName} ${lastName} as your ${relationship}.`,
         );
         // Trigger patient list page to rerender
         if (refresh) {

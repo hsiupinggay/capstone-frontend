@@ -1,3 +1,6 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable max-len */
 /* eslint-disable no-console */
 /*
  * ========================================================
@@ -10,35 +13,16 @@
  */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button, Modal, Box } from '@mui/material';
+import {
+  Button, Modal, Box, Typography, TextField, IconButton,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Tooltip from '@mui/material/Tooltip';
-import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+import Autocomplete from '@mui/material/Autocomplete';
 import { useMedicalContext, setPatientAction } from '../others/store';
 import AddPatient from '../organisms/AddPatient';
-
-/*
- * ========================================================
- * ========================================================
- *
- *                   Modal styling
- *
- * ========================================================
- * ========================================================
- */
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  height: 500,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+import patientListStyles from './PatientListPageCss';
 
 /*
  * ========================================================
@@ -50,6 +34,7 @@ const style = {
  * ========================================================
  */
 export default function PatientListPage() {
+  const [patient, setPatient] = useState(null);
   const [patientList, setPatientList] = useState();
   const [open, setOpen] = useState(false);
   const [refresh, setRefresh] = useState(false);
@@ -89,29 +74,48 @@ export default function PatientListPage() {
   return (
     <div>
       {
-
         patientList === undefined
           ? (
-            <div>
-              <strong>Patients</strong>
-              <Button onClick={addPatient}>View</Button>
-            </div>
+            <div />
           )
           : (
             <div>
-              <strong>Patients</strong>
-              <Tooltip title="Add New Patient">
-                <AddCircleIcon onClick={addPatient} />
-              </Tooltip>
-              <br />
-              {patientList.map((patient) => (
-                <div key={patient.name}>
-                  {`${patient.name}`}
-                  <Tooltip title="View Profile">
-                    <ArrowCircleRightIcon onClick={() => openPatientProfile(patient.patientId)} />
+              <Box sx={patientListStyles.mainContainer}>
+                <Box sx={patientListStyles.titleContainer}>
+
+                  <Typography sx={patientListStyles.title}>Patients</Typography>
+                  <Tooltip arrow title="Add New Patient">
+                    <IconButton>
+                      <AddCircleIcon onClick={addPatient} sx={patientListStyles.addIcon} />
+
+                    </IconButton>
                   </Tooltip>
-                </div>
-              ))}
+                </Box>
+                <Autocomplete
+                  options={patientList}
+                  getOptionLabel={(option) => `${option.name}`}
+                  renderInput={(params) => <TextField {...params} label="Select Patient" sx={patientListStyles.inputField} required />}
+                  onChange={(event, newValue) => { setPatient(newValue); }}
+                  selectOnFocus
+                  clearOnBlur
+                  handleHomeEndKeys
+                />
+                {patient !== null
+                  ? (
+                    <div>
+                      <Typography sx={patientListStyles.description}>
+                        Click submit to view
+                        {' '}
+                        {patient.name}
+                        's profile
+                      </Typography>
+                      <Box sx={patientListStyles.buttonContainer}>
+                        <Button variant="contained" onClick={() => openPatientProfile(patient.patientId)} sx={patientListStyles.button}>Submit</Button>
+                      </Box>
+                    </div>
+                  )
+                  : <div />}
+              </Box>
             </div>
           )
       }
@@ -119,7 +123,7 @@ export default function PatientListPage() {
         open={open}
         onClose={closeAddPatientPopup}
       >
-        <Box sx={style}>
+        <Box sx={patientListStyles.modal}>
           <AddPatient accessedFromPatientPage setRefresh={setRefresh} refresh={refresh} />
         </Box>
       </Modal>
