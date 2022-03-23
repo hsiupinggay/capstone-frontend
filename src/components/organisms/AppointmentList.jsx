@@ -30,7 +30,7 @@ const monthNames = [
 ];
 
 function AppointmentList({
-  displayDataArray, filterData, setOpenApptModal, setApptModalType,
+  displayDataArray, filterData, setOpenApptModal, setApptModalType, setApptPopupDetails,
 }) {
   const [listDisplay, setListDisplay] = useState([]);
   const [order, setOrder] = useState('latest first');
@@ -38,7 +38,7 @@ function AppointmentList({
 
   let userDisplayArray = [];
   displayDataArray.forEach((patient) => {
-    const { identity, appointments } = patient;
+    const { identity, appointments, _id } = patient;
     const displayName = `${identity.name.first} ${identity.name.last}`;
     const displayArray = [];
     appointments.forEach((appointment) => {
@@ -56,18 +56,32 @@ function AppointmentList({
         department: `${appointment.hospital.department}`,
         event_date: new Date(`${appointmentYear}-${appointmentMonth}-${appointmentDay}`),
         id: appointment._id,
+        apptObj: {
+          patientName: displayName,
+          patientId: _id,
+          appointmentId: appointment._id,
+          date: appointment.date,
+          time: appointment.time,
+          hospital: appointment.hospital.name,
+          department: appointment.hospital.department,
+          chaperone: appointment.chaperone !== undefined ? appointment.chaperone.name : '',
+          chaperoneId: appointment.chaperone !== undefined ? appointment.chaperone.chaperoneId : '',
+          notes: appointment.notes !== undefined ? {
+            userImage: appointment.notes.userImage || '',
+            userName: `${appointment.notes.userName.first} ${appointment.notes.userName.last}`,
+            date: appointment.notes.date,
+            note: appointment.notes.note,
+          } : '',
+        },
       };
       displayArray.push(displayObject);
     });
     userDisplayArray = [...userDisplayArray, ...displayArray];
   });
 
-  console.log(userDisplayArray);
   // Sort userDisplayArray based on dates
   userDisplayArray.forEach((appointment) => (appointment.convertedDate = moment(appointment.date, 'DD-MMM-YYYY').format('YYYY-MM-DD')));
   userDisplayArray.sort((a, b) => new Date(a.convertedDate) - new Date(b.convertedDate));
-  // userDisplayArray.sort((a, b) => a.event_date - b.event_date);
-  console.log('after', userDisplayArray);
 
   useEffect(() => {
     const filteredDisplayArray = [];
@@ -120,7 +134,6 @@ function AppointmentList({
     }
     // Validation, if there are no filters, filtereredDisplayArray is empty
     if (filteredDisplayArray.length === 0) {
-      console.log('filterrrrr');
       setListDisplay(userDisplayArray);
       setOriginalDataArray(userDisplayArray);
     }
@@ -134,18 +147,21 @@ function AppointmentList({
       setListDisplay(listDisplay);
     } else {
       listDisplay.sort((a, b) => new Date(a.convertedDate) - new Date(b.convertedDate));
-      console.log('hi');
       setOrder('latest first');
       setListDisplay(listDisplay);
     }
-    console.log(listDisplay);
   };
 
   const resetFilters = () => {
-    console.log(originialDataArray);
     setListDisplay(originialDataArray);
   };
-
+  // Handle onClick on events to display full details
+  const openModal = (apptObject) => {
+    console.log('isnide func');
+    setOpenApptModal(true);
+    setApptModalType('view-full-appointment');
+    setApptPopupDetails(apptObject);
+  };
   const displayAppointmentList = listDisplay.map((appointment) => (
     <div key={appointment.id}>
       <Card variant="outlined">
@@ -161,7 +177,7 @@ function AppointmentList({
           {appointment.department}
         </CardContent>
 
-        <Button onClick={() => { setOpenApptModal(true); setApptModalType('edit'); }}>Edit</Button>
+        <Button onClick={() => openModal(appointment.apptObj)}>View Full Appointment</Button>
       </Card>
     </div>
   ));

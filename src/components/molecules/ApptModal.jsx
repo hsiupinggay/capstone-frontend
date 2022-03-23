@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import AddDetailsTabs from '../organisms/AddDetailsTabs';
 import AddAppointment from '../organisms/AddAppointment';
 import ApptFilterCheckbox from '../atoms/ApptFilterCheckbox';
+import AppointmentDetailPopup from '../organisms/AppointmentDetailPopup';
 
 const style = {
   position: 'absolute',
@@ -25,6 +26,34 @@ const style = {
   p: 4,
   overflow: 'scroll',
 };
+
+function AppointmentDetailModal({
+  openApptModal, setOpenApptModal, setDisplayDataArray, apptPopupDetails,
+}) {
+  const handleClose = () => {
+    setOpenApptModal(false);
+  };
+  console.log('hi');
+  return (
+    <div>
+      <Modal
+        open={openApptModal}
+        onClose={handleClose}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <Box sx={
+          {
+            ...style, width: 400, height: 500, flexDirection: 'column',
+          }
+        }
+        >
+          <AppointmentDetailPopup setDisplayDataArray={setDisplayDataArray} apptPopupDetails={apptPopupDetails} />
+        </Box>
+      </Modal>
+    </div>
+  );
+}
 
 function AddDetailsModal({
   openApptModal, setOpenApptModal, setAddition, addition, setModal,
@@ -223,7 +252,7 @@ function TestModal({ openApptModal, setOpenApptModal }) {
 
 export default function ApptModal(
   {
-    openApptModal, setOpenApptModal, apptModalType, setFilterData, filterParams, filterData, setApptModalType, setDisplayDataArray,
+    openApptModal, setOpenApptModal, apptModalType, setFilterData, filterParams, filterData, setApptModalType, setDisplayDataArray, apptPopupDetails,
   },
 ) {
   const [addition, setAddition] = useState(false);
@@ -234,8 +263,8 @@ export default function ApptModal(
     case 'add-category':
       return <AddDetailsModal openApptModal={openApptModal} addition={addition} setAddition={setAddition} setModal={setApptModalType} setOpenApptModal={setOpenApptModal} />;
       // <AddDetailsTabs addition={addition} setAddition={setAddition} setModal={setApptModalType} setOpenApptModal={setOpenApptModal} />;
-    case 'edit':
-      break;
+    case 'view-full-appointment':
+      return <AppointmentDetailModal setDisplayDataArray={setDisplayDataArray} openApptModal={openApptModal} setOpenApptModal={setOpenApptModal} apptPopupDetails={apptPopupDetails} />;
     case 'filter':
       return (
         <FilterModal
