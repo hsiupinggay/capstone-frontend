@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import Tooltip from '@mui/material/Tooltip';
 import moment from 'moment';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 const monthNames = [
   'Jan',
@@ -33,6 +34,8 @@ function AppointmentList({
 }) {
   const [listDisplay, setListDisplay] = useState([]);
   const [order, setOrder] = useState('latest first');
+  const [originialDataArray, setOriginalDataArray] = useState();
+
   let userDisplayArray = [];
   displayDataArray.forEach((patient) => {
     const { identity, appointments } = patient;
@@ -116,7 +119,11 @@ function AppointmentList({
       setListDisplay(filteredDisplayArray);
     }
     // Validation, if there are no filters, filtereredDisplayArray is empty
-    if (filteredDisplayArray.length === 0) setListDisplay(userDisplayArray);
+    if (filteredDisplayArray.length === 0) {
+      console.log('filterrrrr');
+      setListDisplay(userDisplayArray);
+      setOriginalDataArray(userDisplayArray);
+    }
   }, [filterData, displayDataArray]);
 
   const sortDate = () => {
@@ -132,6 +139,11 @@ function AppointmentList({
       setListDisplay(listDisplay);
     }
     console.log(listDisplay);
+  };
+
+  const resetFilters = () => {
+    console.log(originialDataArray);
+    setListDisplay(originialDataArray);
   };
 
   const displayAppointmentList = listDisplay.map((appointment) => (
@@ -161,6 +173,9 @@ function AppointmentList({
         <Box>
           <Tooltip arrow title="Sort By Appointment Date">
             <CalendarMonthIcon variant="contained" onClick={sortDate} />
+          </Tooltip>
+          <Tooltip arrow title="Reset Filters">
+            <RestartAltIcon variant="contained" onClick={resetFilters} />
           </Tooltip>
           <List>
             {displayAppointmentList}
