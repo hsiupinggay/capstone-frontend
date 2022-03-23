@@ -12,7 +12,7 @@ const AppointmentPageStyles = {
     marginBottom: 1,
     textShadow: '1px 1px black',
   },
-  
+
   mainContainer: {
     width: '80%',
     mx: 'auto',
@@ -34,7 +34,6 @@ const AppointmentPageStyles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-
 
   allCategoryContainer: {
     paddingTop: {

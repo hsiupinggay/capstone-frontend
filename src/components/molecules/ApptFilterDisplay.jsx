@@ -1,3 +1,8 @@
+/* eslint-disable operator-linebreak */
+/* eslint-disable arrow-parens */
+/* eslint-disable react/jsx-wrap-multilines */
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
@@ -22,7 +27,7 @@ export default function ApptFilterDisplay({ filterData }) {
   const departmentDisplay = (
     <>
       {
-        filterData.departmentFilter !== null && 
+        filterData.departmentFilter !== null &&
         <div>
           Department:
           <Stack direction="row" spacing={1}>
@@ -35,7 +40,7 @@ export default function ApptFilterDisplay({ filterData }) {
   const patientDisplay = (
     <>
       {
-        filterData.patientFilter !== null && 
+        filterData.patientFilter !== null &&
         <div>
           Patient:
           <Stack direction="row" spacing={1}>
@@ -48,7 +53,7 @@ export default function ApptFilterDisplay({ filterData }) {
   const chaperoneDisplay = (
     <>
       {
-        filterData.chaperoneFilter !== null && 
+        filterData.chaperoneFilter !== null &&
         <div>
           Chaperone:
           <Stack direction="row" spacing={1}>
@@ -61,7 +66,7 @@ export default function ApptFilterDisplay({ filterData }) {
   const dateDisplay = (
     <>
       {
-        filterData.dateFilter !== null && 
+        filterData.dateFilter !== null &&
         <div>
           Date:
           <Stack direction="row" spacing={1}>

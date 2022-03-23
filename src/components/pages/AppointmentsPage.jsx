@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /*
  * ========================================================
  * ========================================================
@@ -9,13 +10,14 @@
  */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Box from '@mui/material/Box';
 import AppointmentsNavigator from '../organisms/AppointmentsNavigator';
 import AppointmentCalendar from '../organisms/AppointmentCalendar';
 import AppointmentList from '../organisms/AppointmentList';
 import ApptModal from '../molecules/ApptModal';
 import ApptFilterDisplay from '../molecules/ApptFilterDisplay';
 import AppointmentPageStyles from './AppointmentsPageCss';
-import Box from '@mui/material/Box';
+import { useMedicalContext } from '../others/store';
 
 /*
 * ========================================================
@@ -39,16 +41,16 @@ export default function AppointmentsPage() {
       patients: [],
       chaperone: [],
       date: [],
-    }
+    },
   );
+  const { store } = useMedicalContext();
+  const { userId } = store;
 
   // On-mount useEffect:
   // axios call for all patient data related to user
   useEffect(() => {
     const data = new URLSearchParams();
-    // ################################## HARDCODED FOR NOW  ##################################
-    // data.append('userId', userId);
-    data.append('userId', '62259eddb4a77ae0343f7305');
+    data.append('userId', userId);
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/all-patients-list?${data.toString()}`)
       .then((result) => {
         const axiosData = result.data.patientDetailsObj;
@@ -69,7 +71,7 @@ export default function AppointmentsPage() {
           // Available hospital and department filters
           for (let j = 0; j < axiosData[i].visitDetails.clinics.length; j += 1) {
             hospitalArr.push(axiosData[i].visitDetails.clinics[j].hospital);
-            for(let k = 0; k < axiosData[i].visitDetails.clinics[j].departments.length; k += 1) {
+            for (let k = 0; k < axiosData[i].visitDetails.clinics[j].departments.length; k += 1) {
               departmentArr.push(axiosData[i].visitDetails.clinics[j].departments[k]);
             }
           }
@@ -98,28 +100,31 @@ export default function AppointmentsPage() {
 
   return (
     <Box sx={AppointmentPageStyles.mainContainer}>
-      <AppointmentsNavigator 
+      <AppointmentsNavigator
         toggleView={toggleView}
         setToggleView={setToggleView}
         setOpenApptModal={setOpenApptModal}
         setApptModalType={setApptModalType}
       />
-      { toggleView 
-        ? <>
-          <ApptFilterDisplay filterData={filterData} />
-          <AppointmentList
+      { toggleView
+        ? (
+          <>
+            <ApptFilterDisplay filterData={filterData} />
+            <AppointmentList
+              displayDataArray={displayDataArray}
+              filterData={filterData}
+              setOpenApptModal={setOpenApptModal}
+              setApptModalType={setApptModalType}
+            />
+          </>
+        )
+        : (
+          <AppointmentCalendar
             displayDataArray={displayDataArray}
-            filterData={filterData}
             setOpenApptModal={setOpenApptModal}
             setApptModalType={setApptModalType}
           />
-        </>
-        : <AppointmentCalendar
-            displayDataArray={displayDataArray}
-            setOpenApptModal={setOpenApptModal}
-            setApptModalType={setApptModalType}
-          />
-      }
+        )}
       <ApptModal
         openApptModal={openApptModal}
         setOpenApptModal={setOpenApptModal}

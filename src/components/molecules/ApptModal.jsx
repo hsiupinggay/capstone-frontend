@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -11,16 +12,17 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: {
+    md: 600,
+    sm: 500,
+    xs: 475,
+  },
+  height: 600,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+  p: 4,
+  overflow: 'scroll',
 };
 
 function AddApptModal({ openApptModal, setOpenApptModal }) {
@@ -49,7 +51,9 @@ function AddApptModal({ openApptModal, setOpenApptModal }) {
   );
 }
 
-function FilterModal({ openApptModal, setOpenApptModal, setFilterData, filterParams, filterData }) {
+function FilterModal({
+  openApptModal, setOpenApptModal, setFilterData, filterParams, filterData,
+}) {
   const [hospitalFilter, setHospitalFilter] = useState(null);
   const [departmentFilter, setDepartmentFilter] = useState(null);
   const [patientFilter, setPatientFilter] = useState(null);
@@ -97,13 +101,12 @@ function FilterModal({ openApptModal, setOpenApptModal, setFilterData, filterPar
       patientFilter,
       chaperoneFilter,
       dateFilter,
-    })
-  }
+    });
+  };
   // useEffect after filter data is updated
   useEffect(() => {
     handleClose();
-  }, [filterData])
-
+  }, [filterData]);
 
   return (
     <div>
@@ -190,7 +193,7 @@ function TestModal({ openApptModal, setOpenApptModal }) {
 
 export default function ApptModal(
   {
-    openApptModal, setOpenApptModal, apptModalType, setFilterData, filterParams, filterData
+    openApptModal, setOpenApptModal, apptModalType, setFilterData, filterParams, filterData,
   },
 ) {
   switch (apptModalType) {

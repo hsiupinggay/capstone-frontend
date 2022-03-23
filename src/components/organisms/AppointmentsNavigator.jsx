@@ -1,4 +1,11 @@
-import React, { useState , useRef } from 'react';
+/* eslint-disable no-shadow */
+/* eslint-disable arrow-parens */
+/* eslint-disable react/jsx-indent-props */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable default-case */
+/* eslint-disable react/prop-types */
+/* eslint-disable max-len */
+import React, { useState, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -12,10 +19,12 @@ import MenuList from '@mui/material/MenuList';
 
 const OPTION_ADD_APPOINTMENT = 'Add Appointment';
 const OPTION_CHANGE_VIEW = 'Change View';
-const OPTION_FILTER = 'Filter'
+const OPTION_FILTER = 'Filter';
 const options = [OPTION_ADD_APPOINTMENT, OPTION_CHANGE_VIEW, OPTION_FILTER];
 
-export default function SplitButton({ toggleView, setToggleView, setOpenApptModal, setApptModalType }) {
+export default function SplitButton({
+  toggleView, setToggleView, setOpenApptModal, setApptModalType,
+}) {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const [selectedIndex, setSelectedIndex] = useState(1);

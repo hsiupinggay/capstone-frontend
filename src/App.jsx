@@ -45,6 +45,7 @@ import PatientVisitLocationPage from './components/pages/PatientVisitLocationPag
 import PatientMemoPage from './components/pages/PatientMemoPage';
 import ChatRoomPage from './components/pages/ChatRoomPage';
 import PSEUDOAPPTPAGE from './components/organisms/PSEUDOAPPTPAGE';
+import PSEUDOAPPTPAGE2 from './components/organisms/PSEUDOAPPTPAGE2';
 import style from './AppCss';
 
 /*
@@ -149,6 +150,11 @@ export default function App() {
                         exact
                         path="/test"
                         element={<PSEUDOAPPTPAGE />}
+                      />
+                      <Route
+                        exact
+                        path="/test2"
+                        element={<PSEUDOAPPTPAGE2 />}
                       />
                     </Route>
                   </Route>

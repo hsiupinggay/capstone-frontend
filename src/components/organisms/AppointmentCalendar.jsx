@@ -1,3 +1,9 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
+/* eslint-disable max-len */
 /*
  * ========================================================
  * ========================================================
@@ -90,18 +96,21 @@ export default function AppointmentCalendar({ displayDataArray, setOpenApptModal
   // maps data to events and display accordingly
   useEffect(() => {
     if (!displayDataArray) return; // handles error if axios call still not done
-    let updatedEvents = []
-    
+    let updatedEvents = [];
+
+    console.log('displayyyy', displayDataArray);
+
     // after there is userDataArray... map to events
-    displayDataArray.forEach(patient => {
-      const { identity, appointments } = patient
+    displayDataArray.forEach((patient) => {
+      const { identity, appointments } = patient;
+      console.log('appt', appointments);
       const displayName = `${identity.name.first} ${identity.name.last}`;
       const displayArray = [];
-      appointments.forEach(appointment => {
+      appointments.forEach((appointment) => {
         // operate on appointment.date -> string 'DD-MMM-YYYY'
         const appointmentDate = appointment.date.split('-');
         const appointmentDay = Number(appointmentDate[0]);
-        const appointmentMonth = Number(monthNames.findIndex(month => month === appointmentDate[1]));
+        const appointmentMonth = Number(monthNames.findIndex((month) => month === appointmentDate[1]));
         const appointmentYear = Number(appointmentDate[2]);
 
         const appointmentObject = {
@@ -117,7 +126,7 @@ export default function AppointmentCalendar({ displayDataArray, setOpenApptModal
     });
     setEvents(updatedEvents);
   }, [displayDataArray]);
-  
+
   // Arrow button classNames
   const btnClass = (limit) => classNames(
     month === limit ? 'cursor-not-allowed opacity-25' : '',
@@ -223,7 +232,7 @@ export default function AppointmentCalendar({ displayDataArray, setOpenApptModal
                 }}
               >
                 <Typography sx={{ p: 2 }}>{popoverText}</Typography>
-                <Button onClick={(e) => {setOpenApptModal(true); setApptModalType('edit')}}>Edit</Button>
+                <Button onClick={() => { setOpenApptModal(true); setApptModalType('edit'); }}>Edit</Button>
               </Popover>
             </div>
           </div>
