@@ -1,5 +1,10 @@
 const contactPageStyles = {
 
+  mainContainer: {
+    width: { xs: '300px', sm: '500px' },
+    flexDirection: 'row',
+  },
+
   modalStyle: {
     position: 'absolute',
     top: '50%',
@@ -26,12 +31,9 @@ const contactPageStyles = {
     color: '#22577A',
   },
 
-  addIcon: {
+  bigIcon: {
     fontSize: {
-      xl: 44,
-      lg: 42,
-      md: 40,
-      sm: 34,
+      sm: 30,
       xs: 28,
     },
     color: '#22577A',
@@ -44,7 +46,6 @@ const contactPageStyles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: -1,
   },
 
   avatar: {
@@ -85,184 +86,21 @@ const contactPageStyles = {
     width: 'fit-content',
   },
 
-  contactName: {
-    marginBottom: 1,
-    fontSize: {
-      xl: 16,
-      lg: 14,
-      md: 12,
-      sm: 10,
-      xs: 9,
-    },
-    fontWeight: 400,
-  },
-
-  smallContactName: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 1,
-    fontSize: {
-      xl: 13,
-      lg: 12,
-      md: 11,
-      sm: 10,
-      xs: 9,
-    },
-    fontWeight: 400,
-    height: 20,
-  },
-
-  contactContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'space-around',
-    justifyContent: 'space-around',
-    marginLeft: 5,
-    marginRight: 5,
-  },
-
-  smallContactContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 2,
-    width: 'fit-content',
-  },
-
-  requestsContainer: {
-    boxShadow: '0 10px 6px -6px #777',
-    borderRadius: 10,
-    width: {
-      xl: 1200,
-      lg: 1000,
-      md: 800,
-      sm: 550,
-      xs: 400,
-    },
-    display: 'flex',
-    flexDirection: 'column',
-  },
-
-  incomingContainer: {
-    backgroundColor: '#eeeeee',
-    boxShadow: '0 10px 6px -6px #777',
-    borderRadius: 10,
-    width: {
-      xl: 1200,
-      lg: 1000,
-      md: 800,
-      sm: 550,
-      xs: 400,
-    },
-    display: 'flex',
-    flexWrap: 'nowrap',
-    overflow: 'scroll',
-  },
-
-  sentContainer: {
-    backgroundColor: '#eeeeee',
-    boxShadow: '0 10px 6px -6px #777',
-    borderRadius: 10,
-    width: {
-      xl: 1200,
-      lg: 1000,
-      md: 800,
-      sm: 550,
-      xs: 400,
-    },
-    display: 'flex',
-    flexWrap: 'nowrap',
-    overflow: 'scroll',
-  },
-
-  acceptedContainer: {
-    backgroundColor: '#eeeeee',
-    boxShadow: '0 10px 6px -6px #777',
-    borderRadius: 10,
-    width: {
-      xl: 1200,
-      lg: 1000,
-      md: 800,
-      sm: 600,
-      xs: 400,
-    },
-    display: 'flex',
-    flexWrap: 'nowrap',
-    overflow: 'scroll',
-  },
-
-  rejectedContainer: {
-    backgroundColor: '#eeeeee',
-    boxShadow: '0 10px 6px -6px #777',
-    borderRadius: 10,
-    width: {
-      xl: 1200,
-      lg: 1000,
-      md: 800,
-      sm: 550,
-      xs: 400,
-    },
-    display: 'flex',
-    flexWrap: 'nowrap',
-    overflow: 'scroll',
-  },
-
-  allContactsContainer: {
-    backgroundColor: '#eeeeee',
-    boxShadow: '0 10px 6px -6px #777',
-    borderRadius: 10,
-    width: {
-      xl: 1200,
-      lg: 1000,
-      md: 800,
-      sm: 550,
-      xs: 400,
-    },
-    padding: 3,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'nowrap',
-    overflow: 'auto',
-    marginTop: -3,
-  },
-
-  smallTitle: {
-    fontSize: {
-      xl: 15,
-      lg: 14,
-      md: 13,
-      sm: 12,
-      xs: 11,
-    },
-    fontWeight: 500,
-    marginTop: -2,
+  dropdown: {
+    width: '200px',
+    bgcolor: 'background.paper',
+    zIndex: 1,
   },
 
   icon: {
     fontSize: {
-      xl: 20,
-      lg: 18,
-      md: 16,
-      sm: 15,
-      xs: 14,
+      sm: 22,
+      xs: 18,
     },
     color: '#38A3A5',
     '&:hover': {
       color: '#2facfe',
     },
-  },
-
-  secondRowContainer: {
-    marginTop: 1.2,
-    display: 'flex',
-  },
-
-  iconsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
   },
 
   acceptIcon: {

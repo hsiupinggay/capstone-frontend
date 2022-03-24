@@ -17,11 +17,13 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import CircleNotificationsRoundedIcon from '@mui/icons-material/CircleNotificationsRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import AddMedCard from '../organisms/AddMedCard';
 import style from './ModalCss';
 import EditMedCard from '../organisms/EditMedCard';
+import TelegramCard from '../organisms/TelegramCard';
 
 /*
  * ========================================================
@@ -70,6 +72,10 @@ function MedicationPage() {
     setModalContent('edit');
     setOpen(true);
   };
+  const handleReminder = () => {
+    setModalContent('reminder');
+    setOpen(true);
+  };
   const handleClose = () => {
     setModalContent('');
     setOpen(false);
@@ -104,6 +110,7 @@ function MedicationPage() {
         <Box sx={style}>
           {modalContent === 'add' && <AddMedCard setOpen={setOpen} patientId={patientId} />}
           {modalContent === 'edit' && <EditMedCard setOpen={setOpen} patientId={patientId} medicineId={medicineId} />}
+          {modalContent === 'reminder' && <TelegramCard patientId={patientId} /> }
         </Box>
       </Modal>
       <div>
@@ -118,6 +125,11 @@ function MedicationPage() {
           <Tooltip title="Add Medication" arrow>
             <IconButton aria-label="add medication" color="primary" onClick={handleAdd}>
               <AddCircleRoundedIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Subscribe to Reminders" arrow>
+            <IconButton aria-label="Subscribe to Reminders" color="primary" onClick={handleReminder}>
+              <CircleNotificationsRoundedIcon />
             </IconButton>
           </Tooltip>
         </Stack>

@@ -13,9 +13,11 @@
  */
 import React, { useState } from 'react';
 import axios from 'axios';
-import TextField from '@mui/material/TextField';
+import {
+  TextField, Button, Stack, Typography, CardContent,
+} from '@mui/material';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
-import Button from '@mui/material/Button';
+
 import departmentList from '../others/departmentList';
 import { useMedicalContext } from '../others/store';
 
@@ -61,57 +63,53 @@ export default function AddDepartmentTruncated({ hospital, name, setClinicsArr }
   };
 
   return (
-    <div>
-      <strong>
-        {' '}
-        You are adding a department to
-        {' '}
-        {hospital}
-        {' '}
-        under
-        {' '}
-        {name}
-        's profile
-      </strong>
-      <br />
-      <br />
-      <form onSubmit={handleSubmit}>
+    <CardContent>
+      <Stack
+        spacing={4}
+      >
+        <Typography variant="h2">
+          {`Add a Department to ${hospital} for ${name}`}
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <Stack
+            spacing={4}
+            justifyContent="center"
+          >
+            <Autocomplete
+              options={departmentList}
+              onChange={(event, newValue) => { setDepartment(newValue.value); }}
+              renderInput={(params) => <TextField {...params} label="Add Department" required />}
+              filterOptions={(options, params) => {
+                const filtered = filter(options, params);
+                const { inputValue } = params;
+                // Suggest the creation of a new value
+                const isExisting = options.some((option) => inputValue === option.label);
+                if (inputValue !== '' && !isExisting) {
+                  filtered.push({
+                    inputValue,
+                    label: `Add "${inputValue}"`,
+                    value: inputValue,
+                  });
+                }
+                return filtered;
+              }}
+              selectOnFocus
+              clearOnBlur
+              handleHomeEndKeys
+              sx={{ width: 250 }}
+            />
+            <Button variant="contained" type="submit">Submit</Button>
+          </Stack>
+        </form>
 
-        <Autocomplete
-          options={departmentList}
-          onChange={(event, newValue) => { setDepartment(newValue.value); }}
-          renderInput={(params) => <TextField {...params} label="Add Department" required />}
-          filterOptions={(options, params) => {
-            const filtered = filter(options, params);
-            const { inputValue } = params;
-            // Suggest the creation of a new value
-            const isExisting = options.some((option) => inputValue === option.label);
-            if (inputValue !== '' && !isExisting) {
-              filtered.push({
-                inputValue,
-                label: `Add "${inputValue}"`,
-                value: inputValue,
-              });
-            }
-            return filtered;
-          }}
-          selectOnFocus
-          clearOnBlur
-          handleHomeEndKeys
-          sx={{ width: 250 }}
-        />
-        <br />
-        <Button variant="contained" type="submit">Submit</Button>
-      </form>
-      <div>
         {successMessage === ''
           ? <div />
           : (
-            <div>
+            <Typography variant="body1" color="secondary">
               {successMessage}
-            </div>
+            </Typography>
           )}
-      </div>
-    </div>
+      </Stack>
+    </CardContent>
   );
 }
