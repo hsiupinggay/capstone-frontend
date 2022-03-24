@@ -2,7 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Typography, Box } from '@mui/material';
+import {
+  Avatar, Typography, Box, Stack,
+} from '@mui/material';
 import { useMedicalContext } from '../others/store';
 import BackIcon from '../molecules/BackIcon';
 import TexterBubble from '../molecules/TexterBubble';
@@ -97,12 +99,12 @@ export default function ChatRoomPage() {
           {texteeLastName}
         </Typography>
       </Box>
-      <Box
-        spacing={1}
-        overflow="scroll"
-      >
-        {conversation}
-
+      <Box sx={chatStyles.messageContainer}>
+        <Stack
+          spacing={1}
+        >
+          {conversation}
+        </Stack>
       </Box>
       <MessageInput id="message" handleInput={(e) => setDisplayMessage(e.target.value)} handleSend={sendInfoToDB} />
     </Box>

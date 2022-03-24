@@ -3,12 +3,13 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import {
-  Avatar, Box, Badge, Stack, Menu, ListItemText, ListItemAvatar, Divider, MenuItem, Tooltip,
+  Avatar, Box, Badge, Stack, Menu, ListItemText, ListItemAvatar, Divider, MenuItem, Tooltip, IconButton,
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import styles from '../pages/ContactsPageCss';
 import { getNameInitials } from '../others/helper';
 
@@ -18,6 +19,7 @@ function ContactRequests({
   outgoingAcceptedList,
   outgoingPendingList,
   handleClose,
+  handleClick,
   anchorEl,
   requestOpen,
   handleRequest,
@@ -26,6 +28,16 @@ function ContactRequests({
 }) {
   return (
     <div>
+      <IconButton
+        id="basic-button"
+        aria-controls={requestOpen ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={requestOpen ? 'true' : undefined}
+        onClick={handleClick}
+        sx={styles.bigIcon}
+      >
+        <NotificationsRoundedIcon sx={styles.bigIcon} />
+      </IconButton>
       <Box sx={styles.dropdown}>
         <Menu
           id="basic-menu"

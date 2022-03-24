@@ -4,26 +4,20 @@ const patientListStyles = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
-    height: 500,
+    width: 300,
+    height: 450,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    border: 'none',
+    borderRadius: '20px',
     boxShadow: 24,
-    p: 4,
-  },
-  mainContainer: {
-    paddingTop: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
+    p: 1,
   },
 
-  inputField: {
-    width: 400,
-  },
-
-  addIcon: {
-    fontSize: 55,
-    marginTop: 0.5,
+  bigIcon: {
+    fontSize: {
+      sm: 30,
+      xs: 28,
+    },
     color: '#22577A',
     '&:hover': {
       color: '#3486bb',

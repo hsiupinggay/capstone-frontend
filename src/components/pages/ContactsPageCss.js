@@ -1,28 +1,17 @@
 const contactPageStyles = {
 
-  mainContainer: {
-    width: { xs: '300px', sm: '500px' },
-    flexDirection: 'row',
-  },
-
   modalStyle: {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: {
-      md: 600,
-      sm: 500,
-      xs: 475,
-    },
-    height: 600,
+    width: 300,
+    height: 300,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    border: 'none',
+    borderRadius: '20px',
     boxShadow: 24,
-    p: 4,
-    overflow: 'scroll',
-    display: 'flex',
-    justifyContent: 'center',
+    p: 1,
   },
 
   title: {

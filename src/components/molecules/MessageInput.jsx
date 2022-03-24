@@ -15,12 +15,7 @@ function MessageInput({
       py: '4px',
       position: 'absolute',
       width: '100%',
-      bottom: {
-        lg: 10,
-        md: 10,
-        sm: 10,
-        xs: 70,
-      },
+      bottom: 10,
       left: '50%',
       zIndex: 50,
       transform: 'translateX(-50%)',
