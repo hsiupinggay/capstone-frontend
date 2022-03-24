@@ -13,7 +13,6 @@ const navStyles = {
       xs: 'none',
       sm: 'flex',
     },
-
   },
 
   appName: {
@@ -46,9 +45,10 @@ const navStyles = {
 
   navBtn: {
     fontSize: {
-      sm: 13,
-      md: 15,
-      lg: 18,
+      sm: 10,
+      md: 13,
+      lg: 15,
+      xl: 18,
     },
     paddingLeft: {
       sm: 0,
@@ -103,7 +103,6 @@ const navStyles = {
   },
 
   bottomNavContainer: {
-    zIndex: 1,
     display: {
       sm: 'none',
       xs: 'block',
@@ -131,7 +130,7 @@ const navStyles = {
   },
 
   bottomNavBtn: {
-    color: '#ffffff',
+    color: '#000000',
     '&:hover': {
       backgroundColor: '#2f7bad',
       color: '#ffffff',
