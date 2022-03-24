@@ -187,6 +187,7 @@ function FilterModal({
         >
           <Typography variant='h3' sx={{ fontSize: {xs: 10, sm: 14, md: 18, }}}>Apply Filters</Typography>
           <Box sx={{ width: '100%', display: 'flex', flexDirection: "column", alignItems: "center"}}>
+            { console.log('run') }
             <ApptFilterCheckbox label="Hospital" dataArray={filterParams.hospitals} setFilterValue={setFilterValue} />
             <ApptFilterCheckbox label="Department" dataArray={filterParams.departments} setFilterValue={setFilterValue} />
             <ApptFilterCheckbox label="Patient" dataArray={filterParams.patients} setFilterValue={setFilterValue} />

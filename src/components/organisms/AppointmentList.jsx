@@ -177,25 +177,25 @@ function AppointmentList({
         </Typography>
       </CardContent>
       <CardActions>
-        <Button sx={{ justifyContent: 'end' }} onClick={(e) => {setOpenApptModal(true); setApptModalType('edit')}}>Edit</Button>
+        <Button onClick={() => openModal(appointment.apptObj)}>View Full Appointment</Button>
       </CardActions>
     </Card>
   ));
 
   return (
     <div className="h-full overflow-auto">
-      <Typography variant="h2" sx={{ mb: 2 }}>Appointment List</Typography>
-        <Box style={{ maxHeight: 600, overflow: 'auto' }}>
-          <Tooltip arrow title="Sort By Appointment Date">
-            <CalendarMonthIcon variant="contained" onClick={sortDate} />
-          </Tooltip>
-          <Tooltip arrow title="Reset Filters">
-            <RestartAltIcon variant="contained" onClick={resetFilters} />
-          </Tooltip>
-          <List>
-            {displayAppointmentList}
-          </List>
-        </Box>
+      <Typography variant="h2" sx={{ mb: 2 }} display="inline">Appointment List</Typography>
+      <Tooltip arrow title="Sort By Appointment Date">
+        <CalendarMonthIcon variant="contained" onClick={sortDate} />
+      </Tooltip>
+      <Tooltip arrow title="Reset Filters">
+        <RestartAltIcon variant="contained" onClick={resetFilters} />
+      </Tooltip>
+      <Box style={{ maxHeight: 600, overflow: 'auto' }}>
+        <List>
+          {displayAppointmentList}
+        </List>
+      </Box>
     </div>
   );
 }
