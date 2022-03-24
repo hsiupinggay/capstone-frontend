@@ -53,8 +53,8 @@ export default function ProfilePage() {
     data.append('photo', uploadedPhoto);
 
     const res = await uploadPhoto(dispatch, data);
-
     setCurrentPhoto(res.userPhoto);
+    console.log('<== submit photo click response ==>', res);
   };
 
   return (

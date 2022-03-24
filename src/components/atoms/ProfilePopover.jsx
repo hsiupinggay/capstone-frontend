@@ -9,9 +9,7 @@
  * ========================================================
  */
 import React from 'react';
-import {
-  Stack, Popover, Button, Box,
-} from '@mui/material';
+import { Stack, Popover, Button } from '@mui/material';
 
 /*
  * ========================================================
@@ -33,8 +31,8 @@ export default function ProfilePopover({
         anchorEl={anchorEl}
         onClose={onClose}
         anchorOrigin={{
-          vertical: 320,
-          horizontal: 'right',
+          vertical: 'bottom',
+          horizontal: 'left',
         }}
       >
         <Stack
@@ -42,16 +40,10 @@ export default function ProfilePopover({
           justifyContent="center"
         >
           {popoverContent}
-          <Box sx={{
-            padding: 1,
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-          >
+          <div>
             <Button variant="contained" onClick={submitClick}>SUBMIT</Button>
-          </Box>
+          </div>
         </Stack>
-
       </Popover>
     </div>
   );

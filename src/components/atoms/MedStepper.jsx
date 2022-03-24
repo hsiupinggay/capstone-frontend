@@ -7,16 +7,9 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import { useNavigate } from 'react-router-dom';
 
-function MedStepper({
-  setActiveStep, activeStep, handleSubmit, name, setError0, setErrorMessage0,
-}) {
+function MedStepper({ setActiveStep, activeStep, handleSubmit }) {
   const navigate = useNavigate();
   const handleNext = () => {
-    if (activeStep === 0 && name === '') {
-      setError0(true);
-      setErrorMessage0('Please fill in a medication name.');
-      return;
-    }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -32,7 +25,7 @@ function MedStepper({
       steps={3}
       position="static"
       activeStep={activeStep}
-      sx={{ flexGrow: 1 }}
+      sx={{ maxWidth: 230, flexGrow: 1 }}
       nextButton={activeStep === 2 ? (
         <Button size="small" onClick={handleSubmit}>
           Submit

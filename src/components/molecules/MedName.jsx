@@ -22,25 +22,18 @@ import {
  * ========================================================
  * ========================================================
  */
-function MedName({
-  name, handleName, title, error0, errorMessage0,
-}) {
+function MedName({ name, handleName, title }) {
   return (
     <div>
-      <CardContent sx={{ height: '360px' }}>
-        <FormControl fullWidth>
+      <CardContent>
+        <FormControl>
           <Stack
-            spacing={6}
+            spacing={1}
           >
             <Typography variant="h3">{title}</Typography>
             <TextField variant="outlined" label="Name" onChange={handleName} value={name} />
           </Stack>
         </FormControl>
-        {error0 && (
-        <Typography variant="body2" color="error">
-          {errorMessage0}
-        </Typography>
-        )}
       </CardContent>
     </div>
   );

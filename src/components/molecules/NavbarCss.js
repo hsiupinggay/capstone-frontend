@@ -46,10 +46,9 @@ const navStyles = {
 
   navBtn: {
     fontSize: {
-      sm: 10,
-      md: 13,
-      lg: 15,
-      xl: 18,
+      sm: 13,
+      md: 15,
+      lg: 18,
     },
     paddingLeft: {
       sm: 0,
@@ -132,7 +131,7 @@ const navStyles = {
   },
 
   bottomNavBtn: {
-    color: '#000000',
+    color: '#ffffff',
     '&:hover': {
       backgroundColor: '#2f7bad',
       color: '#ffffff',

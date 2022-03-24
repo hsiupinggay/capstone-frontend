@@ -19,6 +19,7 @@ function Prescription({
   return (
     <div>
       <CardContent>
+
         <Stack
           spacing={2}
           justifyContent="space-between"
@@ -51,6 +52,35 @@ function Prescription({
             </FormControl>
             <Typography variant="body1">{dosageCounter}</Typography>
           </Stack>
+          {/* {asRequiredChecked ? (
+            <Tooltip title="Reminder not available for use as required medication">
+              <FormControlLabel
+                control={(
+                  <Switch
+                    checked={false}
+                    disabled
+                    inputProps={{ 'aria-label': 'controlled' }}
+                    color="secondary"
+                  />
+          )}
+                label="Remind me to refill"
+              />
+            </Tooltip>
+          ) : (
+            <FormControlLabel
+              control={(
+                <Switch
+                  checked={reminderChecked}
+                  onChange={handleReminder}
+                  inputProps={{ 'aria-label': 'controlled' }}
+                  color="secondary"
+                />
+
+          )}
+              label="Remind me to refill"
+            />
+
+          )} */}
         </Stack>
       </CardContent>
     </div>
