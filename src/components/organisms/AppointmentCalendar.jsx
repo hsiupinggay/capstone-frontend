@@ -229,8 +229,11 @@ export default function AppointmentCalendar({
               {/* Print {date} and conditionally format - can add onClick here to open modal */}
               {numOfDays.map((date) => (
                 <div key={date} className="px-4 pt-6 border-r border-b relative h-32 w-[14.28%]">
-                  <div className={classNames(isToday(date) ? 'text-[8px] sm:text-sm bg-blue-500 text-white' : 'text-[8px] sm:text-sm text-gray-700 hover:bg-blue-200', 
-                  'inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100')}>
+                  <div className={classNames(
+                    isToday(date) ? 'text-[8px] sm:text-sm bg-blue-500 text-white' : 'text-[8px] sm:text-sm text-gray-700 hover:bg-blue-200',
+                    'inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100',
+                  )}
+                  >
                     {date}
                   </div>
                   {/* Within non-empty days, check for event and print event */}

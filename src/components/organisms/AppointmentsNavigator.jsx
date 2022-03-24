@@ -67,7 +67,14 @@ export default function SplitButton({
   };
 
   return (
-    <Box sx={{ WebkitAlignSelf: { xs: 'center', sm: 'flex-end', md: 'flex-end' }, px: 3, mr: { xss: 0, xs: 0, sm: '8%', md: '8%' }, }}>
+    <Box sx={{
+      WebkitAlignSelf: { xs: 'center', sm: 'flex-end', md: 'flex-end' },
+      px: 3,
+      mr: {
+        xss: 0, xs: 0, sm: '8%', md: '8%',
+      },
+    }}
+    >
       <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
         <Button onClick={handleClick}>{options[selectedIndex]}</Button>
         <Button

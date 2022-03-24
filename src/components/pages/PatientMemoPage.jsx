@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable max-len */
@@ -13,17 +15,19 @@
  */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Avatar, Modal, Box, Typography, Card } from '@mui/material';
+import {
+  Avatar, Modal, Box, Typography, Card,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import Tooltip from '@mui/material/Tooltip';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { flexbox } from '@mui/system';
 import { useMedicalContext } from '../others/store';
 import { getNameInitials } from '../others/helper';
 import FilterPatientMemos from '../organisms/FilterPatientMemos';
-import { flexbox } from '@mui/system';
 
 /*
  * ========================================================
@@ -131,7 +135,7 @@ export default function PatientMemoPage() {
         memoList === undefined || memoList.length === 0
           ? (
             <Box>
-              <Typography variant="h3" display='inline' style={{ fontWeight: 'fontWeightBold' }} sx={{ m: 2 }}>Nil memos found</Typography>
+              <Typography variant="h3" display="inline" style={{ fontWeight: 'fontWeightBold' }} sx={{ m: 2 }}>Nil memos found</Typography>
               <Tooltip title="Filter Memos">
                 <FilterAltIcon variant="contained" onClick={openPopUp} />
               </Tooltip>
@@ -143,7 +147,8 @@ export default function PatientMemoPage() {
           : (
             <Box>
               <Box sx={{ m: 2 }}>
-                <Typography variant="h3" fontWeight='fontWeightBold' fontSize='28px' display='inline' sx={{ mr: 2 }}>{`List of ${name}'s Memos`}
+                <Typography variant="h3" fontWeight="fontWeightBold" fontSize="28px" display="inline" sx={{ mr: 2 }}>
+                  {`List of ${name}'s Memos`}
                 </Typography>
                 <Tooltip title="Sort By Appointment Date">
                   <CalendarMonthIcon variant="contained" onClick={sortDate} />
@@ -155,39 +160,41 @@ export default function PatientMemoPage() {
                   <RestartAltIcon variant="contained" onClick={resetFilters} />
                 </Tooltip>
               </Box>
-              <Box style={{ maxHeight: 700, overflow:'auto',}}>
+              <Box style={{ maxHeight: 700, overflow: 'auto' }}>
                 {memoList.map((memo) => (
-                  <Card elevation={6} rounded sx={{ borderRadius: 2, p: 2, m: 2 }} >
+                  <Card elevation={6} rounded sx={{ borderRadius: 2, p: 2, m: 2 }}>
                     <Typography variant="body1" fontWeight="fontWeightBold" fontSize="32px">Memo: </Typography>
-                    <Typography variant="body1" component='div' fontSize="18px">
-                      <Box fontWeight='fontWeightBold' display='inline'>
-                        Appt Date: 
+                    <Typography variant="body1" component="div" fontSize="18px">
+                      <Box fontWeight="fontWeightBold" display="inline">
+                        Appt Date:
                       </Box>
-                      {`${memo.date}`}<br/>
-                      <Box fontWeight='fontWeightBold' display='inline'>
-                        Hospital: 
+                      {`${memo.date}`}
+                      <br />
+                      <Box fontWeight="fontWeightBold" display="inline">
+                        Hospital:
                       </Box>
-                      {`${memo.hospital.name}`}<br/>
-                      <Box fontWeight='fontWeightBold' display='inline'>
-                        Appt Date: 
+                      {`${memo.hospital.name}`}
+                      <br />
+                      <Box fontWeight="fontWeightBold" display="inline">
+                        Appt Date:
                       </Box>
-                      {`${memo.hospital.department}`}<br/>
-                      <Box fontWeight='fontWeightBold' display='inline'>
-                        Chaperone: 
+                      {`${memo.hospital.department}`}
+                      <br />
+                      <Box fontWeight="fontWeightBold" display="inline">
+                        Chaperone:
                       </Box>
-                        {memo.chaperone !== undefined
-                          ? (
-                              <Box display='inline'>{memo.chaperone.name}</Box>
-                          )
-                          : <Box display='inline'>Nil</Box>
-                        }
-                        <br />
-                      <Box fontWeight='fontWeightBold' display='inline'>
-                        Memo: 
+                      {memo.chaperone !== undefined
+                        ? (
+                          <Box display="inline">{memo.chaperone.name}</Box>
+                        )
+                        : <Box display="inline">Nil</Box>}
+                      <br />
+                      <Box fontWeight="fontWeightBold" display="inline">
+                        Memo:
                       </Box>
-                        {`${memo.notes.note}`}
+                      {`${memo.notes.note}`}
                     </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 2}}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
                       <Box>
                         <Typography variant="body1" fontWeight="fontWeightBold" fontSize="22px">Uploaded by:</Typography>
                         <Typography variant="body1">{`${memo.notes.userName.first} ${memo.notes.userName.last} on ${memo.notes.date}`}</Typography>

@@ -66,11 +66,12 @@ const mainTheme = createTheme(
         fontWeight: 500,
       },
       body1: {
-        fontFamily: 'Roboto',
+        fontFamily: 'Quicksand',
         fontSize: 14,
         fontWeight: 400,
       },
       body2: {
+        fontFamily: 'Quicksand',
         fontSize: 12,
         textTransform: 'uppercase',
         fontWeight: 400,
@@ -80,12 +81,6 @@ const mainTheme = createTheme(
         textTransform: 'uppercase',
         letterSpacing: '0.07em',
         lineHeight: 1.75,
-        fontWeight: 500,
-      },
-      h4: {
-        fontFamily: 'Quicksand',
-        fontSize: '1rem',
-        lineHeight: 1.334,
         fontWeight: 500,
       },
       h5: {
