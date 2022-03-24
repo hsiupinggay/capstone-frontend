@@ -216,7 +216,7 @@ export default function AppointmentCalendar({
             <div className="flex flex-wrap -mb-8" style={{ marginBottom: '-30px' }}>
               {days.map((day) => (
                 <div key={day} className="px-2 py-2 w-[14.28%]">
-                  <div className="text-gray-600 text-sm uppercase tracking-wide font-bold text-center">{day}</div>
+                  <div className="text-gray-600 text-[8px] sm:text-sm uppercase tracking-wide font-bold text-center">{day}</div>
                 </div>
               ))}
             </div>
@@ -228,16 +228,17 @@ export default function AppointmentCalendar({
               ))}
               {/* Print {date} and conditionally format - can add onClick here to open modal */}
               {numOfDays.map((date) => (
-                <div key={date} className="px-4 pt-8 border-r border-b relative h-32 w-[14.28%]">
-                  <div className={classNames(isToday(date) ? 'bg-blue-500 text-white' : 'text-gray-700 hover:bg-blue-200', 'inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100')}>
+                <div key={date} className="px-4 pt-6 border-r border-b relative h-32 w-[14.28%]">
+                  <div className={classNames(isToday(date) ? 'text-[8px] sm:text-sm bg-blue-500 text-white' : 'text-[8px] sm:text-sm text-gray-700 hover:bg-blue-200', 
+                  'inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100')}>
                     {date}
                   </div>
                   {/* Within non-empty days, check for event and print event */}
-                  <div className="overflow-y-auto mt-1 h-20">
+                  <div className="overflow-y-auto mt-1 h-16">
                     {events.filter((e) => new Date(e.event_date).toDateString()
                     === new Date(year, month, date).toDateString()).map((e) => (
                       <div key={e.id} className={classNames(eventClass(e.event_theme), 'px-2 py-1 rounded-lg mt-1 overflow-hidden border')} onClick={(event) => handleOpen(event, e.event_title, e.apptObj)}>
-                        <p className="text-sm truncate leading-tight">{e.event_title}</p>
+                        <Typography><p className="text-[8px] sm:text-sm truncate leading-tight">{e.event_title}</p></Typography>
                       </div>
                     ))}
                   </div>

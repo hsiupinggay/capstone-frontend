@@ -6,13 +6,24 @@
 import React from 'react';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import { Typography, Box } from '@mui/material';
 
 export default function ApptFilterDisplay({ filterData }) {
-  if (filterData === null) return (<div />);
+  console.log(filterData)
+  // Checking for initial null values
+  // if (filterData === null) return (<div><Typography>No Filters Selected</Typography></div>);
+
+  if (
+    filterData.hospitalFilter.length === 0
+    && filterData.departmentFilter.length === 0
+    && filterData.patientFilter.length === 0
+    && filterData.chaperoneFilter.length === 0
+    && filterData.dateFilter.length === 0
+  ) return (<Typography variant="h4" sx={{ m: 2 }}>No Filters Selected</Typography>);
   const hospitalDisplay = (
     <>
       {
-        filterData.hospitalFilter !== null
+        filterData.hospitalFilter.length > 0
         && (
           <div>
             Hospital:
@@ -27,7 +38,7 @@ export default function ApptFilterDisplay({ filterData }) {
   const departmentDisplay = (
     <>
       {
-        filterData.departmentFilter !== null &&
+        filterData.departmentFilter.length > 0 && 
         <div>
           Department:
           <Stack direction="row" spacing={1}>
@@ -40,7 +51,7 @@ export default function ApptFilterDisplay({ filterData }) {
   const patientDisplay = (
     <>
       {
-        filterData.patientFilter !== null &&
+        filterData.patientFilter.length > 0 && 
         <div>
           Patient:
           <Stack direction="row" spacing={1}>
@@ -53,7 +64,7 @@ export default function ApptFilterDisplay({ filterData }) {
   const chaperoneDisplay = (
     <>
       {
-        filterData.chaperoneFilter !== null &&
+        filterData.chaperoneFilter.length > 0 && 
         <div>
           Chaperone:
           <Stack direction="row" spacing={1}>
@@ -66,7 +77,7 @@ export default function ApptFilterDisplay({ filterData }) {
   const dateDisplay = (
     <>
       {
-        filterData.dateFilter !== null &&
+        filterData.dateFilter.length > 0 && 
         <div>
           Date:
           <Stack direction="row" spacing={1}>
@@ -77,14 +88,17 @@ export default function ApptFilterDisplay({ filterData }) {
     </>
   );
 
+
   return (
-    <div>
-      <h1>Filters</h1>
-      {hospitalDisplay}
-      {departmentDisplay}
-      {patientDisplay}
-      {chaperoneDisplay}
-      {dateDisplay}
-    </div>
+    <Box>
+      <Typography variant="h3">Filters: </Typography>
+      <Typography variant="body1">
+        {hospitalDisplay}
+        {departmentDisplay}
+        {patientDisplay}
+        {chaperoneDisplay}
+        {dateDisplay}
+      </Typography>
+    </Box>
   );
 }

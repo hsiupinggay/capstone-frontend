@@ -2,13 +2,19 @@ const chatStyles = {
   container: {
     backgroundImage: `url(${'https://neighbourhood-app.s3.ap-southeast-1.amazonaws.com/whatsApp.webp'})`,
     height: '84vh',
-    width: '310px',
-    overflow: 'scroll',
+    width: {
+      xs: '310px', sm: '400px', md: '500px', lg: '600px',
+    },
     position: 'relative',
   },
 
+  messageContainer: {
+    height: '63vh',
+    overflow: 'scroll',
+  },
+
   header: {
-    backgroundColor: '#747780',
+    backgroundColor: '#303030',
     display: 'flex',
     alignItems: 'center',
     left: 0,

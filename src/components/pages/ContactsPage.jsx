@@ -20,17 +20,13 @@ import Tooltip from '@mui/material/Tooltip';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useNavigate } from 'react-router-dom';
-// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-// import CancelIcon from '@mui/icons-material/Cancel';
-// import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-// import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import { getNameInitials } from '../others/helper';
 import { useMedicalContext, setTexteeAction } from '../others/store';
 import AddContact from '../organisms/AddContact';
 import ContactVisibility from '../organisms/ContactVisibility';
 import ContactRequests from '../organisms/ContactRequests';
 import styles from './ContactsPageCss';
+import PatientListPage from '../organisms/PatientList';
 
 /*
  * ========================================================
@@ -148,55 +144,47 @@ export default function ContactsPage() {
       });
   };
   return (
-    <Box sx={styles.mainContainer}>
-      {
+    <Stack
+      spacing={2}
+    >
+      <Box sx={{ width: '300px' }}>
+        {
         contactsList === undefined
           ? (
             <div />
           )
           : (
-            <div>
+            <Box>
               <Stack
                 direction="row"
                 justifyContent="space-between"
                 alignItems="center"
               >
                 <Typography variant="h1">
-                  Your Contacts
+                  Contacts
                 </Typography>
                 <Tooltip arrow title="Add New Contact">
                   <IconButton onClick={openAddContactPopup}>
                     <AddCircleIcon sx={styles.bigIcon} />
                   </IconButton>
                 </Tooltip>
-                <Box>
-                  <IconButton
-                    id="basic-button"
-                    aria-controls={requestOpen ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={requestOpen ? 'true' : undefined}
-                    onClick={handleClick}
-                    sx={styles.bigIcon}
-                  >
-                    <NotificationsRoundedIcon sx={styles.bigIcon} />
-                  </IconButton>
-                  <ContactRequests
-                    incomingRequestsList={incomingRequestsList}
-                    outgoingRejList={outgoingRejList}
-                    outgoingAcceptedList={outgoingAcceptedList}
-                    outgoingPendingList={outgoingPendingList}
-                    handleClose={handleClose}
-                    anchorEl={anchorEl}
-                    requestOpen={requestOpen}
-                    handleRequest={handleRequest}
-                    dismissNotification={dismissNotification}
-                  />
-                </Box>
+                <ContactRequests
+                  incomingRequestsList={incomingRequestsList}
+                  outgoingRejList={outgoingRejList}
+                  outgoingAcceptedList={outgoingAcceptedList}
+                  outgoingPendingList={outgoingPendingList}
+                  handleClose={handleClose}
+                  anchorEl={anchorEl}
+                  requestOpen={requestOpen}
+                  handleRequest={handleRequest}
+                  handleClick={handleClick}
+                  dismissNotification={dismissNotification}
+                />
               </Stack>
 
               <Stack
                 spacing={1}
-                height="300px"
+                height="400px"
                 overflow="auto"
               >
                 {contactsList.map((contact) => (
@@ -206,19 +194,19 @@ export default function ContactsPage() {
                         <Stack
                           spacing={2}
                           direction="row"
-                          justifyContent="center"
+                          justifyContent="space-between"
                           alignItems="center"
+                          width="100%"
                         >
                           {' '}
                           {!contact.photo && <Avatar sx={styles.avatar}>{getNameInitials(contact.firstName, contact.lastName)}</Avatar>}
                           {contact.photo && <Avatar sx={styles.avatar} alt="profile" src={contact.photo} />}
-                          <Typography variant="body2">
+                          <Typography variant="body1">
                             {`${contact.firstName} ${contact.lastName}`}
                           </Typography>
-
                           <Stack
                             spacing={1}
-                            justifyContent="center"
+                            direction="row"
                           >
                             <Tooltip arrow title="Patient Access">
                               <VisibilityIcon sx={styles.icon} onClick={() => openContactVisibilityPopup(contact.contactId, `${contact.firstName} ${contact.lastName}`)} />
@@ -233,10 +221,13 @@ export default function ContactsPage() {
                   </Grid>
                 ))}
               </Stack>
-            </div>
+            </Box>
           )
       }
-
+      </Box>
+      <Box sx={{ width: '300px' }}>
+        <PatientListPage />
+      </Box>
       <Modal
         open={open}
         onClose={closeAddContactPopup}
@@ -249,6 +240,6 @@ export default function ContactsPage() {
            }
         </Box>
       </Modal>
-    </Box>
+    </Stack>
   );
 }
