@@ -38,19 +38,19 @@ const patientProfilePageStyles = {
     justifyContent: 'center',
   },
 
-  titleFont: {
-    fontSize: {
-      xs: 35,
-      sm: 40,
-      md: 43,
-      lg: 46,
-      xl: 50,
-    },
-    fontWeight: 800,
-    color: '#22577A',
-    marginBottom: 1,
-    textShadow: '1px 1px black',
-  },
+  // titleFont: {
+  //   fontSize: {
+  //     xs: 35,
+  //     sm: 40,
+  //     md: 43,
+  //     lg: 46,
+  //     xl: 50,
+  //   },
+  //   fontWeight: 800,
+  //   color: '#22577A',
+  //   marginBottom: 1,
+  //   textShadow: '1px 1px black',
+  // },
 
   relationship: {
     fontSize: {
@@ -84,14 +84,13 @@ const patientProfilePageStyles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   allCategoryContainer: {
     paddingTop: {
-      xs: 9,
-      sm: 7,
-      md: 6,
-      lg: 5.5,
-      xl: 4.5,
+      xs: 4,
+      sm: 4,
+      md: 5,
+      lg: 7,
+
     },
   },
 
@@ -101,30 +100,74 @@ const patientProfilePageStyles = {
     justifyContent: 'center',
   },
 
-  categories: {
-    padding: 12,
-    border: 'solid black 1px',
+  // categories: {
+  //   padding: 12,
+  //   border: 'solid black 1px',
+  //   borderRadius: 10,
+  //   backgroundColor: '#22577A',
+  //   width: {
+  //     xs: 180,
+  //     sm: 200,
+  //     md: 225,
+  //     lg: 250,
+  //     xl: 300,
+  //   },
+  //   height: {
+  //     xs: 175,
+  //     sm: 200,
+  //     md: 225,
+  //     lg: 250,
+  //     xl: 270,
+  //   },
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   margin: 1,
+  //   boxShadow: '0 10px 6px -6px #777',
+  // },
+
+  primaryCategories: {
     borderRadius: 10,
     backgroundColor: '#22577A',
     width: {
-      xs: 180,
-      sm: 200,
-      md: 225,
-      lg: 250,
-      xl: 300,
+      xs: 130,
+      sm: 150,
+      md: 180,
+
     },
     height: {
-      xs: 175,
-      sm: 200,
-      md: 225,
-      lg: 250,
-      xl: 270,
+      xs: 130,
+      sm: 150,
+      md: 180,
+
     },
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     margin: 1,
-    boxShadow: '0 10px 6px -6px #777',
+    boxShadow: '0 10px 6px -6px #c4c4c4',
+  },
+
+  secondaryCategories: {
+    borderRadius: 10,
+    backgroundColor: '#38A3A5',
+    width: {
+      xs: 130,
+      sm: 150,
+      md: 180,
+
+    },
+    height: {
+      xs: 130,
+      sm: 150,
+      md: 180,
+
+    },
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 1,
+    boxShadow: '0 10px 6px -6px #c4c4c4',
   },
 
   categoryNames: {
@@ -135,15 +178,29 @@ const patientProfilePageStyles = {
     fontSize: {
       xs: 18,
       sm: 20,
-      md: 22,
-      lg: 24,
-      xl: 29,
+      md: 24,
     },
-    fontWeight: 600,
     color: '#fff',
     width: 300,
-    textShadow: '2px 1px black, 0 1px black, 1px 0 black, 0 -1px black',
   },
+
+  // categoryNames: {
+  //   display: 'flex',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   flexDirection: 'column',
+  //   fontSize: {
+  //     xs: 18,
+  //     sm: 20,
+  //     md: 22,
+  //     lg: 24,
+  //     xl: 29,
+  //   },
+  //   fontWeight: 600,
+  //   color: '#fff',
+  //   width: 300,
+  //   textShadow: '2px 1px black, 0 1px black, 1px 0 black, 0 -1px black',
+  // },
 
   categoryDescription: {
     fontSize: {

@@ -3,23 +3,24 @@ const homePageStyles = {
     fontSize: {
       xs: 35,
       sm: 40,
-      md: 43,
-      lg: 46,
-      xl: 50,
+      md: 45,
+      lg: 50,
     },
-    fontWeight: 800,
-    color: '#22577A',
-    marginBottom: 1,
-    textShadow: '1px 1px black',
   },
 
   apptReminder: {
     fontSize: {
-      xs: 13,
-      sm: 14,
-      md: 15,
-      lg: 16,
-      xl: 18,
+      xs: 20,
+      md: 22,
+      lg: 25,
+    },
+  },
+
+  appointmentText: {
+    fontSize: {
+      xs: 16,
+      md: 18,
+      lg: 20,
     },
   },
 
@@ -39,11 +40,11 @@ const homePageStyles = {
 
   allCategoryContainer: {
     paddingTop: {
-      xs: 10,
-      sm: 9,
-      md: 8,
+      xs: 4,
+      sm: 4,
+      md: 5,
       lg: 7,
-      xl: 6,
+
     },
   },
 
@@ -53,30 +54,48 @@ const homePageStyles = {
     justifyContent: 'center',
   },
 
-  categories: {
-    padding: 12,
-    border: 'solid black 1px',
+  primaryCategories: {
     borderRadius: 10,
     backgroundColor: '#22577A',
     width: {
-      xs: 180,
-      sm: 200,
-      md: 225,
-      lg: 250,
-      xl: 300,
+      xs: 130,
+      sm: 150,
+      md: 180,
+
     },
     height: {
-      xs: 175,
-      sm: 200,
-      md: 225,
-      lg: 250,
-      xl: 270,
+      xs: 130,
+      sm: 150,
+      md: 180,
+
     },
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     margin: 1,
-    boxShadow: '0 10px 6px -6px #777',
+    boxShadow: '0 10px 6px -6px #c4c4c4',
+  },
+
+  secondaryCategories: {
+    borderRadius: 10,
+    backgroundColor: '#38A3A5',
+    width: {
+      xs: 130,
+      sm: 150,
+      md: 180,
+
+    },
+    height: {
+      xs: 130,
+      sm: 150,
+      md: 180,
+
+    },
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 1,
+    boxShadow: '0 10px 6px -6px #c4c4c4',
   },
 
   categoryNames: {
@@ -85,30 +104,24 @@ const homePageStyles = {
     alignItems: 'center',
     flexDirection: 'column',
     fontSize: {
-      xs: 26,
+      xs: 18,
       sm: 27,
       md: 28,
-      lg: 29,
-      xl: 34,
     },
-    fontWeight: 600,
     color: '#fff',
     width: 300,
-    textShadow: '2px 1px black, 0 1px black, 1px 0 black, 0 -1px black',
   },
 
   categoryDescription: {
     fontSize: {
-      xs: 10,
-      sm: 11,
-      md: 13,
-      lg: 14,
+      xs: 14,
+      md: 14,
       xl: 16,
     },
-    fontWeight: 200,
+    display: { sm: 'block', xs: 'none' },
+    fontWeight: 400,
     color: '#fff',
     width: 'inherit',
-    display: 'flex',
     justifyContent: 'center',
   },
 

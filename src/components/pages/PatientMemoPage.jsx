@@ -166,33 +166,41 @@ export default function PatientMemoPage() {
                     <Typography variant="body1" fontWeight="fontWeightBold" fontSize="32px">Memo: </Typography>
                     <Typography variant="body1" component="div" fontSize="18px">
                       <Box fontWeight="fontWeightBold" display="inline">
+                        Memo:
+                      </Box>
+                      {' '}
+                      {`${memo.notes.note}`}
+                      <br />
+                      <Box fontWeight="fontWeightBold" display="inline">
                         Appt Date:
                       </Box>
+                      {' '}
+
                       {`${memo.date}`}
                       <br />
                       <Box fontWeight="fontWeightBold" display="inline">
                         Hospital:
                       </Box>
+                      {' '}
+
                       {`${memo.hospital.name}`}
                       <br />
                       <Box fontWeight="fontWeightBold" display="inline">
                         Appt Date:
                       </Box>
+                      {' '}
+
                       {`${memo.hospital.department}`}
                       <br />
                       <Box fontWeight="fontWeightBold" display="inline">
                         Chaperone:
+                        {' '}
                       </Box>
                       {memo.chaperone !== undefined
                         ? (
                           <Box display="inline">{memo.chaperone.name}</Box>
                         )
                         : <Box display="inline">Nil</Box>}
-                      <br />
-                      <Box fontWeight="fontWeightBold" display="inline">
-                        Memo:
-                      </Box>
-                      {`${memo.notes.note}`}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
                       <Box>

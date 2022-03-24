@@ -59,23 +59,6 @@ const mainTheme = createTheme(
         lineHeight: 1.334,
         fontWeight: 600,
       },
-      h4: {
-        fontFamily: 'Quicksand',
-        fontSize: '1rem',
-        lineHeight: 1,
-        fontWeight: 500,
-      },
-      body1: {
-        fontFamily: 'Quicksand',
-        fontSize: 14,
-        fontWeight: 400,
-      },
-      body2: {
-        fontFamily: 'Quicksand',
-        fontSize: 12,
-        textTransform: 'uppercase',
-        fontWeight: 400,
-      },
       button: {
         fontSize: 13,
         textTransform: 'uppercase',
@@ -90,6 +73,7 @@ const mainTheme = createTheme(
         letterSpacing: '0.01em',
       },
     },
+
   },
 );
 

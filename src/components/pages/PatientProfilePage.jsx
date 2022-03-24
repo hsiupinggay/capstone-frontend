@@ -80,27 +80,27 @@ export default function PatientProfilePage() {
             <div>
               <Box sx={patientProfilePageStyles.mainContainer}>
                 <Box sx={patientProfilePageStyles.headerIconContainer}>
-                  <ArrowCircleLeftIcon onClick={() => navigate('/patients')} sx={patientProfilePageStyles.backIcon} />
+                  <ArrowCircleLeftIcon onClick={() => navigate('/contacts')} sx={patientProfilePageStyles.backIcon} />
                   <Box sx={patientProfilePageStyles.headerContainer}>
-                    <Typography sx={patientProfilePageStyles.titleFont}>
-                      <strong>{name}</strong>
+                    <Typography variant="h1">
+                      {name}
                       ,
                       {' '}
-                      <strong>{displayAge}</strong>
+                      {displayAge}
                     </Typography>
-                    <Typography sx={patientProfilePageStyles.relationship}>
+                    <Typography variant="h2">
                       {
                   displayRelationship === null
                     ? (
                       <div>
-                        <Typography sx={patientProfilePageStyles.relationship}>Relationship:</Typography>
+                        <Typography variant="h2">Relationship:</Typography>
                         {' '}
                         <Button variant="contained" onClick={openPopUp}>Add Relationship</Button>
 
                       </div>
                     )
                     : (
-                      <Typography sx={patientProfilePageStyles.relationship}>
+                      <Typography variant="h2">
                         Relationship:
                         {' '}
                         { displayRelationship }
@@ -115,11 +115,12 @@ export default function PatientProfilePage() {
                   <Box sx={patientProfilePageStyles.categoryContainer}>
                     <button type="button" onClick={() => navigate('/appointments')}>
                       <Paper
-                        sx={patientProfilePageStyles.categories}
+                        sx={patientProfilePageStyles.primaryCategories}
                         onMouseOver={() => setShow(true)}
                         onMouseOut={() => setShow(false)}
                       >
                         <Typography
+                          variant="h3"
                           sx={patientProfilePageStyles.categoryNames}
                           onMouseOver={() => setShow(true)}
                           onMouseOut={() => setShow(false)}
@@ -128,11 +129,19 @@ export default function PatientProfilePage() {
                           { show === true
                             ? (
                               <Typography
+                                variant="body1"
                                 sx={patientProfilePageStyles.categoryDescription}
                                 onMouseOver={() => setShow(true)}
                                 onMouseOut={() => setShow(false)}
                               >
-                                Create, check & edit appointments
+                                Create
+                                <br />
+                                {' '}
+                                Check
+                                {' '}
+                                <br />
+                                {' '}
+                                Edit
                               </Typography>
                             )
                             : <div />}
@@ -141,11 +150,12 @@ export default function PatientProfilePage() {
                     </button>
                     <button type="button" onClick={() => navigate('/med-list', { state: patientId })}>
                       <Paper
-                        sx={patientProfilePageStyles.categories}
+                        sx={patientProfilePageStyles.secondaryCategories}
                         onMouseOver={() => setPatientShow(true)}
                         onMouseOut={() => setPatientShow(false)}
                       >
                         <Typography
+                          variant="h3"
                           sx={patientProfilePageStyles.categoryNames}
                           onMouseOver={() => setPatientShow(true)}
                           onMouseOut={() => setPatientShow(false)}
@@ -153,23 +163,19 @@ export default function PatientProfilePage() {
                           Medication
                           { patient === true
                             ? (
-                              <>
-                                <Typography
-                                  sx={patientProfilePageStyles.categoryDescription}
-                                  onMouseOver={() => setPatientShow(true)}
-                                  onMouseOut={() => setPatientShow(false)}
-                                >
-                                  View and add medication
-                                </Typography>
-                                <Typography
-                                  sx={patientProfilePageStyles.categoryDescription}
-                                  onMouseOver={() => setPatientShow(true)}
-                                  onMouseOut={() => setPatientShow(false)}
-                                >
-                                  Set reminders
-                                </Typography>
-
-                              </>
+                              <Typography
+                                sx={patientProfilePageStyles.categoryDescription}
+                                onMouseOver={() => setPatientShow(true)}
+                                onMouseOut={() => setPatientShow(false)}
+                              >
+                                View
+                                {' '}
+                                <br />
+                                {' '}
+                                Add
+                                <br />
+                                Set reminders
+                              </Typography>
                             )
                             : <div />}
 
@@ -180,11 +186,12 @@ export default function PatientProfilePage() {
                   <Box sx={patientProfilePageStyles.categoryContainer}>
                     <button type="button" onClick={() => navigate('/location-details')}>
                       <Paper
-                        sx={patientProfilePageStyles.categories}
+                        sx={patientProfilePageStyles.secondaryCategories}
                         onMouseOver={() => setContactsShow(true)}
                         onMouseOut={() => setContactsShow(false)}
                       >
                         <Typography
+                          variant="h3"
                           sx={patientProfilePageStyles.categoryNames}
                           onMouseOver={() => setContactsShow(true)}
                           onMouseOut={() => setContactsShow(false)}
@@ -193,11 +200,16 @@ export default function PatientProfilePage() {
                           { contacts === true
                             ? (
                               <Typography
+                                variant="body1"
                                 sx={patientProfilePageStyles.categoryDescription}
                                 onMouseOver={() => setContactsShow(true)}
                                 onMouseOut={() => setContactsShow(false)}
                               >
-                                View & add patient visit details
+                                View
+                                {' '}
+                                <br />
+                                {' '}
+                                Add
                               </Typography>
                             )
                             : <div />}
@@ -206,11 +218,12 @@ export default function PatientProfilePage() {
                     </button>
                     <button type="button" onClick={() => navigate('/patient-memos')}>
                       <Paper
-                        sx={patientProfilePageStyles.categories}
+                        sx={patientProfilePageStyles.primaryCategories}
                         onMouseOver={() => setProfileShow(true)}
                         onMouseOut={() => setProfileShow(false)}
                       >
                         <Typography
+                          variant="h3"
                           sx={patientProfilePageStyles.categoryNames}
                           onMouseOver={() => setProfileShow(true)}
                         >
