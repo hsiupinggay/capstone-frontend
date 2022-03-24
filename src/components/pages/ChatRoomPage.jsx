@@ -102,8 +102,8 @@ export default function ChatRoomPage() {
         overflow="scroll"
       >
         {conversation}
+
       </Box>
-      <br />
       <MessageInput id="message" handleInput={(e) => setDisplayMessage(e.target.value)} handleSend={sendInfoToDB} />
     </Box>
   );

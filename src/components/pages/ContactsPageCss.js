@@ -2,7 +2,6 @@ const contactPageStyles = {
 
   mainContainer: {
     width: { xs: '300px', sm: '500px' },
-    display: 'flex',
     flexDirection: 'row',
   },
 
@@ -102,11 +101,6 @@ const contactPageStyles = {
     '&:hover': {
       color: '#2facfe',
     },
-  },
-
-  iconsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
   },
 
   acceptIcon: {

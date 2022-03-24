@@ -3,21 +3,18 @@ import React from 'react';
 import { Paper, IconButton, InputBase } from '@mui/material';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 
-function MessageInput({ id, handleInput, handleSend }) {
+function MessageInput({
+  id, handleInput, handleSend,
+}) {
   return (
     <Paper sx={{
       display: 'flex',
       justifyContent: 'space-between',
-      width: {
-        lg: 1000,
-        md: 800,
-        sm: 600,
-        xs: 400,
-      },
       borderRadius: '20px',
       px: '10px',
       py: '4px',
       position: 'absolute',
+      width: '100%',
       bottom: {
         lg: 10,
         md: 10,
