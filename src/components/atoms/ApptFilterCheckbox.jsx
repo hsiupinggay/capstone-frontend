@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import Box from '@mui/material/Box';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -16,6 +17,7 @@ export default function ApptFilterCheckbox({
   const [value, setValue] = useState([]);
 
   useEffect(() => {
+    if ( value.length === 0 ) return;
     switch (label) {
       case 'Hospital':
         setFilterValue({ hospital: value });
@@ -44,6 +46,7 @@ export default function ApptFilterCheckbox({
       value={value}
       onChange={(event, newValue) => setValue(newValue)}
       options={dataArray}
+      style={{ width: '85%', marginTop: 8, }}
       disableCloseOnSelect
       getOptionLabel={(option) => option}
       renderOption={(props, option, { selected }) => (
@@ -57,7 +60,6 @@ export default function ApptFilterCheckbox({
           {option}
         </li>
       )}
-      style={{ width: 500 }}
       renderInput={(params) => (
         <TextField {...params} label={label} placeholder={label} id={id} />
       )}

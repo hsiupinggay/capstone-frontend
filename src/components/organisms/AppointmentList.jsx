@@ -5,7 +5,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import {
-  Box, List, Card,
+  Box, Paper, List, Card, CardActions, Typography,
 } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
@@ -163,41 +163,39 @@ function AppointmentList({
     setApptPopupDetails(apptObject);
   };
   const displayAppointmentList = listDisplay.map((appointment) => (
-    <div key={appointment.id}>
-      <Card variant="outlined">
-        <CardContent>
-          {appointment.patientName}
-          <br />
-          {appointment.chaperone}
-          <br />
-          {appointment.date}
-          <br />
-          {appointment.hospital}
-          <br />
+    <Card key={appointment.id} rounded elevation={6} sx={{ p: 2, mb: 2, width: '60vw' }}>
+      <CardContent>
+        <Typography variant="h3" sx={{ my: 2, textAlign: 'center', }}>
+          {appointment.patientName}<br/>
+        </Typography>
+        <Typography variant="body1" sx={{ textAlign: 'center', }} component='div'>
+          <Box fontWeight='fontWeightBold' display='inline'>Chaperone:</Box> {appointment.chaperone}<br/>
+          <Box fontWeight='fontWeightBold' display='inline'>Appointment Date:</Box> {appointment.date}<br/>
+          <Box fontWeight='fontWeightBold' display='inline'>Location:</Box><br/>
+          {appointment.hospital},<br/>
           {appointment.department}
-        </CardContent>
-
+        </Typography>
+      </CardContent>
+      <CardActions>
         <Button onClick={() => openModal(appointment.apptObj)}>View Full Appointment</Button>
-      </Card>
-    </div>
+      </CardActions>
+    </Card>
   ));
 
   return (
-    <div className="h-5/6 overflow-hidden">
-      <h1>Appointment List</h1>
-      <div className="h-full overflow-auto">
-        <Box>
-          <Tooltip arrow title="Sort By Appointment Date">
-            <CalendarMonthIcon variant="contained" onClick={sortDate} />
-          </Tooltip>
-          <Tooltip arrow title="Reset Filters">
-            <RestartAltIcon variant="contained" onClick={resetFilters} />
-          </Tooltip>
-          <List>
-            {displayAppointmentList}
-          </List>
-        </Box>
-      </div>
+    <div className="h-full overflow-auto">
+      <Typography variant="h2" sx={{ mb: 2 }} display="inline">Appointment List</Typography>
+      <Tooltip arrow title="Sort By Appointment Date">
+        <CalendarMonthIcon variant="contained" onClick={sortDate} />
+      </Tooltip>
+      <Tooltip arrow title="Reset Filters">
+        <RestartAltIcon variant="contained" onClick={resetFilters} />
+      </Tooltip>
+      <Box style={{ maxHeight: 600, overflow: 'auto' }}>
+        <List>
+          {displayAppointmentList}
+        </List>
+      </Box>
     </div>
   );
 }

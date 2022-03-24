@@ -14,8 +14,12 @@ const AppointmentPageStyles = {
   },
 
   mainContainer: {
-    width: '80%',
+    width: '100vw',
     mx: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   apptReminder: {
