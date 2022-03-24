@@ -5,7 +5,7 @@ const patientListStyles = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 300,
-    height: 450,
+    height: 500,
     bgcolor: 'background.paper',
     border: 'none',
     borderRadius: '20px',
