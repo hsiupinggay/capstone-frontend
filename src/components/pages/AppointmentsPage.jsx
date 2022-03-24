@@ -35,6 +35,7 @@ export default function AppointmentsPage() {
   const [openApptModal, setOpenApptModal] = useState(false);
   const [apptModalType, setApptModalType] = useState('');
   const [filterData, setFilterData] = useState(null);
+  const [apptPopupDetails, setApptPopupDetails] = useState();
   const [filterParams, setFilterParams] = useState(
     {
       hospital: [],
@@ -117,6 +118,7 @@ export default function AppointmentsPage() {
               filterData={filterData}
               setOpenApptModal={setOpenApptModal}
               setApptModalType={setApptModalType}
+              setApptPopupDetails={setApptPopupDetails}
               // originialDataArray={originialDataArray}
             />
           </>
@@ -126,6 +128,7 @@ export default function AppointmentsPage() {
             displayDataArray={displayDataArray}
             setOpenApptModal={setOpenApptModal}
             setApptModalType={setApptModalType}
+            setApptPopupDetails={setApptPopupDetails}
           />
         )}
       <ApptModal
@@ -137,6 +140,7 @@ export default function AppointmentsPage() {
         filterData={filterData}
         setApptModalType={setApptModalType}
         setDisplayDataArray={setDisplayDataArray}
+        apptPopupDetails={apptPopupDetails}
       />
     </Box>
   );

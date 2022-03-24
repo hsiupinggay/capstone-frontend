@@ -8,9 +8,10 @@
  * ========================================================
  * ========================================================
  */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography, Paper, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import homePageStyles from './HomePageCss';
 import { useMedicalContext } from '../others/store';
 
@@ -25,13 +26,24 @@ import { useMedicalContext } from '../others/store';
  */
 export default function HomePage() {
   const { store } = useMedicalContext();
-  const { firstName, lastName } = store;
+  const { firstName, lastName, userId } = store;
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const [upcomingApptObj, setUpcomingApptObj] = useState();
   const [patient, setPatientShow] = useState(false);
   const [contacts, setContactsShow] = useState(false);
   const [profile, setProfileShow] = useState(false);
 
+  useEffect(() => {
+    const data = new URLSearchParams();
+    data.append('userId', userId);
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/next-appointment?${data.toString()}`).then((response) => {
+      console.log(response.data.upcomingAppt);
+      const { upcomingAppt } = response.data;
+      setUpcomingApptObj(upcomingAppt);
+      console.log(upcomingApptObj);
+    });
+  }, []);
   return (
     <Box sx={homePageStyles.mainContainer}>
       <Box sx={homePageStyles.headerContainer}>
@@ -44,7 +56,26 @@ export default function HomePage() {
           !
         </Typography>
         <Typography sx={homePageStyles.apptReminder}>
-          === Upcoming Appointment: ===
+          <strong>Upcoming Appointment: </strong>
+          { upcomingApptObj !== undefined
+            ? (
+              <Box>
+                {upcomingApptObj.fullName}
+                <br />
+                {upcomingApptObj.date}
+                {' '}
+                @
+                {' '}
+                {upcomingApptObj.time}
+                <br />
+                {upcomingApptObj.hospital.department}
+                {' '}
+                @
+                {' '}
+                {upcomingApptObj.hospital.name}
+              </Box>
+            )
+            : <div />}
         </Typography>
       </Box>
       <Box sx={homePageStyles.allCategoryContainer}>
