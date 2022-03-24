@@ -1,16 +1,18 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import {
-  Button,
+  IconButton, Tooltip,
 } from '@mui/material';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 
 function BackIcon({ onClick }) {
   return (
     <div>
-      <Button onClick={onClick}>
-        <ArrowCircleLeftIcon fontSize="large" />
-      </Button>
+      <Tooltip title="Back" arrow>
+        <IconButton onClick={onClick} color="primary" arrow>
+          <ArrowCircleLeftIcon fontSize="large" />
+        </IconButton>
+      </Tooltip>
     </div>
   );
 }

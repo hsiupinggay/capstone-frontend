@@ -13,15 +13,18 @@
  */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Modal, Box } from '@mui/material';
+import {
+  Modal, Box, Typography, Tooltip, IconButton, Stack, Card, CardContent, Grid,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import Tooltip from '@mui/material/Tooltip';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+// import MedicationRoundedIcon from '@mui/icons-material/MedicationRounded';
 import { useMedicalContext } from '../others/store';
 import AddHospitalTruncated from '../organisms/AddHospitalTruncated';
 import AddDepartmentTruncated from '../organisms/AddDepartmentTruncated';
 import AddChaperoneTruncated from '../organisms/AddChaperoneTruncated';
 import BackIcon from '../molecules/BackIcon';
+import style from './ModalCss';
 
 /*
  * ========================================================
@@ -32,18 +35,18 @@ import BackIcon from '../molecules/BackIcon';
  * ========================================================
  * ========================================================
  */
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  height: 500,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+// const style = {
+//   position: 'absolute',
+//   top: '50%',
+//   left: '50%',
+//   transform: 'translate(-50%, -50%)',
+//   width: 400,
+//   height: 500,
+//   bgcolor: 'background.paper',
+//   border: '2px solid #000',
+//   boxShadow: 24,
+//   p: 4,
+// };
 
 /*
  * ========================================================
@@ -98,80 +101,126 @@ export default function PatientVisitLocationPage() {
   };
 
   return (
-    <div>
-      <BackIcon variant="contained" onClick={() => navigate('/patient')} />
-      <br />
-      <br />
+    <Box sx={{ width: { xs: '300px', sm: '500px' }, mb: '70px' }}>
+      <Stack
+        spacing={2}
+        direction="row"
+        alignItems="center"
+      >
+        <BackIcon variant="contained" onClick={() => navigate('/patient')} />
+        <Typography variant="h3">
+          {name}
+        </Typography>
+      </Stack>
+      <Stack
+        id="For Clinics + Chaperone"
+        spacing={2}
+      >
+        <Stack
+          spacing={1}
+          direction="row"
+          alignItems="center"
+        >
+          <Typography variant="h1">
+            Chaperones
+          </Typography>
+          <Tooltip title="Add New Chaperone">
+            <IconButton onClick={openAddChapPopup}>
+              <AddCircleRoundedIcon color="primary" />
+            </IconButton>
+          </Tooltip>
+        </Stack>
+        <Card sx={{ maxHeight: '100px', overflow: 'auto' }}>
+          <CardContent>
+            {
+        chaperonesArr === undefined
+          ? <div />
+          : (
 
-      {
+            <div>
+              {chaperonesArr.length === 0 && (
+              <Typography variant="body1">
+                Add contacts who are likely to chaperone this patient
+              </Typography>
+              )}
+              {chaperonesArr.map((chaperone) => (
+                <div>
+                  {`${chaperone.name}`}
+                  <br />
+                </div>
+              ))}
+            </div>
+
+          )
+      }
+          </CardContent>
+        </Card>
+        {
         clinicsArr === undefined
           ? (
             <div />
           )
           : (
 
-            <div>
-              <strong>
-                List of
-                {' '}
-                {name}
-                's Clinics and Departments
-              </strong>
-              <Tooltip title="Add New Hospital">
-                <AddCircleIcon variant="contained" onClick={openAddHospitalTruncatedPopup} />
-              </Tooltip>
-              <br />
-              <br />
-              <div>
+            <Stack
+              id="For Clinics"
+              spacing={2}
+            >
+              <Stack
+                direction="row"
+                spacing={1}
+              >
+                <Typography variant="h1">
+                  Clinics & Departments
+                </Typography>
+                <Tooltip title="Add New Hospital" arrow>
+                  <IconButton aria-label="Add new hospital" color="primary" onClick={openAddHospitalTruncatedPopup}>
+                    <AddCircleRoundedIcon />
+                  </IconButton>
+                </Tooltip>
+              </Stack>
+              <Stack
+                id="list of clinics"
+                spacing={2}
+              >
                 {clinicsArr.map((clinic) => (
-                  <div>
-                    <strong>
-                      {' '}
-                      {`${clinic.hospital}`}
-                    </strong>
-                    <Tooltip title="Add New Department">
-                      <AddCircleIcon variant="contained" onClick={() => openAddDeptPopup(clinic.hospital)} />
-                    </Tooltip>
-                    {clinic.departments.map((department) => (
-                      <div>
-                        {`${department}`}
-                      </div>
-                    ))}
-                    <br />
-                    <br />
-                  </div>
+                  <Grid item sm={12}>
+                    <Card key={clinic.hospital}>
+                      <CardContent>
+                        <Stack
+                          direction="row"
+                          spacing={1}
+                          alignItems="center"
+                          justifyContent="space-between"
+                        >
+                          <Typography variant="h2">
+                            {clinic.hospital}
+                          </Typography>
+                          <Tooltip title="Add New Department">
+                            <AddCircleRoundedIcon color="secondary" onClick={() => openAddDeptPopup(clinic.hospital)} />
+                          </Tooltip>
+                        </Stack>
+                        {clinic.departments.length === 0 && (
+                        <Typography variant="body1">
+                          You have no departments at the moment.
+                        </Typography>
+                        )}
+                        {clinic.departments.map((department) => (
+                          <Typography variant="body1">
+                            {`${department}`}
+                          </Typography>
+                        ))}
+                      </CardContent>
+                    </Card>
+                  </Grid>
                 ))}
-              </div>
+              </Stack>
 
-            </div>
+            </Stack>
           )
       }
-      {
-        chaperonesArr === undefined
-          ? <div />
-          : (
-            <div>
-              <strong>
-                List of
-                {' '}
-                {name}
-                's Chaperones
-              </strong>
-              <Tooltip title="Add New Chaperone">
-                <AddCircleIcon variant="contained" onClick={openAddChapPopup} />
-              </Tooltip>
-              <br />
-              <div>
-                {chaperonesArr.map((chaperone) => (
-                  <div>
-                    {`${chaperone.name}`}
-                    <br />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )
-      }
+
+      </Stack>
       <Modal
         open={open}
         onClose={closePopup}
@@ -186,6 +235,6 @@ export default function PatientVisitLocationPage() {
            }
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }

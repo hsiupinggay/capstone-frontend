@@ -59,15 +59,6 @@ const mainTheme = createTheme(
         lineHeight: 1.334,
         fontWeight: 600,
       },
-      // body1: {
-      //   fontSize: 14,
-      //   fontWeight: 400,
-      // },
-      // body2: {
-      //   fontSize: 12,
-      //   textTransform: 'uppercase',
-      //   fontWeight: 400,
-      // },
       button: {
         fontSize: 13,
         textTransform: 'uppercase',
@@ -80,6 +71,12 @@ const mainTheme = createTheme(
         fontSize: '1rem',
         lineHeight: 1.334,
         fontWeight: 500,
+      },
+      h5: {
+        fontSize: '1rem',
+        lineHeight: 1.5,
+        fontWeight: 600,
+        letterSpacing: '0.01em',
       },
     },
   },
