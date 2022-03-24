@@ -31,7 +31,15 @@ export default function AppointmentsPage() {
   const [displayDataArray, setDisplayDataArray] = useState();
   const [openApptModal, setOpenApptModal] = useState(false);
   const [apptModalType, setApptModalType] = useState('');
-  const [filterData, setFilterData] = useState(null);
+  const [filterData, setFilterData] = useState(
+    {
+      hospitalFilter: [],
+      departmentFilter: [],
+      patientFilter: [],
+      chaperoneFilter: [],
+      dateFilter: [],
+    }
+  );
   const [filterParams, setFilterParams] = useState(
     {
       hospital: [],

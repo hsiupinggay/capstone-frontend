@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Paper, List, Card } from '@mui/material';
+import { Box, Paper, List, Card, CardActions, Typography } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 
@@ -102,32 +102,35 @@ function AppointmentList({ displayDataArray, filterData, setOpenApptModal, setAp
     // Validation, if there are no filters, filtereredDisplayArray is empty
     if (filteredDisplayArray.length === 0) setListDisplay(userDisplayArray);
   }, [filterData]);
-  
+
   const displayAppointmentList = listDisplay.map(appointment => (
-    <div key={appointment.id}>
-      <Card variant="outlined">
-        <CardContent>
+    <Card key={appointment.id} rounded elevation={6} sx={{ p: 2, mb: 2, width: '60vw' }}>
+      <CardContent>
+        <Typography variant="h3" sx={{ my: 2, textAlign: 'center', }}>
           {appointment.patientName}<br/>
-          {appointment.chaperone}<br/>
-          {appointment.date}<br/>
-          {appointment.hospital}<br/>
+        </Typography>
+        <Typography variant="body1" sx={{ textAlign: 'center', }} component='div'>
+          <Box fontWeight='fontWeightBold' display='inline'>Chaperone:</Box> {appointment.chaperone}<br/>
+          <Box fontWeight='fontWeightBold' display='inline'>Appointment Date:</Box> {appointment.date}<br/>
+          <Box fontWeight='fontWeightBold' display='inline'>Location:</Box><br/>
+          {appointment.hospital},<br/>
           {appointment.department}
-        </CardContent>
-        <Button onClick={(e) => {setOpenApptModal(true); setApptModalType('edit')}}>Edit</Button>
-      </Card>
-    </div>
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button sx={{ justifyContent: 'end' }} onClick={(e) => {setOpenApptModal(true); setApptModalType('edit')}}>Edit</Button>
+      </CardActions>
+    </Card>
   ));
 
   return (
     <div className="h-5/6 overflow-hidden">
-      <h1>Appointment List</h1>
-      <div className="h-full overflow-auto">
-        <Box>
+      <Typography variant="h2" sx={{ mb: 2 }}>Appointment List</Typography>
+        <Box style={{ maxHeight: 600, overflow: 'auto' }}>
           <List>
             {displayAppointmentList}
           </List>
         </Box>
-      </div>
     </div>
   );
 }

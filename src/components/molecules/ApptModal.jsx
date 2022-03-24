@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
+import { Typography } from '@mui/material';
 
 import AddAppointment from '../organisms/AddAppointment';
 import ApptFilterCheckbox from '../atoms/ApptFilterCheckbox';
@@ -37,11 +38,11 @@ function AddApptModal({ openApptModal, setOpenApptModal }) {
       >
         <Box sx={
           {
-            ...style, width: 400, height: 500, flexDirection: 'column',
+            ...style, width: '80vw', height: 500, flexDirection: 'column',
           }
         }
         >
-          <h1>Add Appointment</h1>
+          <Typography varitant="h3">Add Appointment</Typography>
           <AddAppointment />
         </Box>
       </Modal>
@@ -50,24 +51,25 @@ function AddApptModal({ openApptModal, setOpenApptModal }) {
 }
 
 function FilterModal({ openApptModal, setOpenApptModal, setFilterData, filterParams, filterData }) {
-  const [hospitalFilter, setHospitalFilter] = useState(null);
-  const [departmentFilter, setDepartmentFilter] = useState(null);
-  const [patientFilter, setPatientFilter] = useState(null);
-  const [chaperoneFilter, setChaperoneFilter] = useState(null);
-  const [dateFilter, setDateFilter] = useState(null);
+  const [hospitalFilter, setHospitalFilter] = useState([]);
+  const [departmentFilter, setDepartmentFilter] = useState([]);
+  const [patientFilter, setPatientFilter] = useState([]);
+  const [chaperoneFilter, setChaperoneFilter] = useState([]);
+  const [dateFilter, setDateFilter] = useState([]);
   const [filterValue, setFilterValue] = useState({});
   const handleClose = () => {
     setOpenApptModal(false);
-    setHospitalFilter(null);
-    setDepartmentFilter(null);
-    setPatientFilter(null);
-    setChaperoneFilter(null);
-    setDateFilter(null);
+    setHospitalFilter([]);
+    setDepartmentFilter([]);
+    setPatientFilter([]);
+    setChaperoneFilter([]);
+    setDateFilter([]);
   };
 
   // useEffect on filterValue change (only happens within checkbox components)
   // switch case to identify which filter the change is made on
   useEffect(() => {
+    console.log('inside use effect ', filterValue);
     switch (Object.keys(filterValue)[0]) {
       case 'hospital':
         setHospitalFilter(Object.values(filterValue)[0]);
@@ -82,6 +84,7 @@ function FilterModal({ openApptModal, setOpenApptModal, setFilterData, filterPar
         setChaperoneFilter(Object.values(filterValue)[0]);
         break;
       case 'date':
+        console.log('setting date filter...');
         setDateFilter(Object.values(filterValue)[0]);
         break;
       default:
@@ -115,16 +118,18 @@ function FilterModal({ openApptModal, setOpenApptModal, setFilterData, filterPar
       >
         <Box sx={
           {
-            ...style, width: 600, height: 500, flexDirection: 'column',
+            ...style, width: {xxs: '80vw', sm: 600 }, height: 500, flexDirection: 'column',
           }
         }
         >
-          <h1>Apply Filters</h1>
-          <ApptFilterCheckbox label="Hospital" dataArray={filterParams.hospitals} setFilterValue={setFilterValue} />
-          <ApptFilterCheckbox label="Department" dataArray={filterParams.departments} setFilterValue={setFilterValue} />
-          <ApptFilterCheckbox label="Patient" dataArray={filterParams.patients} setFilterValue={setFilterValue} />
-          <ApptFilterCheckbox label="Chaperone" dataArray={filterParams.chaperones} setFilterValue={setFilterValue} />
-          <ApptFilterCheckbox label="Date" dataArray={filterParams.dates} setFilterValue={setFilterValue} />
+          <Typography variant='h3' sx={{ fontSize: {xs: 10, sm: 14, md: 18, }}}>Apply Filters</Typography>
+          <Box sx={{ width: '100%', display: 'flex', flexDirection: "column", alignItems: "center"}}>
+            <ApptFilterCheckbox label="Hospital" dataArray={filterParams.hospitals} setFilterValue={setFilterValue} />
+            <ApptFilterCheckbox label="Department" dataArray={filterParams.departments} setFilterValue={setFilterValue} />
+            <ApptFilterCheckbox label="Patient" dataArray={filterParams.patients} setFilterValue={setFilterValue} />
+            <ApptFilterCheckbox label="Chaperone" dataArray={filterParams.chaperones} setFilterValue={setFilterValue} />
+            <ApptFilterCheckbox label="Date" dataArray={filterParams.dates} setFilterValue={setFilterValue} />
+          </Box>
           <Button onClick={submitFilters}>Submit</Button>
         </Box>
       </Modal>
