@@ -93,7 +93,7 @@ export default function HomePage() {
               onMouseOut={() => setShow(false)}
             >
               <Typography
-                variant="h2"
+                variant="h3"
                 sx={homePageStyles.categoryNames}
                 onMouseOver={() => setShow(true)}
                 onMouseOut={() => setShow(false)}
@@ -124,7 +124,7 @@ export default function HomePage() {
               onMouseOut={() => setPatientShow(false)}
             >
               <Typography
-                variant="h2"
+                variant="h3"
                 sx={homePageStyles.categoryNames}
                 onMouseOver={() => setPatientShow(true)}
                 onMouseOut={() => setPatientShow(false)}
@@ -158,7 +158,7 @@ export default function HomePage() {
               onMouseOut={() => setContactsShow(false)}
             >
               <Typography
-                variant="h2"
+                variant="h3"
                 sx={homePageStyles.categoryNames}
                 onMouseOver={() => setContactsShow(true)}
                 onMouseOut={() => setContactsShow(false)}
@@ -190,7 +190,7 @@ export default function HomePage() {
               onMouseOut={() => setProfileShow(false)}
             >
               <Typography
-                variant="h2"
+                variant="h3"
                 sx={homePageStyles.categoryNames}
                 onMouseOver={() => setProfileShow(true)}
               >
