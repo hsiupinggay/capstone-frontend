@@ -48,7 +48,9 @@ export default function AppointmentDetailPopup({ apptPopupDetails, setDisplayDat
   const [memoDate, setMemoDate] = useState('');
   const [memoUserName, setMemoUserName] = useState('');
   const { store } = useMedicalContext();
-  const { userId, firstName, lastName } = store;
+  const {
+    userId, firstName, lastName, photo,
+  } = store;
   useEffect(() => {
     console.log(apptPopupDetails.date);
     console.log(apptPopupDetails.time);
@@ -135,6 +137,7 @@ export default function AppointmentDetailPopup({ apptPopupDetails, setDisplayDat
       lastName,
       patientId: apptPopupDetails.patientId,
       appointmentId: apptPopupDetails.appointmentId,
+      photo,
       note: memo,
     };
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-memo`, data).then((response) => {

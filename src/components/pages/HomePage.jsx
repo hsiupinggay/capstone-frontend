@@ -75,7 +75,7 @@ export default function HomePage() {
                 {upcomingApptObj.hospital.name}
               </Box>
             )
-            : <div />}
+            : <div>Nil</div>}
         </Typography>
       </Box>
       <Box sx={homePageStyles.allCategoryContainer}>
