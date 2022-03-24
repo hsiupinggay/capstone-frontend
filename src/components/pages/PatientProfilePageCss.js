@@ -208,7 +208,7 @@ const patientProfilePageStyles = {
       sm: 11,
       md: 13,
       lg: 14,
-      xl: 16,
+      xl: 14,
     },
     fontWeight: 200,
     color: '#fff',

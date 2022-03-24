@@ -100,11 +100,11 @@ function AddApptModal({
       >
         <Box sx={
           {
-            ...style, width: '80vw', height: 500, flexDirection: 'column',
+            ...style, width: 450, height: 500, flexDirection: 'column', overflow: 'scroll',
           }
         }
         >
-          <Typography varitant="h3">Add Appointment</Typography>
+
           <AddAppointment setAddition={setAddition} setModal={setModal} setOpenApptModal={setOpenApptModal} setDisplayDataArray={setDisplayDataArray} />
         </Box>
       </Modal>
@@ -181,11 +181,11 @@ function FilterModal({
       >
         <Box sx={
           {
-            ...style, width: { xxs: '80vw', sm: 600 }, height: 500, flexDirection: 'column',
+            ...style, width: { xxs: '80vw', sm: 450 }, height: 500, flexDirection: 'column',
           }
         }
         >
-          <Typography variant="h3" sx={{ fontSize: { xs: 10, sm: 14, md: 18 } }}>Apply Filters</Typography>
+          <Typography variant="h3" sx={{ fontSize: { xs: 10, sm: 14, md: 18 }, marginLeft: 17 }}>Apply Filters</Typography>
           <Box sx={{
             width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center',
           }}
@@ -197,7 +197,7 @@ function FilterModal({
             <ApptFilterCheckbox label="Chaperone" dataArray={filterParams.chaperones} setFilterValue={setFilterValue} />
             <ApptFilterCheckbox label="Date" dataArray={filterParams.dates} setFilterValue={setFilterValue} />
           </Box>
-          <Button onClick={submitFilters}>Submit</Button>
+          <Button variant="contained" sx={{ marginTop: 4, marginLeft: 18 }} onClick={submitFilters}>Submit</Button>
         </Box>
       </Modal>
     </div>

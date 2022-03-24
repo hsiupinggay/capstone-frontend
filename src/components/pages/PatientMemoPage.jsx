@@ -16,7 +16,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  Avatar, Modal, Box, Typography, Card,
+  Avatar, Modal, Box, Typography, Card, IconButton,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -49,6 +49,7 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  overflow: 'scroll',
 };
 
 /*
@@ -137,10 +138,10 @@ export default function PatientMemoPage() {
             <Box>
               <Typography variant="h3" display="inline" style={{ fontWeight: 'fontWeightBold' }} sx={{ m: 2 }}>Nil memos found</Typography>
               <Tooltip title="Filter Memos">
-                <FilterAltIcon variant="contained" onClick={openPopUp} />
+                <FilterAltIcon color="primary" variant="contained" onClick={openPopUp} />
               </Tooltip>
               <Tooltip arrow title="Reset Filters">
-                <RestartAltIcon variant="contained" onClick={resetFilters} />
+                <RestartAltIcon color="primary" variant="contained" onClick={resetFilters} />
               </Tooltip>
             </Box>
           )
@@ -151,13 +152,22 @@ export default function PatientMemoPage() {
                   {`List of ${name}'s Memos`}
                 </Typography>
                 <Tooltip title="Sort By Appointment Date">
-                  <CalendarMonthIcon variant="contained" onClick={sortDate} />
+                  <IconButton>
+                    <CalendarMonthIcon color="primary" variant="contained" onClick={sortDate} />
+
+                  </IconButton>
                 </Tooltip>
                 <Tooltip title="Filter Memos">
-                  <FilterAltIcon variant="contained" onClick={openPopUp} />
+                  <IconButton>
+                    <FilterAltIcon color="primary" variant="contained" onClick={openPopUp} />
+
+                  </IconButton>
                 </Tooltip>
                 <Tooltip title="Reset Filters">
-                  <RestartAltIcon variant="contained" onClick={resetFilters} />
+                  <IconButton>
+
+                    <RestartAltIcon color="primary" variant="contained" onClick={resetFilters} />
+                  </IconButton>
                 </Tooltip>
               </Box>
               <Box style={{ maxHeight: 700, overflow: 'auto' }}>
@@ -207,7 +217,7 @@ export default function PatientMemoPage() {
                         <Typography variant="body1" fontWeight="fontWeightBold" fontSize="22px">Uploaded by:</Typography>
                         <Typography variant="body1">{`${memo.notes.userName.first} ${memo.notes.userName.last} on ${memo.notes.date}`}</Typography>
                       </Box>
-                      <Box sx={{ mx: 2 }}>
+                      <Box sx={{ mx: 2, paddingTop: 3 }}>
                         {!memo.notes.userImage && <Avatar sx={{ width: 40, height: 40 }}>{getNameInitials(memo.notes.userName.first, memo.notes.userName.last)}</Avatar>}
                         {memo.notes.userImage && <Avatar sx={{ width: 40, height: 40 }} alt="profile" src={memo.notes.userImage} />}
                       </Box>

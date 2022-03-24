@@ -5,11 +5,12 @@ const apptPopupStyles = {
 
   inputField: {
     width: { md: 350, xs: 250 },
-    margin: 1,
+    marginTop: 1,
   },
 
   submitBtn: {
     padding: 2,
+    marginRight: 3,
     display: 'flex',
     justifyContent: 'center',
   },

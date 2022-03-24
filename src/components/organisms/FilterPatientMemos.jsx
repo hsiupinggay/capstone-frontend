@@ -14,12 +14,26 @@
  * ========================================================
  */
 import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
+import {
+  TextField, Typography, CardContent, Box,
+} from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import Tooltip from '@mui/material/Tooltip';
 
+const style = {
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
+
+  submitBtn: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+};
 /*
  * ========================================================
  * ========================================================
@@ -93,8 +107,7 @@ export default function FilterPatientMemos({
     }
     setMemoList(newMemoList);
     setSuccessMessage(
-      `You have set the following filters:
-    ${dateFilter || ''} 
+      `You have set the following filters: ${dateFilter || ''} 
     ${hospitalFilter || ''} 
     ${departmentFilter || ''} 
     ${chaperoneFilter || ''}
@@ -108,76 +121,78 @@ export default function FilterPatientMemos({
   };
 
   return (
-    <div>
-      <strong>
-        {' '}
-        Choose the filters you would like for
-        {' '}
-        {name}
-        's memos
-      </strong>
+    <CardContent>
+      <Box sx={style.container}>
 
-      <Tooltip title="Reset Filters">
-        <RestartAltIcon variant="contained" onClick={resetFilters} />
-      </Tooltip>
+        <Typography variant="h3">
+          {' '}
+          Choose filters for
+          {' '}
+          {name}
+          's memos
+          <Tooltip title="Reset Filters">
+            <RestartAltIcon color="primary" variant="contained" onClick={resetFilters} />
+          </Tooltip>
+        </Typography>
 
-      <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
 
-        <Autocomplete
-          options={dateArr}
-          onChange={(event, newValue) => { setDateFilter(newValue); }}
-          renderInput={(params) => <TextField {...params} label="Filter Date" />}
-          selectOnFocus
-          clearOnBlur
-          handleHomeEndKeys
-          sx={{ width: 250 }}
-        />
+          <Autocomplete
+            options={dateArr}
+            onChange={(event, newValue) => { setDateFilter(newValue); }}
+            renderInput={(params) => <TextField {...params} label="Filter Date" />}
+            selectOnFocus
+            clearOnBlur
+            handleHomeEndKeys
+            sx={{ width: 250 }}
+          />
+          <br />
+
+          <Autocomplete
+            options={hospArr}
+            onChange={(event, newValue) => { setHospitalFilter(newValue); }}
+            renderInput={(params) => <TextField {...params} label="Filter Hospital" />}
+            selectOnFocus
+            clearOnBlur
+            handleHomeEndKeys
+            sx={{ width: 250 }}
+          />
+          <br />
+
+          <Autocomplete
+            options={deptArr}
+            onChange={(event, newValue) => { setDepartmentFilter(newValue); }}
+            renderInput={(params) => <TextField {...params} label="Filter Department" />}
+            selectOnFocus
+            clearOnBlur
+            handleHomeEndKeys
+            sx={{ width: 250 }}
+          />
+          <br />
+
+          <Autocomplete
+            options={chapArr}
+            onChange={(event, newValue) => { setChaperoneFilter(newValue); }}
+            renderInput={(params) => <TextField {...params} label="Filter Chaperone" />}
+            selectOnFocus
+            clearOnBlur
+            handleHomeEndKeys
+            sx={{ width: 250 }}
+          />
+          <br />
+          <Button variant="contained" type="submit" sx={{ marginLeft: 11 }}>Submit</Button>
+        </form>
         <br />
-
-        <Autocomplete
-          options={hospArr}
-          onChange={(event, newValue) => { setHospitalFilter(newValue); }}
-          renderInput={(params) => <TextField {...params} label="Filter Hospital" />}
-          selectOnFocus
-          clearOnBlur
-          handleHomeEndKeys
-          sx={{ width: 250 }}
-        />
-        <br />
-
-        <Autocomplete
-          options={deptArr}
-          onChange={(event, newValue) => { setDepartmentFilter(newValue); }}
-          renderInput={(params) => <TextField {...params} label="Filter Department" />}
-          selectOnFocus
-          clearOnBlur
-          handleHomeEndKeys
-          sx={{ width: 250 }}
-        />
-        <br />
-
-        <Autocomplete
-          options={chapArr}
-          onChange={(event, newValue) => { setChaperoneFilter(newValue); }}
-          renderInput={(params) => <TextField {...params} label="Filter Chaperone" />}
-          selectOnFocus
-          clearOnBlur
-          handleHomeEndKeys
-          sx={{ width: 250 }}
-        />
-        <br />
-
-        <Button variant="contained" type="submit">Submit</Button>
-      </form>
-      <div>
-        {successMessage === ''
-          ? <div />
-          : (
-            <div>
-              {successMessage}
-            </div>
-          )}
-      </div>
-    </div>
+        <Typography variant="body2">
+          {successMessage === ''
+            ? <div />
+            : (
+              <div>
+                {successMessage}
+              </div>
+            )}
+        </Typography>
+      </Box>
+    </CardContent>
   );
 }
