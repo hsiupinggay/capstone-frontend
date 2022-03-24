@@ -1,11 +1,10 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
+import { Card } from '@mui/material';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getDate } from '../others/helper';
 
 import MedFrequency from '../molecules/MedFrequency';
@@ -24,9 +23,7 @@ import ReminderRecap from '../molecules/ReminderRecap';
  * ========================================================
  */
 
-function EditMedCard({
-  medicineId, patientId, setOpen,
-}) {
+function EditMedCard() {
   // related to MedName
   const [name, setName] = useState('');
 
@@ -52,6 +49,11 @@ function EditMedCard({
 
   // initiate navigate
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const medicineId = location.state.id;
+  const { patientId } = location.state;
+  console.log('<== location.state ==>', location.state);
 
   useEffect(() => {
     const callBack = async () => {
@@ -99,9 +101,8 @@ function EditMedCard({
   const handleNote = (e) => {
     setNote(e.target.value);
   };
-  // Dates don't work when using e.target.value
   const handlePrescriptionDate = (e) => {
-    setPrescriptionDate(e);
+    setPrescriptionDate(e.target.value);
   };
   const handlePrescriptionQty = (e) => {
     setPrescriptionQty(e.target.value);
@@ -140,8 +141,8 @@ function EditMedCard({
     try {
       const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/edit-med`, data);
       console.log('<== res.data add med ==>', res.data);
-      // close modal, state change will trigger rerender
-      setOpen(false);
+      navigate('/med-list');
+      // need to navigate somewhere after form submit
     } catch (err) {
       console.log(err);
     }
@@ -149,43 +150,56 @@ function EditMedCard({
 
   return (
     <div>
-      {activeStep === 0 && (
-      <MedName name={name} handleName={handleName} title="Edit Medicine" />
-      )}
-      {activeStep === 1 && (
+      <Card>
+        {activeStep === 0 && (
+          <MedName name={name} handleName={handleName} title="Edit Medicine" />
+        )}
+        {activeStep === 1 && (
 
-      <MedFrequency
-        dosage={dosage}
-        handleDosage={handleDosage}
-        dosageCounter={dosageCounter}
-        handleDosageCounter={handleDosageCounter}
-        times={times}
-        handleTimes={handleTimes}
-        duration={duration}
-        handleDuration={handleDuration}
-        asRequiredChecked={asRequiredChecked}
-        handleSwitch={handleSwitch}
-        handleNote={handleNote}
-        note={note}
-      />
-      )}
-      {activeStep === 2 && (
-      <Box sx={{ height: '360px' }}>
-        <Prescription
-          dosageCounter={dosageCounter}
-          prescriptionQty={prescriptionQty}
-          handlePrescriptionDate={handlePrescriptionDate}
-          handlePrescriptionQty={handlePrescriptionQty}
-          reminderChecked={reminderChecked}
-          handleReminder={handleReminder}
-        />
-        <ReminderRecap
-          reminderChecked={reminderChecked}
-          reminderDateTime={reminderDateTime}
-        />
-      </Box>
-      )}
-      <MedStepper setActiveStep={setActiveStep} activeStep={activeStep} handleSubmit={handleSubmit} />
+          <MedFrequency
+            dosage={dosage}
+            handleDosage={handleDosage}
+            dosageCounter={dosageCounter}
+            handleDosageCounter={handleDosageCounter}
+            times={times}
+            handleTimes={handleTimes}
+            duration={duration}
+            handleDuration={handleDuration}
+            asRequiredChecked={asRequiredChecked}
+            handleSwitch={handleSwitch}
+            handleNote={handleNote}
+            note={note}
+
+          />
+        )}
+        {activeStep === 2 && (
+        <div>
+          <Prescription
+            dosageCounter={dosageCounter}
+            prescriptionQty={prescriptionQty}
+            handlePrescriptionDate={handlePrescriptionDate}
+            handlePrescriptionQty={handlePrescriptionQty}
+            reminderChecked={reminderChecked}
+            handleReminder={handleReminder}
+          />
+          <ReminderRecap
+            reminderChecked={reminderChecked}
+            reminderDateTime={reminderDateTime}
+          />
+          {/* <MedReminder
+            handleReminderDays={handleReminderDays}
+            dosage={dosage}
+            times={times}
+            prescriptionQty={prescriptionQty}
+            duration={duration}
+            reminderDays={reminderDays}
+            prescriptionDate={prescriptionDate}
+          /> */}
+        </div>
+
+        )}
+        <MedStepper setActiveStep={setActiveStep} activeStep={activeStep} handleSubmit={handleSubmit} />
+      </Card>
 
     </div>
   );

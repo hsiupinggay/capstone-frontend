@@ -120,7 +120,7 @@ export default function PatientMemoPage() {
 
   return (
     <div>
-      <Tooltip arrow title="Go Back">
+      <Tooltip title="Go Back">
         <ArrowBackIosIcon variant="contained" onClick={() => navigate('/patient')} />
       </Tooltip>
       <br />
@@ -132,10 +132,10 @@ export default function PatientMemoPage() {
             <div>
               {' '}
               Nil memos found
-              <Tooltip arrow title="Filter Memos">
+              <Tooltip title="Filter Memos">
                 <FilterAltIcon variant="contained" onClick={openPopUp} />
               </Tooltip>
-              <Tooltip arrow title="Reset Filters">
+              <Tooltip title="Reset Filters">
                 <RestartAltIcon variant="contained" onClick={resetFilters} />
               </Tooltip>
             </div>
@@ -148,13 +148,13 @@ export default function PatientMemoPage() {
                 {name}
                 's Memos
               </strong>
-              <Tooltip arrow title="Sort By Appointment Date">
+              <Tooltip title="Sort By Appointment Date">
                 <CalendarMonthIcon variant="contained" onClick={sortDate} />
               </Tooltip>
-              <Tooltip arrow title="Filter Memos">
+              <Tooltip title="Filter Memos">
                 <FilterAltIcon variant="contained" onClick={openPopUp} />
               </Tooltip>
-              <Tooltip arrow title="Reset Filters">
+              <Tooltip title="Reset Filters">
                 <RestartAltIcon variant="contained" onClick={resetFilters} />
               </Tooltip>
               <div>

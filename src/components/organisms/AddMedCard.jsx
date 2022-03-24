@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable array-callback-return */
@@ -12,9 +11,11 @@
  * ========================================================
  */
 import React, { useState } from 'react';
-import { Box } from '@mui/material';
+import { Card } from '@mui/material';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { getDate } from '../others/helper';
+import { useMedicalContext } from '../others/store';
 
 import MedFrequency from '../molecules/MedFrequency';
 import Prescription from '../molecules/Prescription';
@@ -31,7 +32,7 @@ import MedReminder from '../molecules/MedReminder';
  * ========================================================
  * ========================================================
  */
-export default function AddMedCard({ setOpen, patientId }) {
+export default function AddMedCard() {
   const [name, setName] = useState('');
 
   //  related to MedFrequency
@@ -54,9 +55,10 @@ export default function AddMedCard({ setOpen, patientId }) {
   // related to stepper
   const [activeStep, setActiveStep] = useState(0);
 
-  // related to error
-  const [error0, setError0] = useState(false);
-  const [errorMessage0, setErrorMessage0] = useState('');
+  const navigate = useNavigate();
+
+  const { store } = useMedicalContext();
+  const { patientId } = store;
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -88,7 +90,7 @@ export default function AddMedCard({ setOpen, patientId }) {
     setNote(e.target.value);
   };
   const handlePrescriptionDate = (e) => {
-    setPrescriptionDate(e);
+    setPrescriptionDate(e.target.value);
   };
   const handlePrescriptionQty = (e) => {
     setPrescriptionQty(e.target.value);
@@ -139,7 +141,7 @@ export default function AddMedCard({ setOpen, patientId }) {
     try {
       const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-medicine`, data);
       console.log('<== res.data add med ==>', res.data);
-      setOpen(false);
+      navigate('/med-list');
     } catch (err) {
       console.log(err);
     }
@@ -147,40 +149,37 @@ export default function AddMedCard({ setOpen, patientId }) {
 
   return (
     <div>
-      {activeStep === 0 && (
-      <div>
-        <MedName
-          handleName={handleName}
-          error0={error0}
-          errorMessage0={errorMessage0}
-          title="Add Medicine"
-        />
-      </div>
-      )}
-      {activeStep === 1 && (
+      <Card>
+        {activeStep === 0 && (
+          <MedName handleName={handleName} title="Add Medicine" />
+        )}
+        {activeStep === 1 && (
 
-      <MedFrequency
-        dosage={dosage}
-        handleDosage={handleDosage}
-        dosageCounter={dosageCounter}
-        handleDosageCounter={handleDosageCounter}
-        times={times}
-        handleTimes={handleTimes}
-        duration={duration}
-        handleDuration={handleDuration}
-        asRequiredChecked={asRequiredChecked}
-        handleSwitch={handleSwitch}
-        handleNote={handleNote}
-        note={note}
-      />
-      )}
-      {activeStep === 2 && (
-        <Box sx={{ height: '360px' }}>
+          <MedFrequency
+            dosage={dosage}
+            handleDosage={handleDosage}
+            dosageCounter={dosageCounter}
+            handleDosageCounter={handleDosageCounter}
+            times={times}
+            handleTimes={handleTimes}
+            duration={duration}
+            handleDuration={handleDuration}
+            asRequiredChecked={asRequiredChecked}
+            handleSwitch={handleSwitch}
+            handleNote={handleNote}
+            note={note}
+
+          />
+        )}
+        {activeStep === 2 && (
+        <div>
           <Prescription
             dosageCounter={dosageCounter}
             handlePrescriptionDate={handlePrescriptionDate}
-            prescriptionDate={prescriptionDate}
             handlePrescriptionQty={handlePrescriptionQty}
+            reminderChecked={reminderChecked}
+            handleReminder={handleReminder}
+            asRequiredChecked={asRequiredChecked}
           />
           <MedReminder
             asRequiredChecked={asRequiredChecked}
@@ -192,18 +191,11 @@ export default function AddMedCard({ setOpen, patientId }) {
             reminderChecked={reminderChecked}
             handleReminder={handleReminder}
           />
-        </Box>
+        </div>
 
-      )}
-      <MedStepper
-        setActiveStep={setActiveStep}
-        activeStep={activeStep}
-        handleSubmit={handleSubmit}
-        name={name}
-        setError0={setError0}
-        setErrorMessage0={setErrorMessage0}
-
-      />
+        )}
+        <MedStepper setActiveStep={setActiveStep} activeStep={activeStep} handleSubmit={handleSubmit} />
+      </Card>
 
     </div>
   );

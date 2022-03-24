@@ -31,7 +31,7 @@ function MedReminder({
   handleReminderDays, reminderDays, reminderDate, handleReminderTime, reminderTime, reminderChecked, asRequiredChecked, handleReminder,
 }) {
   return (
-    <CardContent sx={{ mt: '-20px' }}>
+    <CardContent>
       <Stack
         spacing={2}
       >
@@ -60,38 +60,35 @@ function MedReminder({
               />
 
           )}
-            label="Refill Reminder"
+            label="Remind me to refill"
           />
 
         )}
 
-        <Stack
-          direction="row"
-          spacing={1}
-          justifyContent="space-between"
-        >
-
-          <TextField value={reminderDays} variant="outlined" label="Days before finish" onChange={handleReminderDays} disabled={!reminderChecked} />
-          <LocalizationProvider dateAdapter={DateAdapter}>
-            <TimePicker
-              label="Time"
-              value={reminderTime}
-              onChange={handleReminderTime}
-              disabled={!reminderChecked}
-              renderInput={(params) => <TextField {...params} sx={{ width: '150px' }} />}
-
-            />
-          </LocalizationProvider>
-        </Stack>
+        <TextField value={reminderDays} variant="outlined" label="Days before finish" onChange={handleReminderDays} disabled={!reminderChecked} />
         {reminderChecked && (
-        <div>
-          <Typography variant="body2" color="secondary">
-            {/* reminderDate.getMonth() returns a number from 0-11 hence +1 to get actual month */}
-            {`Remind me on ${reminderDate.getMonth() + 1}/${reminderDate.getDate()}/${reminderDate.getFullYear()}`}
-          </Typography>
+          <div>
+            <Typography variant="body1">
+              Reminder will be sent on
+            </Typography>
 
-        </div>
+            <Typography varient="body1">
+              {/* reminderDate.getMonth() returns a number from 0-11 hence +1 to get actual month */}
+              {`${reminderDate.getMonth() + 1}/${reminderDate.getDate()}/${reminderDate.getFullYear()}`}
+            </Typography>
+
+          </div>
         )}
+
+        <LocalizationProvider dateAdapter={DateAdapter}>
+          <TimePicker
+            label="Time"
+            value={reminderTime}
+            onChange={handleReminderTime}
+            disabled={!reminderChecked}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </LocalizationProvider>
       </Stack>
     </CardContent>
   );

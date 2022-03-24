@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-underscore-dangle */
@@ -13,10 +12,9 @@
  */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {
-  TextField, Typography, Button, CardContent, Stack,
-} from '@mui/material';
+import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import Button from '@mui/material/Button';
 import { useMedicalContext } from '../others/store';
 
 /*
@@ -93,59 +91,51 @@ export default function AddChaperoneTruncated({ name, setChaperonesArr }) {
       { contacts === undefined
         ? <div />
         : (
-          <CardContent>
-            <Stack
-              spacing={4}
-            >
-              <Typography variant="h2">
-                {`Add a Chaperone for ${name}`}
-              </Typography>
-              <form onSubmit={handleSubmit}>
-                <Stack
-                  spacing={4}
-                  justifyContent="center"
-                >
-                  <Autocomplete
-                    options={contacts}
-                    onChange={(event, newValue) => { updateChaperone(newValue.value); }}
-                    renderInput={(params) => <TextField {...params} label="Add Chaperone" required />}
-                    filterOptions={(options, params) => {
-                      const filtered = filter(options, params);
-                      const { inputValue } = params;
-                      // Suggest the creation of a new value
-                      const isExisting = options.some((option) => inputValue === option.label);
-                      if (inputValue !== '' && !isExisting) {
-                        filtered.push({
-                          inputValue,
-                          label: `Add "${inputValue}"`,
-                          value: inputValue,
-                        });
-                      }
-                      return filtered;
-                    }}
-                    selectOnFocus
-                    clearOnBlur
-                    handleHomeEndKeys
-                    sx={{ width: 250 }}
-                  />
-                  <Button variant="contained" type="submit">Submit</Button>
-                </Stack>
-              </form>
-              <div>
-                {successMessage === ''
-                  ? (
-                    <Typography variant="body2" color="secondary">
-                      If you would like to add another app user as chaperone, be sure to add them as your contact first.
-                    </Typography>
-                  )
-                  : (
-                    <Typography variant="body2" color="secondary">
-                      {successMessage}
-                    </Typography>
-                  )}
-              </div>
-            </Stack>
-          </CardContent>
+          <div>
+            <strong>
+              {' '}
+              You are adding a chaperone for
+              {' '}
+              {name}
+            </strong>
+            <form onSubmit={handleSubmit}>
+
+              <Autocomplete
+                options={contacts}
+                onChange={(event, newValue) => { updateChaperone(newValue.value); }}
+                renderInput={(params) => <TextField {...params} label="Add Chaperone" required />}
+                filterOptions={(options, params) => {
+                  const filtered = filter(options, params);
+                  const { inputValue } = params;
+                  // Suggest the creation of a new value
+                  const isExisting = options.some((option) => inputValue === option.label);
+                  if (inputValue !== '' && !isExisting) {
+                    filtered.push({
+                      inputValue,
+                      label: `Add "${inputValue}"`,
+                      value: inputValue,
+                    });
+                  }
+                  return filtered;
+                }}
+                selectOnFocus
+                clearOnBlur
+                handleHomeEndKeys
+                sx={{ width: 250 }}
+              />
+              <br />
+              <Button variant="contained" type="submit">Submit</Button>
+            </form>
+            <div>
+              {successMessage === ''
+                ? <div />
+                : (
+                  <div>
+                    {successMessage}
+                  </div>
+                )}
+            </div>
+          </div>
         )}
     </div>
   );

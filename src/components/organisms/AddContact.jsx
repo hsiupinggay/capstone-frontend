@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable max-len */
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-underscore-dangle */
@@ -16,12 +17,7 @@ import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import axios from 'axios';
-import {
-  Typography, Button, CardContent, Stack,
-} from '@mui/material';
 import { useMedicalContext } from '../others/store';
-import addContactPopupStyles from './AddContactCss';
-
 /*
  * ========================================================
  * ========================================================
@@ -99,39 +95,39 @@ export default function AddContact({ setOutgoingPendingList }) {
       {
         otherUsersList === undefined
           ? (
-            <div />
+            <div>
+              <strong>Add Contact</strong>
+            </div>
           )
           : (
-            <CardContent>
-              <Stack
-                spacing={3}
-              >
-                <Typography variant="h2">
-                  Add Contact
-                </Typography>
+            <div>
+              <strong>Add Contact</strong>
+              <br />
+              <br />
+              <div>
                 <Autocomplete
                   options={otherUsersList}
                   getOptionLabel={(option) => `${option.identity.name.first} ${option.identity.name.last}`}
-                  renderInput={(params) => <TextField {...params} label="Add Contact" sx={addContactPopupStyles.inputField} required />}
+                  renderInput={(params) => <TextField {...params} label="Add Contact" required />}
                   onChange={(event, newValue) => { updateContactValues(newValue); }}
                   selectOnFocus
                   clearOnBlur
                   handleHomeEndKeys
+                  sx={{ width: 250 }}
                 />
-
-                <Button variant="contained" type="submit" onClick={sendRequest}>Submit</Button>
-
+                <br />
+                <button type="button" onClick={sendRequest}>Submit </button>
                 <div>
                   {successMessage === ''
                     ? <div />
                     : (
-                      <Typography variant="body1" sx={{ textAlign: 'center' }}>
+                      <div>
                         {successMessage}
-                      </Typography>
+                      </div>
                     )}
                 </div>
-              </Stack>
-            </CardContent>
+              </div>
+            </div>
           )
       }
     </div>

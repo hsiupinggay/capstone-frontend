@@ -40,13 +40,11 @@ export default function MedFrequency({
   const handleColor = asRequiredChecked ? '#bcbcbc' : '#000000';
   return (
     <div>
-      <CardContent sx={{ height: '360px' }}>
+      <CardContent>
         <Stack
           spacing={1}
           direction="row"
           justifyContent="space-between"
-          alignItems="center"
-          mb={2}
         >
           <Typography variant="h3">Take</Typography>
           <FormControlLabel
@@ -81,15 +79,14 @@ export default function MedFrequency({
                 onChange={handleDosage}
                 value={dosage}
                 disabled={asRequiredChecked}
-                sx={{ width: '130px' }}
               />
             </FormControl>
-            <FormControl sx={{ width: '120px' }}>
-              <InputLabel id="Dosage Counter">Counter</InputLabel>
+            <FormControl fullWidth>
+              <InputLabel id="Dosage Counter">Dosage Counter</InputLabel>
               <Select
                 value={dosageCounter}
                 onChange={handleDosageCounter}
-                label="Counter"
+                label="Dosage Counter"
                 name="Dosage Counter"
               >
                 <MenuItem value="pills">
@@ -112,7 +109,6 @@ export default function MedFrequency({
             spacing={1}
             direction="row"
             alignItems="center"
-            justifyContent="space-between"
           >
             <FormControl>
               <TextField
@@ -124,17 +120,18 @@ export default function MedFrequency({
                 value={times}
                 onChange={handleTimes}
                 disabled={asRequiredChecked}
-                sx={{ width: '130px' }}
               />
             </FormControl>
             <Typography variant="body1" color={handleColor}>{times === '1' ? 'Time' : 'Times'}</Typography>
+
           </Stack>
           <Stack
             spacing={1}
             direction="row"
             alignItems="center"
-            justifyContent="space-between"
+            justifyContent="space-around"
           >
+            {' '}
             <Typography variant="body1" color={handleColor}>Every</Typography>
             <FormControl>
               <TextField
@@ -146,7 +143,6 @@ export default function MedFrequency({
                 onChange={handleDuration}
                 disabled={asRequiredChecked}
                 value={duration}
-                sx={{ width: '130px' }}
               />
             </FormControl>
 

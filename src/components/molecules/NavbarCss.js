@@ -9,6 +9,7 @@ const navStyles = {
   },
 
   toolBar: {
+    mr: 2,
     display: {
       xs: 'none',
       sm: 'flex',
@@ -50,16 +51,16 @@ const navStyles = {
       lg: 15,
       xl: 18,
     },
-    paddingLeft: {
-      sm: 0,
-      md: 2,
-      lg: 2,
-    },
-    paddingRight: {
-      sm: 0,
-      md: 2,
-      lg: 2,
-    },
+    // paddingLeft: {
+    //   sm: 0,
+    //   md: 2,
+    //   lg: 2,
+    // },
+    // paddingRight: {
+    //   sm: 0,
+    //   md: 2,
+    //   lg: 2,
+    // },
     backgroundColor: '#22577A',
     color: '#ffffff',
     '&:hover': {
