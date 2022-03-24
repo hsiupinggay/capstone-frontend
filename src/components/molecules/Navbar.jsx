@@ -11,14 +11,14 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import {
-  Box, AppBar, Toolbar, Typography, Button, Avatar,
+  Box, AppBar, Toolbar, Typography, Button, Avatar, Menu, MenuItem,
 } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import HomeIcon from '@mui/icons-material/Home';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import ContactPageIcon from '@mui/icons-material/ContactPage';
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+// import ContactPageIcon from '@mui/icons-material/ContactPage';
+// import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { useMedicalContext, logout } from '../others/store';
 import { getNameInitials } from '../others/helper';
@@ -63,6 +63,14 @@ export default function NavBar() {
   const navigate = useNavigate();
   const { store, dispatch } = useMedicalContext();
   const { photo, firstName, lastName } = store;
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   // Function to logout
   // Clears local storage and all user info
@@ -70,14 +78,15 @@ export default function NavBar() {
   const handleLogout = () => {
     logout(dispatch);
     navigate('/auth');
+    handleClose();
   };
 
   return (
     <div>
       <AppBar sx={navStyles.appBar}>
         <Toolbar sx={navStyles.toolBar}>
-          <Typography sx={navStyles.appName}>
-            MedicalApp
+          <Typography variant="h2" sx={navStyles.appName}>
+            KEEP
           </Typography>
           <Box sx={navStyles.navContainer}>
             {pathArray.map((e) => (
@@ -129,39 +138,52 @@ export default function NavBar() {
         >
           <BottomNavigationAction
             value="/"
-            label="Home"
             icon={<HomeIcon />}
             sx={navStyles.bottomNavBtn}
           />
           <BottomNavigationAction
             value="/appointments"
-            label="Appointments"
             icon={<CalendarMonthIcon />}
             sx={navStyles.bottomNavBtn}
 
           />
           <BottomNavigationAction
             value="/contacts"
-            label="Contacts"
             icon={<PeopleAltIcon />}
             sx={navStyles.bottomNavBtn}
 
           />
+
           <BottomNavigationAction
-            value="/profile"
-            label="Profile"
-            icon={<ContactPageIcon />}
+            onClick={handleClick}
+            icon={(
+              <Box sx={navStyles.navProfilePic}>
+                {!photo && <Avatar sx={{ width: 40, height: 40 }}>{getNameInitials(firstName, lastName)}</Avatar>}
+                {photo && <Avatar sx={{ width: 40, height: 40 }} alt="profile" src={photo} />}
+              </Box>
+)}
             sx={navStyles.bottomNavBtn}
 
           />
-          <BottomNavigationAction
-            value="/auth"
-            onClick={handleLogout}
-            label="Logout"
-            icon={<PowerSettingsNewIcon />}
-            sx={navStyles.bottomNavBtn}
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem onClick={() => {
+              navigate('/profile');
+              handleClose();
+            }}
+            >
+              Profile
 
-          />
+            </MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </Menu>
         </BottomNavigation>
       </Box>
       <Outlet />

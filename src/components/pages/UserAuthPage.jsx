@@ -25,7 +25,7 @@ export default function UserAuthPage() {
   return (
     <Box sx={authStyle.mainContainer}>
       <Typography sx={authStyle.appName}>
-        APP NAME
+        KEEP
       </Typography>
       <Box sx={authStyle.loginContainer}>
         <AuthCard />

@@ -40,40 +40,25 @@ const mainTheme = createTheme(
       },
     },
     typography: {
+      fontFamily: 'Quicksand',
       h1: {
         fontFamily: 'Quicksand',
         fontWeight: 700,
-        fontSize: '2rem',
+        fontSize: '3rem',
         lineHeight: 1.167,
         letterSpacing: '0em',
       },
       h2: {
         fontFamily: 'Quicksand',
-        fontSize: '1.5rem',
+        fontSize: '2rem',
         letterSpacing: '0.00857em',
         fontWeight: 700,
       },
       h3: {
         fontFamily: 'Quicksand',
-        fontSize: '1.2rem',
+        fontSize: '1.5rem',
         lineHeight: 1.334,
         fontWeight: 600,
-      },
-      h4: {
-        fontFamily: 'Quicksand',
-        fontSize: '1rem',
-        lineHeight: 1,
-        fontWeight: 500,
-      },
-      body1: {
-        fontFamily: 'Roboto',
-        fontSize: 14,
-        fontWeight: 400,
-      },
-      body2: {
-        fontSize: 12,
-        textTransform: 'uppercase',
-        fontWeight: 400,
       },
       button: {
         fontSize: 13,
@@ -88,11 +73,15 @@ const mainTheme = createTheme(
         lineHeight: 1.334,
         fontWeight: 500,
       },
-      h5: {
-        fontSize: '1rem',
-        lineHeight: 1.5,
-        fontWeight: 600,
-        letterSpacing: '0.01em',
+    },
+    breakpoints: {
+      values: {
+        xxs: 0,
+        xs: 400,
+        sm: 600,
+        md: 900,
+        lg: 1200,
+        xl: 1500,
       },
     },
   },

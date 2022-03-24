@@ -2,37 +2,26 @@ const navStyles = {
   appBar: {
     backgroundColor: 'primary',
     display: {
-      xxs: 'none',
       xs: 'none',
       sm: 'flex',
     },
   },
 
   toolBar: {
+    mr: 2,
     display: {
       xs: 'none',
       sm: 'flex',
     },
-
   },
 
   appName: {
     fontVariant: 'h1',
+    mr: 2,
     component: 'div',
-    marginLeft: {
-      lg: 8,
-      md: 7,
-      sm: 0,
-    },
-    marginRight: {
-      lg: 6,
-      md: 4,
-      sm: 0,
-    },
-
     fontSize: {
-      sm: 16,
-      md: 21,
+      sm: 21,
+      md: 25,
       lg: 25,
     },
   },
@@ -40,26 +29,15 @@ const navStyles = {
   navContainer: {
     backgroundColor: '#22577A',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'start',
     flexGrow: 1,
   },
 
   navBtn: {
     fontSize: {
-      sm: 10,
-      md: 13,
+      sm: 13,
+      md: 14,
       lg: 15,
-      xl: 18,
-    },
-    paddingLeft: {
-      sm: 0,
-      md: 2,
-      lg: 2,
-    },
-    paddingRight: {
-      sm: 0,
-      md: 2,
-      lg: 2,
     },
     backgroundColor: '#22577A',
     color: '#ffffff',
@@ -104,7 +82,6 @@ const navStyles = {
   },
 
   bottomNavContainer: {
-    zIndex: 1,
     display: {
       sm: 'none',
       xs: 'block',
