@@ -17,7 +17,6 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import HomeIcon from '@mui/icons-material/Home';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import SickIcon from '@mui/icons-material/Sick';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
@@ -38,10 +37,6 @@ const pathArray = [{
 }, {
   path: '/appointments',
   name: 'Appointments',
-},
-{
-  path: '/patients',
-  name: 'Patients',
 },
 {
   path: '/contacts',
@@ -142,13 +137,6 @@ export default function NavBar() {
             value="/appointments"
             label="Appointments"
             icon={<CalendarMonthIcon />}
-            sx={navStyles.bottomNavBtn}
-
-          />
-          <BottomNavigationAction
-            value="/patients"
-            label="Patients"
-            icon={<SickIcon />}
             sx={navStyles.bottomNavBtn}
 
           />
