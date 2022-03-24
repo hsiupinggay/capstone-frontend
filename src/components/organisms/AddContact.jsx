@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable max-len */
-/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-underscore-dangle */
@@ -17,7 +16,9 @@ import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import axios from 'axios';
-import { Typography, Box, Button } from '@mui/material';
+import {
+  Typography, Button, CardContent, Stack,
+} from '@mui/material';
 import { useMedicalContext } from '../others/store';
 import addContactPopupStyles from './AddContactCss';
 
@@ -101,30 +102,36 @@ export default function AddContact({ setOutgoingPendingList }) {
             <div />
           )
           : (
-            <Box sx={addContactPopupStyles.inputContainer}>
-              <Typography sx={addContactPopupStyles.title}><strong>Send Request to a Contact</strong></Typography>
-              <Autocomplete
-                options={otherUsersList}
-                getOptionLabel={(option) => `${option.identity.name.first} ${option.identity.name.last}`}
-                renderInput={(params) => <TextField {...params} label="Add Contact" sx={addContactPopupStyles.inputField} required />}
-                onChange={(event, newValue) => { updateContactValues(newValue); }}
-                selectOnFocus
-                clearOnBlur
-                handleHomeEndKeys
-              />
-              <Box sx={addContactPopupStyles.submitBtn}>
+            <CardContent>
+              <Stack
+                spacing={3}
+              >
+                <Typography variant="h2">
+                  Add Contact
+                </Typography>
+                <Autocomplete
+                  options={otherUsersList}
+                  getOptionLabel={(option) => `${option.identity.name.first} ${option.identity.name.last}`}
+                  renderInput={(params) => <TextField {...params} label="Add Contact" sx={addContactPopupStyles.inputField} required />}
+                  onChange={(event, newValue) => { updateContactValues(newValue); }}
+                  selectOnFocus
+                  clearOnBlur
+                  handleHomeEndKeys
+                />
+
                 <Button variant="contained" type="submit" onClick={sendRequest}>Submit</Button>
-              </Box>
-              <div>
-                {successMessage === ''
-                  ? <div />
-                  : (
-                    <Typography sx={addContactPopupStyles.outcomeMessage}>
-                      {successMessage}
-                    </Typography>
-                  )}
-              </div>
-            </Box>
+
+                <div>
+                  {successMessage === ''
+                    ? <div />
+                    : (
+                      <Typography variant="body1" sx={{ textAlign: 'center' }}>
+                        {successMessage}
+                      </Typography>
+                    )}
+                </div>
+              </Stack>
+            </CardContent>
           )
       }
     </div>

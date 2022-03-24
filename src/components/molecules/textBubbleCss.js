@@ -3,16 +3,10 @@ const textStyles = {
     display: 'inline',
     borderRadius: 3,
     p: 1,
-    bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#dcf8cf'),
-    boxShadow: '0 10px 6px -6px #777',
+    bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#d7ebce'),
+    boxShadow: '0 10px 6px -6px #adadad',
     marginRight: 2,
-    maxWidth: {
-      lg: 500,
-      md: 400,
-      sm: 300,
-      xs: 200,
-    },
-    marginBottom: 0.5,
+    marginBottom: 1,
   },
 
   texteeBubble: {
@@ -20,36 +14,23 @@ const textStyles = {
     borderRadius: 3,
     p: 1,
     bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
-    boxShadow: '0 10px 6px -6px #777',
+    boxShadow: '0 10px 6px -6px #adadad',
     marginLeft: 2,
-    maxWidth: {
-      lg: 500,
-      md: 400,
-      sm: 300,
-      xs: 200,
-    },
+    marginBottom: 1,
   },
 
   textMessage: {
-    fontSize: {
-      lg: 21,
-      md: 19,
-      sm: 17,
-      xs: 15,
-    },
-    color: '#000',
+    fontSize: 15,
   },
 
   timeStamp: {
     fontSize: {
-      lg: 12,
-      md: 10,
-      sm: 9,
-      xs: 8,
+      sm: 10,
+      xs: 9,
     },
     display: 'flex',
     justifyContent: 'end',
-    color: '#000',
+    color: '#999999',
   },
 };
 

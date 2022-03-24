@@ -1,4 +1,43 @@
-const homePageStyles = {
+const patientProfilePageStyles = {
+  backIcon: {
+    fontSize: {
+      xs: 46,
+      sm: 48,
+      md: 50,
+      lg: 53,
+      xl: 55,
+    },
+    marginTop: {
+      xs: 0.6,
+      sm: 1,
+      md: 1.2,
+      lg: 1.4,
+      xl: 1.6,
+    },
+    marginRight: 2,
+    color: '#22577A',
+  },
+
+  modalStyle: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: {
+      md: 600,
+      sm: 500,
+      xs: 475,
+    },
+    height: 600,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+    overflow: 'scroll',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+
   titleFont: {
     fontSize: {
       xs: 35,
@@ -13,14 +52,23 @@ const homePageStyles = {
     textShadow: '1px 1px black',
   },
 
-  apptReminder: {
+  relationship: {
     fontSize: {
-      xs: 13,
-      sm: 14,
-      md: 15,
-      lg: 16,
-      xl: 18,
+      xs: 15,
+      sm: 18,
+      md: 20,
+      lg: 22,
+      xl: 25,
     },
+    fontWeight: 600,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  headerIconContainer: {
+    display: 'flex',
+    justifyContent: 'center',
   },
 
   headerContainer: {
@@ -39,11 +87,11 @@ const homePageStyles = {
 
   allCategoryContainer: {
     paddingTop: {
-      xs: 10,
-      sm: 9,
-      md: 8,
-      lg: 7,
-      xl: 6,
+      xs: 9,
+      sm: 7,
+      md: 6,
+      lg: 5.5,
+      xl: 4.5,
     },
   },
 
@@ -85,11 +133,11 @@ const homePageStyles = {
     alignItems: 'center',
     flexDirection: 'column',
     fontSize: {
-      xs: 26,
-      sm: 27,
-      md: 28,
-      lg: 29,
-      xl: 34,
+      xs: 18,
+      sm: 20,
+      md: 22,
+      lg: 24,
+      xl: 29,
     },
     fontWeight: 600,
     color: '#fff',
@@ -114,4 +162,4 @@ const homePageStyles = {
 
 };
 
-export default homePageStyles;
+export default patientProfilePageStyles;

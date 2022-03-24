@@ -1,3 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
+/* eslint-disable max-len */
 /*
  * ========================================================
  * ========================================================
@@ -29,7 +36,9 @@ function classNames(...classes) {
  * ========================================================
  * ========================================================
  */
-export default function AppointmentCalendar({ displayDataArray, setOpenApptModal, setApptModalType }) {
+export default function AppointmentCalendar({
+  displayDataArray, setOpenApptModal, setApptModalType, setApptPopupDetails,
+}) {
   // Get today's date
   const stateDate = new Date();
   // Set state to toggle between month views
@@ -42,9 +51,10 @@ export default function AppointmentCalendar({ displayDataArray, setOpenApptModal
   const [popoverText, setPopoverText] = useState('');
 
   // Popover Handlers
-  const handleOpen = (event, eventText) => {
+  const handleOpen = (event, eventText, apptObj) => {
     setAnchorEl(event.currentTarget);
     setPopoverText(eventText);
+    setApptPopupDetails(apptObj);
   };
 
   const handleClose = () => {
@@ -90,18 +100,18 @@ export default function AppointmentCalendar({ displayDataArray, setOpenApptModal
   // maps data to events and display accordingly
   useEffect(() => {
     if (!displayDataArray) return; // handles error if axios call still not done
-    let updatedEvents = []
-    
+    let updatedEvents = [];
+
     // after there is userDataArray... map to events
-    displayDataArray.forEach(patient => {
-      const { identity, appointments } = patient
+    displayDataArray.forEach((patient) => {
+      const { identity, appointments, _id } = patient;
       const displayName = `${identity.name.first} ${identity.name.last}`;
       const displayArray = [];
-      appointments.forEach(appointment => {
+      appointments.forEach((appointment) => {
         // operate on appointment.date -> string 'DD-MMM-YYYY'
         const appointmentDate = appointment.date.split('-');
         const appointmentDay = Number(appointmentDate[0]);
-        const appointmentMonth = Number(monthNames.findIndex(month => month === appointmentDate[1]));
+        const appointmentMonth = Number(monthNames.findIndex((month) => month === appointmentDate[1]));
         const appointmentYear = Number(appointmentDate[2]);
 
         const appointmentObject = {
@@ -110,6 +120,23 @@ export default function AppointmentCalendar({ displayDataArray, setOpenApptModal
           event_title: `${appointment.time}: ${displayName} @ ${appointment.hospital.name}, ${appointment.hospital.department}`,
           event_theme: 'blue', // blue red yellow green purple
           id: appointment._id,
+          apptObj: {
+            patientName: displayName,
+            patientId: _id,
+            appointmentId: appointment._id,
+            date: appointment.date,
+            time: appointment.time,
+            hospital: appointment.hospital.name,
+            department: appointment.hospital.department,
+            chaperone: appointment.chaperone !== undefined ? appointment.chaperone.name : '',
+            chaperoneId: appointment.chaperone !== undefined ? appointment.chaperone.chaperoneId : '',
+            notes: appointment.notes !== undefined ? {
+              userImage: appointment.notes.userImage || '',
+              userName: `${appointment.notes.userName.first} ${appointment.notes.userName.last}`,
+              date: appointment.notes.date,
+              note: appointment.notes.note,
+            } : '',
+          },
         };
         displayArray.push(appointmentObject);
       });
@@ -117,7 +144,7 @@ export default function AppointmentCalendar({ displayDataArray, setOpenApptModal
     });
     setEvents(updatedEvents);
   }, [displayDataArray]);
-  
+
   // Arrow button classNames
   const btnClass = (limit) => classNames(
     month === limit ? 'cursor-not-allowed opacity-25' : '',
@@ -151,7 +178,11 @@ export default function AppointmentCalendar({ displayDataArray, setOpenApptModal
     }
   };
 
-  // handle onClick on events to display full details
+  // Handle onClick on events to display full details
+  const openModal = () => {
+    setOpenApptModal(true);
+    setApptModalType('view-full-appointment');
+  };
 
   return (
     <>
@@ -206,7 +237,7 @@ export default function AppointmentCalendar({ displayDataArray, setOpenApptModal
                   <div className="overflow-y-auto mt-1 h-16">
                     {events.filter((e) => new Date(e.event_date).toDateString()
                     === new Date(year, month, date).toDateString()).map((e) => (
-                      <div key={e.id} className={classNames(eventClass(e.event_theme), 'px-2 py-1 rounded-lg mt-1 overflow-hidden border')} onClick={(event) => handleOpen(event, e.event_title)}>
+                      <div key={e.id} className={classNames(eventClass(e.event_theme), 'px-2 py-1 rounded-lg mt-1 overflow-hidden border')} onClick={(event) => handleOpen(event, e.event_title, e.apptObj)}>
                         <Typography><p className="text-[8px] sm:text-sm truncate leading-tight">{e.event_title}</p></Typography>
                       </div>
                     ))}
@@ -224,7 +255,7 @@ export default function AppointmentCalendar({ displayDataArray, setOpenApptModal
                 }}
               >
                 <Typography sx={{ p: 2 }}>{popoverText}</Typography>
-                <Button onClick={(e) => {setOpenApptModal(true); setApptModalType('edit')}}>Edit</Button>
+                <Button onClick={openModal}>View Full Appointment</Button>
               </Popover>
             </div>
           </div>

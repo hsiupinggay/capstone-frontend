@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useReducer } from 'react';
 
 /*
@@ -15,7 +16,7 @@ const initialState = {
   modalType: '',
   filters: '',
   userDataArray: [],
-}
+};
 
 /*
  * ========================================================
@@ -30,21 +31,21 @@ const initialState = {
 const ACTIONS = {
   GET_DATA: 'get data',
   CHANGE_VIEW: 'change view',
-}
+};
 
 export function getDataAction(payload) {
-  console.log('running getDataAction()')
+  console.log('running getDataAction()');
   return {
     type: ACTIONS.GET_DATA,
     payload,
-  }
+  };
 }
 
 export function changeViewAction() {
-  console.log('running changeViewAction()')
+  console.log('running changeViewAction()');
   return {
     type: ACTIONS.CHANGE_VIEW,
-  }
+  };
 }
 
 /*
@@ -59,7 +60,7 @@ export function changeViewAction() {
 export function apptReducer(state, action) {
   switch (action.type) {
     case ACTIONS.GET_DATA:
-      console.log(state, action)
+      console.log(state, action);
       console.log(state.userDataArray);
       return {
         ...state,
@@ -69,7 +70,7 @@ export function apptReducer(state, action) {
       return {
         ...state,
         view: !state.view,
-      }
+      };
 
     default:
       return state;

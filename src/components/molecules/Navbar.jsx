@@ -17,11 +17,10 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import HomeIcon from '@mui/icons-material/Home';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import SickIcon from '@mui/icons-material/Sick';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import { useMedicalContext } from '../others/store';
+import { useMedicalContext, logout } from '../others/store';
 import { getNameInitials } from '../others/helper';
 import navStyles from './NavbarCss';
 
@@ -40,20 +39,12 @@ const pathArray = [{
   name: 'Appointments',
 },
 {
-  path: '/patients',
-  name: 'Patients',
-},
-{
   path: '/contacts',
   name: 'Contacts',
 },
 {
   path: '/profile',
   name: 'Profile',
-},
-{
-  path: '/logout',
-  name: 'Logout',
 },
 ];
 
@@ -70,8 +61,16 @@ const pathArray = [{
 export default function NavBar() {
   const [value, setValue] = useState();
   const navigate = useNavigate();
-  const { store } = useMedicalContext();
+  const { store, dispatch } = useMedicalContext();
   const { photo, firstName, lastName } = store;
+
+  // Function to logout
+  // Clears local storage and all user info
+  // Navigates to login page
+  const handleLogout = () => {
+    logout(dispatch);
+    navigate('/auth');
+  };
 
   return (
     <div>
@@ -90,6 +89,13 @@ export default function NavBar() {
                 {e.name}
               </Button>
             ))}
+            <Button
+              onClick={handleLogout}
+              sx={navStyles.navBtn}
+            >
+              Logout
+
+            </Button>
           </Box>
 
           <Box
@@ -135,13 +141,6 @@ export default function NavBar() {
 
           />
           <BottomNavigationAction
-            value="/patients"
-            label="Patients"
-            icon={<SickIcon />}
-            sx={navStyles.bottomNavBtn}
-
-          />
-          <BottomNavigationAction
             value="/contacts"
             label="Contacts"
             icon={<PeopleAltIcon />}
@@ -156,7 +155,8 @@ export default function NavBar() {
 
           />
           <BottomNavigationAction
-            value="/logout"
+            value="/auth"
+            onClick={handleLogout}
             label="Logout"
             icon={<PowerSettingsNewIcon />}
             sx={navStyles.bottomNavBtn}

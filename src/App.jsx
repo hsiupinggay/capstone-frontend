@@ -26,7 +26,6 @@ import HomePage from './components/pages/HomePage';
 import AppointmentsPage from './components/pages/AppointmentsPage';
 import ContactsPage from './components/pages/ContactsPage';
 import ProfilePage from './components/pages/ProfilePage';
-import LogoutPage from './components/pages/LogoutPage';
 import AddAppointment from './components/organisms/AddAppointment';
 import AddPatient from './components/organisms/AddPatient';
 import AddHospital from './components/organisms/AddHospital';
@@ -36,16 +35,16 @@ import AddChaperone from './components/organisms/AddChaperone';
 import EditProfile from './components/organisms/EditProfile';
 import ViewProfile from './components/organisms/ViewProfile';
 import AddMedPage from './components/pages/AddMedPage';
-import MedList from './components/organisms/MedList';
 import EditMedCard from './components/organisms/EditMedCard';
 import NavBar from './components/molecules/Navbar';
-import PatientListPage from './components/pages/PatientListPage';
 import PatientProfilePage from './components/pages/PatientProfilePage';
 import PatientVisitLocationPage from './components/pages/PatientVisitLocationPage';
 import PatientMemoPage from './components/pages/PatientMemoPage';
 import ChatRoomPage from './components/pages/ChatRoomPage';
 import PSEUDOAPPTPAGE from './components/organisms/PSEUDOAPPTPAGE';
+import PSEUDOAPPTPAGE2 from './components/organisms/PSEUDOAPPTPAGE2';
 import style from './AppCss';
+import MedicationPage from './components/pages/MedicationPage';
 
 /*
  * ========================================================
@@ -129,11 +128,7 @@ export default function App() {
                       <Route path="add-hospital" element={<AddHospital />} />
                       <Route path="add-department" element={<AddDepartment />} />
                       <Route path="add-chaperone" element={<AddChaperone />} />
-                      <Route
-                        exact
-                        path="patients"
-                        element={<PatientListPage />}
-                      />
+
                       <Route
                         exact
                         path="patient"
@@ -143,20 +138,21 @@ export default function App() {
                       <Route path="chat" element={<ChatRoomPage />} />
                       <Route path="patient-memos" element={<PatientMemoPage />} />
                       <Route path="add-med" element={<AddMedPage />} />
-                      <Route path="med-list" element={<MedList />} />
+                      <Route path="med-list" element={<MedicationPage />} />
                       <Route path="edit-med" element={<EditMedCard />} />
                       <Route
                         exact
                         path="/test"
                         element={<PSEUDOAPPTPAGE />}
                       />
+                      <Route
+                        exact
+                        path="/test2"
+                        element={<PSEUDOAPPTPAGE2 />}
+                      />
                     </Route>
                   </Route>
-                  <Route
-                    exact
-                    path="/logout"
-                    element={<LogoutPage />}
-                  />
+
                 </Routes>
               </div>
             </Box>

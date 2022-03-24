@@ -121,7 +121,7 @@ export default function PatientMemoPage() {
 
   return (
     <div>
-      <Tooltip title="Go Back">
+      <Tooltip arrow title="Go Back">
         <ArrowBackIosIcon variant="contained" onClick={() => navigate('/patient')} />
       </Tooltip>
       <br />
@@ -135,7 +135,7 @@ export default function PatientMemoPage() {
               <Tooltip title="Filter Memos">
                 <FilterAltIcon variant="contained" onClick={openPopUp} />
               </Tooltip>
-              <Tooltip title="Reset Filters">
+              <Tooltip arrow title="Reset Filters">
                 <RestartAltIcon variant="contained" onClick={resetFilters} />
               </Tooltip>
             </Box>

@@ -5,28 +5,26 @@ const contactPageStyles = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: {
-      md: 600,
-      sm: 500,
-      xs: 475,
-    },
-    height: 600,
+    width: 300,
+    height: 300,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    border: 'none',
+    borderRadius: '20px',
     boxShadow: 24,
-    p: 4,
-    overflow: 'scroll',
-    display: 'flex',
-    justifyContent: 'center',
+    p: 1,
   },
 
   title: {
-    fontSize: 25,
-    fontWeight: 600,
+    fontSize: 24,
+    fontWeight: 700,
+    color: '#22577A',
   },
 
-  addIcon: {
-    fontSize: 50,
+  bigIcon: {
+    fontSize: {
+      sm: 30,
+      xs: 28,
+    },
     color: '#22577A',
     '&:hover': {
       color: '#3486bb',
@@ -40,99 +38,68 @@ const contactPageStyles = {
   },
 
   avatar: {
-    width: 70,
-    height: 70,
+    width: {
+      xl: 67,
+      lg: 65,
+      md: 60,
+      sm: 55,
+      xs: 50,
+    },
+    height: {
+      xl: 67,
+      lg: 65,
+      md: 60,
+      sm: 55,
+      xs: 50,
+    },
   },
 
   smallAvatar: {
-    width: 40,
-    height: 40,
+    width: {
+      xl: 40,
+      lg: 38,
+      md: 35,
+      sm: 32,
+      xs: 29,
+    },
+    height: {
+      xl: 40,
+      lg: 38,
+      md: 35,
+      sm: 32,
+      xs: 29,
+    },
   },
 
-  contactName: {
-    marginBottom: 1,
-    fontSize: 16,
-    fontWeight: 400,
+  badge: {
+    width: 'fit-content',
   },
 
-  smallContactName: {
-    marginBottom: 1,
-    fontSize: 12,
-    fontWeight: 400,
-    height: 20,
-  },
-
-  contactContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: 4,
-    marginRight: 4,
-  },
-
-  smallContactContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: 2,
-  },
-
-  requestsContainer: {
-    backgroundColor: '#eeeeee',
-    boxShadow: '0 10px 6px -6px #777',
-    borderRadius: 10,
-    width: 1500,
-    display: 'flex',
-    flexDirection: 'column',
-
-  },
-
-  outGoingContainer: {
-    backgroundColor: '#fff',
-    borderTop: 'black solid 0.5px',
-    borderBottom: 'black solid 0.5px',
-    width: 1500,
-    display: 'flex',
-    flexWrap: 'nowrap',
-    overflow: 'scroll',
-  },
-
-  allContactsContainer: {
-    backgroundColor: '#eeeeee',
-    boxShadow: '0 10px 6px -6px #777',
-    borderRadius: 10,
-    width: 1500,
-    padding: 3,
-    display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'nowrap',
-    overflow: 'auto',
-  },
-
-  smallTitle: {
-    fontSize: 20,
-    fontWeight: 500,
+  dropdown: {
+    width: '200px',
+    bgcolor: 'background.paper',
+    zIndex: 1,
   },
 
   icon: {
-    fontSize: 25,
-    color: '#22577A',
+    fontSize: {
+      sm: 22,
+      xs: 18,
+    },
+    color: '#38A3A5',
     '&:hover': {
       color: '#2facfe',
     },
   },
 
-  secondRowContainer: {
-    display: 'flex',
-  },
-
-  iconsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-
   acceptIcon: {
-    fontSize: 20,
+    fontSize: {
+      xl: 20,
+      lg: 18,
+      md: 16,
+      sm: 15,
+      xs: 14,
+    },
     color: 'green',
     '&:hover': {
       color: '#00FF00',
@@ -140,10 +107,58 @@ const contactPageStyles = {
   },
 
   rejectIcon: {
-    fontSize: 20,
+    fontSize: {
+      xl: 20,
+      lg: 18,
+      md: 16,
+      sm: 15,
+      xs: 14,
+    },
     color: '#bd0000',
     '&:hover': {
       color: '#ff0000',
+    },
+  },
+
+  dismissAcceptIcon: {
+    color: 'green',
+    fontSize: {
+      xl: 20,
+      lg: 18,
+      md: 16,
+      sm: 15,
+      xs: 14,
+    },
+    '&:hover': {
+      color: '#00FF00',
+      fontSize: {
+        xl: 22,
+        lg: 20,
+        md: 18,
+        sm: 17,
+        xs: 16,
+      },
+    },
+  },
+
+  dismissRejIcon: {
+    color: '#bd0000',
+    fontSize: {
+      xl: 20,
+      lg: 18,
+      md: 16,
+      sm: 15,
+      xs: 14,
+    },
+    '&:hover': {
+      color: '#ff0000',
+      fontSize: {
+        xl: 22,
+        lg: 20,
+        md: 18,
+        sm: 17,
+        xs: 16,
+      },
     },
   },
 

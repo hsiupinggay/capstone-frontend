@@ -1,30 +1,92 @@
+/* eslint-disable max-len */
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
 
+import AddDetailsTabs from '../organisms/AddDetailsTabs';
 import AddAppointment from '../organisms/AddAppointment';
 import ApptFilterCheckbox from '../atoms/ApptFilterCheckbox';
+import AppointmentDetailPopup from '../organisms/AppointmentDetailPopup';
 
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: {
+    md: 600,
+    sm: 500,
+    xs: 475,
+  },
+  height: 600,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+  p: 4,
+  overflow: 'scroll',
 };
 
-function AddApptModal({ openApptModal, setOpenApptModal }) {
+function AppointmentDetailModal({
+  openApptModal, setOpenApptModal, setDisplayDataArray, apptPopupDetails,
+}) {
+  const handleClose = () => {
+    setOpenApptModal(false);
+  };
+  console.log('hi');
+  return (
+    <div>
+      <Modal
+        open={openApptModal}
+        onClose={handleClose}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <Box sx={
+          {
+            ...style, width: 400, height: 500, flexDirection: 'column',
+          }
+        }
+        >
+          <AppointmentDetailPopup setDisplayDataArray={setDisplayDataArray} apptPopupDetails={apptPopupDetails} />
+        </Box>
+      </Modal>
+    </div>
+  );
+}
+
+function AddDetailsModal({
+  openApptModal, setOpenApptModal, setAddition, addition, setModal,
+}) {
+  const handleClose = () => {
+    setOpenApptModal(false);
+  };
+  return (
+    <div>
+      <Modal
+        open={openApptModal}
+        onClose={handleClose}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <Box sx={
+          {
+            ...style, width: 400, height: 500, flexDirection: 'column',
+          }
+        }
+        >
+          <AddDetailsTabs addition={addition} setAddition={setAddition} setModal={setModal} />
+        </Box>
+      </Modal>
+    </div>
+  );
+}
+
+function AddApptModal({
+  openApptModal, setOpenApptModal, setModal, setAddition, setDisplayDataArray,
+}) {
   const handleClose = () => {
     setOpenApptModal(false);
   };
@@ -43,14 +105,16 @@ function AddApptModal({ openApptModal, setOpenApptModal }) {
         }
         >
           <Typography varitant="h3">Add Appointment</Typography>
-          <AddAppointment />
+          <AddAppointment setAddition={setAddition} setModal={setModal} setOpenApptModal={setOpenApptModal} setDisplayDataArray={setDisplayDataArray} />
         </Box>
       </Modal>
     </div>
   );
 }
 
-function FilterModal({ openApptModal, setOpenApptModal, setFilterData, filterParams, filterData }) {
+function FilterModal({
+  openApptModal, setOpenApptModal, setFilterData, filterParams, filterData,
+}) {
   const [hospitalFilter, setHospitalFilter] = useState([]);
   const [departmentFilter, setDepartmentFilter] = useState([]);
   const [patientFilter, setPatientFilter] = useState([]);
@@ -100,13 +164,12 @@ function FilterModal({ openApptModal, setOpenApptModal, setFilterData, filterPar
       patientFilter,
       chaperoneFilter,
       dateFilter,
-    })
-  }
+    });
+  };
   // useEffect after filter data is updated
   useEffect(() => {
     handleClose();
-  }, [filterData])
-
+  }, [filterData]);
 
   return (
     <div>
@@ -195,14 +258,19 @@ function TestModal({ openApptModal, setOpenApptModal }) {
 
 export default function ApptModal(
   {
-    openApptModal, setOpenApptModal, apptModalType, setFilterData, filterParams, filterData
+    openApptModal, setOpenApptModal, apptModalType, setFilterData, filterParams, filterData, setApptModalType, setDisplayDataArray, apptPopupDetails,
   },
 ) {
+  const [addition, setAddition] = useState(false);
+
   switch (apptModalType) {
     case 'add-appt':
-      return <AddApptModal openApptModal={openApptModal} setOpenApptModal={setOpenApptModal} />;
-    case 'edit':
-      break;
+      return <AddApptModal openApptModal={openApptModal} setOpenApptModal={setOpenApptModal} setModal={setApptModalType} setAddition={setAddition} setDisplayDataArray={setDisplayDataArray} />;
+    case 'add-category':
+      return <AddDetailsModal openApptModal={openApptModal} addition={addition} setAddition={setAddition} setModal={setApptModalType} setOpenApptModal={setOpenApptModal} />;
+      // <AddDetailsTabs addition={addition} setAddition={setAddition} setModal={setApptModalType} setOpenApptModal={setOpenApptModal} />;
+    case 'view-full-appointment':
+      return <AppointmentDetailModal setDisplayDataArray={setDisplayDataArray} openApptModal={openApptModal} setOpenApptModal={setOpenApptModal} apptPopupDetails={apptPopupDetails} />;
     case 'filter':
       return (
         <FilterModal
