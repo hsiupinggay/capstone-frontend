@@ -89,13 +89,11 @@ export default function ContactVisibility({ contactId, contactName }) {
 
   return (
     <Box sx={visibilityPopupStyles.inputContainer}>
-      <Typography sx={visibilityPopupStyles.title}>
-        <strong>
-          Alter
-          {' '}
-          {contactName}
-          's Patient Access
-        </strong>
+      <Typography variant="h2">
+        Alter
+        {' '}
+        {contactName}
+        's Patient Access
       </Typography>
 
       {successMessage === ''
@@ -110,17 +108,19 @@ export default function ContactVisibility({ contactId, contactName }) {
           ? <div />
           : (
             <div>
-              <Typography sx={visibilityPopupStyles.subtitle}><strong>Visible Patients</strong></Typography>
-              { visiblePatientList.map((patient) => (
-                <Box sx={visibilityPopupStyles.nameContainer}>
-                  <Typography sx={visibilityPopupStyles.names}>{patient.name}</Typography>
-                  <VisibilityOffIcon
-                    sx={visibilityPopupStyles.iconColor}
-                    variant="contained"
-                    onClick={() => removeAccess(patient.patientId, patient.name)}
-                  />
-                </Box>
-              ))}
+              <Typography vairant="body1"><strong>Visible Patients</strong></Typography>
+              <Box sx={{ height: '60px', overflow: 'auto' }}>
+                { visiblePatientList.map((patient) => (
+                  <Box sx={visibilityPopupStyles.nameContainer}>
+                    <Typography sx={visibilityPopupStyles.names}>{patient.name}</Typography>
+                    <VisibilityOffIcon
+                      sx={visibilityPopupStyles.iconColor}
+                      variant="contained"
+                      onClick={() => removeAccess(patient.patientId, patient.name)}
+                    />
+                  </Box>
+                ))}
+              </Box>
             </div>
           )
 
@@ -131,17 +131,19 @@ export default function ContactVisibility({ contactId, contactName }) {
           ? <div />
           : (
             <div>
-              <Typography sx={visibilityPopupStyles.subtitle}><strong>Other Patients</strong></Typography>
-              {otherPatientList.map((patient) => (
-                <Box sx={visibilityPopupStyles.nameContainer}>
-                  <Typography sx={visibilityPopupStyles.names}>{patient.name}</Typography>
-                  <VisibilityIcon
-                    sx={visibilityPopupStyles.lightIconColor}
-                    variant="contained"
-                    onClick={() => giveAccess(patient.patientId, patient.name, patient.admin)}
-                  />
-                </Box>
-              ))}
+              <Typography variant="body1"><strong>Other Patients</strong></Typography>
+              <Box sx={{ height: '60px', overflow: 'auto' }}>
+                {otherPatientList.map((patient) => (
+                  <Box sx={visibilityPopupStyles.nameContainer}>
+                    <Typography sx={visibilityPopupStyles.names}>{patient.name}</Typography>
+                    <VisibilityIcon
+                      sx={visibilityPopupStyles.lightIconColor}
+                      variant="contained"
+                      onClick={() => giveAccess(patient.patientId, patient.name, patient.admin)}
+                    />
+                  </Box>
+                ))}
+              </Box>
             </div>
           )
       }
