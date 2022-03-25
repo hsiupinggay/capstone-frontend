@@ -6,7 +6,6 @@ const visibilityPopupStyles = {
   // },
 
   title: {
-
     marginBottom: 2,
     fontSize: {
       xs: 20,
