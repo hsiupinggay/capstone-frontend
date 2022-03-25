@@ -41,7 +41,7 @@ export default function AppointmentsPage() {
       patientFilter: [],
       chaperoneFilter: [],
       dateFilter: [],
-    }
+    },
   );
   const [apptPopupDetails, setApptPopupDetails] = useState();
   const [filterParams, setFilterParams] = useState(
@@ -127,6 +127,7 @@ export default function AppointmentsPage() {
               setOpenApptModal={setOpenApptModal}
               setApptModalType={setApptModalType}
               setApptPopupDetails={setApptPopupDetails}
+              setFilterData={setFilterData}
               // originialDataArray={originialDataArray}
             />
           </>

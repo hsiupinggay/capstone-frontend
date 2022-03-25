@@ -5,7 +5,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import {
-  Box, Paper, List, Card, CardActions, Typography,
+  Box, List, Card, CardActions, Typography,
 } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
@@ -30,7 +30,7 @@ const monthNames = [
 ];
 
 function AppointmentList({
-  displayDataArray, filterData, setOpenApptModal, setApptModalType, setApptPopupDetails,
+  displayDataArray, filterData, setOpenApptModal, setApptModalType, setApptPopupDetails, setFilterData,
 }) {
   const [listDisplay, setListDisplay] = useState([]);
   const [order, setOrder] = useState('latest first');
@@ -154,6 +154,13 @@ function AppointmentList({
 
   const resetFilters = () => {
     setListDisplay(originialDataArray);
+    setFilterData({
+      hospitalFilter: [],
+      departmentFilter: [],
+      patientFilter: [],
+      chaperoneFilter: [],
+      dateFilter: [],
+    });
   };
   // Handle onClick on events to display full details
   const openModal = (apptObject) => {
@@ -165,31 +172,41 @@ function AppointmentList({
   const displayAppointmentList = listDisplay.map((appointment) => (
     <Card key={appointment.id} rounded elevation={6} sx={{ p: 2, mb: 2, width: '60vw' }}>
       <CardContent>
-        <Typography variant="h3" sx={{ my: 2, textAlign: 'center', }}>
-          {appointment.patientName}<br/>
+        <Typography variant="h3" sx={{ my: 2, textAlign: 'center' }}>
+          {appointment.patientName}
+          <br />
         </Typography>
-        <Typography variant="body1" sx={{ textAlign: 'center', }} component='div'>
-          <Box fontWeight='fontWeightBold' display='inline'>Chaperone:</Box> {appointment.chaperone}<br/>
-          <Box fontWeight='fontWeightBold' display='inline'>Appointment Date:</Box> {appointment.date}<br/>
-          <Box fontWeight='fontWeightBold' display='inline'>Location:</Box><br/>
-          {appointment.hospital},<br/>
+        <Typography variant="body1" sx={{ textAlign: 'center' }} component="div">
+          <Box fontWeight="fontWeightBold" display="inline">Chaperone:</Box>
+          {' '}
+          {appointment.chaperone}
+          <br />
+          <Box fontWeight="fontWeightBold" display="inline">Appointment Date:</Box>
+          {' '}
+          {appointment.date}
+          <br />
+          <Box fontWeight="fontWeightBold" display="inline">Location:</Box>
+          <br />
+          {appointment.hospital}
+          ,
+          <br />
           {appointment.department}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={() => openModal(appointment.apptObj)}>View Full Appointment</Button>
+        <Button sx={{ marginLeft: 56 }} variant="contained" onClick={() => openModal(appointment.apptObj)}>View Full Appointment</Button>
       </CardActions>
     </Card>
   ));
 
   return (
     <div className="h-full overflow-auto">
-      <Typography variant="h2" sx={{ mb: 2 }} display="inline">Appointment List</Typography>
+      <Typography variant="h2" sx={{ mb: 2, marginRight: 2 }} display="inline">Appointment List</Typography>
       <Tooltip arrow title="Sort By Appointment Date">
-        <CalendarMonthIcon variant="contained" onClick={sortDate} />
+        <CalendarMonthIcon sx={{ marginRight: 2, marginBottom: 1 }} color="primary" variant="contained" onClick={sortDate} />
       </Tooltip>
       <Tooltip arrow title="Reset Filters">
-        <RestartAltIcon variant="contained" onClick={resetFilters} />
+        <RestartAltIcon sx={{ marginRight: 2, marginBottom: 1 }} color="primary" variant="contained" onClick={resetFilters} />
       </Tooltip>
       <Box style={{ maxHeight: 600, overflow: 'auto' }}>
         <List>

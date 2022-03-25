@@ -81,7 +81,13 @@ export default function HomePage() {
               </Typography>
             </Box>
           )
-          : <div />}
+          : (
+            <Box>
+              <Typography variant="body1" sx={homePageStyles.appointmentText}>
+                Nil
+              </Typography>
+            </Box>
+          )}
 
       </Stack>
       <Box sx={homePageStyles.allCategoryContainer}>

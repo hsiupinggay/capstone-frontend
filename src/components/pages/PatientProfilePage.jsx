@@ -80,7 +80,7 @@ export default function PatientProfilePage() {
             <div>
               <Box sx={patientProfilePageStyles.mainContainer}>
                 <Box sx={patientProfilePageStyles.headerIconContainer}>
-                  <ArrowCircleLeftIcon onClick={() => navigate('/patients')} sx={patientProfilePageStyles.backIcon} />
+                  <ArrowCircleLeftIcon onClick={() => navigate('/contacts')} sx={patientProfilePageStyles.backIcon} />
                   <Box sx={patientProfilePageStyles.headerContainer}>
                     <Typography variant="h1">
                       {name}

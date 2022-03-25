@@ -66,12 +66,6 @@ const mainTheme = createTheme(
         lineHeight: 1.75,
         fontWeight: 500,
       },
-      h4: {
-        fontFamily: 'Quicksand',
-        fontSize: '1rem',
-        lineHeight: 1.334,
-        fontWeight: 500,
-      },
       h5: {
         fontSize: '1rem',
         lineHeight: 1.5,

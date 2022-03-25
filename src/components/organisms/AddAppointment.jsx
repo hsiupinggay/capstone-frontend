@@ -14,7 +14,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  Autocomplete, TextField, Typography, Box,
+  Autocomplete, TextField, Typography, Box, Stack,
 } from '@mui/material';
 import { DateTimePicker, LocalizationProvider } from '@mui/lab';
 import DateAdapter from '@mui/lab/AdapterLuxon';
@@ -185,7 +185,7 @@ export default function AddAppointment({ setModal, setAddition, setDisplayDataAr
   };
 
   return (
-    <div>
+    <Box>
       { patientArr === undefined
         ? <div />
         : (
@@ -216,94 +216,101 @@ export default function AddAppointment({ setModal, setAddition, setDisplayDataAr
             { hospArr === undefined
               ? (
                 <div>
-                  <Autocomplete
-                    options={[{ label: '--ADD NEW HOSPITAL--' }]}
-                    renderInput={(params) => <TextField {...params} label="Select Hospital" required />}
-                    onChange={(event, newValue) => { updateDept(newValue.label); }}
-                    selectOnFocus
-                    clearOnBlur
-                    handleHomeEndKeys
-                    sx={apptPopupStyles.inputField}
-                  />
-                  <Autocomplete
-                    options={[{ label: '--ADD NEW DEPARTMENT--' }]}
-                    renderInput={(params) => <TextField {...params} label="Select Department" required />}
-                    onChange={(event, newValue) => { selectDept(newValue.label); }}
-                    selectOnFocus
-                    clearOnBlur
-                    handleHomeEndKeys
-                    sx={apptPopupStyles.inputField}
-                  />
-                  {' '}
-                  <Autocomplete
-                    options={[{ name: '--ADD NEW CHAPERONE--' }]}
-                    getOptionLabel={(option) => option.name}
-                    renderInput={(params) => <TextField {...params} label="Select Chaperone" required />}
-                    onChange={(event, newValue) => { updateChaperoneState(`${newValue.name},${newValue.chaperoneId}`); }}
-                    selectOnFocus
-                    clearOnBlur
-                    handleHomeEndKeys
-                    sx={apptPopupStyles.inputField}
-                  />
-                </div>
-              )
-              : (
-                <div>
-                  <div>
+                  <Stack spacing={2}>
+
                     <Autocomplete
-                      options={hospArr}
-                      getOptionLabel={(option) => option.hospital}
+                      options={[{ label: '--ADD NEW HOSPITAL--' }]}
                       renderInput={(params) => <TextField {...params} label="Select Hospital" required />}
-                      onChange={(event, newValue) => { updateDept(newValue.hospital); }}
+                      onChange={(event, newValue) => { updateDept(newValue.label); }}
                       selectOnFocus
                       clearOnBlur
                       handleHomeEndKeys
                       sx={apptPopupStyles.inputField}
                     />
-
-                  </div>
-
-                  { deptArr === undefined
-                    ? (
-                      <div>
-                        <Autocomplete
-                          options={[{ label: '--ADD NEW DEPARTMENT--' }]}
-                          renderInput={(params) => <TextField {...params} label="Select Department" required />}
-                          onChange={(event, newValue) => { selectDept(newValue.label); }}
-                          selectOnFocus
-                          clearOnBlur
-                          handleHomeEndKeys
-                          sx={apptPopupStyles.inputField}
-                        />
-                      </div>
-                    )
-                    : (
-                      <div>
-                        <Autocomplete
-                          options={deptArr}
-                          getOptionLabel={(option) => option}
-                          renderInput={(params) => <TextField {...params} label="Select Deparment" required />}
-                          onChange={(event, newValue) => { selectDept(newValue); }}
-                          selectOnFocus
-                          clearOnBlur
-                          handleHomeEndKeys
-                          sx={apptPopupStyles.inputField}
-                        />
-                      </div>
-                    )}
-
-                  <div>
                     <Autocomplete
-                      options={chaperoneArr}
+                      options={[{ label: '--ADD NEW DEPARTMENT--' }]}
+                      renderInput={(params) => <TextField {...params} label="Select Department" required />}
+                      onChange={(event, newValue) => { selectDept(newValue.label); }}
+                      selectOnFocus
+                      clearOnBlur
+                      handleHomeEndKeys
+                      sx={apptPopupStyles.inputField}
+                    />
+                    {' '}
+                    <Autocomplete
+                      options={[{ name: '--ADD NEW CHAPERONE--' }]}
                       getOptionLabel={(option) => option.name}
-                      renderInput={(params) => <TextField {...params} label="Select Chaperone" />}
+                      renderInput={(params) => <TextField {...params} label="Select Chaperone" required />}
                       onChange={(event, newValue) => { updateChaperoneState(`${newValue.name},${newValue.chaperoneId}`); }}
                       selectOnFocus
                       clearOnBlur
                       handleHomeEndKeys
                       sx={apptPopupStyles.inputField}
                     />
-                  </div>
+                  </Stack>
+
+                </div>
+              )
+              : (
+                <div>
+                  <Stack spacing={0.4}>
+                    <div>
+
+                      <Autocomplete
+                        options={hospArr}
+                        getOptionLabel={(option) => option.hospital}
+                        renderInput={(params) => <TextField {...params} label="Select Hospital" required />}
+                        onChange={(event, newValue) => { updateDept(newValue.hospital); }}
+                        selectOnFocus
+                        clearOnBlur
+                        handleHomeEndKeys
+                        sx={apptPopupStyles.inputField}
+                      />
+
+                    </div>
+
+                    { deptArr === undefined
+                      ? (
+                        <div>
+                          <Autocomplete
+                            options={[{ label: '--ADD NEW DEPARTMENT--' }]}
+                            renderInput={(params) => <TextField {...params} label="Select Department" required />}
+                            onChange={(event, newValue) => { selectDept(newValue.label); }}
+                            selectOnFocus
+                            clearOnBlur
+                            handleHomeEndKeys
+                            sx={apptPopupStyles.inputField}
+                          />
+                        </div>
+                      )
+                      : (
+                        <div>
+                          <Autocomplete
+                            options={deptArr}
+                            getOptionLabel={(option) => option}
+                            renderInput={(params) => <TextField {...params} label="Select Deparment" required />}
+                            onChange={(event, newValue) => { selectDept(newValue); }}
+                            selectOnFocus
+                            clearOnBlur
+                            handleHomeEndKeys
+                            sx={apptPopupStyles.inputField}
+                          />
+                        </div>
+                      )}
+
+                    <div>
+                      <Autocomplete
+                        options={chaperoneArr}
+                        getOptionLabel={(option) => option.name}
+                        renderInput={(params) => <TextField {...params} label="Select Chaperone" />}
+                        onChange={(event, newValue) => { updateChaperoneState(`${newValue.name},${newValue.chaperoneId}`); }}
+                        selectOnFocus
+                        clearOnBlur
+                        handleHomeEndKeys
+                        sx={apptPopupStyles.inputField}
+                      />
+                    </div>
+                  </Stack>
                 </div>
               )}
             <Box sx={apptPopupStyles.submitBtn}>
@@ -322,6 +329,6 @@ export default function AddAppointment({ setModal, setAddition, setDisplayDataAr
           )
         }
       </div>
-    </div>
+    </Box>
   );
 }

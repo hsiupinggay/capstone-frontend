@@ -2,7 +2,7 @@ const addContactPopupStyles = {
 
   inputField: {
     width: {
-      lg: 300, md: 250, sm: 250, xs: 240,
+      lg: 300, md: 300, sm: 250, xs: 240,
     },
   },
 

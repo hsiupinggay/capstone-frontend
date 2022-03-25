@@ -5,13 +5,14 @@ const contactPageStyles = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 300,
-    height: 300,
+    width: 350,
+    height: 350,
     bgcolor: 'background.paper',
     border: 'none',
     borderRadius: '20px',
     boxShadow: 24,
     p: 1,
+    overflow: 'hidden',
   },
 
   title: {

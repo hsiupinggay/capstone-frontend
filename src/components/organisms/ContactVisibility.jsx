@@ -109,7 +109,7 @@ export default function ContactVisibility({ contactId, contactName }) {
           : (
             <div>
               <Typography vairant="body1"><strong>Visible Patients</strong></Typography>
-              <Box sx={{ height: '60px', overflow: 'auto' }}>
+              <Box sx={{ height: '70px', overflow: 'auto' }}>
                 { visiblePatientList.map((patient) => (
                   <Box sx={visibilityPopupStyles.nameContainer}>
                     <Typography sx={visibilityPopupStyles.names}>{patient.name}</Typography>
@@ -132,7 +132,7 @@ export default function ContactVisibility({ contactId, contactName }) {
           : (
             <div>
               <Typography variant="body1"><strong>Other Patients</strong></Typography>
-              <Box sx={{ height: '60px', overflow: 'auto' }}>
+              <Box sx={{ height: '70px', overflow: 'auto' }}>
                 {otherPatientList.map((patient) => (
                   <Box sx={visibilityPopupStyles.nameContainer}>
                     <Typography sx={visibilityPopupStyles.names}>{patient.name}</Typography>
