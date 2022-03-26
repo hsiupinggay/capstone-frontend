@@ -127,7 +127,6 @@ export default function AddDepartment({ setModal, setAddition }) {
                   selectOnFocus
                   clearOnBlur
                   handleHomeEndKeys
-                  sx={{ width: 250 }}
                 />
 
                 { hospArr === undefined
@@ -139,7 +138,6 @@ export default function AddDepartment({ setModal, setAddition }) {
                         selectOnFocus
                         clearOnBlur
                         handleHomeEndKeys
-                        sx={{ width: 250 }}
                       />
                     </div>
                   )
@@ -154,7 +152,6 @@ export default function AddDepartment({ setModal, setAddition }) {
                           selectOnFocus
                           clearOnBlur
                           handleHomeEndKeys
-                          sx={{ width: 250 }}
                         />
                       </div>
 
@@ -182,23 +179,23 @@ export default function AddDepartment({ setModal, setAddition }) {
                   selectOnFocus
                   clearOnBlur
                   handleHomeEndKeys
-                  sx={{ width: 250 }}
                 />
               </Box>
-
               <Box sx={departmentPopupStyles.submitBtn}>
                 <Button variant="contained" type="submit">Submit</Button>
               </Box>
             </form>
-            <div>
+            <Box>
               {successMessage === ''
                 ? <div />
                 : (
-                  <Typography sx={departmentPopupStyles.outcomeMessage}>
-                    {successMessage}
-                  </Typography>
+                  <Box>
+                    <Typography variant="h5">
+                      {successMessage}
+                    </Typography>
+                  </Box>
                 )}
-            </div>
+            </Box>
           </div>
         )}
     </div>

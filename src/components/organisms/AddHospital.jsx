@@ -158,7 +158,7 @@ export default function AddHospital({ setModal, setAddition }) {
               {successMessage === ''
                 ? <div />
                 : (
-                  <Typography sx={hospitalPopupStyles.outcomeMessage}>
+                  <Typography variant="h5" sx={hospitalPopupStyles.outcomeMessage}>
                     {successMessage}
                   </Typography>
                 )}

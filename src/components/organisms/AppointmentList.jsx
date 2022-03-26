@@ -198,8 +198,13 @@ function AppointmentList({
           {appointment.chaperone}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button sx={{ marginLeft: 56 }} variant="contained" onClick={() => openModal(appointment.apptObj)}>View Full Appointment</Button>
+      <CardActions sx={{ width: 'inherit' }}>
+        <Box sx={{
+          display: 'flex', justifyContent: 'center', width: 'inherit',
+        }}
+        >
+          <Button variant="contained" onClick={() => openModal(appointment.apptObj)}>View Full Appointment</Button>
+        </Box>
       </CardActions>
     </Card>
   ));

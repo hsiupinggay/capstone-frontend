@@ -137,7 +137,7 @@ export default function AddPatient({
         successMessage === ''
           ? <div />
           : (
-            <Typography sx={patientPopupStyles.outcomeMessage}>
+            <Typography variant="h5" sx={patientPopupStyles.outcomeMessage}>
               {successMessage}
             </Typography>
           )

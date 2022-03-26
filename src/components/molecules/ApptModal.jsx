@@ -180,11 +180,11 @@ function FilterModal({
       >
         <Box sx={
           {
-            ...style, width: { xxs: '80vw', sm: 450 }, height: 500, flexDirection: 'column',
+            ...style, width: 450, height: 500, flexDirection: 'column',
           }
         }
         >
-          <Typography variant="h3" sx={{ fontSize: { xs: 10, sm: 14, md: 18 }, marginLeft: 17 }}>Apply Filters</Typography>
+          <Typography variant="h3" sx={{ fontSize: 18 }}>Apply Filters</Typography>
           <Box sx={{
             width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center',
           }}
@@ -195,7 +195,7 @@ function FilterModal({
             <ApptFilterCheckbox label="Chaperone" dataArray={filterParams.chaperones} setFilterValue={setFilterValue} />
             <ApptFilterCheckbox label="Date" dataArray={filterParams.dates} setFilterValue={setFilterValue} />
           </Box>
-          <Button variant="contained" sx={{ marginTop: 4, marginLeft: 18 }} onClick={submitFilters}>Submit</Button>
+          <Button variant="contained" sx={{ marginTop: 4 }} onClick={submitFilters}>Submit</Button>
         </Box>
       </Modal>
     </div>

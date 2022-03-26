@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import { TimePicker, LocalizationProvider, DesktopDatePicker } from '@mui/lab';
 import DateAdapter from '@mui/lab/AdapterLuxon';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import Button from '@mui/material/Button';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -74,7 +74,7 @@ export default function AppointmentDetailPopup({
       patientId: apptPopupDetails.patientId,
       appointmentId: apptPopupDetails.appointmentId,
       date: formattedDate !== undefined ? formattedDate : null,
-      time: unformattedTime !== undefined ? `${moment(unformattedTime, 'HH:mm').format('h:mm a')}` : null,
+      time: unformattedTime !== undefined ? moment.tz(unformattedTime, 'Asia/Singapore').format('h:mm a') : null,
     };
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/edit-appointment`, data).then((response) => {
       if (response.status === 200) {
@@ -259,12 +259,10 @@ export default function AppointmentDetailPopup({
                     <AddCircleIcon color="primary" variant="contained" onClick={toggleNoteEditing} />
                   </IconButton>
                 </Tooltip>
-
               </Box>
               {isEditing === false
                 ? (
                   <Box sx={{
-                    paddingBottom: 0.5,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -277,13 +275,17 @@ export default function AppointmentDetailPopup({
                           display: 'flex',
                           flexDirection: 'column',
                           justifyContent: 'center',
+                          width: 'inherit',
                         }}
                         >
-                          <Typography>
+                          <Typography sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            width: 'inherit',
+                          }}
+                          >
                             {memo}
-
                           </Typography>
-
                           <Typography fontSize="small">
                             Uploaded By:
                             <br />
@@ -293,7 +295,6 @@ export default function AppointmentDetailPopup({
                             on
                             {' '}
                             {memoDate}
-
                           </Typography>
                         </Box>
                       )}
@@ -302,7 +303,7 @@ export default function AppointmentDetailPopup({
                 )
                 : (
                   <Box sx={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'space-around',
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
                   }}
                   >
                     <br />
@@ -313,10 +314,9 @@ export default function AppointmentDetailPopup({
                       }}
                       onChange={(e) => { setMemo(e.target.value); }}
                     />
-                    <Button variant="contained" sx={{ marginLeft: 2 }} onClick={handleMemoSubmit}>Submit</Button>
+                    <Button variant="contained" sx={{ marginTop: 2 }} onClick={handleMemoSubmit}>Submit</Button>
                   </Box>
                 )}
-
             </Box>
           </Typography>
         </Box>

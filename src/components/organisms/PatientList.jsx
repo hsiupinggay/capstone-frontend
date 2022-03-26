@@ -114,14 +114,18 @@ export default function PatientList() {
                   />
                   {patient !== null
                     ? (
-                      <div>
+                      <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                      }}
+                      >
                         <Button
                           variant="contained"
                           onClick={() => openPatientProfile(patient.patientId)}
                         >
                           View
                         </Button>
-                      </div>
+                      </Box>
                     )
                     : <div />}
                 </Stack>

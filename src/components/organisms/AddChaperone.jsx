@@ -140,7 +140,6 @@ export default function AddChaperone({ setModal, setAddition }) {
                   selectOnFocus
                   clearOnBlur
                   handleHomeEndKeys
-                  sx={{ width: 250 }}
                 />
 
                 <Autocomplete
@@ -164,7 +163,6 @@ export default function AddChaperone({ setModal, setAddition }) {
                   selectOnFocus
                   clearOnBlur
                   handleHomeEndKeys
-                  sx={{ width: 250 }}
                 />
               </Box>
               <br />
@@ -176,7 +174,7 @@ export default function AddChaperone({ setModal, setAddition }) {
               {successMessage === ''
                 ? <div />
                 : (
-                  <Typography sx={chaperonePopupStyles.outcomeMessage}>
+                  <Typography variant="h5" sx={chaperonePopupStyles.outcomeMessage}>
                     {successMessage}
                   </Typography>
                 )}

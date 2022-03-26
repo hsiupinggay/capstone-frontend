@@ -11,7 +11,7 @@ const patientPopupStyles = {
 
   inputField: {
     width: { lg: 200, sm: 175, xs: 175 },
-    margin: 1,
+    margin: 0.7,
   },
 
   submitBtn: {
@@ -21,7 +21,6 @@ const patientPopupStyles = {
   },
 
   outcomeMessage: {
-    marginBottom: 2,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
