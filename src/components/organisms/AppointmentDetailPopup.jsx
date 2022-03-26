@@ -252,7 +252,7 @@ export default function AppointmentDetailPopup({
               )}
             <Box />
             <Box>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <strong>Memos:</strong>
                 <Tooltip arrow title="Add/Edit Memo">
                   <IconButton>
@@ -263,20 +263,38 @@ export default function AppointmentDetailPopup({
               </Box>
               {isEditing === false
                 ? (
-                  <Box>
+                  <Box sx={{
+                    paddingBottom: 0.5,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                  >
                     {memo === '' || memo === undefined
                       ? <div>Nil</div>
                       : (
-                        <Box>
-                          {memo}
-                          <br />
-                          Uploaded By:
-                          {' '}
-                          {memoUserName}
-                          <br />
-                          on
-                          {' '}
-                          {memoDate}
+                        <Box sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                        }}
+                        >
+                          <Typography>
+                            {memo}
+
+                          </Typography>
+
+                          <Typography fontSize="small">
+                            Uploaded By:
+                            <br />
+                            {' '}
+                            {memoUserName}
+                            {' '}
+                            on
+                            {' '}
+                            {memoDate}
+
+                          </Typography>
                         </Box>
                       )}
                     <br />
