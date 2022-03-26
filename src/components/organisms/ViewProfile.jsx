@@ -8,7 +8,9 @@
  * ========================================================
  */
 import React from 'react';
-import { IconButton, Typography, Box } from '@mui/material';
+import {
+  IconButton, Typography, Box, Tooltip,
+} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import { useMedicalContext } from '../others/store';
@@ -47,9 +49,11 @@ export default function ViewProfile() {
         {email}
 
       </Typography>
-      <IconButton color="primary" onClick={handleEdit}>
-        <EditIcon sx={viewProfileStyles.editIcon} />
-      </IconButton>
+      <Tooltip title="Edit Profile">
+        <IconButton color="primary" onClick={handleEdit}>
+          <EditIcon sx={viewProfileStyles.editIcon} />
+        </IconButton>
+      </Tooltip>
     </Box>
 
   );

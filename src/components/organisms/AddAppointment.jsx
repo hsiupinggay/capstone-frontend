@@ -14,7 +14,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  Autocomplete, TextField, Box, Stack,
+  Autocomplete, TextField, Box, Stack, Typography,
 } from '@mui/material';
 import { DateTimePicker, LocalizationProvider } from '@mui/lab';
 import DateAdapter from '@mui/lab/AdapterLuxon';
@@ -142,7 +142,14 @@ export default function AddAppointment({
   };
 
   return (
-    <Box>
+    <Box sx={{
+      width: '250px', display: 'flex', flexDirection: 'column', alignItems: 'center',
+    }}
+    >
+      <Typography variant="h3">
+        Add Appointment
+      </Typography>
+
       { patientArr === undefined
         ? <div />
         : (
@@ -150,12 +157,12 @@ export default function AddAppointment({
             <Box sx={apptPopupStyles.dateTimeContainer}>
               <LocalizationProvider dateAdapter={DateAdapter}>
                 <DateTimePicker
-                  label="Appointment Details"
+                  label="Date & Time"
                   value={dateTime}
                   onChange={(newValue) => {
                     setDateTime(`${moment(`${newValue.c.year}-${newValue.c.month}-${newValue.c.day}`).format('YYYY-MM-DD')}T${moment(`${newValue.c.hour}:${newValue.minute}`, 'HH:m').format('HH:mm')}`);
                   }}
-                  renderInput={(params) => <TextField {...params} required sx={apptPopupStyles.inputField} />}
+                  renderInput={(params) => <TextField {...params} required sx={apptPopupStyles.inputField} autoComplete="off" />}
                 />
               </LocalizationProvider>
             </Box>
@@ -210,7 +217,7 @@ export default function AddAppointment({
               )
               : (
                 <div>
-                  <Stack spacing={0.4}>
+                  <Stack spacing={1}>
                     <div>
 
                       <Autocomplete

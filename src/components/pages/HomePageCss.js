@@ -56,7 +56,7 @@ const homePageStyles = {
 
   primaryCategories: {
     borderRadius: 10,
-    backgroundColor: '#22577A',
+    backgroundColor: '#718da8',
     width: {
       xs: 130,
       sm: 150,
@@ -78,7 +78,7 @@ const homePageStyles = {
 
   secondaryCategories: {
     borderRadius: 10,
-    backgroundColor: '#38A3A5',
+    backgroundColor: '#718da8',
     width: {
       xs: 130,
       sm: 150,

@@ -15,18 +15,12 @@ const contactPageStyles = {
     overflow: 'hidden',
   },
 
-  title: {
-    fontSize: 24,
-    fontWeight: 700,
-    color: '#22577A',
-  },
-
   bigIcon: {
     fontSize: {
       sm: 30,
       xs: 28,
     },
-    color: '#22577A',
+    color: '#3254a8',
     '&:hover': {
       color: '#3486bb',
     },
@@ -87,7 +81,7 @@ const contactPageStyles = {
       sm: 22,
       xs: 18,
     },
-    color: '#38A3A5',
+    color: '#718da8',
     '&:hover': {
       color: '#2facfe',
     },

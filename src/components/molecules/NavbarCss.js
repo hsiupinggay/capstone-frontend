@@ -1,6 +1,5 @@
 const navStyles = {
   appBar: {
-    backgroundColor: 'primary',
     display: {
       xs: 'none',
       sm: 'flex',
@@ -27,7 +26,6 @@ const navStyles = {
   },
 
   navContainer: {
-    backgroundColor: '#22577A',
     display: 'flex',
     justifyContent: 'start',
     flexGrow: 1,
@@ -39,11 +37,10 @@ const navStyles = {
       md: 14,
       lg: 15,
     },
-    backgroundColor: '#22577A',
     color: '#ffffff',
     '&:hover': {
       backgroundColor: '#ffffff',
-      color: '#22577A',
+      color: '#525B2B',
     },
   },
 
@@ -97,7 +94,7 @@ const navStyles = {
       sm: 'none',
       xs: 'flex',
     },
-    backgroundColor: '#22577A',
+    backgroundColor: '#3254a8',
     '& .Mui-selected': {
       '& .MuiBottomNavigationAction-label': {
         lineHeight: '20px',
@@ -111,7 +108,7 @@ const navStyles = {
   bottomNavBtn: {
     color: '#000000',
     '&:hover': {
-      backgroundColor: '#2f7bad',
+      backgroundColor: '#718da8',
       color: '#ffffff',
     },
   },

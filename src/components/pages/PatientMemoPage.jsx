@@ -44,8 +44,9 @@ const style = {
   width: 400,
   height: 500,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  border: '1px solid #b0b0b0',
   boxShadow: 24,
+  borderRadius: '20px',
   p: 4,
   overflow: 'scroll',
 };
