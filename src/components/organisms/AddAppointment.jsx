@@ -14,7 +14,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  Autocomplete, TextField, Typography, Box, Stack,
+  Autocomplete, TextField, Box, Stack,
 } from '@mui/material';
 import { DateTimePicker, LocalizationProvider } from '@mui/lab';
 import DateAdapter from '@mui/lab/AdapterLuxon';
@@ -32,7 +32,9 @@ import apptPopupStyles from './AddAppointmentCss';
  * ========================================================
  * ========================================================
  */
-export default function AddAppointment({ setModal, setAddition, setDisplayDataArray }) {
+export default function AddAppointment({
+  setModal, setAddition, setDisplayDataArray, setOpenApptModal,
+}) {
   const { store } = useMedicalContext();
   const { userId } = store;
 
@@ -41,13 +43,11 @@ export default function AddAppointment({ setModal, setAddition, setDisplayDataAr
   const [deptArr, setDeptArr] = useState();
   const [chaperoneArr, setChaperoneArr] = useState();
   const [patientId, setPatientId] = useState('');
-  const [patientName, setPatientName] = useState('');
   const [hospital, setHospital] = useState('');
   const [chaperone, setChaperone] = useState('');
   const [chaperoneId, setChaperoneId] = useState('');
   const [department, setDepartment] = useState('');
   const [dateTime, setDateTime] = useState(null);
-  const [successMessage, setSuccessMessage] = useState('');
 
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
@@ -66,7 +66,6 @@ export default function AddAppointment({ setModal, setAddition, setDisplayDataAr
       // Redirect to add department component
       setModal('add-category');
       setAddition('department');
-      // navigate('/add-department');
     } else {
       setDepartment(string);
     }
@@ -79,10 +78,8 @@ export default function AddAppointment({ setModal, setAddition, setDisplayDataAr
       // Redirect to add patient component
       setModal('add-category');
       setAddition('patient');
-      // navigate('/add-patient');
     } else {
       setPatientId(patientSplitStr[0]);
-      setPatientName(patientSplitStr[1]);
       for (let i = 0; i < patientArr.length; i += 1) {
         if (patientArr[i]._id === patientSplitStr[0]) {
           patientArr[i].visitDetails.clinics.push({ hospital: '--ADD NEW HOSPITAL--' });
@@ -98,10 +95,7 @@ export default function AddAppointment({ setModal, setAddition, setDisplayDataAr
   const updateDept = (hospitalInput) => {
     if (hospitalInput === '--ADD NEW HOSPITAL--') {
       // Redirect to add hospital component
-      // navigate('/add-hospital');
-      console.log('weeee');
       setModal('add-category');
-      // setOpenApptModal(true);
       setAddition('hospital');
     } else {
       setHospital(hospitalInput);
@@ -119,7 +113,6 @@ export default function AddAppointment({ setModal, setAddition, setDisplayDataAr
     const chaperoneSplitStr = value.split(',');
     if (chaperoneSplitStr[1] === 'undefined') {
       // Redirect to add chaperone component
-      // navigate('/add-chaperone');
       setModal('add-category');
       setAddition('chaperone');
     } else {
@@ -142,44 +135,8 @@ export default function AddAppointment({ setModal, setAddition, setDisplayDataAr
     };
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-appointment`, data).then((response) => {
       if (response.status === 200) {
-        console.log(response.data.patientDetailsObj);
         setDisplayDataArray(response.data.patientDetailsObj);
-        setSuccessMessage(
-          <Typography sx={apptPopupStyles.outcomeMessage}>
-            <strong>You have Added a New Appointment! </strong>
-            <div>
-              <strong>Patient:</strong>
-              {' '}
-              {`${patientName}`}
-            </div>
-            <div>
-              <strong>Hospital:</strong>
-              {' '}
-              {`${hospital}`}
-            </div>
-            <div>
-              <strong>Department:</strong>
-              {' '}
-              {`${department}`}
-            </div>
-            <div>
-              <strong>Date:</strong>
-              {' '}
-              {`${response.data.data[response.data.data.length - 1].date}`}
-            </div>
-            <div>
-              <strong>Time:</strong>
-              {' '}
-              {`${response.data.data[response.data.data.length - 1].time}`}
-            </div>
-            <div>
-              <strong>Chaperone:</strong>
-              {' '}
-              {`${chaperone || 'Nil'}`}
-            </div>
-
-          </Typography>,
-        );
+        setOpenApptModal(false);
       }
     });
   };
@@ -318,17 +275,6 @@ export default function AddAppointment({ setModal, setAddition, setDisplayDataAr
             </Box>
           </form>
         )}
-      <div>
-        {
-        successMessage === ''
-          ? <div />
-          : (
-            <Typography>
-              {successMessage}
-            </Typography>
-          )
-        }
-      </div>
     </Box>
   );
 }

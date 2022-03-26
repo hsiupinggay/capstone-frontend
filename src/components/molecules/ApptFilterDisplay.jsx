@@ -9,17 +9,18 @@ import Stack from '@mui/material/Stack';
 import { Typography, Box } from '@mui/material';
 
 export default function ApptFilterDisplay({ filterData }) {
-  console.log(filterData);
-  // Checking for initial null values
-  // if (filterData === null) return (<div><Typography>No Filters Selected</Typography></div>);
-
   if (
     filterData.hospitalFilter.length === 0
     && filterData.departmentFilter.length === 0
     && filterData.patientFilter.length === 0
     && filterData.chaperoneFilter.length === 0
     && filterData.dateFilter.length === 0
-  ) return (<Typography variant="h4" sx={{ m: 2 }}>No Filters Selected</Typography>);
+  ) {
+    return (
+      <Typography variant="h1" sx={{ m: 2 }}>No Filters Selected</Typography>
+    );
+  }
+
   const hospitalDisplay = (
     <>
       {
@@ -35,6 +36,7 @@ export default function ApptFilterDisplay({ filterData }) {
       }
     </>
   );
+
   const departmentDisplay = (
     <>
       {
@@ -48,6 +50,7 @@ export default function ApptFilterDisplay({ filterData }) {
       }
     </>
   );
+
   const patientDisplay = (
     <>
       {
@@ -61,6 +64,7 @@ export default function ApptFilterDisplay({ filterData }) {
       }
     </>
   );
+
   const chaperoneDisplay = (
     <>
       {
@@ -74,6 +78,7 @@ export default function ApptFilterDisplay({ filterData }) {
       }
     </>
   );
+
   const dateDisplay = (
     <>
       {

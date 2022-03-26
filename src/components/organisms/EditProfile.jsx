@@ -24,12 +24,12 @@ import { useMedicalContext, editProfile } from '../others/store';
  */
 export default function EditProfile() {
   const { store, dispatch } = useMedicalContext();
+  const { userId } = store;
+  const navigate = useNavigate();
+
   const [currentFirstName, setCurrentFirstName] = useState('');
   const [currentLastName, setCurrentLastName] = useState('');
   const [currentEmail, setCurrentEmail] = useState('');
-
-  const navigate = useNavigate();
-  const { userId } = store;
 
   useEffect(() => {
     const {
@@ -59,7 +59,6 @@ export default function EditProfile() {
     };
     try {
       const res = await editProfile(dispatch, data);
-      console.log('<== res edit profile ==>', res);
       if (res.success) navigate('/profile/view');
       else if (!res.success) console.log(res);
     } catch (error) {

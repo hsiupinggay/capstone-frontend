@@ -73,7 +73,6 @@ const mainTheme = createTheme(
         letterSpacing: '0.01em',
       },
     },
-
   },
 );
 

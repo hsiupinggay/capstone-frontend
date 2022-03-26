@@ -5,7 +5,7 @@
  * ========================================================
  * ========================================================
  *
- *                        Imports
+ *                       Imports
  *
  * ========================================================
  * ========================================================
@@ -18,6 +18,7 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Tooltip from '@mui/material/Tooltip';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useNavigate } from 'react-router-dom';
 import { getNameInitials } from '../others/helper';
@@ -157,9 +158,15 @@ export default function ContactsPage() {
             <Box>
               <Stack
                 direction="row"
+                spacing={1}
                 justifyContent="space-between"
                 alignItems="center"
               >
+                <Tooltip title="Go Back" arrow>
+                  <IconButton>
+                    <ArrowCircleLeftIcon fontSize="large" color="primary" variant="contained" onClick={() => navigate('/home')} />
+                  </IconButton>
+                </Tooltip>
                 <Typography variant="h1">
                   Contacts
                 </Typography>

@@ -2,12 +2,20 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable array-callback-return */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { getDate } from '../others/helper';
-
 import MedFrequency from '../molecules/MedFrequency';
 import Prescription from '../molecules/Prescription';
 import MedName from '../molecules/MedName';
@@ -23,7 +31,6 @@ import ReminderRecap from '../molecules/ReminderRecap';
  * ========================================================
  * ========================================================
  */
-
 function EditMedCard({
   medicineId, patientId, setOpen,
 }) {
@@ -59,7 +66,6 @@ function EditMedCard({
       data.append('patientId', patientId);
       data.append('medicineId', medicineId);
       const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/view-med?${data.toString()}`);
-      console.log('<== get data ==>', res.data);
       const { selectedMedicine } = res.data;
       const { frequency, lastPrescribed, reminder } = selectedMedicine;
       setName(selectedMedicine.name);
@@ -139,7 +145,6 @@ function EditMedCard({
 
     try {
       const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/edit-med`, data);
-      console.log('<== res.data add med ==>', res.data);
       // close modal, state change will trigger rerender
       setOpen(false);
     } catch (err) {

@@ -27,7 +27,6 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { DateTime } from 'luxon';
 import EditIcon from '@mui/icons-material/Edit';
 import { useMedicalContext } from '../others/store';
-// import appointmentPopupStyles from './AppointmentDetailPopupCss';
 
 /*
  * ========================================================
@@ -38,7 +37,9 @@ import { useMedicalContext } from '../others/store';
  * ========================================================
  * ========================================================
  */
-export default function AppointmentDetailPopup({ apptPopupDetails, setDisplayDataArray }) {
+export default function AppointmentDetailPopup({
+  apptPopupDetails, setDisplayDataArray, setOpenApptModal, setAnchorEl,
+}) {
   const [editAppt, setEditAppt] = useState(false);
   const [date, setDate] = useState();
   const [isEditing, setIsEditing] = useState(false);
@@ -48,21 +49,20 @@ export default function AppointmentDetailPopup({ apptPopupDetails, setDisplayDat
   const [memo, setMemo] = useState('');
   const [memoDate, setMemoDate] = useState('');
   const [memoUserName, setMemoUserName] = useState('');
+
   const { store } = useMedicalContext();
   const {
     userId, firstName, lastName, photo,
   } = store;
+
   useEffect(() => {
-    console.log(apptPopupDetails.date);
-    console.log(apptPopupDetails.time);
+    setAnchorEl(null);
     setMemo(apptPopupDetails.notes.note);
     setMemoDate(apptPopupDetails.notes.date);
     setMemoUserName(apptPopupDetails.notes.userName);
     setDate(new Date(apptPopupDetails.date));
     setValue(DateTime.fromFormat(apptPopupDetails.time, 'h:mm a').toISO());
   }, []);
-  // useEffect(() => {
-  // });
 
   // On form submit, send data to backend to store in DB
   const handleSubmit = (formattedDate, unformattedTime) => {
@@ -79,6 +79,7 @@ export default function AppointmentDetailPopup({ apptPopupDetails, setDisplayDat
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/edit-appointment`, data).then((response) => {
       if (response.status === 200) {
         setDisplayDataArray(response.data.patientDetailsObj);
+        setOpenApptModal(false);
         setSuccessMessage(
           <Typography>
             Your new appointment details:
@@ -144,7 +145,6 @@ export default function AppointmentDetailPopup({ apptPopupDetails, setDisplayDat
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-memo`, data).then((response) => {
       setDisplayDataArray(response.data.patientDetailsObj);
       setIsEditing(false);
-      console.log(response.data.note);
       setMemo(response.data.note);
       setMemoDate(response.data.formattedDate);
       setMemoUserName(response.data.uploader);
@@ -152,15 +152,18 @@ export default function AppointmentDetailPopup({ apptPopupDetails, setDisplayDat
   };
   return (
     <CardContent>
-
       <Box>
-        <Tooltip title="Edit Appointment">
-          <EditIcon variant="contained" color="primary" onClick={toggleEditting} sx={{ marginLeft: 35 }} />
+        <Tooltip title="Edit Appointment" sx={{ marginLeft: 35 }}>
+          <EditIcon variant="contained" color="primary" onClick={toggleEditting} />
         </Tooltip>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-
           <Typography>
-            <Box sx={{ paddingBottom: 1.5, display: 'flex', justifyContent: 'center' }}>
+            <Box sx={{
+              paddingBottom: 1.5,
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+            >
               {apptPopupDetails.patientName}
               {' '}
               has an appointment
@@ -200,47 +203,64 @@ export default function AppointmentDetailPopup({ apptPopupDetails, setDisplayDat
                   </LocalizationProvider>
                 </Box>
               )}
-            {/* <Box>
+            <Box sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+            >
               at the
               {' '}
               <strong>{apptPopupDetails.department}</strong>
-              {' '}
-              department in
-            </Box> */}
-            <Box>
-              at the
-              {' '}
-              <strong>{apptPopupDetails.department}</strong>
-              {' '}
               department in
               {' '}
               <strong>{apptPopupDetails.hospital}</strong>
               {' '}
-              <br />
-              <strong>Chaperone:</strong>
-              {' '}
               {
             apptPopupDetails.chaperone === undefined || apptPopupDetails.chaperone === ''
-              ? <Box>Nil</Box>
-              : <Box>{apptPopupDetails.chaperone}</Box>
+              ? (
+                <Box>
+                  <strong>Chaperone:</strong>
+                  {' '}
+                  Nil
+                </Box>
+              )
+              : (
+                <Box>
+                  <strong>Chaperone:</strong>
+                  {' '}
+                  {apptPopupDetails.chaperone}
+                </Box>
+              )
           }
+              <br />
             </Box>
             { !editAppt
               ? <Box />
               : (
-                <Button variant="contained" onClick={() => { handleSubmit(date, value); }}>
-                  Submit
-                </Button>
+                <Box sx={{
+                  paddingBottom: 0.5,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+                >
+                  <Button variant="contained" onClick={() => { handleSubmit(date, value); }}>
+                    Submit
+                  </Button>
+                </Box>
               )}
             <Box />
             <Box>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <strong>Memos:</strong>
+                <Tooltip arrow title="Add/Edit Memo">
+                  <IconButton>
+                    <AddCircleIcon color="primary" variant="contained" onClick={toggleNoteEditing} />
+                  </IconButton>
+                </Tooltip>
 
-              <strong>Memos:</strong>
-              <Tooltip arrow title="Add/Edit Memo">
-                <IconButton>
-                  <AddCircleIcon color="primary" variant="contained" onClick={toggleNoteEditing} />
-                </IconButton>
-              </Tooltip>
+              </Box>
               {isEditing === false
                 ? (
                   <Box>
@@ -263,7 +283,10 @@ export default function AppointmentDetailPopup({ apptPopupDetails, setDisplayDat
                   </Box>
                 )
                 : (
-                  <Box>
+                  <Box sx={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-around',
+                  }}
+                  >
                     <br />
                     <TextField
                       label="Add Memo"
@@ -272,7 +295,7 @@ export default function AppointmentDetailPopup({ apptPopupDetails, setDisplayDat
                       }}
                       onChange={(e) => { setMemo(e.target.value); }}
                     />
-                    <Button variant="contained" onClick={handleMemoSubmit}>Submit</Button>
+                    <Button variant="contained" sx={{ marginLeft: 2 }} onClick={handleMemoSubmit}>Submit</Button>
                   </Box>
                 )}
 

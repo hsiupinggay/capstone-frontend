@@ -1,10 +1,28 @@
 /* eslint-disable react/prop-types */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import {
   CardContent, IconButton, Box, Tooltip, Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                TelegramCard Component
+ *
+ * ========================================================
+ * ========================================================
+ */
 function TelegramCard({ patientId }) {
   const [tooltipText, setTooltipText] = useState('Copy');
   const [error, setError] = useState(false);

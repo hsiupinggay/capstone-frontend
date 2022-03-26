@@ -18,35 +18,12 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-// import MedicationRoundedIcon from '@mui/icons-material/MedicationRounded';
 import { useMedicalContext } from '../others/store';
 import AddHospitalTruncated from '../organisms/AddHospitalTruncated';
 import AddDepartmentTruncated from '../organisms/AddDepartmentTruncated';
 import AddChaperoneTruncated from '../organisms/AddChaperoneTruncated';
 import BackIcon from '../molecules/BackIcon';
 import style from './ModalCss';
-
-/*
- * ========================================================
- * ========================================================
- *
- *                   Modal styling
- *
- * ========================================================
- * ========================================================
- */
-// const style = {
-//   position: 'absolute',
-//   top: '50%',
-//   left: '50%',
-//   transform: 'translate(-50%, -50%)',
-//   width: 400,
-//   height: 500,
-//   bgcolor: 'background.paper',
-//   border: '2px solid #000',
-//   boxShadow: 24,
-//   p: 4,
-// };
 
 /*
  * ========================================================
@@ -76,7 +53,6 @@ export default function PatientVisitLocationPage() {
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/patient-data-visit-details?${data.toString()}`)
       .then((response) => {
         const { chaperones, clinics, fullName } = response.data;
-        console.log(chaperones, clinics);
         setClinicsArr(clinics);
         setChaperonesArr(chaperones);
         setName(fullName);
@@ -87,15 +63,18 @@ export default function PatientVisitLocationPage() {
     setOpen(true);
     setModal('add hospital');
   };
+
   const openAddDeptPopup = (hosp) => {
     setHospital(hosp);
     setOpen(true);
     setModal('add department');
   };
+
   const openAddChapPopup = () => {
     setOpen(true);
     setModal('add chaperone');
   };
+
   const closePopup = () => {
     setOpen(false);
   };
@@ -103,12 +82,12 @@ export default function PatientVisitLocationPage() {
   return (
     <Box sx={{ width: { xs: '300px', sm: '500px' }, mb: '70px' }}>
       <Stack
-        spacing={2}
+        spacing={1}
         direction="row"
         alignItems="center"
       >
         <BackIcon variant="contained" onClick={() => navigate('/patient')} />
-        <Typography variant="h3">
+        <Typography variant="h1">
           {name}
         </Typography>
       </Stack>

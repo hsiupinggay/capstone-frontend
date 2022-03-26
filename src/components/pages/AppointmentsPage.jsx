@@ -29,11 +29,14 @@ import { useMedicalContext } from '../others/store';
 * ========================================================
 */
 export default function AppointmentsPage() {
+  const { store } = useMedicalContext();
+  const { userId } = store;
+
   const [toggleView, setToggleView] = useState(false);
   const [displayDataArray, setDisplayDataArray] = useState();
-  // const [originialDataArray, setOriginalDataArray] = useState();
   const [openApptModal, setOpenApptModal] = useState(false);
   const [apptModalType, setApptModalType] = useState('');
+  const [anchorEl, setAnchorEl] = useState(null);
   const [filterData, setFilterData] = useState(
     {
       hospitalFilter: [],
@@ -53,8 +56,6 @@ export default function AppointmentsPage() {
       date: [],
     },
   );
-  const { store } = useMedicalContext();
-  const { userId } = store;
 
   // On-mount useEffect:
   // axios call for all patient data related to user
@@ -65,7 +66,6 @@ export default function AppointmentsPage() {
       .then((result) => {
         const axiosData = result.data.patientDetailsObj;
         // Save the array of patients data under the USER as a state
-        console.log('axiosData', axiosData);
         setDisplayDataArray(axiosData);
         // setOriginalDataArray(axiosData);
         // Get filter params through axiosData.visitDetails
@@ -128,12 +128,13 @@ export default function AppointmentsPage() {
               setApptModalType={setApptModalType}
               setApptPopupDetails={setApptPopupDetails}
               setFilterData={setFilterData}
-              // originialDataArray={originialDataArray}
             />
           </>
         )
         : (
           <AppointmentCalendar
+            anchorEl={anchorEl}
+            setAnchorEl={setAnchorEl}
             displayDataArray={displayDataArray}
             setOpenApptModal={setOpenApptModal}
             setApptModalType={setApptModalType}
@@ -141,6 +142,7 @@ export default function AppointmentsPage() {
           />
         )}
       <ApptModal
+        setAnchorEl={setAnchorEl}
         openApptModal={openApptModal}
         setOpenApptModal={setOpenApptModal}
         apptModalType={apptModalType}
