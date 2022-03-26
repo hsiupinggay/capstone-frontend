@@ -1,3 +1,12 @@
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *             List of hospital departments
+ *
+ * ========================================================
+ * ========================================================
+ */
 export default [
   { value: 'Cadiology', label: 'Cadiology' },
   { value: 'Dermatology', label: 'Dermatology' },
@@ -15,17 +24,16 @@ export default [
   { value: 'Gynecology', label: 'Gynecology' },
   { value: 'Hematology', label: 'Hematology' },
   { value: 'Neurology', label: 'Neurology' },
+  { value: 'Occupational Therapy', label: 'Occupational Therapy' },
+  { value: 'Oncology', label: 'Oncology' },
   { value: 'Ophthalmology', label: 'Ophthalmology' },
+  { value: 'Orthopedic', label: 'Orthopedic' },
   { value: 'Pathology', label: 'Pathology' },
   { value: 'Pain Medicine', label: 'Pain Medicine' },
   { value: 'Palliative Medicine', label: 'Palliative Medicine' },
   { value: 'Pediatrics', label: 'Pediatrics' },
   { value: 'Physiotherapy', label: 'Physiotherapy' },
   { value: 'Psychiatry', label: 'Psychiatry' },
-  { value: 'Occupational Therapy', label: 'Occupational Therapy' },
-  { value: 'Oncology', label: 'Oncology' },
-  { value: 'Ophthalmology', label: 'Ophthalmology' },
-  { value: 'Orthopedic', label: 'Orthopedic' },
   { value: 'Renal Medicine', label: 'Renal Medicine' },
   { value: 'Urology', label: 'Urology' },
   { value: 'Vascular and Interventional Radiology', label: 'Vascular and Interventional Radiology' },

@@ -1,12 +1,35 @@
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import React from 'react';
-import UserAuthTab from '../organisms/UserAuthTab';
+import { Box, Typography } from '@mui/material';
+import AuthCard from '../organisms/AuthCard';
+import authStyle from './UserAuthPageCss';
 
-function UserAuthPage() {
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                UserAuthPage Component
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function UserAuthPage() {
   return (
-    <div>
-      <UserAuthTab />
-    </div>
+    <Box sx={authStyle.mainContainer}>
+      <Typography sx={authStyle.appName}>
+        KEEP
+      </Typography>
+      <Box sx={authStyle.loginContainer}>
+        <AuthCard />
+      </Box>
+    </Box>
   );
 }
-
-export default UserAuthPage;

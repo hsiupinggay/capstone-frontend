@@ -1,6 +1,6 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable max-len */
-/* eslint-disable no-console */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-props-no-spreading */
 /*
  * ========================================================
  * ========================================================
@@ -12,7 +12,16 @@
  */
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { TextField, Button, Typography } from '@mui/material';
+import { DatePicker, LocalizationProvider } from '@mui/lab';
+import DateAdapter from '@mui/lab/AdapterLuxon';
+import moment from 'moment';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import { useMedicalContext } from '../others/store';
+import BackIcon from '../molecules/BackIcon';
+import patientPopupStyles from './AddPatientCss';
 
 /*
  * ========================================================
@@ -23,17 +32,24 @@ import { useNavigate } from 'react-router-dom';
  * ========================================================
  * ========================================================
  */
-export default function AddPatient() {
+export default function AddPatient({
+  accessedFromPatientPage, setRefresh, refresh, setModal, setAddition,
+}) {
+  const { store } = useMedicalContext();
+  const { userId } = store;
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [relationship, setRelationship] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [DOB, setDOB] = useState('');
-  const navigate = useNavigate();
+  const [DOB, setDOB] = useState(null);
+  const [value, setValue] = useState(0);
 
-  // ################################## HARDCODED FOR NOW  ##################################
-  // data.append('userId', userId);
-  const userId = '62259eddb4a77ae0343f7305';
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    setAddition(newValue);
+    // navigate(newValue);
+  };
 
   // On form submit, send data to backend to store in DB
   const handleSubmit = (event) => {
@@ -48,36 +64,82 @@ export default function AddPatient() {
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-patient`, data).then((response) => {
       if (response.status === 200) {
         setSuccessMessage(
-          <div>
-            <p>
-              {`You have added ${firstName} ${lastName} as your ${relationship}`}
-            </p>
-          </div>,
+          `You have added ${firstName} ${lastName} as your ${relationship}.`,
         );
+        // Trigger patient list page to rerender
+        if (refresh) {
+          setRefresh(false);
+        } else {
+          setRefresh(true);
+        }
       }
     });
   };
+
+  const a11yProps = (index) => ({
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  });
+
   return (
     <div>
-      <button type="button" onClick={() => navigate('/add-appt')}>Back</button>
+      {
+        accessedFromPatientPage === true
+          ? <div />
+          : (
+            <div>
+              <BackIcon variant="contained" onClick={() => setModal('add-appt')} />
+              <Box sx={patientPopupStyles.tabsContainer}>
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="basic tabs example"
+                >
+                  <Tab
+                    label=" +Patient"
+                    value="patient"
+                    {...a11yProps(0)}
+                    disabled
+                  />
+                  <Tab label=" +Hospital" value="hospital" {...a11yProps(1)} />
+                  <Tab label=" +Department" value="department" {...a11yProps(2)} />
+                  <Tab label=" +Chaperone" value="chaperone" {...a11yProps(3)} />
+                </Tabs>
+              </Box>
+            </div>
+          )
+      }
+      <br />
+      <br />
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="First Name" onChange={(e) => setFirstName(e.target.value)} required />
-        <input type="text" placeholder="Last Name" onChange={(e) => setLastName(e.target.value)} required />
-        <input type="text" placeholder="Relationship" onChange={(e) => setRelationship(e.target.value)} required />
-        <div>
-          <label htmlFor="date" name="date">DOB</label>
-          <input type="date" id="date" name="date" onChange={(event) => setDOB(event.target.value)} required />
-        </div>
-        <button type="submit"> Submit</button>
+        <Box sx={patientPopupStyles.inputContainer}>
+          <TextField label="First Name" sx={patientPopupStyles.inputField} onChange={(e) => setFirstName(e.target.value)} required />
+          <TextField label="Last Name" sx={patientPopupStyles.inputField} onChange={(e) => setLastName(e.target.value)} required />
+          <TextField label="Relationship" onChange={(e) => setRelationship(e.target.value)} required sx={patientPopupStyles.inputField} />
+
+          <LocalizationProvider dateAdapter={DateAdapter}>
+            <DatePicker
+              label="Date Of Birth"
+              value={DOB}
+              onChange={(newValue) => {
+                setDOB(moment(`${newValue.c.year}-${newValue.c.month}-${newValue.c.day}`).format('YYYY-MM-DD'));
+              }}
+              renderInput={(params) => <TextField {...params} required sx={patientPopupStyles.inputField} />}
+            />
+          </LocalizationProvider>
+        </Box>
+        <Box sx={patientPopupStyles.submitBtn}>
+          <Button variant="contained" type="submit">Submit</Button>
+        </Box>
       </form>
       <div>
         {
         successMessage === ''
           ? <div />
           : (
-            <div>
+            <Typography sx={patientPopupStyles.outcomeMessage}>
               {successMessage}
-            </div>
+            </Typography>
           )
         }
       </div>

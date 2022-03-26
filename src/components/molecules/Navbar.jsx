@@ -1,98 +1,190 @@
 /* eslint-disable max-len */
-import React, { useRef, useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
-import { MenuIcon } from '@heroicons/react/solid';
-import { useMedicalContext } from '../others/store';
-// Navbar Component. Renders after user logs in and is authenticated
-function Navbar() {
-  const [toggle, setToggle] = useState('hidden');
-  const navMenu = useRef();
-  const { store } = useMedicalContext();
-  const { lastName } = store;
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
+import React, { useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import {
+  Box, AppBar, Toolbar, Typography, Button, Avatar, Menu, MenuItem,
+} from '@mui/material';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import HomeIcon from '@mui/icons-material/Home';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import { useMedicalContext, logout } from '../others/store';
+import { getNameInitials } from '../others/helper';
+import navStyles from './NavbarCss';
 
-  // Toggle menu button that appears for menu icon
-  const handleClick = () => {
-    if (toggle === 'hidden') {
-      setToggle('flex absolute');
-    } else if (toggle === 'flex absolute') {
-      setToggle('hidden');
-    }
+/*
+ * ========================================================
+ * ========================================================
+ *                  Array of navbar paths
+ * ========================================================
+ * ========================================================
+ */
+const pathArray = [{
+  path: '/home',
+  name: 'Home',
+}, {
+  path: '/appointments',
+  name: 'Appointments',
+},
+{
+  path: '/contacts',
+  name: 'Contacts',
+},
+{
+  path: '/profile',
+  name: 'Profile',
+},
+];
+
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                    Navbar Component
+ *       Renders after user logs in and is authenticated
+ *
+ * ========================================================
+ * ========================================================
+ */
+export default function NavBar() {
+  const [value, setValue] = useState();
+  const navigate = useNavigate();
+  const { store, dispatch } = useMedicalContext();
+  const { photo, firstName, lastName } = store;
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
-  // Add/edit routes that should appear in nav bar in pathArray
-  // PathArray gets mapped into navLink component
-  const pathArray = [{
-    path: '/nav/home',
-    name: 'Home',
-  }, {
-    path: '/nav/appointments',
-    name: 'Appointments',
-  },
-  {
-    path: '/nav/people',
-    name: 'People',
-  },
-  {
-    path: '/nav/profile',
-    name: 'Profile',
-  },
-  {
-    path: '/nav/add-appt',
-    name: 'Add Appt',
-  },
-  {
-    path: '/nav/add-patient',
-    name: 'Add Patient',
-  },
-  {
-    path: '/nav/add-hospital',
-    name: 'Add Hospital',
-  },
-  {
-    path: '/nav/add-department',
-    name: 'Add Dept',
-  },
-  {
-    path: '/nav/add-chaperone',
-    name: 'Add Chaperone',
-  },
-  {
-    path: '/logout',
-    name: 'Logout',
-  }];
+  // Function to logout
+  // Clears local storage and all user info
+  // Navigates to login page
+  const handleLogout = () => {
+    logout(dispatch);
+    navigate('/auth');
+    handleClose();
+  };
 
   return (
-    <div className="main-container w-screen h-screen
-          flex flex-col items-center "
-    >
-      <div className="nav-div w-full my-3">
-        <div className="flex flex-row items-center justify-between">
-          <h1 className="text-sm font-semibold">{lastName}</h1>
-          <MenuIcon className="h-5 w-5 text-gray-900 md:hidden" onClick={handleClick} />
-          <nav
-            ref={navMenu}
-            className={`${toggle} flex-col z-40 md:flex md:flex-row md:justify-evenly items-center`}
-          >
-
+    <div>
+      <AppBar sx={navStyles.appBar}>
+        <Toolbar sx={navStyles.toolBar}>
+          <Typography variant="h2" sx={navStyles.appName}>
+            KEEP
+          </Typography>
+          <Box sx={navStyles.navContainer}>
             {pathArray.map((e) => (
-              <NavLink
+              <Button
                 key={e.name}
-                className={({ isActive }) => `${isActive && 'font-bold'} 
-        px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline`}
-                to={e.path}
+                onClick={() => { navigate(e.path); }}
+                sx={navStyles.navBtn}
               >
                 {e.name}
-
-              </NavLink>
+              </Button>
             ))}
+            <Button
+              onClick={handleLogout}
+              sx={navStyles.navBtn}
+            >
+              Logout
 
-          </nav>
-        </div>
+            </Button>
+          </Box>
 
-      </div>
+          <Box
+            sx={navStyles.navProfileContainer}
+          >
+            <Box sx={navStyles.navNameContainer}>
+              <Typography sx={navStyles.navProfileName}>
+                {firstName}
+                {' '}
+                {lastName}
+              </Typography>
+
+            </Box>
+            <Box sx={navStyles.navProfilePic}>
+              {!photo && <Avatar sx={{ width: 45, height: 45 }}>{getNameInitials(firstName, lastName)}</Avatar>}
+              {photo && <Avatar sx={{ width: 45, height: 45 }} alt="profile" src={photo} />}
+            </Box>
+          </Box>
+
+        </Toolbar>
+      </AppBar>
+      <Box sx={navStyles.bottomNavContainer}>
+        <BottomNavigation
+          sx={navStyles.bottomNavBar}
+          showLabels
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+            navigate(newValue);
+          }}
+        >
+          <BottomNavigationAction
+            value="/"
+            icon={<HomeIcon />}
+            sx={navStyles.bottomNavBtn}
+          />
+          <BottomNavigationAction
+            value="/appointments"
+            icon={<CalendarMonthIcon />}
+            sx={navStyles.bottomNavBtn}
+
+          />
+          <BottomNavigationAction
+            value="/contacts"
+            icon={<PeopleAltIcon />}
+            sx={navStyles.bottomNavBtn}
+
+          />
+
+          <BottomNavigationAction
+            onClick={handleClick}
+            icon={(
+              <Box sx={navStyles.navProfilePic}>
+                {!photo && <Avatar sx={{ width: 40, height: 40 }}>{getNameInitials(firstName, lastName)}</Avatar>}
+                {photo && <Avatar sx={{ width: 40, height: 40 }} alt="profile" src={photo} />}
+              </Box>
+)}
+            sx={navStyles.bottomNavBtn}
+
+          />
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem onClick={() => {
+              navigate('/profile');
+              handleClose();
+            }}
+            >
+              Profile
+
+            </MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </Menu>
+        </BottomNavigation>
+      </Box>
       <Outlet />
     </div>
   );
 }
-
-export default Navbar;
