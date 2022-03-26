@@ -32,16 +32,17 @@ import addContactPopupStyles from './AddContactCss';
  * ========================================================
  */
 export default function AddContact({ setOutgoingPendingList }) {
+  const { store } = useMedicalContext();
+  const {
+    userId, firstName, lastName, photo,
+  } = store;
+
   const [successMessage, setSuccessMessage] = useState('');
   const [otherUsersList, setOtherUsersList] = useState();
   const [contactId, setContactId] = useState();
   const [contactFirstName, setContactFirstName] = useState();
   const [contactLastName, setContactLastName] = useState();
   const [contactPhoto, setContactPhoto] = useState();
-  const { store } = useMedicalContext();
-  const {
-    userId, firstName, lastName, photo,
-  } = store;
 
   useEffect(() => {
     const data = new URLSearchParams();

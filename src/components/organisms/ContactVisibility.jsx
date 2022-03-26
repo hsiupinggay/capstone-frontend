@@ -30,12 +30,12 @@ import visibilityPopupStyles from './ContactVisibilityCss';
  * ========================================================
  */
 export default function ContactVisibility({ contactId, contactName }) {
+  const { store } = useMedicalContext();
+  const { userId } = store;
+
   const [visiblePatientList, setVisiblePatientList] = useState();
   const [otherPatientList, setOtherPatientList] = useState();
   const [successMessage, setSuccessMessage] = useState('');
-
-  const { store } = useMedicalContext();
-  const { userId } = store;
 
   useEffect(() => {
     const data = new URLSearchParams();
@@ -43,7 +43,6 @@ export default function ContactVisibility({ contactId, contactName }) {
     data.append('contactId', contactId);
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/contacts/get-visible-patients-list?${data.toString()}`)
       .then((response) => {
-        console.log(response.data);
         const { visiblePatients, otherPatients } = response.data;
         setVisiblePatientList(visiblePatients);
         setOtherPatientList(otherPatients);
@@ -59,7 +58,6 @@ export default function ContactVisibility({ contactId, contactName }) {
     };
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/contacts/remove-access`, data)
       .then((response) => {
-        console.log(response.data);
         const { visiblePatients, otherPatients } = response.data;
         setVisiblePatientList(visiblePatients);
         setOtherPatientList(otherPatients);
@@ -69,7 +67,6 @@ export default function ContactVisibility({ contactId, contactName }) {
 
   // Give contact access to patients data
   const giveAccess = (patientId, name, admin) => {
-    console.log('admin', admin);
     const data = {
       contactId,
       userId,
@@ -79,7 +76,6 @@ export default function ContactVisibility({ contactId, contactName }) {
     };
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/contacts/give-access`, data)
       .then((response) => {
-        console.log(response.data);
         const { visiblePatients, otherPatients } = response.data;
         setVisiblePatientList(visiblePatients);
         setOtherPatientList(otherPatients);

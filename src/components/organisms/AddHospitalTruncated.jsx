@@ -33,10 +33,10 @@ import { useMedicalContext } from '../others/store';
 export default function AddHospitalTruncated({ name, setClinicsArr }) {
   const { store } = useMedicalContext();
   const { patientId } = store;
+  const filter = createFilterOptions();
 
   const [hospital, setHospital] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const filter = createFilterOptions();
 
   // On form submit, send data to backend to store in DB
   const handleSubmit = (event) => {

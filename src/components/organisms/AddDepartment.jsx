@@ -36,6 +36,7 @@ import departmentPopupStyles from './AddDepartmentCss';
 export default function AddDepartment({ setModal, setAddition }) {
   const { store } = useMedicalContext();
   const { userId } = store;
+  const filter = createFilterOptions();
 
   const [hospital, setHospital] = useState('');
   const [patientId, setPatientId] = useState('');
@@ -44,7 +45,6 @@ export default function AddDepartment({ setModal, setAddition }) {
   const [patientArr, setPatientArr] = useState();
   const [hospArr, setHospArr] = useState();
   const [department, setDepartment] = useState('');
-  const filter = createFilterOptions();
 
   // When component renders, retrieve all patient data related to user
   useEffect(() => {

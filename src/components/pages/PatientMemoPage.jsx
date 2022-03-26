@@ -1,9 +1,7 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-nested-ternary */
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable max-len */
-/* eslint-disable no-console */
 /*
  * ========================================================
  * ========================================================
@@ -22,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import Tooltip from '@mui/material/Tooltip';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { flexbox } from '@mui/system';
 import { useMedicalContext } from '../others/store';
@@ -106,17 +104,16 @@ export default function PatientMemoPage() {
       setMemoList(memoList);
     } else {
       memoList.sort((a, b) => new Date(b.convertedDate) - new Date(a.convertedDate));
-      console.log('hi');
       setOrder('latest first');
       setMemoList(memoList);
     }
-    console.log(memoList);
   };
 
   // When user clicks on button, render popup to filter memos
   const openPopUp = () => {
     setOpen(true);
   };
+
   const closePopup = () => {
     setOpen(false);
   };
@@ -127,34 +124,34 @@ export default function PatientMemoPage() {
 
   return (
     <div>
-      <Tooltip arrow title="Go Back">
-        <ArrowBackIosIcon variant="contained" onClick={() => navigate('/patient')} />
-      </Tooltip>
-      <br />
-      <br />
-
       {
         memoList === undefined || memoList.length === 0
           ? (
             <Box>
+              <Tooltip arrow title="Go Back">
+                <ArrowCircleLeftIcon fontSize="large" color="primary" variant="contained" onClick={() => navigate('/patient')} />
+              </Tooltip>
               <Typography variant="h3" display="inline" style={{ fontWeight: 'fontWeightBold' }} sx={{ m: 2 }}>Nil memos found</Typography>
-              <Tooltip title="Filter Memos">
-                <FilterAltIcon color="primary" variant="contained" onClick={openPopUp} />
-              </Tooltip>
-              <Tooltip arrow title="Reset Filters">
-                <RestartAltIcon color="primary" variant="contained" onClick={resetFilters} />
-              </Tooltip>
             </Box>
           )
           : (
             <Box>
-              <Box sx={{ m: 2 }}>
+              <Box sx={{ m: 2, display: 'flex', alignItems: 'center' }}>
+                <Tooltip arrow title="Go Back">
+                  <IconButton sx={{ marginRight: 2 }}>
+                    <ArrowCircleLeftIcon fontSize="large" color="primary" variant="contained" onClick={() => navigate('/patient')} />
+                  </IconButton>
+                </Tooltip>
                 <Typography variant="h3" fontWeight="fontWeightBold" fontSize="28px" display="inline" sx={{ mr: 2 }}>
                   {`List of ${name}'s Memos`}
                 </Typography>
                 <Tooltip title="Sort By Appointment Date">
                   <IconButton>
-                    <CalendarMonthIcon color="primary" variant="contained" onClick={sortDate} />
+                    <CalendarMonthIcon
+                      color="primary"
+                      variant="contained"
+                      onClick={sortDate}
+                    />
 
                   </IconButton>
                 </Tooltip>
@@ -234,7 +231,7 @@ export default function PatientMemoPage() {
         onClose={closePopup}
       >
         <Box sx={style}>
-          <FilterPatientMemos deptArr={deptArr} dateArr={dateArr} hospArr={hospArr} chapArr={chapArr} fullMemoList={fullMemoList} setMemoList={setMemoList} name={name} />
+          <FilterPatientMemos deptArr={deptArr} dateArr={dateArr} hospArr={hospArr} chapArr={chapArr} fullMemoList={fullMemoList} setMemoList={setMemoList} name={name} setOpen={setOpen} />
         </Box>
       </Modal>
     </div>

@@ -15,7 +15,6 @@ import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import axios from 'axios';
 import { getDate } from '../others/helper';
-
 import MedFrequency from '../molecules/MedFrequency';
 import Prescription from '../molecules/Prescription';
 import MedName from '../molecules/MedName';
@@ -61,6 +60,7 @@ export default function AddMedCard({ setOpen, patientId }) {
   const handleName = (e) => {
     setName(e.target.value);
   };
+
   const handleSwitch = (e) => {
     setAsRequiredChecked(e.target.checked);
     // if asRequiredChecked is true then app cannot help set reminders

@@ -31,10 +31,12 @@ const style = {
 
 function AppointmentDetailModal({
   openApptModal, setOpenApptModal, setDisplayDataArray, apptPopupDetails,
+  setAnchorEl,
 }) {
   const handleClose = () => {
     setOpenApptModal(false);
   };
+
   return (
     <div>
       <Modal
@@ -49,7 +51,7 @@ function AppointmentDetailModal({
           }
         }
         >
-          <AppointmentDetailPopup setDisplayDataArray={setDisplayDataArray} apptPopupDetails={apptPopupDetails} />
+          <AppointmentDetailPopup setOpenApptModal={setOpenApptModal} setDisplayDataArray={setDisplayDataArray} apptPopupDetails={apptPopupDetails} setAnchorEl={setAnchorEl} />
         </Box>
       </Modal>
     </div>
@@ -132,7 +134,6 @@ function FilterModal({
   // useEffect on filterValue change (only happens within checkbox components)
   // switch case to identify which filter the change is made on
   useEffect(() => {
-    console.log('inside use effect ', filterValue);
     switch (Object.keys(filterValue)[0]) {
       case 'hospital':
         setHospitalFilter(Object.values(filterValue)[0]);
@@ -147,7 +148,6 @@ function FilterModal({
         setChaperoneFilter(Object.values(filterValue)[0]);
         break;
       case 'date':
-        console.log('setting date filter...');
         setDateFilter(Object.values(filterValue)[0]);
         break;
       default:
@@ -189,7 +189,6 @@ function FilterModal({
             width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center',
           }}
           >
-            { console.log('run') }
             <ApptFilterCheckbox label="Hospital" dataArray={filterParams.hospitals} setFilterValue={setFilterValue} />
             <ApptFilterCheckbox label="Department" dataArray={filterParams.departments} setFilterValue={setFilterValue} />
             <ApptFilterCheckbox label="Patient" dataArray={filterParams.patients} setFilterValue={setFilterValue} />
@@ -261,7 +260,7 @@ function TestModal({ openApptModal, setOpenApptModal }) {
 
 export default function ApptModal(
   {
-    openApptModal, setOpenApptModal, apptModalType, setFilterData, filterParams, filterData, setApptModalType, setDisplayDataArray, apptPopupDetails,
+    openApptModal, setOpenApptModal, apptModalType, setFilterData, filterParams, filterData, setApptModalType, setDisplayDataArray, apptPopupDetails, setAnchorEl,
   },
 ) {
   const [addition, setAddition] = useState(false);
@@ -271,9 +270,16 @@ export default function ApptModal(
       return <AddApptModal openApptModal={openApptModal} setOpenApptModal={setOpenApptModal} setModal={setApptModalType} setAddition={setAddition} setDisplayDataArray={setDisplayDataArray} />;
     case 'add-category':
       return <AddDetailsModal openApptModal={openApptModal} addition={addition} setAddition={setAddition} setModal={setApptModalType} setOpenApptModal={setOpenApptModal} />;
-      // <AddDetailsTabs addition={addition} setAddition={setAddition} setModal={setApptModalType} setOpenApptModal={setOpenApptModal} />;
     case 'view-full-appointment':
-      return <AppointmentDetailModal setDisplayDataArray={setDisplayDataArray} openApptModal={openApptModal} setOpenApptModal={setOpenApptModal} apptPopupDetails={apptPopupDetails} />;
+      return (
+        <AppointmentDetailModal
+          setDisplayDataArray={setDisplayDataArray}
+          openApptModal={openApptModal}
+          setOpenApptModal={setOpenApptModal}
+          apptPopupDetails={apptPopupDetails}
+          setAnchorEl={setAnchorEl}
+        />
+      );
     case 'filter':
       return (
         <FilterModal

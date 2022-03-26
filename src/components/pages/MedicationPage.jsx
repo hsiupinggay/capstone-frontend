@@ -17,6 +17,7 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import CircleNotificationsRoundedIcon from '@mui/icons-material/CircleNotificationsRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
@@ -53,7 +54,6 @@ function MedicationPage() {
       const data = new URLSearchParams();
       data.append('patientId', patientId);
       const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/med-list?${data.toString()}`);
-      console.log(res.data);
       const { medication } = res.data;
       setMedicineList(medication);
       setLoading(false);
@@ -83,7 +83,6 @@ function MedicationPage() {
 
   // event handler for delete button
   const handleDelete = async (id) => {
-    console.log('medicine id delete', id);
     const data = new URLSearchParams();
     data.append('medicineId', id);
     data.append('patientId', patientId);
@@ -116,20 +115,27 @@ function MedicationPage() {
       <div>
         <Stack
           direction="row"
-          spacing={2}
+          spacing={1}
           mb={2}
+          display="flex"
+          alignItems="center"
         >
+          <Tooltip title="Go Back" arrow>
+            <IconButton>
+              <ArrowCircleLeftIcon fontSize="large" color="primary" variant="contained" onClick={() => navigate('/patient')} />
+            </IconButton>
+          </Tooltip>
           <Typography variant="h1">
             Medication
           </Typography>
           <Tooltip title="Add Medication" arrow>
             <IconButton aria-label="add medication" color="primary" onClick={handleAdd}>
-              <AddCircleRoundedIcon />
+              <AddCircleRoundedIcon fontSize="large" />
             </IconButton>
           </Tooltip>
           <Tooltip title="Subscribe to Reminders" arrow>
             <IconButton aria-label="Subscribe to Reminders" color="primary" onClick={handleReminder}>
-              <CircleNotificationsRoundedIcon />
+              <CircleNotificationsRoundedIcon fontSize="large" />
             </IconButton>
           </Tooltip>
         </Stack>

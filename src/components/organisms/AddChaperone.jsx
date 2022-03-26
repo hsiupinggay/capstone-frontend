@@ -35,6 +35,7 @@ import chaperonePopupStyles from './AddChaperoneCss';
 export default function AddChaperone({ setModal, setAddition }) {
   const { store } = useMedicalContext();
   const { userId, firstName, lastName } = store;
+  const filter = createFilterOptions();
 
   const [contacts, setContacts] = useState('');
   const [patientId, setPatientId] = useState('');
@@ -44,11 +45,12 @@ export default function AddChaperone({ setModal, setAddition }) {
   const [successMessage, setSuccessMessage] = useState('');
   const [patientArr, setPatientArr] = useState();
   const [value, setValue] = useState(0);
-  const filter = createFilterOptions();
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setAddition(newValue);
   };
+
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
     const data = new URLSearchParams();

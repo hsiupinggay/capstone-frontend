@@ -1,9 +1,6 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-underscore-dangle */
 /*
  * ========================================================
  * ========================================================
@@ -15,12 +12,10 @@
  */
 import React, { useState } from 'react';
 import {
-  TextField, Typography, CardContent, Box, IconButton, Stack,
+  TextField, Typography, CardContent, Box, Stack,
 } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import Tooltip from '@mui/material/Tooltip';
 
 const style = {
   container: {
@@ -34,6 +29,7 @@ const style = {
     justifyContent: 'center',
   },
 };
+
 /*
  * ========================================================
  * ========================================================
@@ -44,9 +40,8 @@ const style = {
  * ========================================================
  */
 export default function FilterPatientMemos({
-  deptArr, dateArr, hospArr, chapArr, fullMemoList, setMemoList,
+  deptArr, dateArr, hospArr, chapArr, fullMemoList, setMemoList, name, setOpen,
 }) {
-  const [successMessage, setSuccessMessage] = useState('');
   const [dateFilter, setDateFilter] = useState('');
   const [chaperoneFilter, setChaperoneFilter] = useState('');
   const [hospitalFilter, setHospitalFilter] = useState('');
@@ -100,38 +95,21 @@ export default function FilterPatientMemos({
       }
     }
     setMemoList(newMemoList);
-    setSuccessMessage(
-      `You have set the following filters: ${dateFilter || ''} 
-    ${hospitalFilter || ''} 
-    ${departmentFilter || ''} 
-    ${chaperoneFilter || ''}
-    `,
-    );
-  };
-
-  const resetFilters = () => {
-    setMemoList(fullMemoList);
-    setSuccessMessage('You have reset the filters!');
+    setOpen(false);
   };
 
   return (
     <CardContent>
       <Box sx={style.container}>
-        <Stack
-          spacing={1}
-          direction="row"
-          alignItems="center"
-          mb={1}
-        >
-          <Typography variant="h3">
-            Filter By:
-          </Typography>
-          <Tooltip title="Reset Filters">
-            <IconButton onClick={resetFilters}>
-              <RestartAltIcon color="primary" />
-            </IconButton>
-          </Tooltip>
-        </Stack>
+
+        <Typography variant="h3">
+          {' '}
+          Filter
+          {' '}
+          {name}
+          's memos
+        </Typography>
+
         <form onSubmit={handleSubmit}>
           <Stack
             spacing={2}
@@ -175,16 +153,6 @@ export default function FilterPatientMemos({
             <Button variant="contained" type="submit" sx={{ marginLeft: 11 }}>Submit</Button>
           </Stack>
         </form>
-        <br />
-        <Typography variant="body2">
-          {successMessage === ''
-            ? <div />
-            : (
-              <div>
-                {successMessage}
-              </div>
-            )}
-        </Typography>
       </Box>
     </CardContent>
   );

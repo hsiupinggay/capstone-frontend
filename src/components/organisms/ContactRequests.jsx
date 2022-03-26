@@ -175,7 +175,7 @@ function ContactRequests({
                       onClick={() => dismissNotification(request._id, 'rejected')}
                       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                       badgeContent={(
-                        <Tooltip arrow title="Dismiss" placement="bottom">
+                        <Tooltip arrow title="Rejected" placement="bottom">
                           <ThumbDownIcon color="primary" sx={styles.dismissRejIcon} />
                         </Tooltip>
                       )}

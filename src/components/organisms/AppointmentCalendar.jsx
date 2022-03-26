@@ -16,9 +16,9 @@
  */
 import React, { useEffect, useState } from 'react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/solid';
-import Typography from '@mui/material/Typography';
-import Popover from '@mui/material/Popover';
-import Button from '@mui/material/Button';
+import {
+  Typography, Box, Button, Popover,
+} from '@mui/material';
 
 // Global variables to help print  Calendar
 const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -37,7 +37,7 @@ function classNames(...classes) {
  * ========================================================
  */
 export default function AppointmentCalendar({
-  displayDataArray, setOpenApptModal, setApptModalType, setApptPopupDetails,
+  displayDataArray, setOpenApptModal, setApptModalType, setApptPopupDetails, anchorEl, setAnchorEl,
 }) {
   // Get today's date
   const stateDate = new Date();
@@ -47,7 +47,6 @@ export default function AppointmentCalendar({
   const [numOfDays, setNumOfDays] = useState([]);
   const [emptyDays, setEmptyDays] = useState([]);
   const [events, setEvents] = useState([]);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [popoverText, setPopoverText] = useState('');
 
   // Popover Handlers
@@ -117,7 +116,7 @@ export default function AppointmentCalendar({
         const appointmentObject = {
           date: `${appointment.date} | ${appointment.time}`,
           event_date: new Date(appointmentYear, appointmentMonth, appointmentDay),
-          event_title: `${appointment.time}: ${displayName} @ ${appointment.hospital.name}, ${appointment.hospital.department}`,
+          event_title: `${appointment.time}, ${displayName} @ ${appointment.hospital.name}, ${appointment.hospital.department}`,
           event_theme: 'blue', // blue red yellow green purple
           id: appointment._id,
           apptObj: {
@@ -257,8 +256,21 @@ export default function AppointmentCalendar({
                   horizontal: 'left',
                 }}
               >
-                <Typography sx={{ p: 2 }}>{popoverText}</Typography>
-                <Button onClick={openModal}>View Full Appointment</Button>
+                <Typography variant="h5" sx={{ p: 2 }}>{popoverText}</Typography>
+                <Button
+                  sx={{
+                    backgroundColor: '#22577A',
+                    '&:hover': {
+                      backgroundColor: '#3486bb',
+                    },
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '100%',
+                  }}
+                  onClick={openModal}
+                >
+                  <Typography sx={{ color: 'white' }} variant="h7"> View Full Appointment</Typography>
+                </Button>
               </Popover>
             </div>
           </div>
