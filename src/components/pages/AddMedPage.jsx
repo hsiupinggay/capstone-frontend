@@ -8,21 +8,21 @@
  * ========================================================
  */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import AddMedCard from '../organisms/AddMedCard';
 
 /*
  * ========================================================
  * ========================================================
  *
- *                    Index Component
+ *                   AddMedPage Component
  *
  * ========================================================
  * ========================================================
  */
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root'),
-);
+export default function AddMedPage() {
+  return (
+    <div>
+      <AddMedCard />
+    </div>
+  );
+}

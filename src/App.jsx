@@ -1,74 +1,147 @@
+/* eslint-disable no-unused-vars */
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                        Imports
+ *
+ * ========================================================
+ * ========================================================
+ */
 import './App.css';
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
-import axios from 'axios';
-import { MedicalProvider } from './components/others/store'
+import React from 'react';
+import {
+  BrowserRouter as Router, Routes, Route,
+} from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import { Box } from '@mui/material';
+import { MedicalProvider } from './components/others/store';
+import { ApptProvider } from './components/others/ApptContext';
+import ProtectedRoute from './components/molecules/ProtectedRoute';
+import mainTheme from './theme';
 
-// Pages import
-import AuthPage from './components/pages/AuthPage';
+// Component Imports
 import HomePage from './components/pages/HomePage';
 import AppointmentsPage from './components/pages/AppointmentsPage';
-import PeoplePage from './components/pages/PeoplePage';
+import ContactsPage from './components/pages/ContactsPage';
 import ProfilePage from './components/pages/ProfilePage';
-import LogoutPage from './components/pages/LogoutPage';
+import AddAppointment from './components/organisms/AddAppointment';
+import AddPatient from './components/organisms/AddPatient';
+import AddHospital from './components/organisms/AddHospital';
+import AddDepartment from './components/organisms/AddDepartment';
+import UserAuthPage from './components/pages/UserAuthPage';
+import AddChaperone from './components/organisms/AddChaperone';
+import EditProfile from './components/organisms/EditProfile';
+import ViewProfile from './components/organisms/ViewProfile';
+import AddMedPage from './components/pages/AddMedPage';
+import EditMedCard from './components/organisms/EditMedCard';
+import NavBar from './components/molecules/Navbar';
+import PatientProfilePage from './components/pages/PatientProfilePage';
+import PatientVisitLocationPage from './components/pages/PatientVisitLocationPage';
+import PatientMemoPage from './components/pages/PatientMemoPage';
+import ChatRoomPage from './components/pages/ChatRoomPage';
+import style from './AppCss';
+import MedicationPage from './components/pages/MedicationPage';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || `http://localhost:3004`;
-
+/*
+ * ========================================================
+ * ========================================================
+ *
+ *                      App Component
+ *
+ * ========================================================
+ * ========================================================
+ */
 export default function App() {
-  // state to check jwt from backend
-  const [auth, setAuth] = useState(true);
-
-  // on load, check for token... if no token, 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('authToken');
-  //   if (!token) return setAuth(false)/
-
-  //   ( async() => {
-  //     try {
-  //       const headers = {
-  //         headers: { Authorization: `Bearer ${token}` }
-  //       };
-
-  //       const response = await axios.get(`${BACKEND_URL}/authenticate`, headers);
-  //       const { valid } = response.data;
-  //       if (!valid) return setAuth(false);
-  //       setAuth(true);
-  //     } catch (err) {
-  //       setAuth(false);
-  //       console.error(err.response);
-  //     }
-  //   })();
-  // });
-
   return (
-    <MedicalProvider>
-      <Router>
-        { auth  ?
-          <div className="main-container w-screen h-screen 
-          flex flex-col items-center">
-            <div className="nav-div w-full border-solid border-black border-2">
-              <nav className="flex justify-evenly items-center">
-                <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/">Home</NavLink>
-                <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/appointments">Appointments</NavLink>
-                <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/people">People</NavLink>
-                <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/profile">Profile</NavLink>
-                <NavLink className={({ isActive }) => `${isActive && `font-bold`} hover:underline`} to="/logout">Logout</NavLink>
-              </nav>
-            </div>
-            <div className="display">
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/appointments" element={<AppointmentsPage />} />
-                <Route path="/people" element={<PeoplePage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/logout" element={<LogoutPage setAuth={setAuth} />} />
-              </Routes>
-            </div>
-          </div> 
-          // Log In page displays if there's no auth token
-        : <AuthPage /> }
-      </Router>
-    </MedicalProvider>
+    <ThemeProvider theme={mainTheme}>
+      <MedicalProvider>
+        <Router>
+          <div className="main-container w-screen h-screen
+          flex flex-col items-center relative "
+          >
+            <Box sx={style}>
+              <div className="display">
+                <Routes>
+                  <Route
+                    exact
+                    path="/auth"
+                    element={<UserAuthPage />}
+                  />
+                  {/* ProtectedRoute wraps around all rounds that are authenticated */}
+                  <Route element={<ProtectedRoute />}>
+                    <Route
+                      exact
+                      path="/"
+                      element={<NavBar />}
+                    >
+                      <Route
+                        index
+                        element={<HomePage />}
+                      />
+                      <Route
+                        exact
+                        path="home"
+                        element={<HomePage />}
+                      />
+                      <Route
+                        exact
+                        path="appointments"
+                        element={<AppointmentsPage />}
+                      />
+                      <Route
+                        exact
+                        path="contacts"
+                        element={<ContactsPage />}
+                      />
+                      <Route
+                        exact
+                        path="profile"
+                        element={<ProfilePage />}
+                      >
+                        <Route
+                          index
+                          element={<ViewProfile />}
+                        />
+                        <Route
+                          exact
+                          path="view"
+                          element={<ViewProfile />}
+                        />
+                        <Route
+                          exact
+                          path="edit"
+                          element={<EditProfile />}
+                        />
+                      </Route>
+                      <Route
+                        exact
+                        path="add-appt"
+                        element={<AddAppointment />}
+                      />
+                      <Route path="add-patient" element={<AddPatient />} />
+                      <Route path="add-hospital" element={<AddHospital />} />
+                      <Route path="add-department" element={<AddDepartment />} />
+                      <Route path="add-chaperone" element={<AddChaperone />} />
+                      <Route
+                        exact
+                        path="patient"
+                        element={<PatientProfilePage />}
+                      />
+                      <Route path="location-details" element={<PatientVisitLocationPage />} />
+                      <Route path="chat" element={<ChatRoomPage />} />
+                      <Route path="patient-memos" element={<PatientMemoPage />} />
+                      <Route path="add-med" element={<AddMedPage />} />
+                      <Route path="med-list" element={<MedicationPage />} />
+                      <Route path="edit-med" element={<EditMedCard />} />
+                    </Route>
+                  </Route>
+                </Routes>
+              </div>
+            </Box>
+          </div>
+        </Router>
+      </MedicalProvider>
+    </ThemeProvider>
   );
 }
-

@@ -8,21 +8,28 @@
  * ========================================================
  */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import { Box, Typography } from '@mui/material';
+import AuthCard from '../organisms/AuthCard';
+import authStyle from './UserAuthPageCss';
 
 /*
  * ========================================================
  * ========================================================
  *
- *                    Index Component
+ *                UserAuthPage Component
  *
  * ========================================================
  * ========================================================
  */
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root'),
-);
+export default function UserAuthPage() {
+  return (
+    <Box sx={authStyle.mainContainer}>
+      <Typography sx={authStyle.appName}>
+        KEEP
+      </Typography>
+      <Box sx={authStyle.loginContainer}>
+        <AuthCard />
+      </Box>
+    </Box>
+  );
+}
