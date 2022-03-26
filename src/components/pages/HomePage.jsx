@@ -52,7 +52,7 @@ export default function HomePage() {
         spacing={2}
         justifyContent="center"
       >
-        <Typography variant="h1" color="secondary" sx={homePageStyles.titleFont}>
+        <Typography variant="h1" color="primary" sx={homePageStyles.titleFont}>
           Hello,
           <br />
           {firstName}

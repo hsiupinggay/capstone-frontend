@@ -1,9 +1,4 @@
 const visibilityPopupStyles = {
-  // inputContainer: {
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //   justifyContent: 'center',
-  // },
 
   title: {
     marginBottom: 2,

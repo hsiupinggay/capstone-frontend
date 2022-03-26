@@ -27,6 +27,7 @@ function MessageInput({
         id={id}
         sx={{ flex: 1 }}
         onChange={handleInput}
+        autoComplete="off"
       />
       <IconButton onClick={handleSend}>
         <SendRoundedIcon sx={{ color: '#22577A' }} />

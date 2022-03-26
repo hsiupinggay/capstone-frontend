@@ -39,12 +39,6 @@ export default function ProfilePage() {
   useEffect(() => {
     const { photo } = store;
     setCurrentPhoto(photo);
-    // const isAuth = async () => {
-    //   const res = await authenticate(dispatch);
-    //   console.log('<== res ==>', res);
-    //   if (!res) navigate('/auth');
-    // };
-    // isAuth();
   }, []);
 
   const submitPhoto = async () => {
@@ -60,7 +54,7 @@ export default function ProfilePage() {
   return (
     <Stack
       spacing={2}
-      justifyContent="center"
+      alignItems="center"
     >
       <ProfileAvatar
         popoverContent={(

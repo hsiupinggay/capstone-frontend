@@ -23,10 +23,10 @@ const mainTheme = createTheme(
     palette: {
       type: 'light',
       primary: {
-        main: '#22577A',
+        main: '#3254a8',
       },
       secondary: {
-        main: '#38A3A5',
+        main: '#718da8',
       },
       error: {
         main: '#f45636',
@@ -42,7 +42,7 @@ const mainTheme = createTheme(
     typography: {
       h1: {
         fontFamily: 'Quicksand',
-        fontWeight: 700,
+        fontWeight: 500,
         fontSize: '2rem',
         lineHeight: 1.167,
         letterSpacing: '0em',
@@ -51,13 +51,13 @@ const mainTheme = createTheme(
         fontFamily: 'Quicksand',
         fontSize: '1.5rem',
         letterSpacing: '0.00857em',
-        fontWeight: 700,
+        fontWeight: 500,
       },
       h3: {
         fontFamily: 'Quicksand',
         fontSize: '1.2rem',
         lineHeight: 1.334,
-        fontWeight: 600,
+        fontWeight: 500,
       },
       button: {
         fontSize: 13,
@@ -69,7 +69,7 @@ const mainTheme = createTheme(
       h5: {
         fontSize: '1rem',
         lineHeight: 1.5,
-        fontWeight: 600,
+        fontWeight: 400,
         letterSpacing: '0.01em',
       },
     },

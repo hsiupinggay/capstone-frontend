@@ -95,8 +95,16 @@ export default function Login() {
         padding={3}
       >
         <PersonIcon />
-        <TextField fullWidth label="E-mail" variant="outlined" onChange={handleEmail} />
-        <TextField fullWidth label="Password" type="password" variant="outlined" onChange={handlePassword} />
+
+        <form>
+          <Stack
+            spacing={2}
+          >
+            <TextField fullWidth label="E-mail" variant="outlined" autoComplete="username" onChange={handleEmail} />
+            <TextField fullWidth label="Password" type="password" variant="outlined" autoComplete="current-password" onChange={handlePassword} />
+          </Stack>
+        </form>
+
       </Stack>
       )}
 
@@ -109,8 +117,16 @@ export default function Login() {
         padding={3}
       >
         <PersonIcon />
-        <TextField fullWidth error label="E-mail" variant="outlined" onChange={handleEmail} />
-        <TextField fullWidth error label="Password" type="password" variant="outlined" onChange={handlePassword} helperText={errorMessage} />
+
+        <form>
+          <Stack
+            spacing={2}
+          >
+            <TextField fullWidth error label="E-mail" variant="outlined" autoComplete="username" onChange={handleEmail} />
+            <TextField fullWidth error label="Password" type="password" variant="outlined" autoComplete="current-password" onChange={handlePassword} helperText={errorMessage} />
+          </Stack>
+        </form>
+
       </Stack>
       )}
       <Stack

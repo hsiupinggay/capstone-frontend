@@ -15,7 +15,7 @@ const patientProfilePageStyles = {
       xl: 1.6,
     },
     marginRight: 2,
-    color: '#22577A',
+    color: '#3254a8',
   },
 
   modalStyle: {
@@ -37,20 +37,6 @@ const patientProfilePageStyles = {
     display: 'flex',
     justifyContent: 'center',
   },
-
-  // titleFont: {
-  //   fontSize: {
-  //     xs: 35,
-  //     sm: 40,
-  //     md: 43,
-  //     lg: 46,
-  //     xl: 50,
-  //   },
-  //   fontWeight: 800,
-  //   color: '#22577A',
-  //   marginBottom: 1,
-  //   textShadow: '1px 1px black',
-  // },
 
   relationship: {
     fontSize: {
@@ -100,35 +86,9 @@ const patientProfilePageStyles = {
     justifyContent: 'center',
   },
 
-  // categories: {
-  //   padding: 12,
-  //   border: 'solid black 1px',
-  //   borderRadius: 10,
-  //   backgroundColor: '#22577A',
-  //   width: {
-  //     xs: 180,
-  //     sm: 200,
-  //     md: 225,
-  //     lg: 250,
-  //     xl: 300,
-  //   },
-  //   height: {
-  //     xs: 175,
-  //     sm: 200,
-  //     md: 225,
-  //     lg: 250,
-  //     xl: 270,
-  //   },
-  //   display: 'flex',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   margin: 1,
-  //   boxShadow: '0 10px 6px -6px #777',
-  // },
-
   primaryCategories: {
     borderRadius: 10,
-    backgroundColor: '#22577A',
+    backgroundColor: '#718da8',
     width: {
       xs: 130,
       sm: 150,
@@ -150,7 +110,7 @@ const patientProfilePageStyles = {
 
   secondaryCategories: {
     borderRadius: 10,
-    backgroundColor: '#38A3A5',
+    backgroundColor: '#718da8',
     width: {
       xs: 130,
       sm: 150,
@@ -183,24 +143,6 @@ const patientProfilePageStyles = {
     color: '#fff',
     width: 300,
   },
-
-  // categoryNames: {
-  //   display: 'flex',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   flexDirection: 'column',
-  //   fontSize: {
-  //     xs: 18,
-  //     sm: 20,
-  //     md: 22,
-  //     lg: 24,
-  //     xl: 29,
-  //   },
-  //   fontWeight: 600,
-  //   color: '#fff',
-  //   width: 300,
-  //   textShadow: '2px 1px black, 0 1px black, 1px 0 black, 0 -1px black',
-  // },
 
   categoryDescription: {
     fontSize: {

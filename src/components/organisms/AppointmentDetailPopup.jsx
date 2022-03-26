@@ -27,7 +27,6 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { DateTime } from 'luxon';
 import EditIcon from '@mui/icons-material/Edit';
 import { useMedicalContext } from '../others/store';
-// import appointmentPopupStyles from './AppointmentDetailPopupCss';
 
 /*
  * ========================================================
@@ -200,13 +199,6 @@ export default function AppointmentDetailPopup({ apptPopupDetails, setDisplayDat
                   </LocalizationProvider>
                 </Box>
               )}
-            {/* <Box>
-              at the
-              {' '}
-              <strong>{apptPopupDetails.department}</strong>
-              {' '}
-              department in
-            </Box> */}
             <Box>
               at the
               {' '}

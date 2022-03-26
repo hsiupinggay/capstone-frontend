@@ -16,17 +16,17 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: {
-    md: 600,
-    sm: 500,
-    xs: 475,
-  },
-  height: 600,
+  width: '500px',
+  height: '600px',
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  border: '1px solid #b0b0b0',
+  borderRadius: '20px',
   boxShadow: 24,
-  p: 4,
   overflow: 'scroll',
+  display: 'flex',
+  p: 2,
+  flexDirection: 'column',
+  alignItems: 'center',
 };
 
 function AppointmentDetailModal({
@@ -35,7 +35,6 @@ function AppointmentDetailModal({
   const handleClose = () => {
     setOpenApptModal(false);
   };
-  console.log('hi');
   return (
     <div>
       <Modal
@@ -73,7 +72,7 @@ function AddDetailsModal({
       >
         <Box sx={
           {
-            ...style, width: 400, height: 500, flexDirection: 'column',
+            ...style, width: 500, height: 500, flexDirection: 'column',
           }
         }
         >
@@ -100,7 +99,7 @@ function AddApptModal({
       >
         <Box sx={
           {
-            ...style, width: 450, height: 500, flexDirection: 'column', overflow: 'scroll',
+            ...style, width: 400, height: 500, flexDirection: 'column', overflow: 'scroll',
           }
         }
         >
