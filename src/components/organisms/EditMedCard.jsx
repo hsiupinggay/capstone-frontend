@@ -148,7 +148,7 @@ function EditMedCard({
       // close modal, state change will trigger rerender
       setOpen(false);
     } catch (err) {
-      console.log(err);
+      return false;
     }
   };
 

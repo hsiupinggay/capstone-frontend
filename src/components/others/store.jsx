@@ -280,7 +280,6 @@ export async function authenticate(dispatch) {
     dispatch(authAction(res.data));
     return true;
   } catch (err) {
-    console.log(err);
     return false;
   }
 }
@@ -292,7 +291,6 @@ export async function uploadPhoto(dispatch, data) {
     dispatch(uploadPhotoAction(res.data.userPhoto));
     return res.data;
   } catch (error) {
-    console.log(error);
     return error.response.data;
   }
 }
@@ -304,7 +302,6 @@ export async function editProfile(dispatch, data) {
     dispatch(editUserAction(res.data.payload));
     return res.data;
   } catch (error) {
-    console.log(error);
     return error.response.data;
   }
 }
