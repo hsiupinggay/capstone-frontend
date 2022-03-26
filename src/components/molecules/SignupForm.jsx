@@ -129,9 +129,18 @@ export default function Signup() {
          >
            {stepOneError ? <HelperText text={stepOneErrorMessage} />
              : <PersonIcon />}
-           <TextField label="First Name" variant="outlined" onChange={handleFirstName} value={firstName} />
-           <TextField label="Last Name" variant="outlined" onChange={handleLastName} value={lastName} />
-           <TextField label="E-mail" type="email" variant="outlined" onChange={handleEmail} value={email} />
+           <form>
+             <Stack
+               spacing={2}
+               direction="column"
+               justifyContent="center"
+               alignItems="center"
+             >
+               <TextField label="First Name" variant="outlined" onChange={handleFirstName} autoComplete="given-name" value={firstName} />
+               <TextField label="Last Name" variant="outlined" onChange={handleLastName} autoComplete="family-name" value={lastName} />
+               <TextField label="E-mail" type="email" variant="outlined" onChange={handleEmail} autoComplete="email" value={email} />
+             </Stack>
+           </form>
          </Stack>
        )}
 
@@ -139,7 +148,6 @@ export default function Signup() {
         && (
         <Stack
           spacing={2}
-          direction="column"
           justifyContent="center"
           alignItems="center"
           height="240px"
@@ -147,11 +155,17 @@ export default function Signup() {
           {error
             ? <HelperText text={errorMessage} />
             : <LockRoundedIcon />}
-
-          <TextField label="Password" type="password" variant="outlined" onChange={handlePassword} value={password} />
-          <TextField label="Re-enter Password" type="password" variant="outlined" onChange={handlePasswordConfirmation} value={passwordConfrimation} />
-          {/* <Box sx={{ height: '56px' }} /> */}
-
+          <form>
+            <Stack
+              spacing={2}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <input type="hidden" autoComplete="username" value="email" />
+              <TextField label="Password" type="password" variant="outlined" onChange={handlePassword} autoComplete="new-password" value={password} />
+              <TextField label="Re-enter Password" type="password" variant="outlined" onChange={handlePasswordConfirmation} autoComplete="new-password" value={passwordConfrimation} />
+            </Stack>
+          </form>
         </Stack>
         )}
 

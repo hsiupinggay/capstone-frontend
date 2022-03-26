@@ -18,7 +18,7 @@ const patientListStyles = {
       sm: 30,
       xs: 28,
     },
-    color: '#22577A',
+    color: '#3254a8',
     '&:hover': {
       color: '#3486bb',
     },

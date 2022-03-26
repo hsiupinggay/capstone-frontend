@@ -50,7 +50,7 @@ export default function ProfilePage() {
   return (
     <Stack
       spacing={2}
-      justifyContent="center"
+      alignItems="center"
     >
       <ProfileAvatar
         popoverContent={(
