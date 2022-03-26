@@ -7,14 +7,6 @@ const patientProfilePageStyles = {
       lg: 53,
       xl: 55,
     },
-    marginTop: {
-      xs: 0.6,
-      sm: 1,
-      md: 1.2,
-      lg: 1.4,
-      xl: 1.6,
-    },
-    marginRight: 2,
     color: '#22577A',
   },
 

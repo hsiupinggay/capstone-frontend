@@ -99,9 +99,6 @@ function AppointmentList({
       if (filterData.departmentFilter !== null) {
         for (let i = 0; i < filterData.departmentFilter.length; i += 1) {
           for (let j = 0; j < userDisplayArray.length; j += 1) {
-            console.log(userDisplayArray[j].department);
-            console.log(filterData.departmentFilter[i]);
-            console.log(userDisplayArray[j].department === filterData.departmentFilter[i]);
             if (userDisplayArray[j].department === filterData.departmentFilter[i]) filteredDisplayArray.push(userDisplayArray[j]);
           }
         }
@@ -164,7 +161,6 @@ function AppointmentList({
   };
   // Handle onClick on events to display full details
   const openModal = (apptObject) => {
-    console.log('isnide func');
     setOpenApptModal(true);
     setApptModalType('view-full-appointment');
     setApptPopupDetails(apptObject);

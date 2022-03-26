@@ -16,28 +16,20 @@ import {
 } from '@mui/material';
 import FolderZipIcon from '@mui/icons-material/FolderZip';
 import addPhotoStyles from './AddPhotoCss';
-// ProfilePage > ProfileAvatar (AddPhoto) > ProfilePopover
 
 /*
- * ========================================================
- * ========================================================
- *
- *                 AddPhoto Component
- *
- * ========================================================
- * ========================================================
- */
+* ========================================================
+* ========================================================
+*
+*                 AddPhoto Component
+*  ProfilePage > ProfileAvatar (AddPhoto) > ProfilePopover
+*
+* ========================================================
+* ========================================================
+*/
 export default function AddPhoto({ setUploadedPhoto, caption, setCaption }) {
   const imageHandler = (e) => {
-    console.log(e.target.files[0]);
-    console.log(setUploadedPhoto);
     setUploadedPhoto(e.target.files[0]);
-    // const [file] = e.target.files;
-    // // Get the file name and size
-    // const { name: fileName, size } = file;
-    // // Convert size in bytes to kilo bytes
-    // const fileSize = (size / 1000).toFixed(2);
-    // setCaption(`${fileName}-${fileSize}kb`);
     setCaption('Pic selected!');
   };
 

@@ -1,9 +1,6 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-underscore-dangle */
 /*
  * ========================================================
  * ========================================================
@@ -19,8 +16,6 @@ import {
 } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import Tooltip from '@mui/material/Tooltip';
 
 const style = {
   container: {
@@ -34,6 +29,7 @@ const style = {
     justifyContent: 'center',
   },
 };
+
 /*
  * ========================================================
  * ========================================================
@@ -44,19 +40,12 @@ const style = {
  * ========================================================
  */
 export default function FilterPatientMemos({
-  deptArr, dateArr, hospArr, chapArr, fullMemoList, setMemoList, name,
+  deptArr, dateArr, hospArr, chapArr, fullMemoList, setMemoList, name, setOpen,
 }) {
-  const [successMessage, setSuccessMessage] = useState('');
   const [dateFilter, setDateFilter] = useState('');
   const [chaperoneFilter, setChaperoneFilter] = useState('');
   const [hospitalFilter, setHospitalFilter] = useState('');
   const [departmentFilter, setDepartmentFilter] = useState('');
-  // const [filters, setFilters] = useState({
-  //   date: '',
-  //   chaperone: '',
-  //   hospital: '',
-  //   department: '',
-  // });
 
   // On form submit, send data to backend to store in DB
   const handleSubmit = (event) => {
@@ -106,18 +95,7 @@ export default function FilterPatientMemos({
       }
     }
     setMemoList(newMemoList);
-    setSuccessMessage(
-      `You have set the following filters: ${dateFilter || ''} 
-    ${hospitalFilter || ''} 
-    ${departmentFilter || ''} 
-    ${chaperoneFilter || ''}
-    `,
-    );
-  };
-
-  const resetFilters = () => {
-    setMemoList(fullMemoList);
-    setSuccessMessage('You have reset the filters!');
+    setOpen(false);
   };
 
   return (
@@ -130,9 +108,6 @@ export default function FilterPatientMemos({
           {' '}
           {name}
           's memos
-          <Tooltip title="Reset Filters">
-            <RestartAltIcon color="primary" variant="contained" onClick={resetFilters} />
-          </Tooltip>
         </Typography>
 
         <form onSubmit={handleSubmit}>
@@ -182,16 +157,6 @@ export default function FilterPatientMemos({
           <br />
           <Button variant="contained" type="submit" sx={{ marginLeft: 11 }}>Submit</Button>
         </form>
-        <br />
-        <Typography variant="body2">
-          {successMessage === ''
-            ? <div />
-            : (
-              <div>
-                {successMessage}
-              </div>
-            )}
-        </Typography>
       </Box>
     </CardContent>
   );

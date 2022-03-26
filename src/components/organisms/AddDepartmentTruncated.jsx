@@ -17,7 +17,6 @@ import {
   TextField, Button, Stack, Typography, CardContent,
 } from '@mui/material';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
-
 import departmentList from '../others/departmentList';
 import { useMedicalContext } from '../others/store';
 
@@ -33,10 +32,10 @@ import { useMedicalContext } from '../others/store';
 export default function AddDepartmentTruncated({ hospital, name, setClinicsArr }) {
   const { store } = useMedicalContext();
   const { patientId } = store;
+  const filter = createFilterOptions();
 
   const [successMessage, setSuccessMessage] = useState('');
   const [department, setDepartment] = useState('');
-  const filter = createFilterOptions();
 
   // On form submit, send data to backend to store in DB
   const handleSubmit = (event) => {

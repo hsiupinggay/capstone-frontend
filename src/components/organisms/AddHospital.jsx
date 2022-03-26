@@ -34,21 +34,22 @@ import hospitalPopupStyles from './AddHospitalCss';
  * ========================================================
  */
 export default function AddHospital({ setModal, setAddition }) {
-  console.log('inside hospital');
   const { store } = useMedicalContext();
   const { userId } = store;
+  const filter = createFilterOptions();
 
   const [hospital, setHospital] = useState('');
   const [patientId, setPatientId] = useState('');
   const [patientName, setPatientName] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [patientArr, setPatientArr] = useState();
-  const filter = createFilterOptions();
   const [value, setValue] = useState(0);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setAddition(newValue);
   };
+
   // When component renders, retrieve all patient data related to user
   useEffect(() => {
     const data = new URLSearchParams();

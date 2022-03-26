@@ -36,33 +36,28 @@ function MedList() {
   const navigate = useNavigate();
   const location = useLocation();
   const patientId = location.state;
-  console.log('<== patientId ==>', patientId);
 
   useEffect(() => {
     const callBack = async () => {
       const data = new URLSearchParams();
       data.append('patientId', patientId);
       const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/med-list?${data.toString()}`);
-      console.log(res.data);
       const { medication } = res.data;
       setMedicineList(medication);
       setLoading(false);
     };
     callBack();
   }, []);
-  console.log(medicineList);
+
   const handleClick = (id) => {
     navigate('/edit-med', { state: { id, patientId } });
-    console.log('<== e.target ==>', id);
   };
 
   const handleDelete = async (id) => {
-    console.log('medicine id delete', id);
     const data = new URLSearchParams();
     data.append('medicineId', id);
     data.append('patientId', patientId);
     const res = await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/patient/delete?${data.toString()}`);
-    console.log(res.data);
   };
 
   const handleAdd = async () => {

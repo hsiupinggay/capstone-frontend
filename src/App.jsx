@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 /*
  * ========================================================
@@ -41,8 +40,6 @@ import PatientProfilePage from './components/pages/PatientProfilePage';
 import PatientVisitLocationPage from './components/pages/PatientVisitLocationPage';
 import PatientMemoPage from './components/pages/PatientMemoPage';
 import ChatRoomPage from './components/pages/ChatRoomPage';
-import PSEUDOAPPTPAGE from './components/organisms/PSEUDOAPPTPAGE';
-import PSEUDOAPPTPAGE2 from './components/organisms/PSEUDOAPPTPAGE2';
 import style from './AppCss';
 import MedicationPage from './components/pages/MedicationPage';
 
@@ -64,7 +61,6 @@ export default function App() {
           flex flex-col items-center relative "
           >
             <Box sx={style}>
-
               <div className="display">
                 <Routes>
                   <Route
@@ -83,7 +79,6 @@ export default function App() {
                         index
                         element={<HomePage />}
                       />
-
                       <Route
                         exact
                         path="home"
@@ -128,7 +123,6 @@ export default function App() {
                       <Route path="add-hospital" element={<AddHospital />} />
                       <Route path="add-department" element={<AddDepartment />} />
                       <Route path="add-chaperone" element={<AddChaperone />} />
-
                       <Route
                         exact
                         path="patient"
@@ -140,19 +134,8 @@ export default function App() {
                       <Route path="add-med" element={<AddMedPage />} />
                       <Route path="med-list" element={<MedicationPage />} />
                       <Route path="edit-med" element={<EditMedCard />} />
-                      <Route
-                        exact
-                        path="/test"
-                        element={<PSEUDOAPPTPAGE />}
-                      />
-                      <Route
-                        exact
-                        path="/test2"
-                        element={<PSEUDOAPPTPAGE2 />}
-                      />
                     </Route>
                   </Route>
-
                 </Routes>
               </div>
             </Box>

@@ -12,7 +12,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  Button, Modal, Box, Typography, Paper,
+  Button, Modal, Box, Typography, Paper, IconButton, Tooltip,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
@@ -24,7 +24,7 @@ import patientProfilePageStyles from './PatientProfilePageCss';
  * ========================================================
  * ========================================================
  *
- *                PatientProfilePage Component
+ *             PatientProfilePage Component
  *
  * ========================================================
  * ========================================================
@@ -48,11 +48,9 @@ export default function PatientProfilePage() {
     const data = new URLSearchParams();
     data.append('userId', userId);
     data.append('patientId', patientId);
-    console.log(data);
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/patient-data?${data.toString()}`)
       .then((response) => {
         const { fullName, relationship, age } = response.data;
-        console.log(fullName, relationship, age);
         setName(fullName);
         setDisplayRelationship(relationship);
         setDisplayAge(age);
@@ -80,7 +78,11 @@ export default function PatientProfilePage() {
             <div>
               <Box sx={patientProfilePageStyles.mainContainer}>
                 <Box sx={patientProfilePageStyles.headerIconContainer}>
-                  <ArrowCircleLeftIcon onClick={() => navigate('/contacts')} sx={patientProfilePageStyles.backIcon} />
+                  <Tooltip title="Go Back" arrow>
+                    <IconButton>
+                      <ArrowCircleLeftIcon onClick={() => navigate('/contacts')} sx={patientProfilePageStyles.backIcon} />
+                    </IconButton>
+                  </Tooltip>
                   <Box sx={patientProfilePageStyles.headerContainer}>
                     <Typography variant="h1">
                       {name}

@@ -65,7 +65,7 @@ export default function Login() {
       email,
       password,
     };
-    console.log('<== login data ==>', data);
+
     try {
       // Calls login function from store
       const res = await login(dispatch, data);
@@ -78,7 +78,6 @@ export default function Login() {
         setErrorMessage(res.error);
       }
     } catch (err) {
-      console.log(err);
       setError(true);
       setErrorMessage('Oops, something went wrong.');
     }

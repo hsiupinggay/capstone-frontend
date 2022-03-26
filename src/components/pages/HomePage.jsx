@@ -40,12 +40,11 @@ export default function HomePage() {
     const data = new URLSearchParams();
     data.append('userId', userId);
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/patient/next-appointment?${data.toString()}`).then((response) => {
-      console.log(response.data.upcomingAppt);
       const { upcomingAppt } = response.data;
       setUpcomingApptObj(upcomingAppt);
-      console.log(upcomingApptObj);
     });
   }, []);
+
   return (
     <Box sx={homePageStyles.mainContainer}>
       <Stack
@@ -180,9 +179,9 @@ export default function HomePage() {
                     >
                       Add
                       <br />
-                      Alter patient access
-                      <br />
                       Chat
+                      <br />
+                      Alter patient access
                     </Typography>
                   )
                   : <div />}

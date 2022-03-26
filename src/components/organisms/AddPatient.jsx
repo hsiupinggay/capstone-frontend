@@ -43,7 +43,6 @@ export default function AddPatient({
   const [relationship, setRelationship] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [DOB, setDOB] = useState(null);
-
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {

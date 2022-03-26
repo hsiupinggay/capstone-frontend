@@ -11,7 +11,6 @@
  * ========================================================
  */
 import React, { useReducer } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 /*
@@ -277,11 +276,8 @@ export async function authenticate(dispatch) {
   const config = { headers: { authorization: `Bearer ${token}` } };
   try {
     const res = await axios.get(`${REACT_APP_BACKEND_URL}/user/authenticate`, config);
-    console.log('<== authenticate res.data ==>', res.data);
-
     // Sets user details again, in case user closed window
     dispatch(authAction(res.data));
-    console.log('<== dispatch auth action ==>', authAction(res.data));
     return true;
   } catch (err) {
     console.log(err);
@@ -294,7 +290,6 @@ export async function uploadPhoto(dispatch, data) {
   try {
     const res = await axios.post(`${REACT_APP_BACKEND_URL}/user/photo`, data);
     dispatch(uploadPhotoAction(res.data.userPhoto));
-    console.log('<== STORE: res.data ==>', res.data);
     return res.data;
   } catch (error) {
     console.log(error);

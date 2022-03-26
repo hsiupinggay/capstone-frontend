@@ -44,7 +44,7 @@ const style = {
  * ========================================================
  * ========================================================
  *
- *                PatientListPage Component
+ *              PatientListPage Component
  *
  * ========================================================
  * ========================================================
@@ -82,6 +82,7 @@ export default function PatientListPage() {
   const addPatient = () => {
     setOpen(true);
   };
+
   const closeAddPatientPopup = () => {
     setOpen(false);
   };

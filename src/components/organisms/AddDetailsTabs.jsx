@@ -11,11 +11,11 @@
  * ========================================================
  */
 import React from 'react';
-
 import AddHospital from './AddHospital';
 import AddPatient from './AddPatient';
 import AddChaperone from './AddChaperone';
 import AddDepartment from './AddDepartment';
+
 /*
  * ========================================================
  * ========================================================
@@ -28,8 +28,6 @@ import AddDepartment from './AddDepartment';
 export default function AddDetailsTabs({ addition, setAddition, setModal }) {
   return (
     <div>
-      { console.log('run?')}
-      { console.log(addition)}
       {
           addition === 'hospital'
             ? <AddHospital setAddition={setAddition} setModal={setModal} />

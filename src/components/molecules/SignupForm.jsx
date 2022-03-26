@@ -112,7 +112,6 @@ export default function Signup() {
         setErrorMessage(res.error);
       }
     } catch (err) {
-      console.log(err);
       setError(true);
       setErrorMessage('Oops, something went wrong.');
     }

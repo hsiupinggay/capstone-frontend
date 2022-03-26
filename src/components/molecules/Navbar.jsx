@@ -17,8 +17,6 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import HomeIcon from '@mui/icons-material/Home';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-// import ContactPageIcon from '@mui/icons-material/ContactPage';
-// import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { useMedicalContext, logout } from '../others/store';
 import { getNameInitials } from '../others/helper';
