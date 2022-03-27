@@ -6,6 +6,7 @@ const departmentPopupStyles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor: 'divider',
     width: '100%',
   },
 
@@ -22,16 +23,6 @@ const departmentPopupStyles = {
     justifyContent: 'center',
 
   },
-
-  outcomeMessage: {
-    marginTop: 2,
-    marginBottom: 2,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
 };
 
 export default departmentPopupStyles;

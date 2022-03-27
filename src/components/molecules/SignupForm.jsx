@@ -36,7 +36,7 @@ export default function Signup() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   // This is a 2-step form
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
   const [error, setError] = useState(false);
   const [stepOneError, setStepOneError] = useState(false);
   const [stepOneErrorMessage, setStepOneErrorMessage] = useState('');
@@ -83,7 +83,6 @@ export default function Signup() {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setStepOneError(false);
     setStepOneErrorMessage('');
-    setActiveStep(2);
   };
 
   const handleSubmit = async (e) => {
@@ -119,7 +118,7 @@ export default function Signup() {
 
   return (
     <CardContent>
-      {activeStep === 1
+      {activeStep === 0
        && (
          <Stack
            spacing={2}
@@ -144,7 +143,7 @@ export default function Signup() {
          </Stack>
        )}
 
-      {activeStep === 2
+      {activeStep === 1
         && (
         <Stack
           spacing={2}
@@ -175,20 +174,20 @@ export default function Signup() {
         position="static"
         activeStep={activeStep}
         sx={{ flexGrow: 1 }}
-        nextButton={activeStep === 2 ? (
+        nextButton={activeStep === 1 ? (
           <Button size="small" onClick={handleSubmit}>
             Submit
             <KeyboardArrowRight />
           </Button>
         ) : (
-          <Button size="small" onClick={handleNext} disabled={activeStep === 2}>
+          <Button size="small" onClick={handleNext} disabled={activeStep === 1}>
             Next
             <KeyboardArrowRight />
           </Button>
 
         )}
         backButton={(
-          <Button size="small" onClick={handleBack} disabled={activeStep === 1}>
+          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
             <KeyboardArrowLeft />
             Back
           </Button>

@@ -107,7 +107,7 @@ export default function FilterPatientMemos({
           Filter
           {' '}
           {name}
-          's memos
+          's Memos
         </Typography>
 
         <form onSubmit={handleSubmit}>

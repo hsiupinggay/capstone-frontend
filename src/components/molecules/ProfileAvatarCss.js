@@ -1,29 +1,17 @@
 const profileAvatarStyles = {
   avatar: {
-    marginTop: 2,
+    marginTop: 3,
     marginBottom: 2,
-    width: {
-      md: 200,
-      xs: 100,
-    },
-    height: {
-      md: 200,
-      xs: 100,
-    },
+    width: 200,
+    height: 200,
   },
 
   cameraIcon: {
-    fontSize: {
-      md: 45,
-      xs: 35,
-    },
+    fontSize: 45,
   },
 
   noPicName: {
-    fontSize: {
-      md: 70,
-      xs: 40,
-    },
+    fontSize: 70,
   },
 
 };

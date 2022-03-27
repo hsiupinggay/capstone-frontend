@@ -79,7 +79,7 @@ export default function PatientProfilePage() {
               <Box sx={patientProfilePageStyles.mainContainer}>
                 <Box sx={patientProfilePageStyles.headerIconContainer}>
                   <Tooltip title="Go Back" arrow>
-                    <IconButton>
+                    <IconButton sx={patientProfilePageStyles.iconBtn}>
                       <ArrowCircleLeftIcon onClick={() => navigate('/contacts')} sx={patientProfilePageStyles.backIcon} />
                     </IconButton>
                   </Tooltip>

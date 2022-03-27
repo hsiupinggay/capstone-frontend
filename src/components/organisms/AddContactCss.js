@@ -1,9 +1,11 @@
 const addContactPopupStyles = {
+  contactTitle: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
 
   inputField: {
-    width: {
-      lg: 300, md: 300, sm: 250, xs: 240,
-    },
+    width: 300,
   },
 
   outcomeMessage: {

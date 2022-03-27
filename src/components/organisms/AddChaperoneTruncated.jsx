@@ -97,7 +97,7 @@ export default function AddChaperoneTruncated({ name, setChaperonesArr }) {
             <Stack
               spacing={4}
             >
-              <Typography variant="h2">
+              <Typography variant="h2" textAlign="center">
                 {`Add a Chaperone for ${name}`}
               </Typography>
               <form onSubmit={handleSubmit}>
@@ -134,12 +134,12 @@ export default function AddChaperoneTruncated({ name, setChaperonesArr }) {
               <div>
                 {successMessage === ''
                   ? (
-                    <Typography variant="body2" color="secondary">
+                    <Typography variant="body2" color="secondary" textAlign="center">
                       If you would like to add another app user as chaperone, be sure to add them as your contact first.
                     </Typography>
                   )
                   : (
-                    <Typography variant="body2" color="secondary">
+                    <Typography variant="body2" color="secondary" textAlign="center">
                       {successMessage}
                     </Typography>
                   )}

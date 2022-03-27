@@ -92,14 +92,7 @@ function MedicationPage() {
   };
 
   return (
-    <Box sx={{
-      width: {
-        xs: '200px',
-        sm: '400px',
-      },
-      mb: '70px',
-    }}
-    >
+    <Box>
       <Modal
         open={open}
         onClose={handleClose}
@@ -139,54 +132,62 @@ function MedicationPage() {
             </IconButton>
           </Tooltip>
         </Stack>
+        <Box sx={{
+          width: {
+            xs: '200px',
+            sm: '400px',
+          },
+        }}
+        >
 
-        {!loading && (
-        <Grid container spacing={2}>
-          {medicineList.map((e) => (
-            <Grid item xs={12} sm={6}>
-              <Card key={e._id}>
-                <CardContent>
-                  <Typography variant="h3">
-                    {e.name}
-                  </Typography>
-                  {e.frequency.asRequiredChecked
-                    ? <Typography variant="body1">As required</Typography>
-                    : (
-                      <Typography variant="body1">
+          {!loading && (
+          <Grid container spacing={2}>
+            {medicineList.map((e) => (
+              <Grid item xs={12} sm={6}>
+                <Card key={e._id}>
+                  <CardContent>
+                    <Typography variant="h3">
+                      {e.name}
+                    </Typography>
+                    {e.frequency.asRequiredChecked
+                      ? <Typography variant="body1">As required</Typography>
+                      : (
+                        <Typography variant="body1">
 
-                        {`${e.frequency.dosage}
+                          {`${e.frequency.dosage}
             ${e.frequency.dosageCounter}`}
-                        <br />
-                        {e.frequency.times}
-                        {' '}
-                        {e.frequency.times === 1 ? 'time' : 'times'}
-                        {' '}
-                        {e.frequency.perDuration === '1' ? 'everyday' : `every ${e.frequency.perDuration} days`}
-                      </Typography>
-                    )}
+                          <br />
+                          {e.frequency.times}
+                          {' '}
+                          {e.frequency.times === 1 ? 'time' : 'times'}
+                          {' '}
+                          {e.frequency.perDuration === '1' ? 'everyday' : `every ${e.frequency.perDuration} days`}
+                        </Typography>
+                      )}
 
-                  <Typography variant="body1">
-                    {`${e.lastPrescribed.prescriptionDate.split('T')[0]} `}
-                  </Typography>
-                </CardContent>
-                <CardActions sx={{ justifyContent: 'flex-end' }}>
-                  <Tooltip title="Delete" arrow>
-                    <IconButton aria-label="Delete medication" color="secondary" onClick={() => { handleDelete(e._id); }}>
-                      <DeleteRoundedIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Edit" arrow>
-                    <IconButton aria-label="Edit medication" color="secondary" onClick={() => { handleEdit(e._id); }}>
-                      <EditRoundedIcon />
-                    </IconButton>
-                  </Tooltip>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-        )}
+                    <Typography variant="body1">
+                      {`${e.lastPrescribed.prescriptionDate.split('T')[0]} `}
+                    </Typography>
+                  </CardContent>
+                  <CardActions sx={{ justifyContent: 'flex-end' }}>
+                    <Tooltip title="Delete" arrow>
+                      <IconButton aria-label="Delete medication" color="secondary" onClick={() => { handleDelete(e._id); }}>
+                        <DeleteRoundedIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Edit" arrow>
+                      <IconButton aria-label="Edit medication" color="secondary" onClick={() => { handleEdit(e._id); }}>
+                        <EditRoundedIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+          )}
 
+        </Box>
       </div>
     </Box>
   );

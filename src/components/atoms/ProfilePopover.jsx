@@ -33,7 +33,7 @@ export default function ProfilePopover({
         anchorEl={anchorEl}
         onClose={onClose}
         anchorOrigin={{
-          vertical: 320,
+          vertical: 225,
           horizontal: 'right',
         }}
       >

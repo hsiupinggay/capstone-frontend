@@ -191,7 +191,7 @@ export default function ContactsPage() {
 
               <Stack
                 spacing={1}
-                height="400px"
+                height="30vh"
                 overflow="auto"
               >
                 {contactsList.map((contact) => (

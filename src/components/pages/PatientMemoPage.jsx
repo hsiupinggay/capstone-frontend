@@ -212,8 +212,8 @@ export default function PatientMemoPage() {
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
                       <Box>
-                        <Typography variant="body1" fontWeight="fontWeightBold" fontSize="22px">Uploaded by:</Typography>
-                        <Typography variant="body1">{`${memo.notes.userName.first} ${memo.notes.userName.last} on ${memo.notes.date}`}</Typography>
+                        <Typography variant="body1" fontWeight="fontWeightBold" fontSize="18px">Uploaded by:</Typography>
+                        <Typography variant="body1" fontSize="16px">{`${memo.notes.userName.first} ${memo.notes.userName.last} on ${memo.notes.date}`}</Typography>
                       </Box>
                       <Box sx={{ mx: 2, paddingTop: 3 }}>
                         {!memo.notes.userImage && <Avatar sx={{ width: 40, height: 40 }}>{getNameInitials(memo.notes.userName.first, memo.notes.userName.last)}</Avatar>}

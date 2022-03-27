@@ -18,7 +18,7 @@ import Button from '@mui/material/Button';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import { useMedicalContext } from '../others/store';
 import departmentList from '../others/departmentList';
 import BackIcon from '../molecules/BackIcon';
@@ -102,20 +102,21 @@ export default function AddDepartment({ setModal, setAddition }) {
         ? <div />
         : (
           <div>
-            <BackIcon variant="contained" onClick={() => setModal('add-appt')} />
+            <IconButton>
+              <BackIcon variant="contained" onClick={() => setModal('add-appt')} />
+            </IconButton>
             <Box sx={departmentPopupStyles.inputContainer}>
               <Tabs
                 value={value}
                 onChange={handleChange}
                 aria-label="basic tabs example"
               >
-                <Tab label=" +Patient" value="patient" {...a11yProps(0)} borderColor="#000000" />
-                <Tab label=" +Hospital" value="hospital" {...a11yProps(1)} />
-                <Tab label=" +Department" value="department" {...a11yProps(2)} disabled />
-                <Tab label=" +Chaperone" value="chaperone" {...a11yProps(3)} />
+                <Tab label=" +Patient" value="patient" sx={{ fontSize: 12, padding: 1 }} {...a11yProps(0)} borderColor="#000000" />
+                <Tab label=" +Hospital" value="hospital" sx={{ fontSize: 12, padding: 1 }} {...a11yProps(1)} />
+                <Tab label=" +Department" value="department" sx={{ fontSize: 12, padding: 1 }} {...a11yProps(2)} disabled />
+                <Tab label=" +Chaperone" value="chaperone" sx={{ fontSize: 12, padding: 1 }} {...a11yProps(3)} />
               </Tabs>
             </Box>
-            <br />
             <br />
             <form onSubmit={handleSubmit}>
               <Box sx={departmentPopupStyles.inputContainer}>
@@ -127,7 +128,6 @@ export default function AddDepartment({ setModal, setAddition }) {
                   selectOnFocus
                   clearOnBlur
                   handleHomeEndKeys
-                  sx={{ width: 250 }}
                 />
 
                 { hospArr === undefined
@@ -139,7 +139,6 @@ export default function AddDepartment({ setModal, setAddition }) {
                         selectOnFocus
                         clearOnBlur
                         handleHomeEndKeys
-                        sx={{ width: 250 }}
                       />
                     </div>
                   )
@@ -154,7 +153,6 @@ export default function AddDepartment({ setModal, setAddition }) {
                           selectOnFocus
                           clearOnBlur
                           handleHomeEndKeys
-                          sx={{ width: 250 }}
                         />
                       </div>
 
@@ -182,23 +180,23 @@ export default function AddDepartment({ setModal, setAddition }) {
                   selectOnFocus
                   clearOnBlur
                   handleHomeEndKeys
-                  sx={{ width: 250 }}
                 />
               </Box>
-
               <Box sx={departmentPopupStyles.submitBtn}>
                 <Button variant="contained" type="submit">Submit</Button>
               </Box>
             </form>
-            <div>
+            <Box>
               {successMessage === ''
                 ? <div />
                 : (
-                  <Typography sx={departmentPopupStyles.outcomeMessage}>
-                    {successMessage}
-                  </Typography>
+                  <Box>
+                    <Typography variant="h7" textAlign="center">
+                      {successMessage}
+                    </Typography>
+                  </Box>
                 )}
-            </div>
+            </Box>
           </div>
         )}
     </div>
