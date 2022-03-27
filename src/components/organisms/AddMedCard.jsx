@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
@@ -105,7 +106,9 @@ export default function AddMedCard({ setOpen, patientId }) {
 
   const qtyPerDay = (Number(dosage) * Number(times)) / Number(duration);
   const prescriptionDuration = Number(prescriptionQty) / Number(qtyPerDay);
+
   const daysBeforeReminder = prescriptionDuration - reminderDays;
+
   const reminderDate = getDate(prescriptionDate, daysBeforeReminder);
 
   const handleSubmit = async () => {
@@ -128,9 +131,10 @@ export default function AddMedCard({ setOpen, patientId }) {
 
     try {
       const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-medicine`, data);
+
       setOpen(false);
     } catch (err) {
-      console.log(err);
+      return false;
     }
   };
 

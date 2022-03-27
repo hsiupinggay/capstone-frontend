@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 /*
  * ========================================================
@@ -60,9 +61,8 @@ export default function EditProfile() {
     try {
       const res = await editProfile(dispatch, data);
       if (res.success) navigate('/profile/view');
-      else if (!res.success) console.log(res);
     } catch (error) {
-      console.log(error);
+      return false;
     }
   };
 

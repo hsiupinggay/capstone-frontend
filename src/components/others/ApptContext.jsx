@@ -58,6 +58,7 @@ export function changeViewAction() {
 export function apptReducer(state, action) {
   switch (action.type) {
     case ACTIONS.GET_DATA:
+
       return {
         ...state,
         userDataArray: action.payload,

@@ -34,7 +34,6 @@ export default function ApptFilterCheckbox({
         setFilterValue({ date: value });
         break;
       default:
-        console.log('incorrect label');
         break;
     }
   }, [value]);

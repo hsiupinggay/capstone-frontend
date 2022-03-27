@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
@@ -148,7 +149,7 @@ function EditMedCard({
       // close modal, state change will trigger rerender
       setOpen(false);
     } catch (err) {
-      console.log(err);
+      return false;
     }
   };
 
