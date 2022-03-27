@@ -40,11 +40,6 @@ const patientListStyles = {
     marginTop: -1,
   },
 
-  description: {
-    marginTop: 5,
-    fontSize: 20,
-  },
-
   buttonContainer: {
     width: 400,
     display: 'flex',
@@ -52,10 +47,6 @@ const patientListStyles = {
     alignItems: 'center',
   },
 
-  button: {
-    marginTop: 4,
-    fontSize: 20,
-  },
 };
 
 export default patientListStyles;

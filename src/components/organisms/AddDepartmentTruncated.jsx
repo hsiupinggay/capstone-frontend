@@ -66,7 +66,7 @@ export default function AddDepartmentTruncated({ hospital, name, setClinicsArr }
       <Stack
         spacing={4}
       >
-        <Typography variant="h2">
+        <Typography variant="h2" textAlign="center">
           {`Add a Department to ${hospital} for ${name}`}
         </Typography>
         <form onSubmit={handleSubmit}>
@@ -104,7 +104,7 @@ export default function AddDepartmentTruncated({ hospital, name, setClinicsArr }
         {successMessage === ''
           ? <div />
           : (
-            <Typography variant="body1" color="secondary">
+            <Typography variant="body1" color="secondary" textAlign="center">
               {successMessage}
             </Typography>
           )}
