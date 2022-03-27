@@ -1,4 +1,8 @@
 const visibilityPopupStyles = {
+  centerText: {
+    textAlign: 'center',
+    marginBottom: 2,
+  },
 
   title: {
     marginBottom: 2,
@@ -36,6 +40,7 @@ const visibilityPopupStyles = {
   },
 
   outcomeMessage: {
+    textAlign: 'center',
     marginBottom: 2,
     fontSize: {
       xs: 10,

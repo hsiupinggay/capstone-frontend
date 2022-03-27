@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import { TimePicker, LocalizationProvider, DesktopDatePicker } from '@mui/lab';
 import DateAdapter from '@mui/lab/AdapterLuxon';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import Button from '@mui/material/Button';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -74,7 +74,7 @@ export default function AppointmentDetailPopup({
       patientId: apptPopupDetails.patientId,
       appointmentId: apptPopupDetails.appointmentId,
       date: formattedDate !== undefined ? formattedDate : null,
-      time: unformattedTime !== undefined ? `${moment(unformattedTime, 'HH:mm').format('h:mm a')}` : null,
+      time: unformattedTime !== undefined ? moment.tz(unformattedTime, 'Asia/Singapore').format('h:mm a') : null,
     };
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/edit-appointment`, data).then((response) => {
       if (response.status === 200) {
@@ -252,31 +252,51 @@ export default function AppointmentDetailPopup({
               )}
             <Box />
             <Box>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <strong>Memos:</strong>
                 <Tooltip arrow title="Add/Edit Memo">
                   <IconButton>
                     <AddCircleIcon color="primary" variant="contained" onClick={toggleNoteEditing} />
                   </IconButton>
                 </Tooltip>
-
               </Box>
               {isEditing === false
                 ? (
-                  <Box>
+                  <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                  >
                     {memo === '' || memo === undefined
                       ? <div>Nil</div>
                       : (
-                        <Box>
-                          {memo}
-                          <br />
-                          Uploaded By:
-                          {' '}
-                          {memoUserName}
-                          <br />
-                          on
-                          {' '}
-                          {memoDate}
+                        <Box sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          width: 'inherit',
+                        }}
+                        >
+                          <Typography sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            width: 'inherit',
+                            textAlign: 'center',
+                          }}
+                          >
+                            {memo}
+                          </Typography>
+                          <Typography fontSize="small" textAlign="center">
+                            Uploaded By:
+                            <br />
+                            {' '}
+                            {memoUserName}
+                            {' '}
+                            on
+                            {' '}
+                            {memoDate}
+                          </Typography>
                         </Box>
                       )}
                     <br />
@@ -284,7 +304,7 @@ export default function AppointmentDetailPopup({
                 )
                 : (
                   <Box sx={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'space-around',
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
                   }}
                   >
                     <br />
@@ -295,10 +315,9 @@ export default function AppointmentDetailPopup({
                       }}
                       onChange={(e) => { setMemo(e.target.value); }}
                     />
-                    <Button variant="contained" sx={{ marginLeft: 2 }} onClick={handleMemoSubmit}>Submit</Button>
+                    <Button variant="contained" sx={{ marginTop: 2 }} onClick={handleMemoSubmit}>Submit</Button>
                   </Box>
                 )}
-
             </Box>
           </Typography>
         </Box>

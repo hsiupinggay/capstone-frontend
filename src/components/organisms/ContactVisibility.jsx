@@ -84,8 +84,8 @@ export default function ContactVisibility({ contactId, contactName }) {
   };
 
   return (
-    <Box sx={visibilityPopupStyles.inputContainer}>
-      <Typography variant="h2">
+    <Box>
+      <Typography variant="h2" sx={visibilityPopupStyles.centerText}>
         Alter
         {' '}
         {contactName}

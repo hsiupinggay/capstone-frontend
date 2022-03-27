@@ -18,7 +18,7 @@ import Button from '@mui/material/Button';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import { useMedicalContext } from '../others/store';
 import BackIcon from '../molecules/BackIcon';
 import chaperonePopupStyles from './AddChaperoneCss';
@@ -114,17 +114,19 @@ export default function AddChaperone({ setModal, setAddition }) {
         ? <div />
         : (
           <div>
-            <BackIcon variant="contained" onClick={() => setModal('add-appt')} />
+            <IconButton>
+              <BackIcon variant="contained" onClick={() => setModal('add-appt')} />
+            </IconButton>
             <Box sx={chaperonePopupStyles.inputContainer}>
               <Tabs
                 value={value}
                 onChange={handleChange}
                 aria-label="basic tabs example"
               >
-                <Tab label=" +Patient" value="patient" {...a11yProps(0)} />
-                <Tab label=" +Hospital" value="hospital" {...a11yProps(1)} />
-                <Tab label=" +Department" value="department" {...a11yProps(2)} />
-                <Tab label=" +Chaperone" value="chaperone" {...a11yProps(3)} disabled />
+                <Tab label=" +Patient" value="patient" sx={{ fontSize: 12, padding: 1 }} {...a11yProps(0)} />
+                <Tab label=" +Hospital" value="hospital" sx={{ fontSize: 12, padding: 1 }} {...a11yProps(1)} />
+                <Tab label=" +Department" value="department" sx={{ fontSize: 12, padding: 1 }} {...a11yProps(2)} />
+                <Tab label=" +Chaperone" value="chaperone" sx={{ fontSize: 12, padding: 1 }} {...a11yProps(3)} disabled />
               </Tabs>
             </Box>
             <br />
@@ -140,7 +142,6 @@ export default function AddChaperone({ setModal, setAddition }) {
                   selectOnFocus
                   clearOnBlur
                   handleHomeEndKeys
-                  sx={{ width: 250 }}
                 />
 
                 <Autocomplete
@@ -164,7 +165,6 @@ export default function AddChaperone({ setModal, setAddition }) {
                   selectOnFocus
                   clearOnBlur
                   handleHomeEndKeys
-                  sx={{ width: 250 }}
                 />
               </Box>
               <br />
@@ -176,7 +176,7 @@ export default function AddChaperone({ setModal, setAddition }) {
               {successMessage === ''
                 ? <div />
                 : (
-                  <Typography sx={chaperonePopupStyles.outcomeMessage}>
+                  <Typography variant="h7" sx={chaperonePopupStyles.outcomeMessage}>
                     {successMessage}
                   </Typography>
                 )}

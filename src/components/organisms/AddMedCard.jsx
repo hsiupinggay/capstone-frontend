@@ -105,18 +105,8 @@ export default function AddMedCard({ setOpen, patientId }) {
 
   const qtyPerDay = (Number(dosage) * Number(times)) / Number(duration);
   const prescriptionDuration = Number(prescriptionQty) / Number(qtyPerDay);
-
-  console.log('<== prescription duration ==>', prescriptionDuration);
-
   const daysBeforeReminder = prescriptionDuration - reminderDays;
-  console.log('<== daysBeforeReminder ==>', daysBeforeReminder);
-  console.log('<== reminderDays ==>', reminderDays);
-
   const reminderDate = getDate(prescriptionDate, daysBeforeReminder);
-
-  console.log('<== reminderDate ==>', reminderDate);
-  console.log('<== prescriptionDate ==>', prescriptionDate);
-  console.log('<== daysBeforeReminder ==>', daysBeforeReminder);
 
   const handleSubmit = async () => {
     const data = {
@@ -138,7 +128,6 @@ export default function AddMedCard({ setOpen, patientId }) {
 
     try {
       const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/patient/add-medicine`, data);
-      console.log('<== res.data add med ==>', res.data);
       setOpen(false);
     } catch (err) {
       console.log(err);

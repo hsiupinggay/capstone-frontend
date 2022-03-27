@@ -46,10 +46,10 @@ function AppointmentList({
       const appointmentDay = Number(appointmentDate[0]);
       const appointmentMonth = Number(monthNames.findIndex((month) => month === appointmentDate[1]));
       const appointmentYear = Number(appointmentDate[2]);
-      if (!appointment.chaperone) appointment.chaperone = 'none assigned';
+      if (!appointment.chaperone) appointment.chaperone = 'Nil';
       const displayObject = {
         patientName: displayName,
-        chaperone: appointment.chaperone.name || 'none assigned',
+        chaperone: appointment.chaperone.name || 'Nil',
         date: `${appointment.date}`,
         time: `${appointment.time}`,
         hospital: `${appointment.hospital.name}`,
@@ -127,8 +127,13 @@ function AppointmentList({
           }
         }
       }
-      setListDisplay(filteredDisplayArray);
+
+      // Return only unique appointments
+      const onlyUnique = (value, index, self) => self.indexOf(value) === index;
+      const uniqueAppts = filteredDisplayArray.filter(onlyUnique);
+      setListDisplay(uniqueAppts);
     }
+
     // Validation, if there are no filters, filtereredDisplayArray is empty
     if (filteredDisplayArray.length === 0) {
       setListDisplay(userDisplayArray);
@@ -159,38 +164,82 @@ function AppointmentList({
       dateFilter: [],
     });
   };
+
   // Handle onClick on events to display full details
   const openModal = (apptObject) => {
     setOpenApptModal(true);
     setApptModalType('view-full-appointment');
     setApptPopupDetails(apptObject);
   };
+
   const displayAppointmentList = listDisplay.map((appointment) => (
-    <Card key={appointment.id} rounded elevation={6} sx={{ p: 2, mb: 2, width: '60vw' }}>
+    <Card
+      key={appointment.id}
+      rounded
+      elevation={6}
+      sx={{
+        p: 1, mb: 2, width: '60vw', display: 'flex', justifyContent: 'center', flexDirection: 'column',
+      }}
+    >
       <CardContent>
-        <Typography variant="h3" sx={{ my: 2, textAlign: 'center' }}>
+        <Typography
+          variant="h3"
+          sx={{
+            my: {
+              xs: 0, sm: 0.5, md: 1, lg: 1.5, xl: 2,
+            },
+            textAlign: 'center',
+            fontSize: {
+              xs: 13, sm: 15, md: 17, lg: 19, xl: 20,
+            },
+          }}
+        >
           {appointment.patientName}
           <br />
         </Typography>
-        <Typography variant="body1" sx={{ textAlign: 'center' }} component="div">
-          <Box fontWeight="fontWeightBold" display="inline">Chaperone:</Box>
-          {' '}
-          {appointment.chaperone}
-          <br />
+        <Typography
+          variant="body1"
+          sx={{
+            textAlign: 'center',
+            fontSize: {
+              xs: 10, sm: 12, md: 14, lg: 16, xl: 17,
+            },
+          }}
+          component="div"
+        >
+
           <Box fontWeight="fontWeightBold" display="inline">Appointment Date:</Box>
           {' '}
           {appointment.date}
           <br />
-          <Box fontWeight="fontWeightBold" display="inline">Location:</Box>
-          <br />
+          <Box fontWeight="fontWeightBold" display="inline">Hospital:</Box>
+          {' '}
           {appointment.hospital}
-          ,
           <br />
+          <Box fontWeight="fontWeightBold" display="inline">Department:</Box>
+          {' '}
           {appointment.department}
+          <br />
+          <Box fontWeight="fontWeightBold" display="inline">Chaperone:</Box>
+          {' '}
+          {appointment.chaperone}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button sx={{ marginLeft: 56 }} variant="contained" onClick={() => openModal(appointment.apptObj)}>View Full Appointment</Button>
+      <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Box>
+          <Button
+            variant="contained"
+            onClick={() => openModal(appointment.apptObj)}
+            sx={{
+              fontSize: {
+                xs: 8, sm: 11, md: 13, lg: 16, xl: 17,
+              },
+            }}
+          >
+            View Full Appointment
+
+          </Button>
+        </Box>
       </CardActions>
     </Card>
   ));
@@ -205,7 +254,10 @@ function AppointmentList({
         <RestartAltIcon sx={{ marginRight: 2, marginBottom: 1 }} color="primary" variant="contained" onClick={resetFilters} />
       </Tooltip>
       <Box style={{ maxHeight: 600, overflow: 'auto' }}>
-        <List>
+        <List sx={{
+          display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center',
+        }}
+        >
           {displayAppointmentList}
         </List>
       </Box>

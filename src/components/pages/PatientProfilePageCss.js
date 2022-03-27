@@ -1,12 +1,5 @@
 const patientProfilePageStyles = {
-  backIcon: {
-    fontSize: {
-      xs: 46,
-      sm: 48,
-      md: 50,
-      lg: 53,
-      xl: 55,
-    },
+  iconBtn: {
     marginTop: {
       xs: 0.6,
       sm: 1,
@@ -15,6 +8,16 @@ const patientProfilePageStyles = {
       xl: 1.6,
     },
     marginRight: 2,
+  },
+
+  backIcon: {
+    fontSize: {
+      xs: 46,
+      sm: 48,
+      md: 50,
+      lg: 53,
+      xl: 55,
+    },
     color: '#3254a8',
   },
 
@@ -55,6 +58,7 @@ const patientProfilePageStyles = {
   headerIconContainer: {
     display: 'flex',
     justifyContent: 'center',
+    marginTop: 7,
   },
 
   headerContainer: {
@@ -72,10 +76,10 @@ const patientProfilePageStyles = {
   },
   allCategoryContainer: {
     paddingTop: {
-      xs: 4,
-      sm: 4,
-      md: 5,
-      lg: 7,
+      xs: 9,
+      sm: 9.5,
+      md: 12,
+      lg: 14,
 
     },
   },
