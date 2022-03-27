@@ -74,7 +74,7 @@ function AddDetailsModal({
       >
         <Box sx={
           {
-            ...style, width: 500, height: 500, flexDirection: 'column',
+            ...style, width: 440, height: 550, flexDirection: 'column',
           }
         }
         >

@@ -12,13 +12,11 @@
  */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
+import {
+  Tabs, IconButton, Tab, Box, TextField, Typography,
+} from '@mui/material';
 import hospitalList from '../others/hopsitalList';
 import { useMedicalContext } from '../others/store';
 import BackIcon from '../molecules/BackIcon';
@@ -96,17 +94,27 @@ export default function AddHospital({ setModal, setAddition }) {
         : (
           <div>
             <div>
-              <BackIcon variant="contained" onClick={() => setModal('add-appt')} />
+              <IconButton>
+                <BackIcon variant="contained" onClick={() => setModal('add-appt')} />
+
+              </IconButton>
               <Box sx={hospitalPopupStyles.inputContainer}>
                 <Tabs
                   value={value}
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
-                  <Tab label=" +Patient" value="patient" {...a11yProps(0)} />
-                  <Tab label=" +Hospital" value="hospital" {...a11yProps(1)} disabled />
-                  <Tab label=" +Department" value="department" {...a11yProps(2)} />
-                  <Tab label=" +Chaperone" value="chaperone" {...a11yProps(3)} />
+                  <Tab
+                    label=" +Patient"
+                    value="patient"
+                    sx={{
+                      fontSize: 12, padding: 1,
+                    }}
+                    {...a11yProps(0)}
+                  />
+                  <Tab label=" +Hospital" value="hospital" sx={{ fontSize: 12, padding: 1 }} {...a11yProps(1)} disabled />
+                  <Tab label=" +Department" value="department" sx={{ fontSize: 12, padding: 1 }} {...a11yProps(2)} />
+                  <Tab label=" +Chaperone" value="chaperone" sx={{ fontSize: 12, padding: 1 }} {...a11yProps(3)} />
                 </Tabs>
               </Box>
             </div>
@@ -158,7 +166,7 @@ export default function AddHospital({ setModal, setAddition }) {
               {successMessage === ''
                 ? <div />
                 : (
-                  <Typography variant="h5" sx={hospitalPopupStyles.outcomeMessage}>
+                  <Typography variant="h7" sx={hospitalPopupStyles.outcomeMessage}>
                     {successMessage}
                   </Typography>
                 )}

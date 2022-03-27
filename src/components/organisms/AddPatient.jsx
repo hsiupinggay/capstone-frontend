@@ -12,7 +12,9 @@
  */
 import React, { useState } from 'react';
 import axios from 'axios';
-import { TextField, Button, Typography } from '@mui/material';
+import {
+  TextField, Button, Typography, IconButton,
+} from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/lab';
 import DateAdapter from '@mui/lab/AdapterLuxon';
 import moment from 'moment';
@@ -88,7 +90,9 @@ export default function AddPatient({
           ? <div />
           : (
             <div>
-              <BackIcon variant="contained" onClick={() => setModal('add-appt')} />
+              <IconButton>
+                <BackIcon variant="contained" onClick={() => setModal('add-appt')} />
+              </IconButton>
               <Box sx={patientPopupStyles.tabsContainer}>
                 <Tabs
                   value={value}
@@ -98,18 +102,18 @@ export default function AddPatient({
                   <Tab
                     label=" +Patient"
                     value="patient"
+                    sx={{ fontSize: 12, padding: 1 }}
                     {...a11yProps(0)}
                     disabled
                   />
-                  <Tab label=" +Hospital" value="hospital" {...a11yProps(1)} />
-                  <Tab label=" +Department" value="department" {...a11yProps(2)} />
-                  <Tab label=" +Chaperone" value="chaperone" {...a11yProps(3)} />
+                  <Tab label=" +Hospital" value="hospital" sx={{ fontSize: 12, padding: 1 }} {...a11yProps(1)} />
+                  <Tab label=" +Department" value="department" sx={{ fontSize: 12, padding: 1 }} {...a11yProps(2)} />
+                  <Tab label=" +Chaperone" value="chaperone" sx={{ fontSize: 12, padding: 1 }} {...a11yProps(3)} />
                 </Tabs>
               </Box>
             </div>
           )
       }
-      <br />
       <br />
       <form onSubmit={handleSubmit}>
         <Box sx={patientPopupStyles.inputContainer}>
@@ -137,7 +141,7 @@ export default function AddPatient({
         successMessage === ''
           ? <div />
           : (
-            <Typography variant="h5" sx={patientPopupStyles.outcomeMessage}>
+            <Typography variant="h7" sx={patientPopupStyles.outcomeMessage}>
               {successMessage}
             </Typography>
           )

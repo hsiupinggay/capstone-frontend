@@ -58,6 +58,7 @@ const patientProfilePageStyles = {
   headerIconContainer: {
     display: 'flex',
     justifyContent: 'center',
+    marginTop: 7,
   },
 
   headerContainer: {
@@ -75,10 +76,10 @@ const patientProfilePageStyles = {
   },
   allCategoryContainer: {
     paddingTop: {
-      xs: 4,
-      sm: 4,
-      md: 5,
-      lg: 7,
+      xs: 9,
+      sm: 9.5,
+      md: 12,
+      lg: 14,
 
     },
   },

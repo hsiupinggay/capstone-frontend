@@ -28,6 +28,7 @@ const hospitalPopupStyles = {
     marginBottom: 2,
     display: 'flex',
     flexDirection: 'column',
+    textAlign: 'center',
   },
 
 };

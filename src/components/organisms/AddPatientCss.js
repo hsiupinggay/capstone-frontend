@@ -25,11 +25,10 @@ const patientPopupStyles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    textAlign: 'center',
   },
 
   tabsContainer: {
-    borderBottom: 1,
-    borderColor: 'divider',
     width: '100%',
   },
 };

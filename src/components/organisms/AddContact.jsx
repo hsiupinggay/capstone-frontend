@@ -107,7 +107,7 @@ export default function AddContact({ setOutgoingPendingList }) {
               <Stack
                 spacing={3}
               >
-                <Typography variant="h2">
+                <Typography variant="h2" sx={addContactPopupStyles.contactTitle}>
                   Add Contact
                 </Typography>
                 <Autocomplete

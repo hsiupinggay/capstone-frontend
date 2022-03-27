@@ -15,6 +15,7 @@ const navStyles = {
   },
 
   appName: {
+    fontFamily: 'Secular One, sans-serif',
     fontVariant: 'h1',
     mr: 2,
     component: 'div',

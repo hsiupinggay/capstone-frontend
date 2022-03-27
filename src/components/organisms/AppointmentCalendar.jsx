@@ -256,21 +256,52 @@ export default function AppointmentCalendar({
                   horizontal: 'left',
                 }}
               >
-                <Typography variant="h5" sx={{ p: 2 }}>{popoverText}</Typography>
-                <Button
-                  sx={{
-                    backgroundColor: '#22577A',
-                    '&:hover': {
-                      backgroundColor: '#3486bb',
-                    },
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '100%',
-                  }}
-                  onClick={openModal}
+                <Box sx={{
+                  width: {
+                    xs: 200, sm: 250, md: 300, lg: 400, xl: 450,
+                  },
+                }}
                 >
-                  <Typography sx={{ color: 'white' }} variant="h7"> View Full Appointment</Typography>
-                </Button>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      p: 2,
+                      fontSize: {
+                        xs: 11, sm: 14, md: 16, lg: 17, xl: 18,
+                      },
+                      textAlign: 'center',
+                    }}
+                  >
+                    {popoverText}
+
+                  </Typography>
+                  <Button
+                    sx={{
+                      backgroundColor: '#22577A',
+                      '&:hover': {
+                        backgroundColor: '#3486bb',
+                      },
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}
+                    onClick={openModal}
+                  >
+                    <Typography
+                      sx={{
+                        color: 'white',
+                        fontSize: {
+                          xs: 11, sm: 14, md: 16, lg: 17, xl: 18,
+                        },
+                      }}
+                      variant="h7"
+                      textAlign="center"
+                    >
+                      View Full Appointment
+
+                    </Typography>
+                  </Button>
+                </Box>
               </Popover>
             </div>
           </div>

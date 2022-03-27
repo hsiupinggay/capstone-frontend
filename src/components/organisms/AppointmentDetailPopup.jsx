@@ -282,11 +282,12 @@ export default function AppointmentDetailPopup({
                             display: 'flex',
                             justifyContent: 'center',
                             width: 'inherit',
+                            textAlign: 'center',
                           }}
                           >
                             {memo}
                           </Typography>
-                          <Typography fontSize="small">
+                          <Typography fontSize="small" textAlign="center">
                             Uploaded By:
                             <br />
                             {' '}

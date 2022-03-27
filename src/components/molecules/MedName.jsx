@@ -32,7 +32,7 @@ function MedName({
           <Stack
             spacing={6}
           >
-            <Typography variant="h3">{title}</Typography>
+            <Typography variant="h3" textAlign="center">{title}</Typography>
             <TextField variant="outlined" label="Name" onChange={handleName} value={name} />
           </Stack>
         </FormControl>
