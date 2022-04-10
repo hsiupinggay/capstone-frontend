@@ -81,6 +81,6 @@ We used socket.io for our chat functionality. Each time a chat is initiated, a t
 
 Hsiu Ping Gay | [linkedin.com/in/hsiupinggay](https://www.linkedin.com/in/hsiupinggay/)
 
-Shannon Suresh | 
+Shannon Suresh | [linkedin.com/in/shannon-suresh](https://www.linkedin.com/in/shannon-suresh)
 
 Bryan Luke Tan | 
