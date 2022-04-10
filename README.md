@@ -55,7 +55,8 @@ www.keepapp.live
 
 ## Technologies used 
 
-**MongoDB**
+**MongoDB** 
+
 We opted for a NoSQL database for a few reasons:
 1. We had a short development time and wanted a flexible schema that would allow us to make changes quickly and easily as requirements change
 2. We pass a lot of information from view to view that would have required join data from multiple tables if we used SQL databases. MongoDB allowed us to store data that is often accessed together in the same document. Since we already know which data will often be queried alongside others, it made sense to put them in the same document so that we don't need as many queries and joins.
@@ -75,6 +76,8 @@ We used socket.io for our chat functionality. Each time a chat is initiated, a t
 
 ## Contributors
 
-Hsiu Ping Gay | [linkedIn](https://www.linkedin.com/in/hsiupinggay/)
+Hsiu Ping Gay | [linkedin.com/in/hsiupinggay](https://www.linkedin.com/in/hsiupinggay/)
+
 Shannon Suresh | 
+
 Bryan Luke Tan | 
