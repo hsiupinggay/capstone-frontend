@@ -5,6 +5,6 @@ KEEP is a healthcare app made for families who are collectively taking care of t
 ## Features
 
 Schedule appointments, appoint chaperones, make edits
-![schedule appointments, assign chaperones, make edits](https://imgur.com/a/dbCEoGL)
+![Imgur](https://i.imgur.com/JMA0Uuu.gifv)
 
 View and filter appointments in mulitple views
