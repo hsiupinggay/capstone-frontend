@@ -30,11 +30,12 @@ www.keepapp.live
 User cannot access any links from url before logging in. Upon login, user login details will persist even with refresh and reopening of browser, until JWT expires.
 <details>
 <summary> How it was achieved: </summary>
- 
-Once user email and password are verified to match database, a JWT containing header, signature and payload (with user email, name and photo) will be sent to the front-end and saved in local storage.
+<ol>
+<li> Once user email and password are verified to match database, a JWT containing header, signature and payload (with user email, name and photo) will be sent to the front-end and saved in local storage. </li>
 
-We created a <protectedRoute /> react component that we then use to wrap around every route in our app, so that everytime the user navigates to a new page, the front-end will send the JWT to the backend as header for verification. If verification fails, user will be redirected to login again. If verification succeeds, user can navigate to desired page, and backend will send user name and photo to frontend so that even upon refresh or reopening of browser, user details can be displayed correctly.
-</details>
+<li> We created a <protectedRoute /> react component that we then use to wrap around every route in our app, so that everytime the user navigates to a new page, the front-end will send the JWT to the backend as header for verification. If verification fails, user will be redirected to login again. If verification succeeds, user can navigate to desired page, and backend will send user name and photo to frontend so that even upon refresh or reopening of browser, user details can be displayed correctly. </li>
+ </ol>
+ </details>
 
 ![user_auth_jwt](https://user-images.githubusercontent.com/85098526/162703679-6eeca0c4-5137-4575-9328-7895e20c9c46.gif)
 
@@ -70,9 +71,11 @@ Schedule medication refill reminders that will be sent via telegram
 
 <details>
 <summary> How it was achieved: </summary>
-1. Users are given specific instructions to initiate a chat with the our telegram bot and to provide the patient ID which corresponds with the ID key of the patient's document in our database. The telegram API receives the user's initiation message which includes the user's telegram ID. 
-2. We save this ID in the patient's document. Each patient's document will have a list of telegram IDs of users that have subscribed to this patient's medicine reminders.
-3. When a new prescription is added, users can opt to set a refill reminder. The app will draft a telegram message with the patient name, medication name and days left till the medication runs out. We use CRON to help us queue medicine refill reminder message to be sent out at a specific date and time determined by the user.
+ <ol>
+<li> Users are given specific instructions to initiate a chat with the our telegram bot and to provide the patient ID which corresponds with the ID key of the patient's document in our database. The telegram API receives the user's initiation message which includes the user's telegram ID.</li>
+<li> We save this ID in the patient's document. Each patient's document will have a list of telegram IDs of users that have subscribed to this patient's medicine reminders. </li>
+<li> When a new prescription is added, users can opt to set a refill reminder. The app will draft a telegram message with the patient name, medication name and days left till the medication runs out. We use CRON to help us queue medicine refill reminder message to be sent out at a specific date and time determined by the user. </li>
+ </ol>
 </details>
 
 ![telegram](https://user-images.githubusercontent.com/85098526/162618164-718d62dd-d9be-47b8-9d42-dc89640439d2.gif)
@@ -173,7 +176,7 @@ We opted for a NoSQL database for a few reasons:
 2. We pass a lot of information from view to view that would have required join data from multiple tables if we used SQL databases. MongoDB allowed us to store data that is often accessed together in the same document. Since we already know which data will often be queried alongside others, it made sense to put them in the same document so that we don't need as many queries and joins.
  
  <h3>  Telegram API & CRON </h3>
-We wamted send users reminders through a platform that they would definitely take notice of throughout the day. We figured that chat messages are most suited as they are short and would attract immediate attention as opposed to emails or in app notifications. CRON allowed us to send these messages at a specific date and time. The downside of this is that we are unable to reschedule a message once the CRON job has been queued.
+We figured that chat messages are most suited as reminders as they are short and would attract immediate attention as opposed to emails or in app notifications. CRON allowed us to send these messages at a specific date and time. The downside of this is that we are unable to reschedule a message once the CRON job has been queued.
 
  <h3>  Socket.io </h3>
 ------------------------- NEED TO FILL IN WHY WE CHOSE THIS -------------------------
