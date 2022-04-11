@@ -22,7 +22,88 @@ KEEP is a healthcare app made for families who are collectively taking care of t
 <h2> Website </h2>
 www.keepapp.live
 </div>
+
+<h2 id="features"> Features </h2>
+
+<h3> User Authentication </h3>
+
+User cannot access any links from url before logging in. Upon login, user login details will persist even with refresh and reopening of browser, until JWT expires.
+<details>
+<summary> How it was achieved: </summary>
  
+Once user email and password are verified to match database, a JWT containing header, signature and payload (with user email, name and photo) will be sent to the front-end and saved in local storage.
+
+We created a <protectedRoute /> react component that we then use to wrap around every route in our app, so that everytime the user navigates to a new page, the front-end will send the JWT to the backend as header for verification. If verification fails, user will be redirected to login again. If verification succeeds, user can navigate to desired page, and backend will send user name and photo to frontend so that even upon refresh or reopening of browser, user details can be displayed correctly.
+</details>
+
+![user_auth_jwt](https://user-images.githubusercontent.com/85098526/162703679-6eeca0c4-5137-4575-9328-7895e20c9c46.gif)
+
+Front-end validates login and signup inputs to handle prevent errors from reaching back-end. This includes incorrect password, incorrect email format, passwords not matching, empty fields.
+
+![signup_validation](https://user-images.githubusercontent.com/85098526/162709869-e0af50cc-08c8-4b59-b25f-a3562231f98e.gif)
+
+<h3> Appointments </h3>
+
+Schedule appointments, appoint chaperones, make edits
+
+![schedule_edit_appointments_480](https://user-images.githubusercontent.com/85098526/162615184-df2baff5-303a-478f-b23c-4b7cb92d154c.gif)
+
+View and filter appointments in calendar and list views
+
+![filter_appointments](https://user-images.githubusercontent.com/85098526/162615410-a751f330-6096-40df-b8e6-f0d0b5484e9f.gif)
+
+View and schedule appointments related to specific patient via patient menu
+
+![appointments](https://user-images.githubusercontent.com/85098526/162616539-e9215a06-1669-4243-b6c8-5bc36d90bf6a.gif)
+
+<h3> Keep all patient information in one place </h3>
+
+Access all patient information from patient menu
+
+![patient_menu](https://user-images.githubusercontent.com/85098526/162616383-438fe421-d3d3-45ff-b99f-e13679d5018a.gif)
+
+View, add and edit patient's medication
+
+![medication](https://user-images.githubusercontent.com/85098526/162616529-2fa9e811-fa65-4c9c-adcc-d982e1f87917.gif)
+
+Schedule medication refill reminders that will be sent via telegram
+
+<details>
+<summary> How it was achieved: </summary>
+We used 
+</details>
+
+![telegram](https://user-images.githubusercontent.com/85098526/162618164-718d62dd-d9be-47b8-9d42-dc89640439d2.gif)
+
+View and add clinics and departments that patient frequently visit
+
+![clinics_departments](https://user-images.githubusercontent.com/85098526/162616507-945cfd66-19b6-42ad-9e41-1056305384f7.gif)
+
+View and filter memos that are tagged to patient to get a comprehensive overview of medical status during each doctor's appointment
+
+![memos](https://user-images.githubusercontent.com/85098526/162616500-1dfda194-3403-4aa0-94a3-8d36b19eb15b.gif)
+
+<h3> Manage your contacts </h3>
+
+Add other users as contacts, share patients with contacts so that they can access mutual patient's information
+
+![contacts_visibility](https://user-images.githubusercontent.com/85098526/162617079-0c3446ec-5f46-4305-b334-5f69364f09fb.gif)
+
+Chat with users within the app
+
+<details>
+<summary> How it was achieved: </summary>
+We used socket.io for our chat functionality. Each time a chat is initiated, a temporary connection is opened for the time that both users are on the chat page. Messages are saved in the database so that even if the connection ceases, users can still view the messages that transpired.
+</details>
+
+![chat](https://user-images.githubusercontent.com/85098526/162617085-0a5d39cd-8be7-4598-85be-0e10d05863f8.gif)
+
+<h3> Mobile responsive </h3>
+
+Allows users the ease to access the app both at home and on-the-go.
+
+![resoponsiveness](https://user-images.githubusercontent.com/85098526/162710131-2ba1b63d-065d-450b-9bb1-3fc6a7396610.gif)
+
 <div id="tech-used">
 <h2> Technologies Used </h2>
  
@@ -79,58 +160,6 @@ www.keepapp.live
  </ul>
  
 </div>
-
-<h2 id="features"> Features </h2>
-
-### Appointments
-Schedule appointments, appoint chaperones, make edits
-
-![schedule_edit_appointments_480](https://user-images.githubusercontent.com/85098526/162615184-df2baff5-303a-478f-b23c-4b7cb92d154c.gif)
-
-View and filter appointments in calendar and list views
-
-![filter_appointments](https://user-images.githubusercontent.com/85098526/162615410-a751f330-6096-40df-b8e6-f0d0b5484e9f.gif)
-
-View and schedule appointments related to specific patient via patient menu
-
-![appointments](https://user-images.githubusercontent.com/85098526/162616539-e9215a06-1669-4243-b6c8-5bc36d90bf6a.gif)
-
-### Keep all patient information in one place
-
-Access all patient information from patient menu
-
-![patient_menu](https://user-images.githubusercontent.com/85098526/162616383-438fe421-d3d3-45ff-b99f-e13679d5018a.gif)
-
-View, add and edit patient's medication
-
-![medication](https://user-images.githubusercontent.com/85098526/162616529-2fa9e811-fa65-4c9c-adcc-d982e1f87917.gif)
-
-Schedule medication refill reminders that will be sent via telegram
-
-![telegram](https://user-images.githubusercontent.com/85098526/162618164-718d62dd-d9be-47b8-9d42-dc89640439d2.gif)
-
-View and add clinics and departments that patient frequently visit
-
-![clinics_departments](https://user-images.githubusercontent.com/85098526/162616507-945cfd66-19b6-42ad-9e41-1056305384f7.gif)
-
-View and filter memos that are tagged to patient to get a comprehensive overview of medical status during each doctor's appointment
-
-![memos](https://user-images.githubusercontent.com/85098526/162616500-1dfda194-3403-4aa0-94a3-8d36b19eb15b.gif)
-
-### Manage your contacts
-
-Add other users as contacts, share patients with contacts so that they can access mutual patient's information
-
-![contacts_visibility](https://user-images.githubusercontent.com/85098526/162617079-0c3446ec-5f46-4305-b334-5f69364f09fb.gif)
-
-Chat with users within the app
-<details>
-<summary> How it was achieved: </summary>
-We used socket.io for our chat functionality. Each time a chat is initiated, a temporary connection is opened for the time that both users are on the chat page. Messages are saved in the database so that even if the connection ceases, users can still view the messages that transpired.
-</details>
-
-![chat](https://user-images.githubusercontent.com/85098526/162617085-0a5d39cd-8be7-4598-85be-0e10d05863f8.gif)
-
 
 <div id="rationale">
 <h2> Rationale for Choice of Technologies  </h2>
