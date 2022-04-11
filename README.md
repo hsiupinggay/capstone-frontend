@@ -1,4 +1,4 @@
-# KEEP
+<h1> KEEP </h1>
 
 <details>
 <summary>Table of Contents</summary>
@@ -14,17 +14,21 @@
 </details>
 
 <div id="about">
-## About
+ <h2> About the Project </h2>
 KEEP is a healthcare app made for families who are collectively taking care of their sick family members. It takes away the administrative hassle of coordinating medical visits, keeping track of medicine refills and allows for easy sharing of patient's medical details with family members.
 </div>
  
 <div id="website">
-## Website
+<h2> Website </h2>
 www.keepapp.live
 </div>
  
-## Features
+<div id="tech-used">
+<h2> Technologies Used </h2>
+----- TO COMPLETE ----
+</div>
 
+<h2 id="tech-used"> Features </h2>
 ### Appointments
 
 Schedule appointments, appoint chaperones, make edits
