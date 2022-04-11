@@ -27,6 +27,7 @@ www.keepapp.live
 <h2> Technologies Used </h2>
 Frontend
  <ul>
+  <li><a onclick="window.open ('https://reactjs.org/', ''); return false" href="javascript:void(0);">  React.js</a></li>
   <li><a href="https://reactjs.org/" target="_blank"> React.js <a/></li>
    <li><a href="https://reactrouter.com/" target="_blank"> React Router <a/></li>
    <li><a href="https://mui.com/" target="_blank"> Material UI <a/></li> 
