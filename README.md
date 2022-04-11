@@ -156,7 +156,7 @@ Allows users the ease to access the app both at home and on-the-go.
    Telegram Medication Reminder:
  <ul>
  <li><a href="https://core.telegram.org/" target="_blank"> Telegram API <a/></li>
-    <li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/" target="_blank"> CRON <a/></li>
+    <li><a href="https://github.com/kelektiv/node-cron#readme" target="_blank"> CRON <a/></li>
  </ul>
  
   Live Chatroom:
