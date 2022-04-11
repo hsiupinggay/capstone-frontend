@@ -1,7 +1,28 @@
 # KEEP
 
-KEEP is a healthcare app made for families who are collectively taking care of their sick family members. It takes away the administrative hassle of coordinating medical visits, keeping track of medicine refills and allows for easy sharing of patient's medical details with family members.
+<details>
+<summary>Table of Contents</summary>
+<br>
+ <ol> 
+    <li> <a href="#about"> About the Project </a></li>
+    <li> <a href="#website"> Website </a></li>
+    <li> <a href="#tech-used"> Technologies Used </a></li>
+    <li> <a href="#features"> Features </a></li>
+    <li> <a href="#rationale"> Rationale for Choice of Technologies </a></li>
+    <li> <a href="#repo-links"> Repo Links </a></li>
+  </ol>
+</details>
 
+<div id="about">
+## About
+KEEP is a healthcare app made for families who are collectively taking care of their sick family members. It takes away the administrative hassle of coordinating medical visits, keeping track of medicine refills and allows for easy sharing of patient's medical details with family members.
+</div>
+ 
+<div id="website">
+## Website
+www.keepapp.live
+</div>
+ 
 ## Features
 
 ### Appointments
@@ -50,8 +71,6 @@ Chat with users within the app
 
 ![chat](https://user-images.githubusercontent.com/85098526/162617085-0a5d39cd-8be7-4598-85be-0e10d05863f8.gif)
 
-## Website
-www.keepapp.live
 
 ## Technologies used 
 
