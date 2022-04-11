@@ -1,6 +1,6 @@
 # KEEP
 
-KEEP is a healthcare app made for families who are collectively taking care of their sick family members. It takes away the administrative hassle of coordinating medical visits, medicine refills and keeping updated with the patient's medical situation.
+KEEP is a healthcare app made for families who are collectively taking care of their sick family members. It takes away the administrative hassle of coordinating medical visits, keeping track of medicine refills and allows for easy sharing of patient's medical details with family members.
 
 ## Features
 
