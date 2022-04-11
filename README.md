@@ -27,22 +27,22 @@ www.keepapp.live
 <h2> Technologies Used </h2>
 Frontend
  <ul>
-  <li><a href="https://reactjs.org/"> React.js <a/></li>
-   <li><a href="https://reactrouter.com/"> React Router <a/></li>
-   <li><a href="https://mui.com/"> Material UI <a/></li> 
-  <li><a href="https://socket.io/"> Socket.IO <a/></li>
+  <li><a href="https://reactjs.org/" target="_blank"> React.js <a/></li>
+   <li><a href="https://reactrouter.com/" target="_blank"> React Router <a/></li>
+   <li><a href="https://mui.com/" target="_blank"> Material UI <a/></li> 
+  <li><a href="https://socket.io/" target="_blank"> Socket.IO <a/></li>
  </ul>
  
  Backend
  <ul>
-  <li><a href="https://expressjs.com/"> Express.js <a/></li>
-   <li><a href="https://www.mongodb.com/docs/atlas/"> MongoDB Atlas <a/></li> 
-   <li><a href="https://mongoosejs.com/"> Mongoose ODM <a/></li>
-   <li><a href="https://www.npmjs.com/package/argon2"> argon2 <a/></li>
-   <li><a href="https://jwt.io/"> JSON Web Token <a/></li>
-   <li><a href="https://core.telegram.org/"> Telegram API <a/></li>
-    <li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/"> CRON <a/></li>
-  <li><a href="https://socket.io/"> Socket.IO <a/></li>
+  <li><a href="https://expressjs.com/" target="_blank"> Express.js <a/></li>
+   <li><a href="https://www.mongodb.com/docs/atlas/" target="_blank"> MongoDB Atlas <a/></li> 
+   <li><a href="https://mongoosejs.com/" target="_blank"> Mongoose ODM <a/></li>
+   <li><a href="https://www.npmjs.com/package/argon2" target="_blank"> argon2 <a/></li>
+   <li><a href="https://jwt.io/" target="_blank"> JSON Web Token <a/></li>
+   <li><a href="https://core.telegram.org/" target="_blank"> Telegram API <a/></li>
+    <li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/" target="_blank"> CRON <a/></li>
+  <li><a href="https://socket.io/" target="_blank"> Socket.IO <a/></li>
  </ul>
  
 </div>
