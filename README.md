@@ -25,12 +25,31 @@ www.keepapp.live
  
 <div id="tech-used">
 <h2> Technologies Used </h2>
------ TO COMPLETE ----
+Frontend
+ <ul>
+  <li><a href="https://reactjs.org/"> React.js <a/></li>
+   <li><a href="https://reactrouter.com/"> React Router <a/></li>
+   <li><a href="https://mui.com/"> Material UI <a/></li> 
+  <li><a href="https://socket.io/"> Socket.IO <a/></li>
+ </ul>
+ 
+ Backend
+ <ul>
+  <li><a href="https://expressjs.com/"> Express.js <a/></li>
+   <li><a href="https://www.mongodb.com/docs/atlas/"> MongoDB Atlas <a/></li> 
+   <li><a href="https://mongoosejs.com/"> Mongoose ODM <a/></li>
+   <li><a href="https://www.npmjs.com/package/argon2"> argon2 <a/></li>
+   <li><a href="https://jwt.io/"> JSON Web Token <a/></li>
+   <li><a href="https://core.telegram.org/"> Telegram API <a/></li>
+    <li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/"> CRON <a/></li>
+  <li><a href="https://socket.io/"> Socket.IO <a/></li>
+ </ul>
+ 
 </div>
 
-<h2 id="tech-used"> Features </h2>
-### Appointments
+<h2 id="features"> Features </h2>
 
+### Appointments
 Schedule appointments, appoint chaperones, make edits
 
 ![schedule_edit_appointments_480](https://user-images.githubusercontent.com/85098526/162615184-df2baff5-303a-478f-b23c-4b7cb92d154c.gif)
@@ -74,6 +93,15 @@ Add other users as contacts, share patients with contacts so that they can acces
 Chat with users within the app
 
 ![chat](https://user-images.githubusercontent.com/85098526/162617085-0a5d39cd-8be7-4598-85be-0e10d05863f8.gif)
+
+
+<div id="rationale">
+<h2> Rationale for Choice of Technologies  </h2>
+</div>
+
+<div id="repo-links">
+<h2> Repo Links  </h2>
+</div>
 
 
 ## Technologies used 
