@@ -124,12 +124,33 @@ Add other users as contacts, share patients with contacts so that they can acces
 ![contacts_visibility](https://user-images.githubusercontent.com/85098526/162617079-0c3446ec-5f46-4305-b334-5f69364f09fb.gif)
 
 Chat with users within the app
+<details>
+<summary> How it was achieved: </summary>
+We used socket.io for our chat functionality. Each time a chat is initiated, a temporary connection is opened for the time that both users are on the chat page. Messages are saved in the database so that even if the connection ceases, users can still view the messages that transpired.
+</details>
 
 ![chat](https://user-images.githubusercontent.com/85098526/162617085-0a5d39cd-8be7-4598-85be-0e10d05863f8.gif)
 
 
 <div id="rationale">
 <h2> Rationale for Choice of Technologies  </h2>
+
+ <h3> MongoDB </h3>
+
+We opted for a NoSQL database for a few reasons:
+1. We had a short development time and wanted a flexible schema that would allow us to make changes quickly and easily as requirements change
+2. We pass a lot of information from view to view that would have required join data from multiple tables if we used SQL databases. MongoDB allowed us to store data that is often accessed together in the same document. Since we already know which data will often be queried alongside others, it made sense to put them in the same document so that we don't need as many queries and joins.
+ 
+ 
+ <h3>  Telegram API & CRON </h3>
+------------------------- NEED TO FILL IN WHY WE CHOSE THIS -------------------------
+
+ <h3>  Socket.io </h3>
+------------------------- NEED TO FILL IN WHY WE CHOSE THIS -------------------------
+
+ <h3>  Argon2 & JWT </h3>
+------------------------- NEED TO FILL IN WHY WE CHOSE THIS -------------------------
+
 </div>
 
 <div id="repo-links">
@@ -141,31 +162,6 @@ Chat with users within the app
  </ul>
  
 </div>
-
-
-## Technologies used 
-
-### MongoDB
-
-We opted for a NoSQL database for a few reasons:
-1. We had a short development time and wanted a flexible schema that would allow us to make changes quickly and easily as requirements change
-2. We pass a lot of information from view to view that would have required join data from multiple tables if we used SQL databases. MongoDB allowed us to store data that is often accessed together in the same document. Since we already know which data will often be queried alongside others, it made sense to put them in the same document so that we don't need as many queries and joins.
-
-### Telegram API & CRON
-
-1. Users are given specific instructions to initiate a chat with the our telegram bot and to provide the patient ID which corresponds with the ID key of the patient's document in our database. The telegram API receives the user's initiation message which includes the user's telegram ID. 
-2. We save this ID in the patient's document. Each patient's document will have a list of telegram IDs of users that have subscribed to this patient's medicine reminders.
-3. When a new prescription is added, users can opt to set a refill reminder. The app will draft a telegram message with the patient name, medication name and days left till the medication runs out. We use CRON to help us queue medicine refill reminder message to be sent out at a specific date and time determined by the user.
-
-### Socket.io
-
-We used socket.io for our chat functionality. Each time a chat is initiated, a temporary connection is opened for the time that both users are on the chat page. Messages are saved in the database so that even if the connection ceases, users can still view the messages that transpired.
-
-### Argon2 & JWT
-
-1. Each time a user logs in, after the login payload is verified, the backend API sends a JWT token with a signature and payload including username and profile picture which is stored in local storage. As this payload is encrypted, it will not reveal user details. 
-2. We then send the token back as part of the header on every route. This allows us to verify the user every time they navigate to a new page, it also allows the username and profile picture to be available to the frontend even when the user refreshes the page. 
-3. We use Argon2 to hash our passwords before saving into our database. We chose it over hashing algorithms such as bcrypt as it won the [PHC](https://www.password-hashing.net/) in 2015.
 
 ## Contributors
 
