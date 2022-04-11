@@ -70,7 +70,9 @@ Schedule medication refill reminders that will be sent via telegram
 
 <details>
 <summary> How it was achieved: </summary>
-We used 
+1. Users are given specific instructions to initiate a chat with the our telegram bot and to provide the patient ID which corresponds with the ID key of the patient's document in our database. The telegram API receives the user's initiation message which includes the user's telegram ID. 
+2. We save this ID in the patient's document. Each patient's document will have a list of telegram IDs of users that have subscribed to this patient's medicine reminders.
+3. When a new prescription is added, users can opt to set a refill reminder. The app will draft a telegram message with the patient name, medication name and days left till the medication runs out. We use CRON to help us queue medicine refill reminder message to be sent out at a specific date and time determined by the user.
 </details>
 
 ![telegram](https://user-images.githubusercontent.com/85098526/162618164-718d62dd-d9be-47b8-9d42-dc89640439d2.gif)
@@ -170,9 +172,8 @@ We opted for a NoSQL database for a few reasons:
 1. We had a short development time and wanted a flexible schema that would allow us to make changes quickly and easily as requirements change
 2. We pass a lot of information from view to view that would have required join data from multiple tables if we used SQL databases. MongoDB allowed us to store data that is often accessed together in the same document. Since we already know which data will often be queried alongside others, it made sense to put them in the same document so that we don't need as many queries and joins.
  
- 
  <h3>  Telegram API & CRON </h3>
-------------------------- NEED TO FILL IN WHY WE CHOSE THIS -------------------------
+We wamted send users reminders through a platform that they would definitely take notice of throughout the day. We figured that chat messages are most suited as they are short and would attract immediate attention as opposed to emails or in app notifications. CRON allowed us to send these messages at a specific date and time. The downside of this is that we are unable to reschedule a message once the CRON job has been queued.
 
  <h3>  Socket.io </h3>
 ------------------------- NEED TO FILL IN WHY WE CHOSE THIS -------------------------
@@ -194,8 +195,8 @@ We opted for a NoSQL database for a few reasons:
 
 ## Contributors
 
-Hsiu Ping Gay | [linkedin.com/in/hsiupinggay](https://www.linkedin.com/in/hsiupinggay/)
+Hsiu Ping Gay | [linkedin.com/in/hsiupinggay](https://www.linkedin.com/in/hsiupinggay)
 
 Shannon Suresh | [linkedin.com/in/shannon-suresh](https://www.linkedin.com/in/shannon-suresh)
 
-Bryan Luke Tan | 
+Bryan Luke Tan | [linkedin.com/in/bryan-luke-138a901b6](https://www.linkedin.com/in/bryan-luke-138a901b6)
