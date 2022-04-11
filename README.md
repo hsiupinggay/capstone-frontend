@@ -25,25 +25,57 @@ www.keepapp.live
  
 <div id="tech-used">
 <h2> Technologies Used </h2>
-Frontend
+ 
+ <h3>Frontend</h3>
+ 
+ User Interface:
  <ul>
-  <li><a onclick="window.open ('https://reactjs.org/', ''); return false" href="javascript:void(0);">  React.js</a></li>
   <li><a href="https://reactjs.org/" target="_blank"> React.js <a/></li>
-   <li><a href="https://reactrouter.com/" target="_blank"> React Router <a/></li>
-   <li><a href="https://mui.com/" target="_blank"> Material UI <a/></li> 
-  <li><a href="https://socket.io/" target="_blank"> Socket.IO <a/></li>
  </ul>
  
- Backend
+  Component Routing:
  <ul>
-  <li><a href="https://expressjs.com/" target="_blank"> Express.js <a/></li>
+  <li><a href="https://reactrouter.com/" target="_blank"> React Router <a/></li>
+ </ul>
+ 
+ CSS Framework:
+ <ul>
+  <li><a href="https://mui.com/" target="_blank"> Material UI <a/></li> 
+ </ul>
+ 
+ Live Chatroom:
+ <ul>
+   <li><a href="https://socket.io/" target="_blank"> Socket.IO <a/></li>
+ </ul>
+ 
+ <h3> Backend </h3>
+ 
+ Server:
+ <ul>
+   <li><a href="https://expressjs.com/" target="_blank"> Express.js <a/></li>
+ </ul>
+ 
+  Database:
+ <ul>
    <li><a href="https://www.mongodb.com/docs/atlas/" target="_blank"> MongoDB Atlas <a/></li> 
    <li><a href="https://mongoosejs.com/" target="_blank"> Mongoose ODM <a/></li>
-   <li><a href="https://www.npmjs.com/package/argon2" target="_blank"> argon2 <a/></li>
+ </ul>
+ 
+   Authentication:
+ <ul>
+  <li><a href="https://www.npmjs.com/package/argon2" target="_blank"> argon2 <a/></li>
    <li><a href="https://jwt.io/" target="_blank"> JSON Web Token <a/></li>
-   <li><a href="https://core.telegram.org/" target="_blank"> Telegram API <a/></li>
+ </ul>
+ 
+   Telegram Medication Reminder:
+ <ul>
+ <li><a href="https://core.telegram.org/" target="_blank"> Telegram API <a/></li>
     <li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/" target="_blank"> CRON <a/></li>
-  <li><a href="https://socket.io/" target="_blank"> Socket.IO <a/></li>
+ </ul>
+ 
+  Live Chatroom:
+ <ul>
+   <li><a href="https://socket.io/" target="_blank"> Socket.IO <a/></li>
  </ul>
  
 </div>
@@ -102,6 +134,12 @@ Chat with users within the app
 
 <div id="repo-links">
 <h2> Repo Links  </h2>
+
+ <ul>
+  <li><a href="https://github.com/hsiupinggay/capstone-frontend" target="_blank"> Frontend<a/></li>
+   <li><a href="https://github.com/hsiupinggay/capstone-backend" target="_blank"> Backend<a/></li>
+ </ul>
+ 
 </div>
 
 
