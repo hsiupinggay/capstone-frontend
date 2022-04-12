@@ -35,7 +35,7 @@ KEEP is a secure app with protected routes that requires user authentication.
 Users accessing any KEEP URLs without being logged in are redirected to the login page.
 
 <details>
-<summary> How it was achieved: </summary>
+ <summary><i> How It Was Achieved: </i></summary>
 <ol>
  
  <li> Upon Login: <br/> Once the user's email and password are verified to match the database, the user's login details are stored in a JSON Web Token and sent from the backend Express server to the frontend React server. <br/> These details are saved in the browser's local storage. </li>
@@ -81,7 +81,7 @@ View, add and edit patient's medication.
 Schedule medication refill reminders sent via Telegram.
 
 <details>
-<summary> How it was achieved: </summary>
+<summary><i> How It Was Achieved: </i></summary>
  <ol>
   <li> Initiate Chat: <br/> Users are instructed to initiate a Telegram chat with KEEP apps Telegram bot and provide the patient ID. </li>
   <li> Storing Users Telegram ID: <br/> The telegram API receives the user's initiation message which includes the user's telegram ID. 
@@ -112,24 +112,33 @@ View and filter memos that are tagged to patients to get a comprehensive overvie
 
 ![memos](https://user-images.githubusercontent.com/85098526/162616500-1dfda194-3403-4aa0-94a3-8d36b19eb15b.gif)
 
-<h3> 4. Manage your contacts </h3>
+<h3> 4. Contacts </h3>
 
-Add other users as contacts, share patients with contacts so that they can access mutual patient's information
+Add other users as contacts. 
+<br/>
+Share patient details with contacts, allowing for access of mutual patient's appointments, medications and memos.
 
 ![contacts_visibility](https://user-images.githubusercontent.com/85098526/162617079-0c3446ec-5f46-4305-b334-5f69364f09fb.gif)
 
-Chat with users within the app
+Chat with users within the app.
 
 <details>
-<summary> How it was achieved: </summary>
-We used socket.io for our chat functionality. Each time a chat is initiated, a temporary connection is opened for the time that both users are on the chat page. Messages are saved in the database so that even if the connection ceases, users can still view the messages that transpired.
+<summary><i> How It Was Achieved: </i></summary>
+ <ol>
+  <li> Establish Socket Connection: <br/> When a user enters a chatroom, a socket connection is established in the Express server. 
+   <br/> The users socket ID, user ID and the user ID of the person they are texting is stored as a document in an <i>OnlineChatModel</i> collection in the database.
+  <br/> The user is then placed in a socket room (channel) named after their user ID.</li>
+  <li> Sending Real-Time Messages: <br/> When a user sends a message, the Express server will check the <i>OnlineChatModel</i> collection in the database to determine if the textee is also in the same chatroom.
+  <br/> If they are, the user joins the textees socket room and the message is emitted to both rooms and hence the user and the textee. <br/> If not, the message is only sent to the user.</li>
+  <li> Leaving Chatroom: <br/> When a user leaves the chatroom, their document is removed from the <i>OnlineChatModel</i> collection in the database, so as to allow for accurate checking of online users. </li>
+ </ol>
 </details>
 
 ![chat](https://user-images.githubusercontent.com/85098526/162617085-0a5d39cd-8be7-4598-85be-0e10d05863f8.gif)
 
 <h3> 5. Mobile responsive </h3>
 
-Allows users the ease to access the app both at home and on-the-go.
+Provide users with the ease of access to KEEP, both at home and on-the-go.
 
 ![resoponsiveness](https://user-images.githubusercontent.com/85098526/162710131-2ba1b63d-065d-450b-9bb1-3fc6a7396610.gif)
 
