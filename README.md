@@ -6,16 +6,19 @@
  <ol> 
     <li> <a href="#about"> About the Project </a></li>
     <li> <a href="#website"> Website </a></li>
-    <li> <a href="#tech-used"> Technologies Used </a></li>
     <li> <a href="#features"> Features </a></li>
+    <li> <a href="#tech-used"> Technologies Used </a></li>
     <li> <a href="#rationale"> Rationale for Choice of Technologies </a></li>
     <li> <a href="#repo-links"> Repo Links </a></li>
+    <li> <a href="#contributors"> Contributors </a></li>
   </ol>
 </details>
 
 <div id="about">
  <h2> About the Project </h2>
-KEEP is a healthcare app made for families who are collectively taking care of their sick family members. It takes away the administrative hassle of coordinating medical visits, keeping track of medicine refills and allows for easy sharing of patient's medical details with family members.
+KEEP is a healthcare app made for families who are collectively taking care of their sick family members. 
+ <br/>
+It takes away the administrative hassle of coordinating medical visits, <br/>keeps track of medication refills <br/>and allows for easy sharing of patient's medical details with family members.
 </div>
  
 <div id="website">
@@ -25,15 +28,22 @@ www.keepapp.live
 
 <h2 id="features"> Features </h2>
 
-<h3> User Authentication </h3>
+<h3> 1. App Security </h3>
 
-User cannot access any links from url before logging in. Upon login, user login details will persist even with refresh and reopening of browser, until JWT expires.
+KEEP is a secure app with protected routes that requires user authentication. 
+<br/>
+Users accessing any KEEP URLs without being logged in are redirected to the login page.
+
 <details>
 <summary> How it was achieved: </summary>
 <ol>
-<li> Once user email and password are verified to match database, a JWT containing header, signature and payload (with user email, name and photo) will be sent to the front-end and saved in local storage. </li>
+ 
+ <li> Upon Login: <br/> Once the user's email and password are verified to match the database, the user's login details are stored in a JSON Web Token and sent from the backend Express server to the frontend React server. These details are saved in the browser's local storage. </li>
 
-<li> We created a <protectedRoute /> react component that we then use to wrap around every route in our app, so that everytime the user navigates to a new page, the front-end will send the JWT to the backend as header for verification. If verification fails, user will be redirected to login again. If verification succeeds, user can navigate to desired page, and backend will send user name and photo to frontend so that even upon refresh or reopening of browser, user details can be displayed correctly. </li>
+ <li> On Access of KEEP URLs: <br/> We created a <i>ProtectedRoute</i> react component, that wraps all routes in the app. When any of the KEEP app's URLs are accessed or changed, a useEffect runs in the <i>ProtectedRoute</i> component, which triggers user authentication to occur. </li>
+ 
+  <li> User Authentication: <br/> The JSON Web Token is retrieved from local storage and sent to the Express server where the token is then verified. The outcome is then sent to the React server. If the token was not successfully verfied, the app would redirect to the login page. If verification is successful, users can navigate to their intended page and the Express server will send the users details to the React server, allowing for the user's details to be correctly displayed even upon refresh or reopening of the browser.  </li>
+ 
  </ol>
  </details>
 
@@ -43,7 +53,7 @@ Front-end validates login and signup inputs to handle prevent errors from reachi
 
 ![signup_validation](https://user-images.githubusercontent.com/85098526/162709869-e0af50cc-08c8-4b59-b25f-a3562231f98e.gif)
 
-<h3> Appointments </h3>
+<h3> 2. Appointments </h3>
 
 Schedule appointments, appoint chaperones, make edits
 
@@ -57,7 +67,7 @@ View and schedule appointments related to specific patient via patient menu
 
 ![appointments](https://user-images.githubusercontent.com/85098526/162616539-e9215a06-1669-4243-b6c8-5bc36d90bf6a.gif)
 
-<h3> Keep all patient information in one place </h3>
+<h3> 3. Keep all patient information in one place </h3>
 
 Access all patient information from patient menu
 
@@ -88,7 +98,7 @@ View and filter memos that are tagged to patient to get a comprehensive overview
 
 ![memos](https://user-images.githubusercontent.com/85098526/162616500-1dfda194-3403-4aa0-94a3-8d36b19eb15b.gif)
 
-<h3> Manage your contacts </h3>
+<h3> 4. Manage your contacts </h3>
 
 Add other users as contacts, share patients with contacts so that they can access mutual patient's information
 
@@ -103,7 +113,7 @@ We used socket.io for our chat functionality. Each time a chat is initiated, a t
 
 ![chat](https://user-images.githubusercontent.com/85098526/162617085-0a5d39cd-8be7-4598-85be-0e10d05863f8.gif)
 
-<h3> Mobile responsive </h3>
+<h3> 5. Mobile responsive </h3>
 
 Allows users the ease to access the app both at home and on-the-go.
 
@@ -196,10 +206,10 @@ We figured that chat messages are most suited as reminders as they are short and
  
 </div>
 
-## Contributors
+<h2 id="contributors"> Contributors </h2>
 
-Hsiu Ping Gay | [linkedin.com/in/hsiupinggay](https://www.linkedin.com/in/hsiupinggay)
+Bryan Luke Tan | <a href="https://www.linkedin.com/in/bryan-luke-138a901b6" target="_blank"> LinkedIn<a/>
 
-Shannon Suresh | [linkedin.com/in/shannon-suresh](https://www.linkedin.com/in/shannon-suresh)
+Hsiu Ping Gay | <a href="https://www.linkedin.com/in/hsiupinggay" target="_blank"> LinkedIn<a/>
 
-Bryan Luke Tan | [linkedin.com/in/bryan-luke-138a901b6](https://www.linkedin.com/in/bryan-luke-138a901b6)
+Shannon Suresh | <a href="https://www.linkedin.com/in/shannon-suresh" target="_blank"> LinkedIn<a/>
