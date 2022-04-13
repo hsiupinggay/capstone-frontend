@@ -29,56 +29,65 @@ www.keepapp.live
 <h2 id="features"> Features </h2>
 
 <h3> 1. App Security </h3>
-
-KEEP is a secure app with protected routes that requires user authentication. 
-<br/>
-Users accessing any KEEP URLs without being logged in are redirected to the login page.
-
+<ul>
+ <li> KEEP is a secure app with protected routes that requires user authentication. </li>
+ <li> Users accessing any KEEP URLs without being logged in are redirected to the login page.</li>
+ </ul>
+ 
 <details>
  <summary><i> <b>How It Was Achieved:</b> </i></summary>
 <ol>
- 
  <li> <b>Upon Login:</b> <br/> Once the user's email and password are verified to match the database, the user's login details are stored in a JSON Web Token and sent from the backend Express server to the frontend React server. <br/> The token is saved in the browser's local storage. </li>
 
  <li> <b>On Access of KEEP URLs:</b> <br/> When any of the KEEP app's URLs are accessed, a <i>useEffect</i> React Hook runs in the <i>ProtectedRoute</i> component, that wraps all routes in the app. <br/> This triggers user authentication to occur. </li>
  
   <li> <b>User Authentication:</b> <br/> The JSON Web Token is retrieved from local storage and sent to the Express server where the token is then verified.<br/>  The outcome is then sent to the React server. <br/> If the token was not successfully verfied, the app would redirect to the login page. <br/> If verification is successful, users can navigate to their intended page and the Express server will send the users details to the React server, allowing for the user's details to be correctly displayed even upon refresh or reopening of the browser.  </li>
- 
  </ol>
  </details>
 
 ![user_auth_jwt](https://user-images.githubusercontent.com/85098526/162703679-6eeca0c4-5137-4575-9328-7895e20c9c46.gif)
 
-KEEP provides a seamless signup and login process by accounting for and validating errors on the frontend. <br/> These include incorrect passwords, incorrect email formats, passwords not matching and empty input fields.
+<ul>
+ <li> KEEP provides a seamless signup and login process by accounting for and validating errors on the frontend.</li> 
+ <li> These include incorrect passwords, incorrect email formats, passwords not matching and empty input fields. </li>
+</ul>
 
 ![signup_validation](https://user-images.githubusercontent.com/85098526/162709869-e0af50cc-08c8-4b59-b25f-a3562231f98e.gif)
 
 <h3> 2. Appointments </h3>
 
-View upcoming appointments for the month in calendar view.
-<br/>
-Schedule appointments, appoint chaperones, reschedule appointments and write memos after the hospital visit.
+<ul>
+ <li> View upcoming appointments for the month in calendar view. </li>
+<li>Schedule appointments, appoint chaperones, reschedule appointments and write memos after the hospital visit.</li>
+ </ul>
 
 ![schedule_edit_appointments_480](https://user-images.githubusercontent.com/85098526/162615184-df2baff5-303a-478f-b23c-4b7cb92d154c.gif)
 
-Easily toggle between calendar and list views. 
-<br/>
-Filter appointments in list view.
+<ul>
+ <li>Easily toggle between calendar and list views. </li>
+<li>Filter appointments in list view.</li>
+</ul>
 
 ![filter_appointments](https://user-images.githubusercontent.com/85098526/162615410-a751f330-6096-40df-b8e6-f0d0b5484e9f.gif)
 
 
 <h3> 3. Patient Hub </h3>
 
-Access all the patient's information from the patient hub.
+<ul>
+ <li>Access all the patient's information from the patient hub.</li>
+</ul>
 
 ![patient_menu](https://user-images.githubusercontent.com/85098526/162616383-438fe421-d3d3-45ff-b99f-e13679d5018a.gif)
 
-View, add and edit patient's medication.
+<ul>
+ <li>View, add and edit patient's medication.</li>
+</ul>
 
 ![medication](https://user-images.githubusercontent.com/85098526/162616529-2fa9e811-fa65-4c9c-adcc-d982e1f87917.gif)
 
-Schedule medication refill reminders sent via Telegram.
+<ul>
+ <li>Schedule medication refill reminders sent via Telegram.</li>
+</ul>
 
 <details>
 <summary><i><b> How It Was Achieved: </b></i></summary>
@@ -104,23 +113,30 @@ Schedule medication refill reminders sent via Telegram.
 
 ![telegram](https://user-images.githubusercontent.com/85098526/162618164-718d62dd-d9be-47b8-9d42-dc89640439d2.gif)
 
-View and add clinics and departments that patient frequently visit and chaperones who typically accompany them.
+<ul>
+ <li>View and add clinics and departments that patient frequently visit and chaperones who typically accompany them.</li>
+</ul>
 
 ![clinics_departments](https://user-images.githubusercontent.com/85098526/162616507-945cfd66-19b6-42ad-9e41-1056305384f7.gif)
 
-View and filter memos that are tagged to patients to get a comprehensive overview of their medical status during each hospital visit.
+<ul>
+ <li>View and filter memos that are tagged to patients to get a comprehensive overview of their medical status during each hospital visit.</li>
+</ul>
 
 ![memos](https://user-images.githubusercontent.com/85098526/162616500-1dfda194-3403-4aa0-94a3-8d36b19eb15b.gif)
 
 <h3> 4. Contacts </h3>
 
-Add other users as contacts. 
-<br/>
-Share patient details with contacts, allowing for access of mutual patient's appointments, medications and memos.
+<ul>
+ <li>Add other users as contacts. </li>
+ <li>Share patient details with contacts, allowing for access of mutual patient's appointments, medications and memos.</li>
+</ul>
 
 ![contacts_visibility](https://user-images.githubusercontent.com/85098526/162617079-0c3446ec-5f46-4305-b334-5f69364f09fb.gif)
 
-Chat with users within the app.
+<ul>
+ <li>Chat with users within the app.</li>
+</ul>
 
 <details>
 <summary><i><b> How It Was Achieved: </b></i></summary>
@@ -138,7 +154,9 @@ Chat with users within the app.
 
 <h3> 5. Mobile Responsive </h3>
 
-Provide users with the ease of access to KEEP, both at home and on-the-go.
+<ul>
+ <li>Provide users with the ease of access to KEEP, both at home and on-the-go.</li>
+</ul>
 
 ![resoponsiveness](https://user-images.githubusercontent.com/85098526/162710131-2ba1b63d-065d-450b-9bb1-3fc6a7396610.gif)
 
