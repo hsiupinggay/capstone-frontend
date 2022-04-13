@@ -177,12 +177,12 @@ Provide users with the ease of access to KEEP, both at home and on-the-go.
   Database:
  <ul>
    <li><a href="https://www.mongodb.com/docs/atlas/" target="_blank"> MongoDB Atlas <a/></li> 
-   <li><a href="https://mongoosejs.com/" target="_blank"> Mongoose ODM <a/></li>
+   <li><a href="https://mongoosejs.com/" target="_blank"> Mongoose <a/></li>
  </ul>
  
    Authentication:
  <ul>
-  <li><a href="https://www.npmjs.com/package/argon2" target="_blank"> argon2 <a/></li>
+  <li><a href="https://www.npmjs.com/package/argon2" target="_blank"> Argon2 <a/></li>
    <li><a href="https://jwt.io/" target="_blank"> JSON Web Token <a/></li>
  </ul>
  
@@ -205,19 +205,33 @@ Provide users with the ease of access to KEEP, both at home and on-the-go.
 <h3> MongoDB </h3>
  <b>Reason for Choosing a NoSQL Database: </b>
 <ul>
- <li> Due to a short development time, we required a flexible schema that would allow us to make changes quickly and easily as requirements changed </li>
+ <li> Due to a short development time, we required a flexible schema that would allow us to make changes quickly and easily as requirements changed. </li>
  <li> The size and complexity of the app meant that a lot of information was being accessed by the various components. <br/> This would have required multiple join tables if a SQL database was used. <br/> MongoDB allowed us to embed information, allowing for ease of storage and access of data.<br/> Since we had sets of data which needed to be queried alongside one another, a NoSQL database was better suited as it removed the need for multiple queries and joins. </li>
 </ul>
  
- <h3>  Telegram API & CRON </h3>
-We figured that chat messages are most suited as reminders as they are short and would attract immediate attention as opposed to emails or in app notifications. CRON allowed us to send these messages at a specific date and time. The downside of this is that we are unable to reschedule a message once the CRON job has been queued.
+<h3> Telegram API & CRON </h3>
+<ul>
+  <li> We decided on chat messages as our mode of reminders due to their concise nature and ability to attract immediate attention as opposed to emails or in app notifications. </li>
+   <li>CRON was utilized to allow reminders to be sent at a specific date and time. </li>
+   <li>One downside of using CRON was that we were unable to reschedule messages once the CRON job had been queued.</li>
+</ul>
 
- <h3>  Socket.io </h3>
-------------------------- NEED TO FILL IN WHY WE CHOSE THIS -------------------------
+<h3> Socket.IO </h3>
+<ul>
+ <li> Our desire to implement a live chatroom necessitated a Javascript library with such capabilities. </li>
+ <li> Socket.IO's ability to enable real-time, bi-directional communication between the clients and our servers suited this need. </li>
+</ul>
 
- <h3>  Argon2 & JWT </h3>
-------------------------- NEED TO FILL IN WHY WE CHOSE THIS -------------------------
-We use Argon2 to hash our passwords before saving into our database. We chose it over hashing algorithms such as bcrypt as it won the PHC in 2015.
+ <h3> Argon2 & JWT </h3>
+ <b>Argon2 Password Hashing: </b>
+ <ul>
+ <li> We used Argon2 to hash our passwords before saving into our database over other hashing algorithms such as bcrypt. </li>
+  <li> This was due to it having better security as displayed in it winning the <a href="https://github.com/P-H-C/phc-winner-argon2" target="_blank">Password Hashing Competition</a> in 2015. </li>
+  </ul>
+  <b>JWT Authentication: </b>
+ <ul>
+ <li> We chose JSON Web Tokens as our method of authentication due to its increased security through its digital signature capabilities. </li>
+  </ul>
 </div>
 
 <div id="repo-links">
