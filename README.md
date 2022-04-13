@@ -182,7 +182,7 @@ Provide users with the ease of access to KEEP, both at home and on-the-go.
  
    Authentication:
  <ul>
-  <li><a href="https://www.npmjs.com/package/argon2" target="_blank"> argon2 <a/></li>
+  <li><a href="https://www.npmjs.com/package/argon2" target="_blank"> Argon2 <a/></li>
    <li><a href="https://jwt.io/" target="_blank"> JSON Web Token <a/></li>
  </ul>
  
