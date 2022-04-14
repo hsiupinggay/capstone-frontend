@@ -35,7 +35,7 @@ www.keepapp.live
  </ul>
  
 <details>
- <summary><i> <b>How It Was Achieved:</b> </i></summary>
+ <summary><i> <b>How we built it:</b> </i></summary>
 <ol>
  <li> <b>Upon Login:</b> <br/> Once the user's email and password are verified to match the database, the user's login details are stored in a JSON Web Token and sent from the backend Express server to the frontend React server. <br/> The token is saved in the browser's local storage. </li>
 
@@ -90,7 +90,7 @@ www.keepapp.live
 </ul>
 
 <details>
-<summary><i><b> How It Was Achieved: </b></i></summary>
+<summary><i><b> How we built it: </b></i></summary>
  <ol>
   <li><b> Initiate Chat: </b><br/> Users are instructed to initiate a Telegram chat with KEEP apps Telegram bot and provide the patient ID. </li>
   <li><b> Storing Users Telegram ID: </b><br/> The telegram API receives the user's initiation message which includes the user's telegram ID. 
@@ -139,7 +139,7 @@ www.keepapp.live
 </ul>
 
 <details>
-<summary><i><b> How It Was Achieved: </b></i></summary>
+<summary><i><b> How we built it: </b></i></summary>
  <ol>
   <li><b> Establish Socket Connection: </b><br/> When a user enters a chatroom, a socket connection is established in the Express server. 
    <br/> The users socket ID, user ID and the user ID of the person they are texting is stored as a document in an <i>OnlineChatModel</i> collection in the database.
