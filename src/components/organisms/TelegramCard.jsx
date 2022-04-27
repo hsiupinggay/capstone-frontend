@@ -33,7 +33,6 @@ function TelegramCard({ patientId }) {
       await navigator.clipboard.writeText(patientId);
       setTooltipText('Copied to Clipboad');
     } catch (err) {
-      console.log(err);
       setError(true);
       setErrorMessage('Did not manage to copy, refresh the page or renavigate to this page again.');
     }

@@ -42,6 +42,8 @@ export default function Signup() {
   const [stepOneErrorMessage, setStepOneErrorMessage] = useState('');
 
   const [errorMessage, setErrorMessage] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   // Handle input changes
   const handleEmail = (e) => {
@@ -104,9 +106,11 @@ export default function Signup() {
     try {
       const res = await signup(dispatch, data);
 
-      if (res.loginSuccess) {
+      if (res.signupSuccess) {
         window.location.reload();
-      } else if (!res.loginSuccess) {
+        setSuccess(true);
+        setSuccessMessage('Sign up success! Please login.');
+      } else if (!res.signupSuccess) {
         setError(true);
         setErrorMessage(res.error);
       }
@@ -154,6 +158,9 @@ export default function Signup() {
           {error
             ? <HelperText text={errorMessage} />
             : <LockRoundedIcon />}
+          {success
+            ? <HelperText text={successMessage} />
+            : <div />}
           <form>
             <Stack
               spacing={2}
