@@ -83,7 +83,7 @@ export default function HomePage() {
           : (
             <Box>
               <Typography variant="body1" sx={homePageStyles.appointmentText}>
-                Nil
+                None
               </Typography>
             </Box>
           )}
@@ -95,13 +95,13 @@ export default function HomePage() {
             <Paper
               sx={homePageStyles.primaryCategories}
               onMouseOver={() => setShow(true)}
-              onMouseOut={() => setShow(false)}
+              onMouseLeave={() => setShow(false)}
             >
               <Typography
                 variant="h3"
                 sx={homePageStyles.categoryNames}
                 onMouseOver={() => setShow(true)}
-                onMouseOut={() => setShow(false)}
+                onMouseLeave={() => setShow(false)}
               >
                 Calendar
                 { show === true
@@ -109,7 +109,7 @@ export default function HomePage() {
                     <Typography
                       sx={homePageStyles.categoryDescription}
                       onMouseOver={() => setShow(true)}
-                      onMouseOut={() => setShow(false)}
+                      onMouseLeave={() => setShow(false)}
                     >
                       Create
                       <br />
@@ -126,13 +126,13 @@ export default function HomePage() {
             <Paper
               sx={homePageStyles.secondaryCategories}
               onMouseOver={() => setPatientShow(true)}
-              onMouseOut={() => setPatientShow(false)}
+              onMouseLeave={() => setPatientShow(false)}
             >
               <Typography
                 variant="h3"
                 sx={homePageStyles.categoryNames}
                 onMouseOver={() => setPatientShow(true)}
-                onMouseOut={() => setPatientShow(false)}
+                onMouseLeave={() => setPatientShow(false)}
               >
                 Patients
                 { patient === true
@@ -140,7 +140,7 @@ export default function HomePage() {
                     <Typography
                       sx={homePageStyles.categoryDescription}
                       onMouseOver={() => setPatientShow(true)}
-                      onMouseOut={() => setPatientShow(false)}
+                      onMouseLeave={() => setPatientShow(false)}
                     >
                       Medication
                       <br />
@@ -160,13 +160,13 @@ export default function HomePage() {
             <Paper
               sx={homePageStyles.secondaryCategories}
               onMouseOver={() => setContactsShow(true)}
-              onMouseOut={() => setContactsShow(false)}
+              onMouseLeave={() => setContactsShow(false)}
             >
               <Typography
                 variant="h3"
                 sx={homePageStyles.categoryNames}
                 onMouseOver={() => setContactsShow(true)}
-                onMouseOut={() => setContactsShow(false)}
+                onMouseLeave={() => setContactsShow(false)}
               >
                 Contacts
                 { contacts === true
@@ -175,7 +175,7 @@ export default function HomePage() {
                       variant="body1"
                       sx={homePageStyles.categoryDescription}
                       onMouseOver={() => setContactsShow(true)}
-                      onMouseOut={() => setContactsShow(false)}
+                      onMouseLeave={() => setContactsShow(false)}
                     >
                       Add
                       <br />
@@ -192,7 +192,7 @@ export default function HomePage() {
             <Paper
               sx={homePageStyles.primaryCategories}
               onMouseOver={() => setProfileShow(true)}
-              onMouseOut={() => setProfileShow(false)}
+              onMouseLeave={() => setProfileShow(false)}
             >
               <Typography
                 variant="h3"

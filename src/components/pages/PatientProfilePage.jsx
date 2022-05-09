@@ -119,13 +119,13 @@ export default function PatientProfilePage() {
                       <Paper
                         sx={patientProfilePageStyles.primaryCategories}
                         onMouseOver={() => setShow(true)}
-                        onMouseOut={() => setShow(false)}
+                        onMouseLeave={() => setShow(false)}
                       >
                         <Typography
                           variant="h3"
                           sx={patientProfilePageStyles.categoryNames}
                           onMouseOver={() => setShow(true)}
-                          onMouseOut={() => setShow(false)}
+                          onMouseLeave={() => setShow(false)}
                         >
                           Appointments
                           { show === true
@@ -134,7 +134,7 @@ export default function PatientProfilePage() {
                                 variant="body1"
                                 sx={patientProfilePageStyles.categoryDescription}
                                 onMouseOver={() => setShow(true)}
-                                onMouseOut={() => setShow(false)}
+                                onMouseLeave={() => setShow(false)}
                               >
                                 Create
                                 <br />
@@ -154,13 +154,13 @@ export default function PatientProfilePage() {
                       <Paper
                         sx={patientProfilePageStyles.secondaryCategories}
                         onMouseOver={() => setPatientShow(true)}
-                        onMouseOut={() => setPatientShow(false)}
+                        onMouseLeave={() => setPatientShow(false)}
                       >
                         <Typography
                           variant="h3"
                           sx={patientProfilePageStyles.categoryNames}
                           onMouseOver={() => setPatientShow(true)}
-                          onMouseOut={() => setPatientShow(false)}
+                          onMouseLeave={() => setPatientShow(false)}
                         >
                           Medication
                           { patient === true
@@ -168,7 +168,7 @@ export default function PatientProfilePage() {
                               <Typography
                                 sx={patientProfilePageStyles.categoryDescription}
                                 onMouseOver={() => setPatientShow(true)}
-                                onMouseOut={() => setPatientShow(false)}
+                                onMouseLeave={() => setPatientShow(false)}
                               >
                                 View
                                 {' '}
@@ -190,13 +190,13 @@ export default function PatientProfilePage() {
                       <Paper
                         sx={patientProfilePageStyles.secondaryCategories}
                         onMouseOver={() => setContactsShow(true)}
-                        onMouseOut={() => setContactsShow(false)}
+                        onMouseLeave={() => setContactsShow(false)}
                       >
                         <Typography
                           variant="h3"
                           sx={patientProfilePageStyles.categoryNames}
                           onMouseOver={() => setContactsShow(true)}
-                          onMouseOut={() => setContactsShow(false)}
+                          onMouseLeave={() => setContactsShow(false)}
                         >
                           Visit Details
                           { contacts === true
@@ -205,7 +205,7 @@ export default function PatientProfilePage() {
                                 variant="body1"
                                 sx={patientProfilePageStyles.categoryDescription}
                                 onMouseOver={() => setContactsShow(true)}
-                                onMouseOut={() => setContactsShow(false)}
+                                onMouseLeave={() => setContactsShow(false)}
                               >
                                 View
                                 {' '}
@@ -222,7 +222,7 @@ export default function PatientProfilePage() {
                       <Paper
                         sx={patientProfilePageStyles.primaryCategories}
                         onMouseOver={() => setProfileShow(true)}
-                        onMouseOut={() => setProfileShow(false)}
+                        onMouseLeave={() => setProfileShow(false)}
                       >
                         <Typography
                           variant="h3"
